@@ -1,0 +1,2 @@
+<!--Definition of context for the semanlink web application.see READ-ME in distribution directory for instructions about what to do with this file--><Context path="/semanlink" docBase="path-of-semanlink.war" reloadable="true" debug="0">	<Parameter name="semanlinkURL" value="http://host:port/semanlink" override="false"/>	<Parameter name="semanlinkDataDir" value="path-of-semanlink-data-directory" override="false"/>	<Parameter name="lang" value="en" override="false"/>
+</Context>

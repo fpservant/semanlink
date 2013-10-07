@@ -1,0 +1,6 @@
+<!--kwlist_nb.jsp--><%/** * Suppose défini un bean Bean_KwList_Nb contenant la liste à afficher dans l'attribut de request "net.semanlink.servlet.Bean_KwList". */%><%@ page language="java" session="true" import="net.semanlink.servlet.*"%><%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %><%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %><%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %><%Bean_KwList_Nb truc = (Bean_KwList_Nb) request.getAttribute("net.semanlink.servlet.Bean_KwList");
+/*if (truc.getJsp() == null) { // 2007/11 hack correction nug tag cloud sur dossier
+	Jsp_Page jsp = (Jsp_Page) request.getAttribute("net.semanlink.servlet.jsp");
+	truc.setJsp(jsp);
+}*/
+if (truc != null) {		int n = truc.size();		if (n > 0) {			%>			<ul>				<%				for (int i = 0; i < n; i++) {					HTML_Link link = truc.getLink(i);					String nombre = null;					int nb = truc.getNb(i);					if (nb > 1) {						nombre = " (" + Integer.toString(nb) + ")";					} else {						nombre = "";					}					%>					<li><html:link page="<%=link.getPage()%>"><%=link.getLabel()%><%=nombre%></html:link></li><%				} // for				%>			</ul>			<%		} // if (n > 0)} // if (truc != null)%><!--/kwlist.jsp-->

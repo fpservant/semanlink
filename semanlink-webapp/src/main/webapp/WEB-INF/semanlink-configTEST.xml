@@ -1,0 +1,153 @@
+<rdf:RDF
+    xmlns:sl="http://www.semanlink.net/2001/00/semanlink-schema#"
+    xmlns:slc="http://www.semanlink.net/2006/09/semanlink-config-schema#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+	<!--
+		This file is the main configuration file of the semanlink servlet and the semanlink "datastore".
+		For documentation about its content and how to modify it, see:
+		/semanlink/about/semanlink-config-with-comments.xml
+		or (for latest updates):
+		http://www.semanlink.net/about/semanlink-config-with-comments.xml
+	-->
+	<sl:SLModel rdf:about="">
+		<!-- THESAURI -->
+		<slc:defaultThesaurus>
+			<sl:Thesaurus rdf:about="tag">
+				<slc:pathRelativeToDataDir>tags</slc:pathRelativeToDataDir>
+			</sl:Thesaurus>
+		</slc:defaultThesaurus>
+		<!-- DATA FOLDERS -->
+		<slc:defaultDataFolder>
+			<!-- uri of DataFolder is its root uri -->
+			<sl:DataFolder rdf:about="document">
+				<!-- by default, the uri of the DataFolder -->
+				<slc:base rdf:resource="document"/>
+				<!-- acces au rdf en [servletUrl]/datafolder/[slc:name] -->
+				<!-- ou bien en [servletUrl]/datafolder/?uri=[DataFolderUri] -->
+				<slc:name>documents</slc:name>
+				<!-- THESAURUS -->
+				<!--  LOADING MODE -->
+				<slc:loadingMode>yearMonth</slc:loadingMode>
+				<!-- slc:pathRelativeToDataDir>documents</slc:pathRelativeToDataDir -->
+				<!-- dir containing the metadata -->
+				<slc:metadataDir>
+					<slc:Dir>
+						<slc:pathRelativeToDataDir>documents</slc:pathRelativeToDataDir>
+					</slc:Dir>
+				</slc:metadataDir>
+				<!-- to be documented only if this DataFolder is on your disk or your web server
+				This allows the bookmarklet to find the metadata for a file from its file protocol url -->
+				<!--  oui oui enfin, aujourd'hui, si non doc, ca ne marche pas:
+				IL FAUT pour que ceci soit vrai que je reprenne la façon de passer d'un docuri au sl.rdf
+				en me basant, non, sur le file (atteint via le webserver), mais sur docuri -->
+				<slc:dataDir>
+					<slc:Dir>
+						<slc:pathRelativeToDataDir>documents</slc:pathRelativeToDataDir>
+					</slc:Dir>
+				</slc:dataDir>
+			</sl:DataFolder>
+		</slc:defaultDataFolder>
+		
+		<!-- 
+		<slc:bookmarkFolder>
+			<sl:DataFolder>
+				<slc:pathRelativeToDataDir>bookmarks</slc:pathRelativeToDataDir>
+				<slc:loadingMode>yearMonth absoluteBase</slc:loadingMode>
+			</sl:DataFolder>
+		</slc:bookmarkFolder>
+		 -->
+		 
+		<slc:bookmarkFolder>
+			<sl:DataFolder>
+				<!-- by default, the uri of the DataFolder. Has to be documented here, as the DataFolder is an anonymous res -->
+				<!-- OU BIEN non : parce qu'il faut utiliser, c'est l'uri di thesaurus -->
+				<slc:base rdf:resource="tag"/>
+				<!-- acces au rdf en [servletUrl]/datafolder/[slc:name] -->
+				<!-- NON : PAS POSSIBLE PUISQUE ANON : ou bien en [servletUrl]/datafolder/?uri=[DataFolderUri] -->
+				<slc:name>bookmarks</slc:name>
+				<slc:loadingMode>yearMonth absoluteBase</slc:loadingMode>
+				<!-- dir containing the metadata -->
+				<slc:metadataDir>
+					<slc:Dir>
+						<slc:pathRelativeToDataDir>bookmarks</slc:pathRelativeToDataDir>
+					</slc:Dir>
+				</slc:metadataDir>
+				<!-- to be documented only if this DataFolder is on your disk or your web server
+				This allows the bookmarklet to find the metadata for a file from its file protocol url -->
+				<!--  oui oui enfin, aujourd'hui, si non doc, ca ne marche pas:
+				IL FAUT pour que cei soit vrai que je reprenne la façon de passer d'un docuri au sl.rdf
+				en me basant, non, sur le file (atteint via l webserver), mais sur docuri -->
+				<!--  ET APRES, NECESSAIRE ? -->
+				<slc:dataDir>
+					<slc:Dir>
+						<slc:pathRelativeToDataDir>bookmarks</slc:pathRelativeToDataDir>
+					</slc:Dir>
+				</slc:dataDir>
+			</sl:DataFolder>
+		</slc:bookmarkFolder>
+		
+		
+		<slc:notesFolder>
+			<sl:DataFolder>
+				<!-- by default, the uri of the DataFolder. Has to be documented here, as the DataFolder is an anonymous res -->
+				<!-- OU BIEN non : parce qu'il faut utiliser, c'est l'uri di thesaurus -->
+				<slc:base rdf:resource="tag"/>
+				<!-- acces au rdf en [servletUrl]/datafolder/[slc:name] -->
+				<!-- NON : PAS POSSIBLE PUISQUE ANON : ou bien en [servletUrl]/datafolder/?uri=[DataFolderUri] -->
+				<slc:name>notes</slc:name>
+				<slc:loadingMode>yearMonth</slc:loadingMode>
+				<!-- dir containing the metadata -->
+				<slc:metadataDir>
+					<slc:Dir>
+						<slc:pathRelativeToDataDir>notes</slc:pathRelativeToDataDir>
+					</slc:Dir>
+				</slc:metadataDir>
+				<!-- to be documented only if this DataFolder is on your disk or your web server
+				This allows the bookmarklet to find the metadata for a file from its file protocol url -->
+				<!--  oui oui enfin, aujourd'hui, si non doc, ca ne marche pas:
+				IL FAUT pour que cei soit vrai que je reprenne la façon de passer d'un docuri au sl.rdf
+				en me basant, non, sur le file (atteint via l webserver), mais sur docuri -->
+				<!--  ET APRES, NECESSAIRE ? -->
+				<slc:dataDir>
+					<slc:Dir>
+						<slc:pathRelativeToDataDir>notes</slc:pathRelativeToDataDir>
+					</slc:Dir>
+				</slc:dataDir>
+			</sl:DataFolder>
+		</slc:notesFolder>
+		
+		
+		
+		
+		
+		
+		
+		
+		<slc:notesFolder>
+			<sl:DataFolder>
+				<slc:pathRelativeToDataDir>notes</slc:pathRelativeToDataDir>
+				<slc:loadingMode>yearMonth</slc:loadingMode>
+			</sl:DataFolder>
+		</slc:notesFolder>		
+	</sl:SLModel>
+	
+	<!-- APPLICATION PARAMS -->
+	<slc:ApplicationParams>
+		<!-- sort property used by default. If not documented, sl:slCreationDate -->
+		<slc:defaultSortProperty rdf:resource="http://www.semanlink.net/2001/00/semanlink-schema#creationDate"/>
+		<!-- date property used by default. If not documented, sl:slCreationDate -->
+		<slc:defaultDateProperty rdf:resource="http://www.semanlink.net/2001/00/semanlink-schema#creationDate"/>
+		<!-- is editing allowed by default? -->
+		<slc:editorByDefault>true</slc:editorByDefault>
+		<!-- URL of logon page (either obsolute or relative to semanlink servlet) (used only when !editorByDefault)  -->
+		<slc:logonPage rdf:resource="" />
+		<!-- Tags that should not be considered as tags during automatic metadata extraction -->
+		<slc:metadataExtractionBlackListed>http</slc:metadataExtractionBlackListed>
+		<!-- value used by the bookmarklet, in case your web site uses a page with html frames: 
+		name of the main frame (leave "" or not documented if frames are not used). -->
+		<slc:mainFrame></slc:mainFrame>
+		<!--  -->
+		<slc:trace>false</slc:trace>
+	</slc:ApplicationParams>
+</rdf:RDF>

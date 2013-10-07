@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment></comment>
+<entry key="livesearchform.search">Rechercher :</entry>
+<entry key="sidemenu.print">Impression</entry>
+<entry key="sidemenu.edit">Édition...</entry>
+<entry key="sidemenu.newBookmark">Nouveau Marque-Page...</entry>
+<entry key="sidemenu.newNote">Nouvelle Note...</entry>
+<entry key="sidemenu.copy">Copier</entry>
+<entry key="sidemenu.paste">Coller</entry>
+<entry key="sidemenu.pasteAsParent">Coller comme Parent</entry>
+<entry key="sidemenu.pasteAsChild">Coller comme Enfant</entry>
+<entry key="sidemenu.pasteAsFriend">Coller comme Ami</entry>
+<entry key="sidemenu.deleteTag">Détruire le Mot-clé...</entry>
+<entry key="sidemenu.confirmDeleteTag">Détruire ce Mot-clé ? (impossible d&apos;annuler)</entry>
+<entry key="sidemenu.downloadCopy">Télécharger une Copie</entry>
+<entry key="sidemenu.extractMetadata">Extraire les Metadata</entry>
+<entry key="sidemenu.removeDoc">Supprimer le Document...</entry>
+<entry key="sidemenu.confirmRemoveDoc">Supprimer ce document? (impossible d&apos;annuler)</entry>
+<entry key="sidemenu.preferences">Préférences...</entry>
+<entry key="sidemenu.pref-display">Présentation</entry>
+<entry key="sidemenu.sortby">Tri par</entry>
+<entry key="sidemenu.imagesOnly">Images seulement</entry>
+<entry key="sidemenu.yes">Oui</entry>
+<entry key="sidemenu.no">Non</entry>
+<entry key="sidemenu.ok">OK</entry>
+<entry key="sidemenu.treeView">Arbre</entry>
+<entry key="sidemenu.firstLevelDocs">Liste courte</entry>
+<entry key="sidemenu.allDocs">Liste complète</entry>
+<entry key="sidemenu.expandedTree">Arbre déplié</entry>
+<entry key="sidemenu.tagCloud">Mots-clés liés</entry>
+<entry key="topmenu.home">Home</entry>
+<entry key="topmenu.help">Aide</entry>
+<entry key="topmenu.newEntries">Nouveautés</entry>
+<entry key="topmenu.favorites">Favoris</entry>
+<entry key="topmenu.activFolder">Dossier Actif</entry>
+<entry key="sidemenu.descendants-display">Affichage des Descendants :</entry>
+<entry key="sidemenu.childrenAsList">Liste des enfants</entry>
+<entry key="sidemenu.documents-display">Liste des Documents :</entry>
+<entry key="tag.parents">Parents :</entry>
+<entry key="tag.friends">Amis :</entry>
+<entry key="tag.children">Enfants :</entry>
+<entry key="tag.label">LIBELLÉ DU MOT-CLÉ</entry>
+<entry key="tag.descendants">Descendants</entry>
+<entry key="tag.ancestors">Ancêtres</entry>
+<entry key="tag.aliases">Alias</entry>
+<entry key="tag.addAlias">Ajouter un Alias</entry>
+<entry key="properties.aboutThisDoc">Au sujet de ce document</entry>
+<entry key="properties.properties">Propriétés</entry>
+<entry key="properties.editProp">Editer la Propriété:</entry>
+<entry key="properties.setValue">Fixer la Valeur</entry>
+<entry key="properties.addValue">Ajouter une valeur</entry>
+<entry key="x.documents">{0} Documents</entry>
+<entry key="x.tags">{0} Mots-clés</entry>
+<entry key="x.add">Ajouter</entry>
+<entry key="x.cut">Couper</entry>
+<entry key="x.copy">Copier</entry>
+<entry key="x.paste">Coller</entry>
+<entry key="x.remove">Supprimer</entry>
+<entry key="x.comment">Commentaire</entry>
+<entry key="x.comment-colon">Commentaire :</entry>
+<entry key="x.setComment">Sauver le Commentaire</entry>
+<entry key="x.title-colon">Titre :</entry>
+<entry key="x.bookmark">Marquer la Page</entry>
+<entry key="x.aboutModel">Au sujet de ces données</entry>
+<entry key="bookmarkform.newbookmark">Nouveau Marque-Page</entry>
+<entry key="bookmarkform.1">
+	Seul le premier champ ("URI du document") est nécessaire (titre et commentaire pourront être rajoutés plus tard).
+	Les mots-clés seront choisis sur la prochaine page.
+</entry>
+<entry key="bookmarkform.docuri">URI du document</entry>
+<entry key="bookmarkform.docuri2">(peut-être une URI de fichier local, tel que ///Users/fps/2003/11/) :</entry>
+<entry key="bookmarkform.downloaduri">URI de téléchargement</entry>
+<entry key="bookmarkform.downloaduri2">(au cas où elle est différente de la précédente. Utilisée seulement en cas d'enregitrement de la page) :</entry>
+<entry key="bookmarkform.nir">URI d'une chose du monde réel ("Non information resource"):</entry>
+<entry key="bookmarkform.bookmarkAndCopy">Marquer, et Enregistrer la Page</entry>
+<entry key="bookmarkform.copy">Enregistrer la page</entry>
+<entry key="bookmarkform.copyWithSource">Enregistrer la Page, en notant sa Source</entry>
+<entry key="bookmarkform.createTag">Créer un Mot-Clé</entry>
+<entry key="bookmarkform.2">
+	Vous pouvez marquer, et/ou enregistrer la page sur disque. 
+	Si vous choisissez "Marquer, et Enregistrer la Page", la resource principale (celle qui est listée dans
+	les résultats de recherche)	est la page en ligne, tandis que c'est la copie sur disque
+	si vous choisissez "Enregistrer la Page, en notant sa Source".
+</entry>
+<entry key="livesearchform.addToTags">Ajouter aux Mots-Clés</entry>
+<entry key="livesearchform.addToParents">Ajouter aux Parents</entry>
+<entry key="livesearchform.addToChildren">Ajouter aux Enfants</entry>
+<entry key="livesearchform.addToFriends">Ajouter aux Amis</entry>
+<entry key="livesearchform.go">Aller</entry>
+<entry key="newnoteform.newnote">Nouvelle Note</entry>
+<entry key="welcome.more">En savoir plus...</entry>
+<entry key="welcome.seewebsite">Dernières informations et mises à jour sont sur le site web {0}.</entry>
+<entry key="welcome.docsAndStatementsNbs">
+	{0} documents ; {1} assertions ({2} assertions concernent les documents et {3} les mots-clés)
+</entry>
+<entry key="welcome.download">Téléchargement</entry>
+<entry key="welcome.download2">Télécharger {0}</entry>
+<entry key="welcome.releaseNotes">Notes de mise à jour</entry>
+<entry key="welcome.version">Ceci est la version {0} de Semanlink</entry>
+<entry key="welcome.dataFolders">Dossiers "semanlinkés"</entry>
+<entry key="tag.homePage">Home Page</entry>
+<entry key="tag.getDescribedByPage">Description</entry>
+<entry key="delicious.account">Compte Delicious</entry>
+<entry key="delicious.username">Nom d'utilisateur :</entry>
+<entry key="delicious.password">Mot de passe :</entry>
+<entry key="doc.title">TITRE :</entry>
+<entry key="doc.fileInfo">Infos sur le fichier</entry>
+<entry key="doc.path">Chemin :</entry>
+<entry key="doc.bytes">Taille : {0} octets</entry>
+<entry key="doc.kbytes">Taille : {0} KO</entry>
+<entry key="doc.lastModified">Dernière modification :</entry>
+<entry key="doc.noSuchFile">FICHIER ABSENT</entry>
+<entry key="doc.parentFolderInSL">Dossier parent dans Semanlink</entry>
+<entry key="doc.parentFolderOnDisk">Dossier parent sur Disque</entry>
+<entry key="doc.cpNavBar">(Copier/Coller le lien dans la barre de navigation)</entry>
+<entry key="doc.localCopy">Copie locale</entry>
+<entry key="js.sure">Ajouter ce mot-clé ?</entry>
+<!--  2008/02 -->
+<entry key="x.lang">Langue</entry>
+<!--  2008/04 -->
+<entry key="found">{0} {2} {1}.</entry>
+<entry key="found.during1">dans le dernier mois</entry>
+<entry key="found.during2">dans la dernière semaine</entry>
+<entry key="found.during3">dans les deux dernières semaines</entry>
+<entry key="found.during4">dans les {0} derniers jours</entry>
+<entry key="found.documents">documents</entry>
+<entry key="found.domains">domaines</entry>
+<!--  2008/09 -->
+<entry key="doc.source">Source</entry>
+<!-- 2010/12 -->
+<entry key="topmenu.sparql">SPARQL</entry>
+<!--  2013/03 -->
+<entry key="docList.firstLevelDocs">Liste courte</entry>
+<entry key="docList.allDocs">Liste longue</entry>
+
+</properties>

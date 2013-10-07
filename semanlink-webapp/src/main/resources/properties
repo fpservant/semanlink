@@ -1,0 +1,3 @@
+#Definition of the version number
+version=${version}
+version-date=${semanlink.release.date}

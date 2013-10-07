@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?><!DOCTYPE struts-config PUBLIC          "-//Apache Software Foundation//DTD Struts Configuration 1.0//EN"          "http://jakarta.apache.org/struts/dtds/struts-config_1_0.dtd"><struts-config>  <!-- ========== Form Bean Definitions =================================== -->  <form-beans>    <!-- Logon form bean -->	<form-bean 		name="baseForm"        type="net.semanlink.servlet.Form_Base"/>	<form-bean 		name="selectTripleForm"        type="net.semanlink.servlet.Form_SelectTriple"/>	<form-bean 		name="addAliasForm"        type="net.semanlink.servlet.Form_AddAlias"/>	<form-bean 		name="rddCreationForm"        type="net.semanlink.sicg.Form_RDDCreation"/>	<form-bean 		name="bookmarkForm"        type="net.semanlink.servlet.Form_Bookmark"/>	<form-bean 		name="searchForm"        type="net.semanlink.servlet.Form_Search"/>	<form-bean 		name="newNoteForm"        type="net.semanlink.servlet.Form_NewNote"/>
+	<form-bean 
+		name="deliciousForm"
+        type="net.semanlink.servlet.Form_Delicious"/>
+        	  </form-beans>  <!-- ========== Global Forward Definitions ============================== -->  <global-forwards>    <forward   name="continue"              path="/jsp/template.jsp"/>    <forward   name="rdf"              		path="/rdf"/>
+    <forward   name="keyword"              	path="/jsp/template.jsp"/>    <forward   name="document"              path="/jsp/template.jsp"/>    <forward   name="error"              path="/jsp/template.jsp"/>
+  </global-forwards>  <!-- ========== Action Mapping Definitions ============================== -->  <action-mappings>    <!-- Display New Doc Form -->    <action    path="/newdocform"			   name="baseForm"               type="net.semanlink.servlet.BaseAction">    </action>    <!-- New Document -->    <action    path="/newdocument"			   name="baseForm"               type="net.semanlink.servlet.Action_NewDocument">    </action>    <!-- Go Keyword (label) -->    <action    path="/gokeyword"			   name="baseForm"               type="net.semanlink.servlet.Action_GoKeyword">    </action>      <!-- Delete kw -->    <action    path="/deletekw"			   name="baseForm"               type="net.semanlink.servlet.Action_DeleteKw">     </action>    <!-- Remove doc -->    <action    path="/removedoc"			   name="baseForm"               type="net.semanlink.servlet.Action_RemoveDoc">    </action>    <!-- Set or Add Property of Document or Keyword -->    <action    path="/setoraddproperty"			   name="baseForm"               type="net.semanlink.servlet.Action_SetOrAddProperty">    </action>    <action    path="/setcomment"			   name="baseForm"               type="net.semanlink.servlet.Action_SetComment">    </action>    <!-- Set Label of Keyword -->
+    <action    path="/setkwlabel"
+			   name="baseForm"
+               type="net.semanlink.servlet.Action_SetKwLabel">
+    </action>
+
+    <!-- Copy Keyword to "clipboard" (post) -->    <action    path="/copykw"			   name="baseForm"               type="net.semanlink.servlet.Action_CopyKeyword">    </action>    <!-- Copy Keyword to "clipboard" (get) -->    <action    path="/copykwget"			   name="baseForm"               type="net.semanlink.servlet.Action_CopyKeywordGet">    </action>	<!-- Paste un Keyword dans un "post". Tiens, pourquoi n'utilise pas la Paste_Form ? -->    <action    path="/pastekw"			   name="baseForm"               type="net.semanlink.servlet.Action_PasteKeyword">    </action>    <!-- Paste un Keyword dans un "get" -->	<action    path="/pastekwget"			   name="baseForm"               type="net.semanlink.servlet.Action_PasteKeyword">    </action>    <!-- TREE -->    <action    path="/treeornot"			   name="baseForm"               type="net.semanlink.servlet.Action_TreeOrNot">    </action>    <!-- SET DE VARIABLES DE SESSION -->    <action    path="/set"			   name="baseForm"               type="net.semanlink.servlet.Action_Set">    </action>	
+	<!--     <action    path="/setboolean"			   name="baseForm"               type="net.semanlink.servlet.Action_SetBoolean">    </action>
+     -->	    <action    path="/nextImage"			   name="baseForm"               type="net.semanlink.servlet.Action_NextImage">    </action>		    <action    path="/sortdoclist"			   name="baseForm"               type="net.semanlink.servlet.Action_SortDocList">    </action>		<!-- Redo extraction of metadata from a Document -->    <action    path="/docanalysis"			   name="baseForm"               type="net.semanlink.servlet.Action_DocAnalysis">    </action>
+    <!-- Download a copy -->
+    <action    path="/download"
+			   name="baseForm"
+               type="net.semanlink.servlet.Action_Download">
+    </action>
+    <!-- Show Keyword1 and Keyword2... -->    <action    path="/andkws"               type="net.semanlink.servlet.Action_AndKws">    </action>    <!-- Show Liste des docs avec ppty de valeur donnee -->    <action    path="/showprop"               type="net.semanlink.servlet.Action_ShowProp">    </action>     <action    path="/showthesaurus"               type="net.semanlink.servlet.Action_ShowThesaurus">   	</action>     <action    path="/welcome"               type="net.semanlink.servlet.BaseAction">  	</action>     <action    path="/showthesauri"               type="net.semanlink.servlet.Action_ShowThesauri">  	</action>     <action    path="/neworupdated"               type="net.semanlink.servlet.Action_ThisMonth">  	</action>     <action    path="/opendocument"               type="net.semanlink.servlet.Action_OpenDocument">  	</action>	    <action		path="/setprefs"			  	name="baseForm"				type="net.semanlink.servlet.Action_SetPrefs">    </action>    <!-- New Document -->    <action    path="/selecttriple"			   name="selectTripleForm"               type="net.semanlink.servlet.Action_SelectTriple">    </action>    <action    path="/addalias"			   name="addAliasForm"               type="net.semanlink.servlet.Action_AddAlias">    </action>    <!-- Remove Alias -->    <action    path="/removealias"			   name="addAliasForm"               type="net.semanlink.servlet.Action_RemoveAlias">    </action>		<action   path="/newcrrdd"			   name="rddCreationForm"               type="net.semanlink.sicg.Action_NewCrRdd">    </action>	    <!-- Display Bookmark Form -->    <action    path="/bookmarkform"			   name="bookmarkForm"               type="net.semanlink.servlet.Action_BookmarkForm">    </action>    <action    path="/bookmark"			   name="bookmarkForm"               type="net.semanlink.servlet.Action_Bookmark">    </action>		 <action   path="/search"			   name="searchForm"               type="net.semanlink.servlet.Action_Search">    </action>			 <action   path="/search.rdf"
+			   name="searchForm"
+               type="net.semanlink.servlet.Action_Search">
+    </action>	
+	
+	 <action   path="/livesearch"               type="net.semanlink.servlet.Action_LiveSearch">     			<forward name="continue" path="/jsp/livesearchxml.jsp"/>    </action>			 <action   path="/loadsubtree"               type="net.semanlink.servlet.Action_GetKw">     			<forward name="continue" path="/jsp/livetreesons.jsp"/>    </action>			 <action   path="/logonok"               type="net.semanlink.sicg.Action_LogonOK">    </action>	    <action    path="/newnoteform"			   name="newNoteForm"               type="net.semanlink.servlet.Action_NewNoteForm">    </action>    <action    path="/newnote"			   name="newNoteForm"               type="net.semanlink.servlet.Action_NewNote">    </action>	<action path="/home"		type="net.semanlink.servlet.Action_Welcome">  	</action>
+  	<!--  Action_Welcome marche, mais sans interet: on met ThisMonth -->	<action path="/home.rdf"
+		type="net.semanlink.servlet.Action_ThisMonth">
+  	</action>
+	<action path="/home.n3"		type="net.semanlink.servlet.Action_ThisMonth">  	</action>	<action path="/help"		type="net.semanlink.servlet.BaseAction">  	</action>	<action path="/about"
+		type="net.semanlink.servlet.BaseAction">
+  	</action>
+	<action path="/new"		type="net.semanlink.servlet.Action_ThisMonth">	</action>	<action path="/new.rdf"
+		type="net.semanlink.servlet.Action_ThisMonth">
+	</action>
+ 	<action path="/new.n3"		type="net.semanlink.servlet.Action_ThisMonth">	</action>    <action path="/thesaurus"		type="net.semanlink.servlet.Action_ShowThesaurus">   	</action>    <!-- Show Keyword1 and Keyword2... -->    <action    path="/tags"               type="net.semanlink.servlet.Action_AndKws2">    </action>	<!--  edit list of tags of doc, or parents, children, .... of a tag -->    <action    path="/edittaglist"			   name="baseForm"               type="net.semanlink.servlet.Action_EditTagList">    </action>    <action    path="/delicious"
+			   name="deliciousForm"
+               type="net.semanlink.servlet.Action_Delicious">
+    </action>
+
+    <action    path="/deliciousajax"
+               type="net.semanlink.servlet.Action_DeliciousAjax">
+    			<forward name="continue" path="/jsp/deliciousajax.jsp"/>
+    </action>
+
+    <action    path="/export"
+               type="net.semanlink.servlet.Action_Export">
+    </action>
+
+	 <action   path="/rdfjs"
+               type="net.semanlink.servlet.Action_RdfJs">
+     			<forward name="continue" path="/jsp/rdfjs.jsp"/>
+    </action>	
+	
+     <action    path="/domains"
+               type="net.semanlink.servlet.Action_Domains">
+  	</action>
+
+  </action-mappings></struts-config>

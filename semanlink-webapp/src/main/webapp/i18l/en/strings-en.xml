@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment></comment>
+<entry key="livesearchform.search">Search Tag:</entry>
+<entry key="sidemenu.print">Printer friendly</entry>
+<entry key="sidemenu.edit">Edit...</entry>
+<entry key="sidemenu.newBookmark">New Bookmark...</entry>
+<entry key="sidemenu.newNote">New Note...</entry>
+<entry key="sidemenu.copy">Copy</entry>
+<entry key="sidemenu.paste">Paste</entry>
+<entry key="sidemenu.pasteAsParent">Paste as Parent</entry>
+<entry key="sidemenu.pasteAsChild">Paste as Child</entry>
+<entry key="sidemenu.pasteAsFriend">Paste as Related Tag</entry>
+<entry key="sidemenu.deleteTag">Delete Tag...</entry>
+<entry key="sidemenu.confirmDeleteTag">Delete this tag? (no way back)</entry>
+<entry key="sidemenu.downloadCopy">Download a Copy</entry>
+<entry key="sidemenu.extractMetadata">Extract Metadata</entry>
+<entry key="sidemenu.removeDoc">Remove Document...</entry>
+<entry key="sidemenu.confirmRemoveDoc">Remove this document? (no way back)</entry>
+<entry key="sidemenu.preferences">Preferences...</entry>
+<entry key="sidemenu.pref-display">Display</entry>
+<entry key="sidemenu.sortby">Sort by</entry>
+<entry key="sidemenu.imagesOnly">Images only</entry>
+<entry key="sidemenu.yes">Yes</entry>
+<entry key="sidemenu.no">No</entry>
+<entry key="sidemenu.ok">OK</entry>
+<entry key="sidemenu.treeView">Tree</entry>
+<entry key="sidemenu.firstLevelDocs">Short List</entry>
+<entry key="sidemenu.allDocs">All Documents</entry>
+<entry key="sidemenu.expandedTree">Expanded Tree</entry>
+<entry key="sidemenu.tagCloud">Tag Cloud</entry>
+<entry key="topmenu.home">Home</entry>
+<entry key="topmenu.help">Help</entry>
+<entry key="topmenu.newEntries">New Entries</entry>
+<entry key="topmenu.favorites">Favorites</entry>
+<entry key="topmenu.activFolder">Activ Folder</entry>
+<entry key="sidemenu.descendants-display">Descendants</entry>
+<entry key="sidemenu.childrenAsList">List of children</entry>
+<entry key="sidemenu.documents-display">Documents</entry>
+<entry key="tag.parents">Parents:</entry>
+<entry key="tag.friends">Related Tags:</entry>
+<entry key="tag.children">Children:</entry>
+<entry key="tag.label">TAG's LABEL:</entry>
+<entry key="tag.descendants">Descendants</entry>
+<entry key="tag.ancestors">Ancestors</entry>
+<entry key="tag.aliases">Aliases</entry>
+<entry key="tag.addAlias">Add Alias</entry>
+<entry key="properties.aboutThisDoc">About This Document</entry>
+<entry key="properties.properties">Properties</entry>
+<entry key="properties.editProp">Edit Property:</entry>
+<entry key="properties.setValue">Set Value</entry>
+<entry key="properties.addValue">Add Value</entry>
+<entry key="x.documents">{0} Documents</entry>
+<entry key="x.tags">{0} Tags</entry>
+<entry key="x.add">Add</entry>
+<entry key="x.cut">Cut</entry>
+<entry key="x.copy">Copy</entry>
+<entry key="x.paste">Paste</entry>
+<entry key="x.remove">Remove</entry>
+<entry key="x.comment">Comment</entry>
+<entry key="x.comment-colon">Comment:</entry>
+<entry key="x.setComment">Set Comment</entry>
+<entry key="x.title-colon">Title:</entry>
+<entry key="x.bookmark">Bookmark</entry>
+<entry key="x.aboutModel">About this data</entry>
+<entry key="bookmarkform.newbookmark">New Bookmark</entry>
+<entry key="bookmarkform.1">
+	Only the first field ("document's uri") is needed (title and comment can be set later).
+	You'll be able to add tags on next screen.
+</entry>
+<entry key="bookmarkform.docuri">Document's URI</entry>
+<entry key="bookmarkform.docuri2">(may be a file protocol uri, such as file:///Users/fps/2003/11/):</entry>
+<entry key="bookmarkform.downloaduri">URI to download from</entry>
+<entry key="bookmarkform.downloaduri2">(in case it's different from previous. Used only when saving a copy):</entry>
+<entry key="bookmarkform.nir">URI of real world thing ("Non information resource"):</entry>
+<entry key="bookmarkform.bookmarkAndCopy">Bookmark and Save a Copy</entry>
+<entry key="bookmarkform.copy">Save a Copy</entry>
+<entry key="bookmarkform.copyWithSource">Save a Copy, keeping track of Source</entry>
+<entry key="bookmarkform.createTag">Create Tag</entry>
+<entry key="bookmarkform.2">
+	You can create a bookmark and/or save a copy to disk.
+	If you choose "Bookmark and Save a  Sopy",
+	the main resource (the one that gets listed in search results) is the online page,
+	while it is the file saved on disk if you choose "Save a Copy, keeping track of Source".
+</entry>
+<entry key="livesearchform.addToTags">Add to Tags</entry>
+<entry key="livesearchform.addToParents">Add to Parents</entry>
+<entry key="livesearchform.addToChildren">Add to Children</entry>
+<entry key="livesearchform.addToFriends">Add to Related Tags</entry>
+<entry key="livesearchform.go">Go</entry>
+<entry key="newnoteform.newnote">New Note</entry>
+<entry key="welcome.more">Read more...</entry>
+<entry key="welcome.seewebsite">Latest information about Semanlink and updates are available on {0}.</entry>
+<entry key="welcome.docsAndStatementsNbs">
+	{0} documents ; {1} statements ({2} statements about documents and {3} about tags)
+</entry>
+<entry key="welcome.download">Download</entry>
+<entry key="welcome.download2">Download {0}</entry>
+<entry key="welcome.releaseNotes">Release Notes</entry>
+<entry key="welcome.version">This is Semanlink {0}</entry>
+<entry key="welcome.thesauri">Thesauri</entry>
+<entry key="welcome.dataFolders">Semanlinked Folders</entry>
+<entry key="tag.homePage">Home Page</entry>
+<entry key="tag.getDescribedByPage">Description Page</entry>
+<entry key="delicious.account">Delicious account</entry>
+<entry key="delicious.username">User name:</entry>
+<entry key="delicious.password">Password:</entry>
+<entry key="doc.title">TITLE:</entry>
+<entry key="doc.fileInfo">File info</entry>
+<entry key="doc.path">Path:</entry>
+<entry key="doc.bytes">Size: {0} bytes</entry>
+<entry key="doc.kbytes">Size: {0} kb</entry>
+<entry key="doc.lastModified">Last modified:</entry>
+<entry key="doc.parentFolderInSL">Parent Folder in Semanlink</entry>
+<entry key="doc.parentFolderOnDisk">Parent Folder on Disk</entry>
+<entry key="doc.cpNavBar">(Copy/Paste link into navigation bar)</entry>
+<entry key="doc.localCopy">Local Copy</entry>
+<entry key="js.sure">Add this tag?</entry>
+<!--  2008/02 -->
+<entry key="x.lang">Lang</entry>
+<!--  2008/04 -->
+<entry key="found">{0} {2} {1}.</entry>
+<entry key="found.during1">during the last month</entry>
+<entry key="found.during2">during the last week</entry>
+<entry key="found.during3">during the last two weeks</entry>
+<entry key="found.during4">during the last {0} days</entry>
+<entry key="found.documents">documents</entry>
+<entry key="found.domains">domains</entry>
+<!--  2008/09 -->
+<entry key="doc.source">Source</entry>
+<!-- 2010/12 -->
+<entry key="topmenu.sparql">SPARQL</entry>
+<!--  2013/03 -->
+<entry key="docList.firstLevelDocs">Short List</entry>
+<entry key="docList.allDocs">Long List</entry>
+</properties>

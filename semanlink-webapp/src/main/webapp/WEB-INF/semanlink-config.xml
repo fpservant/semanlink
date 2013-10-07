@@ -1,0 +1,69 @@
+<rdf:RDF
+    xmlns:sl="http://www.semanlink.net/2001/00/semanlink-schema#"
+    xmlns:slc="http://www.semanlink.net/2006/09/semanlink-config-schema#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+	<!--
+		This file is the main configuration file 
+		of the semanlink servlet and the semanlink "datastore".
+		For documentation about its content and how to modify it:
+		/semanlink/about/config.htm
+	-->
+	<sl:SLModel rdf:about="">
+		<!-- THESAURI -->
+		<slc:defaultThesaurus>
+			<sl:Thesaurus rdf:about="tag">
+				<slc:pathRelativeToDataDir>tags</slc:pathRelativeToDataDir>
+			</sl:Thesaurus>
+		</slc:defaultThesaurus>
+		<!-- DATA FOLDERS -->
+		<slc:defaultDataFolder>
+			<sl:DataFolder rdf:about="document">
+				<slc:pathRelativeToDataDir>documents</slc:pathRelativeToDataDir>
+				<slc:loadingMode>yearMonth</slc:loadingMode>
+			</sl:DataFolder>
+		</slc:defaultDataFolder>
+		<slc:bookmarkFolder>
+			<sl:DataFolder>
+				<slc:pathRelativeToDataDir>bookmarks</slc:pathRelativeToDataDir>
+				<!-- 
+				having "absoluteBase" in loadingMode (meaning that base is thesaurusUri)
+				probably not needed anymore
+ 				-->
+				<slc:loadingMode>yearMonth absoluteBase</slc:loadingMode>
+			</sl:DataFolder>
+		</slc:bookmarkFolder>
+		<slc:notesFolder>
+			<sl:DataFolder>
+				<slc:pathRelativeToDataDir>notes</slc:pathRelativeToDataDir>
+				<slc:loadingMode>yearMonth</slc:loadingMode>
+			</sl:DataFolder>
+		</slc:notesFolder>
+	</sl:SLModel>
+	
+	<!-- APPLICATION PARAMS -->
+	<slc:ApplicationParams>
+		<!-- if connection to internet goes through a proxy, set useProxy to true, and document following params -->
+		<slc:useProxy>false</slc:useProxy>
+		<slc:proxyHost></slc:proxyHost>
+		<slc:proxyPort></slc:proxyPort>
+		<slc:proxyUserName></slc:proxyUserName>
+		<slc:proxyPassword></slc:proxyPassword>
+		<!-- sort property used by default. If not documented, sl:creationTime -->
+		<slc:defaultSortProperty rdf:resource="http://www.semanlink.net/2001/00/semanlink-schema#creationTime"/>
+		<!-- date property used by default. If not documented, sl:creationDate -->
+		<slc:defaultDateProperty rdf:resource="http://www.semanlink.net/2001/00/semanlink-schema#creationDate"/>
+		<!-- is editing allowed by default? -->
+		<slc:editorByDefault>true</slc:editorByDefault>
+		<!-- URL of logon page (either obsolute or relative to semanlink servlet) (used only when !editorByDefault)  -->
+		<slc:logonPage rdf:resource="" />
+		<!-- Tags that should not be considered as tags during automatic metadata extraction -->
+		<slc:metadataExtractionBlackListed>http</slc:metadataExtractionBlackListed>
+		<!-- value used by the bookmarklet, in case your web site uses a page with html frames: 
+		name of the main frame (leave "" or not documented if frames are not used). -->
+		<slc:mainFrame></slc:mainFrame>
+		<slc:trace>false</slc:trace>
+		<!-- is it the semanlink web site. Default: false -->
+		<slc:isSemanlinkWebSite>false</slc:isSemanlinkWebSite>
+	</slc:ApplicationParams>
+</rdf:RDF>

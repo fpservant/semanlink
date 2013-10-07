@@ -1,0 +1,5 @@
+<%@ page
+    contentType="text/html;charset=UTF-8" 
+    pageEncoding="UTF-8"
+%>
+<h1>Tips</h1><div class="graybox"><h2>New bookmark form: about saving a copy</h2><p>Saving a copy just save the HTML page, but it takes care to transform relative  links to absolute: html links remain valid in the copy, and you don't lose  css style, links to javascript files and images (if your connected to the internet when looking  at the copy).</p><h2>Bookmarklet and file-protocol URLs</h2><p>Files on your disk marked with metadata are served by the servlet with an  HTTP URL (such as &quot;[semanlinkURL]/document/2006/11/file.htm&quot;. If  you double-click on the file on your disk, it will be displayed in your browser  as a file  protocol page (something such as &quot;file:///[semanlinkDataDir/documents/2006/11/file.htm&quot;).  Clicking the bookmarklet works anyway and returns the metadata about &quot;[semanlinkURL]/document/2006/11/file.htm&quot;.  See <a href="localfilesmetadata.htm">Adding metatada to files on your disk</a> to  learn how to add metadata to files outside the &quot;[semanlinkDataDir/documents&quot;  directory</p></div>

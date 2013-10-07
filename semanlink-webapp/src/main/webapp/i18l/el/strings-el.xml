@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment></comment>
+<entry key="livesearchform.search">Βρες μου:</entry>
+<entry key="sidemenu.print">Εκτύπωση</entry>
+<entry key="sidemenu.edit">Επεξεργασια...</entry>
+<entry key="sidemenu.newBookmark">Νέα σημείωση...</entry>
+<entry key="sidemenu.newNote">Νέος όρος...</entry>
+<entry key="sidemenu.copy">Αντιγραφή</entry>
+<entry key="sidemenu.paste">Επικόλληση</entry>
+<entry key="sidemenu.pasteAsParent">Επικόλληση σαν γονέας</entry>
+<entry key="sidemenu.pasteAsChild">Επικόλληση σαν παιδί</entry>
+<entry key="sidemenu.pasteAsFriend">Επικόλληση σαν σχετική ετικέτα</entry>
+<entry key="sidemenu.deleteTag">Διαγραφή ετικέτας...</entry>
+<entry key="sidemenu.confirmDeleteTag">Να διαγράψω οριστικά την ετικέτα;(δρόμος χωρίς επιστροφή)</entry>
+<entry key="sidemenu.downloadCopy">Τηλεφόρτωση αντιγράφου</entry>
+<entry key="sidemenu.extractMetadata">Εξαγωγή μεταδεδομένων</entry>
+<entry key="sidemenu.removeDoc">Αφαίρεση εγγράφου...</entry>
+<entry key="sidemenu.confirmRemoveDoc">Να αφαιρέσω το έγγραφο; (δρόμος χωρίς επιστροφή)</entry>
+<entry key="sidemenu.preferences">Προτιμήσεις...</entry>
+<entry key="sidemenu.pref-display">Εμφάνιση</entry>
+<entry key="sidemenu.sortby">Ταξινόμηση κατά</entry>
+<entry key="sidemenu.imagesOnly">Μόνο φωτογραφίες</entry>
+<entry key="sidemenu.yes">Ναι</entry>
+<entry key="sidemenu.no">Όχι</entry>
+<entry key="sidemenu.ok">OK</entry>
+<entry key="sidemenu.treeView">Δέντρο</entry>
+<entry key="sidemenu.firstLevelDocs">Σύντομη Λίστα</entry>
+<entry key="sidemenu.allDocs">Όλα τα έγγραφα</entry>
+<entry key="sidemenu.expandedTree">Εκτεταμένο δέντρο</entry>
+<entry key="sidemenu.tagCloud">Ετικέτες</entry>
+<entry key="topmenu.home">Αρχική σελίδα</entry>
+<entry key="topmenu.help">Βοήθεια</entry>
+<entry key="topmenu.newEntries">Νέες εγγραφές</entry>
+<entry key="topmenu.favorites">Αγαπημένα</entry>
+<entry key="topmenu.activFolder">Ενεργός φάκελος</entry>
+<entry key="sidemenu.descendants-display">Απόγονοι</entry>
+<entry key="sidemenu.childrenAsList">Λίστα παιδιών</entry>
+<entry key="sidemenu.documents-display">Έγγραφα</entry>
+<entry key="tag.parents">Γονείς:</entry>
+<entry key="tag.friends">Σχετικές ετικέτες:</entry>
+<entry key="tag.children">Παιδιά:</entry>
+<entry key="tag.label">Ταμπέλα ετικέτας:</entry>
+<entry key="tag.descendants">Απόγονοι</entry>
+<entry key="tag.ancestors">Πρόγονοι</entry>
+<entry key="tag.aliases">Συνώνυμα</entry>
+<entry key="tag.addAlias">Πρόσθεσε συνώνυμο</entry>
+<entry key="properties.aboutThisDoc">Σχετικά με το έγγραφο αυτό</entry>
+<entry key="properties.properties">Ιδιότητες</entry>
+<entry key="properties.editProp">Επεξεργασία ιδιότητας:</entry>
+<entry key="properties.setValue">Ορισμός τιμής</entry>
+<entry key="properties.addValue">Προσθήκη τιμής</entry>
+<entry key="x.documents">{0} Έγγραφα</entry>
+<entry key="x.tags">{0} Ετικέτες</entry>
+<entry key="x.add">Πρόσθεσε</entry>
+<entry key="x.cut">Επικόλλησε</entry>
+<entry key="x.copy">Αντέγραψε</entry>
+<entry key="x.paste">Επικόλλησε</entry>
+<entry key="x.remove">Αφαίρεσε</entry>
+<entry key="x.comment">Σχόλιο</entry>
+<entry key="x.comment-colon">Σχόλιο:</entry>
+<entry key="x.setComment">Όρισε ως σχόλιο</entry>
+<entry key="x.title-colon">Επικεφαλίδα:</entry>
+<entry key="x.bookmark">Καταχώρηση</entry>
+<entry key="x.aboutModel">Σχετικα με αυτά τα δεδομένα</entry>
+<entry key="bookmarkform.newbookmark">Νέα καταχώρηση</entry>
+<entry key="bookmarkform.1">
+	Μόνο το αρχικό πεδίο("του αρχείου το uri") απαιτείται(η επικεφαλίδα και το σχόλιο μπορούν να προστεθούν αργότερα).
+	Θα μπορείτε να προσθέσετε ετικέτες στη συνέχεια.
+</entry>
+<entry key="bookmarkform.docuri">Αρχείου URI</entry>
+<entry key="bookmarkform.docuri2">(ίσως είναι ένα αρχείο πρωτοκόλου uri, όπως το αρχείο:///Users/fps/2003/11/):</entry>
+<entry key="bookmarkform.downloaduri">τηλεφόρτωσε το URI από</entry>
+<entry key="bookmarkform.downloaduri2">(μόνο αν είναι διαφορετικό από το προηγούμενο. Χρησιμοποιείται μόνο κατά τη δημιουργία αντιγράφου):</entry>
+<entry key="bookmarkform.nir">URI of real world thing ("Non information resource"):</entry>
+<entry key="bookmarkform.bookmarkAndCopy">Καταχώρησε και δημιούργησε αντίγραφο</entry>
+<entry key="bookmarkform.copy">Αποθήκευσε ένα αντίγραφο</entry>
+<entry key="bookmarkform.copyWithSource">Αποθήκευσε ένα αντίγραφο, διατηρώντας τα ίχνη της πηγής</entry>
+<entry key="bookmarkform.createTag">Δημιούργησε ετικέτα</entry>
+<entry key="bookmarkform.2">
+	Μπορείτε να δημιουργήσετε μια καταχώρηση και/ή να αποθηκεύσετε ένα αντίγραφο στο δίσκο.
+	Αν επιλέξετε "Καταχώρησε και δημιούργησε αντίγραφο",
+	η βασική πηγή(αυτή που εμφανίζεται στα αποτελέσματα αναζήτησης) είναι η  σελίδα του διαδικτύου,
+	ενώ αν επιλέξετε «δημιούργησε αντίγραφο, διατηρώντας ίχνη της πηγής», η σελίδα που θα εμφανίζει ως αποτέλεσμα η μηχανή αναζήτησης,
+         θα είναι αυτή που αποθηκεύτηκε στον υπολογιστή σας. 
+</entry>
+<entry key="livesearchform.addToTags">+ στις ετικέτες</entry>
+<entry key="livesearchform.addToParents">+ στους γονείς</entry>
+<entry key="livesearchform.addToChildren">+ στα παιδιά</entry>
+<entry key="livesearchform.addToFriends">+ στις σχετικές ετικέτες</entry>
+<entry key="livesearchform.go">Πήγαινε</entry>
+<entry key="newnoteform.newnote">Νέα σημείωση</entry>
+<entry key="welcome.more">Περισσότερες πληροφορίες...</entry>
+<entry key="welcome.seewebsite">Τελευταίες εξελίξεις και ανανεώσεις του Semanlink είναι διαθέσιμες στο{0}.</entry>
+<entry key="welcome.docsAndStatementsNbs">
+	{0} έγγραφα ; {1} δηλώσεις ({2} δηλώσεις σχετικά με έγγραφα και {3} σχετικά με ετικέτες)
+</entry>
+<entry key="welcome.download">Τηλεφόρτωσε</entry>
+<entry key="welcome.download2">Τηλεφόρτωσε {0}</entry>
+<entry key="welcome.releaseNotes">Σημειώσεις έκδοσης</entry>
+<entry key="welcome.version">Αυτό είναι το Semanlink {0}</entry>
+<entry key="welcome.thesauri">Θησαυροί</entry>
+<entry key="welcome.dataFolders">Φάκελοι Semanlink</entry>
+<entry key="tag.homePage">Αρχική σελίδα</entry>
+<entry key="tag.getDescribedByPage">Αρχική σελίδα</entry><!-- should be change to description page -->
+<entry key="delicious.account">Λογαριασμός Delicious</entry>
+<entry key="delicious.username">Όνομα χρήστη:</entry>
+<entry key="delicious.password">Κωδικός πρόσβασης:</entry>
+<entry key="doc.title">Επικεφαλίδα:</entry>
+<entry key="doc.fileInfo">Πληροφορία αρχείου</entry>
+<entry key="doc.path">Μονοπάτι:</entry>
+<entry key="doc.bytes">Μέγεθος: {0} μπάιτ</entry>
+<entry key="doc.kbytes">Μέγεθος: {0} kb</entry>
+<entry key="doc.lastModified">Τροποποιήθηκε πρόσφατα:</entry>
+<entry key="doc.parentFolderInSL">Φάκελος γονέας στο Semanlink</entry>
+<entry key="doc.parentFolderOnDisk">Φάκελος γονέας στο δίσκο</entry>
+<entry key="doc.cpNavBar">(Αντιγραφή/Επικόλληση σύνδεσης στη μπάρα πλοήγησης)</entry>
+<entry key="doc.localCopy">Τοπικό αντίγραφο</entry>
+<entry key="js.sure">Να προσθέσω αυτή την ετικέτα;</entry>
+<!--  2008/02 -->
+<entry key="x.lang">Lang</entry>
+<!--  2008/04 -->
+<entry key="found">{0} {2} {1}.</entry>
+<entry key="found.during1">τον τελευταίο μήνα</entry>
+<entry key="found.during2">την τελευταία εβδομάδα</entry>
+<entry key="found.during3">τις τελευταίες δύο εβδομάδες</entry>
+<entry key="found.during4">τις τελευταίες{0}ημέρες</entry>
+<entry key="found.documents">έγγραφα</entry>
+<entry key="found.domains">domains</entry>
+<!--  2008/09 -->
+<entry key="doc.source">Source</entry>
+<!-- 2010/12 -->
+<entry key="topmenu.sparql">SPARQL</entry>
+<!--  2013/03 -->
+<entry key="docList.firstLevelDocs">Σύντομη Λίστα</entry>
+<entry key="docList.allDocs">Όλα τα έγγραφα</entry>
+</properties>

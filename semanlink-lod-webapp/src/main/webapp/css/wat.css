@@ -1,0 +1,294 @@
+body {
+	margin:0px 0px 0px 0px;
+	padding:0px;
+}
+
+.clearboth {clear: both;}
+
+/* 
+ * 3-BOX-MODEL BEGIN
+ */
+
+#topbox {
+	height:60px; /* TOPHEIGHT */
+	margin-right: 4px; /* TOP_RIGHT_MARGIN */
+	margin-left: 4px; /* TOP_LEFT_MARGIN */
+	margin-bottom: 4px; /*TOP_MARGIN_TOP */
+	margin-top: 4px; /* TOP_MARGIN_BOTTOM */
+    border: 1px solid #ccc; /* TOP_BORDER */
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	height:59px; /* TOPHEIGHT -1 TODO VERIFY */
+}
+html>body #topcontent {
+	height:59px; /* TOPHEIGHT -1 TODO VERIFY */
+}
+
+	/*#topbox h1 {
+		font-family: Palatino, "Comic Sans MS", Arial, Helvetica, serif;
+		font-size: 20px;
+		padding-top:6px;
+		padding-bottom:6px;
+		background:pink;
+	}*/
+
+#leftbox {
+	position: absolute;
+	left:0px;
+	top:69px; /* TOPHEIGHT + TOP_MARGIN_BOTTOM + TOP_MARGIN_TOP + 2*TOP_BORDER -1 */
+	width:3px; /* LEFTWIDTH = int + TOP_LEFT_MARGIN -1 */
+	/* background: yellow; */
+}
+
+#rightbox {
+	position: absolute;
+	right:0px;
+	top:69px; /* TOPHEIGHT + TOP_MARGIN_BOTTOM + TOP_MARGIN_TOP + 2*TOP_BORDER -1 */
+	width:250px; /* RIGHTWIDTH = int + TOP_RIGHT_MARGIN -1 */
+	/* background: yellow; */
+}
+
+#centerbox {
+	/*background:yellow;
+    border: 1px solid #ccc;*/
+	margin-left: 2px; /* LEFTWIDTH - 1 */
+	margin-right:249px; /* RIGHTWIDTH - 1 */
+	/*
+	IE5x PC mis-implements the box model. Because of that we sometimes have
+	to perform a little CSS trickery to get pixel-perfect display across browsers.
+	The following bit of code was proposed by Tantek Celik, and it preys upon a CSS
+	parsing bug in IE5x PC that will prematurly close a style rule when it runs
+	into the string "\"}\"". After that string appears in a rule, then, we can override
+	previously set attribute values and only browsers without the parse bug will
+	recognize the new values. So any of the name-value pairs above this comment
+	that we need to override for browsers with correct box-model implementations
+	will be listed below.
+	
+	We use the voice-family property because it is likely to be used very infrequently,
+	and where it is used it will be set on the body tag. So the second voice-family value 
+	of "inherit" will override our bogus "\"}\"" value and allow the proper value to
+	cascade down from the body tag.
+
+	The style rule immediately following this rule offers another chance for CSS2
+	aware browsers to pick up the values meant for correct box-model implementations.
+	It uses a CSS2 selector that will be ignored by IE5x PC.
+	
+	Read more at http://www.glish.com/css/hacks.asp
+	*/
+	
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	margin-left: 4px; /* LEFTWIDTH + 1 */
+	margin-right:251px; /* RIGHTWIDTH + 1 */
+	
+	overflow:hidden;
+}
+html>body #centerbox {
+	margin-left: 4px; /* LEFTWIDTH + 1 */
+	margin-right:251px; /* RIGHTWIDTH + 1 */
+}
+
+#leftcontent {
+	margin-right: 4px;
+	margin-left: 4px; /* TOP_LEFT_MARGIN */
+	padding-top: 4px; /* BAR_PADDING_TOP */
+}
+
+#rightcontent {
+	margin-right: 4px;
+	margin-left: 4px; /* TOP_RIGHT_MARGIN */
+}
+
+#centercontent {
+	/* no margin: width between boxes are already set by leftcontent and rightcontent */
+	padding-top: 0px;
+}
+
+
+.watgraybox {
+	border: 1px solid #ccc;
+	padding-bottom:4px;
+    /* background: pink; */
+}
+
+/* this, to avoid a double width between left and center gray boxes and between center and right gray boxes */
+
+	#rightbox .watgraybox ul {
+		margin: 0;
+		padding: 18px;
+		padding-top:0px;
+		padding-bottom:0px;
+		font-size:14px;
+	}
+	
+	/* #leftbox .watgraybox ul { or #leftcontent ul, it's the same thing */
+	#leftcontent ul {
+		margin: 0;
+		padding: 18px;
+		padding-top:0px;
+		padding-bottom:0px;
+		font-size:14px;
+	}
+
+
+/* 
+ * 3-BOX-MODEL END
+ * ***********************
+ */
+
+
+
+	
+p,h1,h2,h3,pre {
+	margin:0px 10px 10px 10px;
+}
+	
+h1 {
+	font-size:14px;
+	padding-top:10px;
+}
+
+h2 {
+	font-size:14px;
+	padding-top:10px;
+	padding-left:20px;
+}
+
+.doctitle , h2 {
+	font-family: Palatino, "Comic Sans MS", Arial, Helvetica, serif;
+	/* font-size: 16px; * /* fait moche sur ie si laoded probable car deja def ds h2*/
+	text-align: left;
+	margin: 0;
+	margin-right: 0px;
+	margin-top: 0px;
+	margin-bottom: 6px;
+	padding-top:6px;
+	padding-bottom:6px;
+	padding-left:10px;
+}
+
+
+
+h4 {
+	font-size:12px;
+	padding-left:40px;
+}
+
+
+/*
+ *
+ */
+
+.graybox {
+	background:#fff;
+	margin-right: 4px;
+	margin-left: 4px;
+	margin-bottom: 4px;
+	margin-top: 4px;
+	padding-left:4px;
+	padding-right:4px;
+	padding-top:4px;
+	padding-bottom:4px;
+    border: 1px solid #ccc;
+    overflow:hidden;
+}
+
+.what,h3 {
+    background-color: #eee;
+	border: 1px solid #ccc;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: left;
+	padding: 4px;
+	margin:4px;
+	height:16px;
+}
+
+.subtitle {
+    background-color: #c0d4ee;
+	border: 1px solid #ccc;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: left;
+	padding-left: 4px;
+	padding-top:4px;
+	height:20px;
+}
+
+.doctitle , h2 {
+	font-family: Palatino, "Comic Sans MS", Arial, Helvetica, serif;
+	/* font-size: 16px; * /* fait moche sur ie si laoded probable car deja def ds h2*/
+	text-align: left;
+	margin: 0;
+	margin-right: 0px;
+	margin-top: 0px;
+	margin-bottom: 6px;
+	padding-top:6px;
+	padding-bottom:6px;
+	padding-left:10px;
+}
+
+h2 {
+	color: white;
+	background-color: #369;
+}
+
+.doctitle {
+	color: black;
+	background-color: white;
+}
+
+
+
+.comment {
+	font-size: 10px;
+	text-align: left;
+}
+
+
+/*
+ * livetree
+ */
+ 
+.livetree {
+	list-style-type: none;
+	padding-left:20px;
+	margin-left:0px;
+}
+
+
+.livetree .treeLeaf a { 
+	text-decoration: underline;
+	color: blue;
+}
+
+.livetree li a {
+	text-decoration: none;
+	color: #005050;
+}
+
+.livetree li span ul li a { 
+	text-decoration: none;
+	color: #005050;
+}
+
+.graybox p span a { 
+	text-decoration: none;
+	color: #005050;
+}
+
+
+
+
+.livetree li a:visited {
+	color: #663399;
+}
+
+.livetree li a:hover {
+	text-decoration: underline;
+}
+ 
+.treeLeaf {
+	list-style-type: disc;
+	margin-left:13px;
+}

@@ -1,0 +1,14 @@
+<%@ page
+    contentType="text/html;charset=UTF-8" 
+    pageEncoding="UTF-8"
+%>
+<style type="text/css"><!--.q {	font-weight: bold;}--></style><h1>Συχνές ερωτήσεις </h1><div class="graybox"><h2>Είναι δυνατόν να αποθηκεύουμε έγγραφα εκτός του καταλόγου «semanlinkDataDir»; </h2><p>Ναι. Εναλλακτικά μπορούμε να προσδιορίσουμε αρκετούς άλλους «φακέλους δεδομένων». Αυτό γίνεται μέσω του αρχείου <strong>"semanlink-config.xml"</strong> που βρίσκεται στον κατάλογο <strong>[semanlinkDataDir]/conf</strong>. Περισσότερες πληροφορίες σχετικά με το αρχείο αυτό θα βρείτε εδώ.</p><p>(Το semanlinkDataDir προσδιορίζεται στα συμφραζόμενα της εφαρμογής μας, συμβουλευτείτε το READ-ME στον βασικό κατάλογο του προγράμματός μας).</p><h2>Πώς μπορώ να χρησιμοποιήσω το Semanlink στο διαδικτυακό μου τόπο ; </h2><p>Προσδιορίζουμε ένα (ή περισσότερους) φακέλους δεδομένων (DataFolder) στο αρχείο «[semanlinkDataDir]/conf/semanlink-config.xml» προκειμένου να ορίσουμε που θα αποθηκεύσουμε τα μεταδεδομένα, πώς αυτό σχετίζεται με τα URL της ιστοσελίδας μας, και πως φορτώνεται. Είναι ευκολότερο να περιγράψουμε τη διαδικασία αυτή μέσω παραδειγμάτων : </p><h3>Δημιουργώντας ετικέτες για στατικές ιστοσελίδες</h3><p>Ας υποθέσουμε ότι θέλουμε να χρησιμοποιήσουμε το Semanlink για να δημιουργήσουμε ετικέτες στατικών σελίδων οι οποίες εξυπηρετούνται από ένα κατάλογο C:\site\statix στο URL "http://www.yourdomain.com/statix". </p><p>Ανοίγουμε το αρχείο «[semanlinkDataDir]/conf/semanlink-config.xml» και προσθέτουμε την ιδιότητα slc:dataFolder ιδιότητα στο sl:SLModel το οποίο το προσδιορίζουμε κάπως έτσι : 
+</p>
+
+
+<pre><code>		&lt;slc:dataFolder&gt;<br>			&lt;sl:DataFolder rdf:about=&quot;http://www.yourdomain.com/statix&quot;&gt;<br>				&lt;slc:filePath&gt;C:\site\statix&lt;/slc:filePath&gt;<br>			&lt;/sl:DataFolder&gt;<br>		&lt;/slc:dataFolder&gt;
+</code></pre>
+Στη συνέχεια είμαστε έτοιμοι να προσθέσουμε μεταδεδομένα στα αρχεία που βρίσκονται εντός του «statix». Τα μεταδεδομένα αυτά θα αποθηκευτούν στα αρχεία «sl.rdf» (συμβουλευτείτε επίσης την ενότητα διάταξη του Semanlink) για περισσότερες πληροφορίες).
+
+<h3>Δημιουργώντας ετικέτες για δυναμικές σελίδες </h3><p>Η διαδικασία για αυτού του είδους τις ιστοσελίδες δεν διαφέρει ιδιαίτερα από εκείνη που περιγράψαμε πιο πάνω. Για να δημιουργήσουμε σελίδες που εξυπηρετούνται από «http://www.yourdomain.com/webapp», δημιουργούμε ένα φάκελο δεδομένων (DataFolder), όπως : 
+</p><pre><code>		&lt;slc:dataFolder&gt;<br>			&lt;sl:DataFolder rdf:about=&quot;http://www.yourdomain.com/webapp&quot;&gt;<br>				&lt;slc:filePath&gt;C:\site\webapp_metadata&lt;/slc:filePath				&lt;slc:loadingMode&gt;simple&lt;/slc:loadingMode&gt;<br>			&lt;/sl:DataFolder&gt;<br>		&lt;/slc:dataFolder&gt;</code></pre><p>Όλα τα μεταδεδομένα θα αποθηκευτούν στο αρχείο C:\site\webapp_metadata\sl.rdf</p></div>
