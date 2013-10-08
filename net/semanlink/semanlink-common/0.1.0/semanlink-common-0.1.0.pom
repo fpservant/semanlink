@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>net.semanlink</groupId>
+		<artifactId>semanlink-parent</artifactId>
+		<version>1</version>
+		<relativePath>../semanlink-parent</relativePath>
+	</parent>
+
+	<artifactId>semanlink-common</artifactId>
+	<version>0.1.0</version>
+	<packaging>jar</packaging>
+
+	<name>semanlink-common</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>jena-arq</artifactId>
+			<version>${version.jena}</version>
+		</dependency>
+
+<!-- 
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+ -->
+ 		
+		<dependency>
+			<groupId>xom</groupId>
+			<artifactId>xom</artifactId>
+			<version>1.2.5</version>
+			<exclusions>
+				<exclusion>
+					<!-- newer one is provided by jena -->
+					<groupId>xml-apis</groupId>
+					<artifactId>xml-apis</artifactId>
+				</exclusion>
+				<exclusion>
+					<!-- newer one is provided by jena -->
+					<groupId>xerces</groupId>
+					<artifactId>xercesImpl</artifactId>
+				</exclusion>				
+			</exclusions>
+		</dependency>
+	</dependencies>
+
+</project>
