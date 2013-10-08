@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>semanlink-webapp</artifactId>
+	<version>0.4.2</version>
+	<packaging>war</packaging>
+	<name>semanlink</name>
+
+	<parent>
+		<groupId>net.semanlink</groupId>
+		<artifactId>semanlink-parent</artifactId>
+		<version>1</version>
+		<relativePath>../semanlink-parent</relativePath>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>net.semanlink</groupId>
+			<artifactId>semanlink-java</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.semanlink</groupId>
+			<artifactId>semanlink-lod-webapp</artifactId>
+			<version>0.1.0</version>
+			<type>war</type>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts-taglib</artifactId>
+			<version>1.3.10</version>
+		</dependency>
+
+		<!-- NO GOOD! pb in eclipse such as described in http://stackoverflow.com/questions/11824632/eclipse-featurenotfoundexception -->
+		<!-- <dependency> <groupId>struts</groupId> <artifactId>struts</artifactId> 
+			<version>1.2.9</version> </dependency> -->
+
+		<!-- removed 'cause pb passage à Jena 2.10, pb sr le slf4j binding <dependency> 
+			<groupId>dfki.km.json</groupId> <artifactId>jsonld-java</artifactId> <version>1.0.0-SNAPSHOT</version> 
+			</dependency> -->
+	</dependencies>
+
+
+	<build>
+		<finalName>semanlink</finalName>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+	</build>
+</project>
