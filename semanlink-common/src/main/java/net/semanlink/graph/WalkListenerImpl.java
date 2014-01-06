@@ -1,4 +1,5 @@
 package net.semanlink.graph;
+/** An implementation of WalkListener that doesn't do anything. */
 public class WalkListenerImpl<NODE> implements WalkListener<NODE> {
   public void startSeed(NODE seed) throws Exception {}
   public void startNeighborList(NODE node) throws Exception {}

@@ -7,7 +7,6 @@ import net.semanlink.util.index.I18nFriendlyIndexEntries;
 import net.semanlink.util.index.IndexEntriesCalculator;
 import net.semanlink.util.index.MultiLabelGetter;
 import net.semanlink.util.index.MultiLabelIndex2;
-import net.semanlink.util.index.RDFSLabelGetter;
 import net.semanlink.util.text.CharConverter;
 import net.semanlink.util.text.WordsInString;
 
@@ -17,16 +16,21 @@ import com.hp.hpl.jena.rdf.model.Resource;
 
 /**
  * Indexing (Resource, label) pairs.
- * <p>When compared with ModelIndexedByLabel (which indexes Resources, on several labels),
- * this has the advantage of allowing to return the found label.
+ * <p>When compared to ModelIndexedByLabel (which indexes Resources, by several labels),
+ * this allows to return the found label.
  * @author fps
  */
 public class ModelIndexedByLabel2 extends MultiLabelIndex2<Resource> {
 protected Model model;
 
-/** Default: uses RDFS.label */
+/** Default: uses RDFS.label. Beware, only index the labels in the language given by the Locale*/
 public ModelIndexedByLabel2(ResIterator resToBeIndexedByLabel, Model model, Locale locale) {
 	this(resToBeIndexedByLabel, new RDFSLabelGetter(locale.getLanguage()), model, locale);
+}
+
+/** Default: uses RDFS.label.*/
+public ModelIndexedByLabel2(ResIterator resToBeIndexedByLabel, Model model, Locale locale, boolean indexLabelInAnyLang) {
+	this(resToBeIndexedByLabel, new RDFSLabelGetter(indexLabelInAnyLang ? null : locale.getLanguage()), model, locale);
 }
 
 public ModelIndexedByLabel2(ResIterator resToBeIndexedByLabel, MultiLabelGetter<Resource> multiLabelGetter, Model model, Locale locale) {

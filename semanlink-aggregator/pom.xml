@@ -1,21 +1,27 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.semanlink</groupId>
 	<artifactId>semanlink-aggregator</artifactId>
 	<version>0.4.2</version>
 	<packaging>pom</packaging>
 	<name>semanlink-aggregator</name>
 	
+	<!--
 	<parent>
 		<groupId>net.semanlink</groupId>
 		<artifactId>semanlink-parent</artifactId>
 		<version>1</version>
 	</parent>
-
+	-->
+	
 	<modules>
+		<module>../semanlink-parent</module>
 		<module>../semanlink-common</module>
 		<module>../semanlink-lod-parent</module>
 		<module>../semanlink-java</module>
 		<module>../semanlink-webapp</module>
 	</modules>
+	
+
 </project>

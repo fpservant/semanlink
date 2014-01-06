@@ -49,7 +49,7 @@ public boolean correct(Model mod) {
 	Resource newRes = mod.getResource(newUri);
 
 	StmtIterator it;
-	List oldStaList;
+	List<Statement> oldStaList;
 	boolean thereIsChange;
 	// StmtIterator it = mod.listStatements((Resource) null, (Property) null, (Resource) null);
 	
@@ -59,7 +59,7 @@ public boolean correct(Model mod) {
 	thereIsChange = (n > 0);
 	it.close();
 	for (int i = 0;i < n;i++) {
-		Statement oldSta = (Statement) oldStaList.get(i);
+		Statement oldSta = oldStaList.get(i);
 		Statement newSta = mod.createStatement(newRes, oldSta.getPredicate(), oldSta.getObject());
 		mod.add(newSta);
 	}
@@ -74,7 +74,7 @@ public boolean correct(Model mod) {
 	thereIsChange = (n > 0);
 	it.close();
 	for (int i = 0;i < n;i++) {
-		Statement oldSta = (Statement) oldStaList.get(i);
+		Statement oldSta = oldStaList.get(i);
 		Statement newSta = mod.createStatement(oldSta.getSubject(), newProp, oldSta.getObject());
 		mod.add(newSta);
 	}
@@ -87,7 +87,7 @@ public boolean correct(Model mod) {
 	thereIsChange = (n > 0);
 	it.close();
 	for (int i = 0;i < n;i++) {
-		Statement oldSta = (Statement) oldStaList.get(i);
+		Statement oldSta = oldStaList.get(i);
 		Statement newSta = mod.createStatement(oldSta.getSubject(), oldSta.getPredicate(), newRes);
 		mod.add(newSta);
 	}

@@ -4,6 +4,7 @@ package net.semanlink.graph.jena;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Property;
 
+/** Definition of a tree in a jena graph*/
 public class TreeDefinition {
 // je le garde à la fois sous forme de string et de props, parce qu'on a besoin
 // des 1eres ds js, et des secondes en java
@@ -16,7 +17,14 @@ private Property[] parentProps;
 private Property[] leafProps;
 private Property[] invLeafProps;
 
-
+/**
+ * The TreeDefinition is based on the listing of the properties that must be considered as "parent-child", "child-parent" and "node-leaf"
+ * @param mod jena model
+ * @param schildProps the properties to be used as "parent - child" properties
+ * @param sparentProps  the properties to be used as "child - parent" properties
+ * @param sleafProps the properties that link a node of the tree to a leaf
+ * @param sinvLeafProps the properties that link a leaf to a node
+ */
 public TreeDefinition(Model mod, String[] schildProps, String[] sparentProps, String[] sleafProps, String[] sinvLeafProps) {
 	this.schildProps = schildProps;
 	this.sparentProps = sparentProps;
@@ -40,14 +48,6 @@ static private Property[] s2p(String[] s, Model mod) {
 		return null;
 	}
 }
-/*
-public TreeDefinition(Property[] childProps, Property[] parentProps, Property[] leafProps, Property[] invLeafProps) {
-	this.childProps = childProps;
-	this.parentProps = parentProps;
-	this.leafProps = leafProps;
-	this.invLeafProps = invLeafProps;
-}
-*/
 
 public Property[] getChildProps() {
 	return childProps;

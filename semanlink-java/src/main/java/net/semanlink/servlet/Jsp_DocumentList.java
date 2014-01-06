@@ -82,7 +82,7 @@ public static void filterDocsByKws(List docs, SLKeyword[] kws, boolean childrenO
 	}
 }
 
-public abstract String getTitle() throws Exception;
+public abstract String getTitle();
 
 /** non nécessairement triée */
 public List getDocs() throws Exception { return this.docs; }

@@ -9,7 +9,6 @@ import net.semanlink.util.index.I18nFriendlyIndexEntries;
 import net.semanlink.util.index.IndexEntriesCalculator;
 import net.semanlink.util.index.MultiLabelIndex;
 import net.semanlink.util.index.MultiLabelGetter;
-import net.semanlink.util.index.RDFSLabelGetter;
 import net.semanlink.util.text.CharConverter;
 import net.semanlink.util.text.WordsInString;
 
@@ -20,11 +19,15 @@ import net.semanlink.util.text.WordsInString;
  */
 public class ModelIndexedByLabel extends MultiLabelIndex<Resource> {
 protected Model model;
-// protected Locale locale;
 
-/** Default: uses RDFS.label */
+/** Default: uses RDFS.label. Beware, only index the labels in the language given by the Locale*/
 public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, Model model, Locale locale) {
 	this(resToBeIndexedByLabel, new RDFSLabelGetter(locale.getLanguage()), model, locale);
+}
+
+/** Default: uses RDFS.label.*/
+public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, Model model, Locale locale, boolean indexLabelInAnyLang) {
+	this(resToBeIndexedByLabel, new RDFSLabelGetter(indexLabelInAnyLang ? null : locale.getLanguage()), model, locale);
 }
 
 public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, MultiLabelGetter<Resource> labelGetter, Model model, Locale locale) {

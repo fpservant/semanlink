@@ -2,15 +2,14 @@ package net.semanlink.util.index.jena;
 
 import java.util.*;
 
-import net.semanlink.util.index.Index;
+import net.semanlink.util.index.MultiLabelIndex;
 import net.semanlink.util.index.ObjectLabelPair;
 
 import com.hp.hpl.jena.util.iterator.Map1;
 import com.hp.hpl.jena.util.iterator.Map1Iterator;
-
 import com.hp.hpl.jena.graph.Node;
+import com.hp.hpl.jena.graph.NodeFactory;
 import com.hp.hpl.jena.graph.Node_Literal;
-
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.sparql.core.Var;
 import com.hp.hpl.jena.sparql.engine.ExecutionContext;
@@ -42,9 +41,9 @@ import com.hp.hpl.jena.query.QueryExecException;
 
 public class TextMatchMagicProp2 extends PropertyFunctionEval
 {
-		private static Index<ObjectLabelPair<Resource>> index;
+		private static MultiLabelIndex<ObjectLabelPair<Resource>> index;
 		/** MUST be called */
-		public static void setIndex(Index<ObjectLabelPair<Resource>> textIndex) { index = textIndex; }
+		public static void setIndex(MultiLabelIndex<ObjectLabelPair<Resource>> textIndex) { index = textIndex; }
 		
 		public TextMatchMagicProp2() // must be public or Class com.hp.hpl.jena.sparql.pfunction.PropertyFunctionFactoryAuto can not access a member of class package net.semanlink.util.jena.TextMatchMagicProp2 with modifiers "protected"
     {
@@ -79,13 +78,7 @@ public class TextMatchMagicProp2 extends PropertyFunctionEval
     @Override
     public QueryIterator execEvaluated(Binding binding, PropFuncArg argSubject, Node predicate, PropFuncArg argObject, ExecutionContext execCxt)
     {
-    	try { 
     		return execEvaluatedProtected(binding, argSubject, predicate,  argObject,  execCxt) ;
-    	} catch (RuntimeException ex)
-    	{
-    		// Log.fatal(this, "Exception from text search", ex) ;
-    		throw ex ;
-    	}
     }
 
     private QueryIterator execEvaluatedProtected(Binding binding, PropFuncArg argSubject, Node predicate, PropFuncArg argObject, ExecutionContext execCxt)
@@ -168,7 +161,7 @@ public class TextMatchMagicProp2 extends PropertyFunctionEval
                                     Var textMatchVar,
                                     String searchString,
                                     String lang,
-                                    Index<ObjectLabelPair<Resource>> index,
+                                    MultiLabelIndex<ObjectLabelPair<Resource>> index,
                                     ExecutionContext execCxt)
     {
       	// Iterator<HitLARQ> iter = getIndex(execCxt).search(searchString) ;
@@ -231,7 +224,7 @@ public class TextMatchMagicProp2 extends PropertyFunctionEval
             	?res rdfs.label ?textMatch.
             }*/
             // for one ?res, I get in ?textMatch all its rdfs.label (instead of the one found in the first line of query)
-           if (foundLabelVar != null) b.add(foundLabelVar, Node.createLiteral(hit.getLabel(), lang, false));
+           if (foundLabelVar != null) b.add(foundLabelVar, NodeFactory.createLiteral(hit.getLabel(), lang, false));
            return b;
         }
         
@@ -240,7 +233,7 @@ public class TextMatchMagicProp2 extends PropertyFunctionEval
     public QueryIterator boundSubject(Binding binding, 
                                       Node match,
                                       String searchString,
-                                      Index<ObjectLabelPair<Resource>> index,
+                                      MultiLabelIndex<ObjectLabelPair<Resource>> index,
                                       ExecutionContext execCxt)
     {
         // HitLARQ hit = getIndex(execCxt).contains(match, searchString) ;

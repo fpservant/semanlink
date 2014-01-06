@@ -156,7 +156,11 @@ public List  prepareIntersectKWsList() throws Exception {
 		SLTree slTree2 = new SLTree(this.kws[i], "children", this.sortProperty, getSLModel()) ;
 		Graph graph2 = slTree2.getGraph();
 		Intersection intersection = new Intersection(hsx, graph2);
-		hsx = intersection.getNodes();		
+		if (i < this.kws.length - 1) {
+			hsx = intersection.getNodes(false);		
+		} else {
+			hsx = intersection.getNodes(true);		
+		}
 	}
 
 	List x = Arrays.asList(hsx.toArray());

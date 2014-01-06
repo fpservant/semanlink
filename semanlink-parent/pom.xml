@@ -15,20 +15,24 @@
 			<email>fps@semanlink.net</email>
 		</developer>
 	</developers>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
-		<!-- 
-        <semanlink.release.date>2013-09-27</semanlink.release.date>
-		-->
-    	<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
-        <semanlink.release.date>${maven.build.timestamp}</semanlink.release.date>
-		 		 
-        <version.jena>2.11.0</version.jena>
-        <version.servlet.api>3.0.1</version.servlet.api>
-        <version.jsp.api>2.1</version.jsp.api>
-        <version.junit>4.11</version.junit>
+
+		<!-- name of mvn-repo -->
+		<temp.stagging.repo>${project.build.directory}/mvn-repo</temp.stagging.repo>
+
+		<!-- github server corresponds to entry in ~/.m2/settings.xml -->
+		<github.global.server>github</github.global.server>
+
+		<!-- <semanlink.release.date>2013-09-27</semanlink.release.date> -->
+		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
+		<semanlink.release.date>${maven.build.timestamp}</semanlink.release.date>
+
+		<version.jena>2.11.0</version.jena>
+		<version.servlet.api>3.0.1</version.servlet.api>
+		<version.jsp.api>2.1</version.jsp.api>
+		<version.junit>4.11</version.junit>
 	</properties>
 
 	<dependencies>
@@ -51,7 +55,7 @@
 			<artifactId>junit</artifactId>
 			<version>${version.junit}</version>
 			<scope>test</scope>
-		</dependency>	
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -65,7 +69,75 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<inherited>true</inherited>
+				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<!-- <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository> -->
+					<altDeploymentRepository>internal.repo::default::file://${temp.stagging.repo}</altDeploymentRepository>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.8</version>
+				<configuration>
+					<message>Maven artifacts for ${project.version}</message>  <!-- git commit message -->
+					<noJekyll>true</noJekyll>                                  <!-- disable webpage processing -->
+					<outputDirectory>${temp.stagging.repo}</outputDirectory> <!-- matches distribution management repository url above -->
+					<!-- This isn't perfect, because every old SNAPSHOT is kept.. -->
+					<merge>true</merge>
+					<branch>refs/heads/mvn-repo</branch>                       <!-- remote branch name -->
+					<includes>
+						<include>**/*</include>
+					</includes>
+					<repositoryName>semanlink</repositoryName>      <!-- github repo name -->
+					<repositoryOwner>fpservant</repositoryOwner>    <!-- github username -->
+				</configuration>
+
+
+				<executions>
+					<!-- run site-maven-plugin's 'site' target as part of the build's normal 
+						'deploy' phase -->
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>deploy</phase>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 
+	<!-- <distributionManagement> <repository> <id>github</id> <name>GitHub 
+		Semanlink Repository</name> <url>https://raw.github.com/fpservant/semanlink/mvn-repo</url> 
+		</repository> </distributionManagement> -->
+
+	<distributionManagement>
+		<repository>
+			<id>internal.repo</id>
+			<name>Temporary Staging Repository</name>
+			<url>file://${project.build.directory}/mvn-repo</url>
+		</repository>
+	</distributionManagement>
 </project>

@@ -12,8 +12,6 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-// import javax.servlet.ServletResponse;
-
 /**
  * utile quand on a affaire à des dossiers et des fichiers.
  *
@@ -33,12 +31,9 @@ public static void osCopy(final File src,final File dst) throws IOException {
 		throw new IllegalArgumentException("copy: src undefined");		
 	}
 	if (dst==null) {
-		throw new IllegalArgumentException("copy: src undefined");
+		throw new IllegalArgumentException("copy: dst undefined");
 	}
-	if (src.canRead()) {
-		
-	}
-	else {
+	if (!src.canRead()) {
 		throw new IllegalArgumentException("copy: "+src.getAbsolutePath()+" is not readable");
 	}	
 	
@@ -113,18 +108,6 @@ public static void writeFile2OutputStream(File source, OutputStream os, byte[] b
 	in.close();
 }
 
-/*// moved to BasicServlet, to avoid to have to include servlet stuff
-public static void writeFile2ServletResponse(File source, ServletResponse res) throws IOException {
-	// we do not want to close the res OutputStream
-	// CopyFiles.writeFile2OutputStream(source, res.getOutputStream(), new byte[res.getBufferSize()]);
-	BufferedInputStream in = new BufferedInputStream(new FileInputStream(source));
-	writeIn2Out(in, res.getOutputStream(), new byte[res.getBufferSize()]);
-	in.close();
-}
-*/
-
-
-
 /** write in to out
 @param buffer to bufferize transfer. */
 public static void writeIn2Out(InputStream in, OutputStream out, byte[] buffer) throws IOException {
@@ -162,7 +145,7 @@ public static byte[] stream2bytes(InputStream is, int buffSize) throws IOExcepti
 	int nx = 0;
 	while ((c = in.read(buffer,0,buffSize)) > -1) {
 		v.add(buffer);
-		vSizes.add(new Integer(c));
+		vSizes.add(Integer.valueOf(c));
 		nx += c;
 		buffer = new byte[buffSize];
 	}
@@ -198,7 +181,7 @@ public static char[] reader2chars(Reader reader, int buffSize) throws IOExceptio
 	int nx = 0;
 	while ((c = in.read(buffer,0,buffSize)) > -1) {
 		v.add(buffer);
-		vSizes.add(new Integer(c));
+		vSizes.add(Integer.valueOf(c));
 		nx += c;
 		buffer = new char[buffSize];
 	}

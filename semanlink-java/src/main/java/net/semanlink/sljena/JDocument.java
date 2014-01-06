@@ -1,7 +1,9 @@
 package net.semanlink.sljena;
 import net.semanlink.semanlink.SLDocumentAdapter;
+import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLVocab;
 import net.semanlink.semanlink.SLRuntimeException;
+
 import java.util.*;
 
 import com.hp.hpl.jena.rdf.model.*;
@@ -32,7 +34,7 @@ public String getURI() { return this.res.getURI(); } // ca va pas
 
 public int hashCode() { return this.res.hashCode(); }
 
-public List computeKeywords() {
+public List<SLKeyword> computeKeywords() {
   try {
 	return this.slModel.getKeywordsList(this.res);
   } catch (Exception ex) { throw new SLRuntimeException(ex); }

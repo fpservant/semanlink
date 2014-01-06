@@ -204,8 +204,8 @@ private Resource resolveAliasAsResource(String uri) {
 public void aliasesIntoCollectionOfUris(Collection coll) throws JenaException {
 	NodeIterator ite = this.kwsModel.listObjectsOfProperty(this.hasAliasProperty);
     for (;ite.hasNext();) {
-		Resource node = (Resource) ite.next();
-		coll.add(node.getURI());
+			Resource node = (Resource) ite.next();
+			coll.add(node.getURI());
     }
     ite.close();
 }
@@ -904,7 +904,7 @@ public void usedKWsIntoCollection(Collection coll) {
   try {
 	  for (;ite.hasNext();) {
 	    RDFNode node = ite.nextNode();
-		coll.add(node2JKeyword((node)));
+	    coll.add(node2JKeyword((node)));
 	  }
   } catch (Exception e) {
   	throw new SLRuntimeException(e);
@@ -1067,11 +1067,11 @@ public boolean hasDocument(Resource kwRes) {
  *  ATTENTION, si des documents sont simplement affectés du label correspondant au keyword,
  *  ils ne seront pas retournés.
  */
-public ArrayList getDocumentsList(Resource kwRes) throws JenaException {
+public ArrayList<SLDocument> getDocumentsList(Resource kwRes) throws JenaException {
   Model model = this.docsModel;
   // ResIterator ite = kwRes.getModel().listSubjectsWithProperty(this.hasKeywordProperty, kwRes);
   ResIterator ite = model.listSubjectsWithProperty(this.hasKeywordProperty, kwRes);
-  ArrayList x = new ArrayList();
+  ArrayList<SLDocument> x = new ArrayList<SLDocument>();
   for (;ite.hasNext();) {
   		x.add(new JDocument(this, ite.nextResource()));
   }
@@ -1082,9 +1082,9 @@ public ArrayList getDocumentsList(Resource kwRes) throws JenaException {
 /** Ajoute ? une Collection les Documents afectés d'un certain keyword -
  *  y compris si ce n'est que sous forme littérale.
  */
-public ArrayList getDocumentsList(JKeyword kw) throws JenaException {
+public ArrayList<SLDocument> getDocumentsList(JKeyword kw) throws JenaException {
   // Ceux affectés du kw ? proprement parler
-  ArrayList x = getDocumentsList(kw.getRes());
+  ArrayList<SLDocument> x = getDocumentsList(kw.getRes());
   // Les littéraux
   // pour trouver aussi ceux qui ne sont qu'affectés du littéral
   // 2003-08 : bof bof ?
@@ -1104,10 +1104,10 @@ public ArrayList getDocumentsList(JKeyword kw) throws JenaException {
 //
 
 /** retourne une ArrayList des JKeyword d'un doc */
-public ArrayList getKeywordsList(String uri) {
+public ArrayList<SLKeyword> getKeywordsList(String uri) {
    Model model = this.docsModel;
    Resource res = model.getResource(uri);
-    if (res == null) return new ArrayList(); // ?
+    if (res == null) return new ArrayList<SLKeyword>(); // ?
     return getKeywordsList(res);
 }
 
@@ -1116,14 +1116,14 @@ public ArrayList getKeywordsList(String uri) {
  *  NE Traite PLUS le cas des litteraux depuis qu'on a plusieurs vocab
  */
  // 02/01/06
-ArrayList getKeywordsList(Resource doc) {
-    Model model = this.docsModel;
-    // ON FERAIT MIEUX D'UTILISER public NodeIterator listObjectsOfProperty(Resource s, Property p)
+ArrayList<SLKeyword> getKeywordsList(Resource doc) {
+  Model model = this.docsModel;
+  // ON FERAIT MIEUX D'UTILISER public NodeIterator listObjectsOfProperty(Resource s, Property p)
 
-    // 02/01/03 : traitement du cas des keywords donnés dans un fichier sous forme de Literal
-    // System.out.println("getKeywordsList of " + doc);
-    NodeIterator ite = model.listObjectsOfProperty(doc, this.hasKeywordProperty);
-    ArrayList x = new ArrayList();
+  // 02/01/03 : traitement du cas des keywords donnés dans un fichier sous forme de Literal
+  // System.out.println("getKeywordsList of " + doc);
+  NodeIterator ite = model.listObjectsOfProperty(doc, this.hasKeywordProperty);
+  ArrayList<SLKeyword> x = new ArrayList<SLKeyword>();
 	try {
 	    for (; ite.hasNext();) {
 	    	// 2007-04 : pas bon, parce que ite.nextNode() ds docsModel, pas kwsModel

@@ -1,15 +1,8 @@
  /* Created on 2 oct. 06 */
 package net.semanlink.servlet;
 
-import java.io.File;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.semanlink.semanlink.Exporter;
-import net.semanlink.semanlink.SLDataFolder;
-import net.semanlink.semanlink.SLModel;
-import net.semanlink.semanlink.SLModel.LoadingMode;
-import net.semanlink.util.Util;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

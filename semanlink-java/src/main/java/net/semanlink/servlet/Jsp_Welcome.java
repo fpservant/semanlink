@@ -19,7 +19,7 @@ public Jsp_Welcome(HttpServletRequest request) {
 	request.setAttribute("net.semanlink.servlet.jsp", this);
 }
 
-public String getTitle() throws Exception { return "Semanlink Home Page"; }
+public String getTitle() { return "Semanlink Home Page"; }
 
 /** attention, change au fur et à mesure (voir par ex getActivFolder) */
 public Bean_DocList getDocList() { return this.bean_DocList; }

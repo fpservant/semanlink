@@ -4,8 +4,6 @@ package net.semanlink.sljena.modelcorrections;
 import java.io.IOException;
 
 import net.semanlink.semanlink.SLVocab;
-import net.semanlink.sljena.JenaUtils;
-
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.NodeIterator;
 import com.hp.hpl.jena.rdf.model.Property;

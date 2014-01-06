@@ -166,7 +166,7 @@ protected void computeDescendantsMode() {
 }
 */
 
-public String getTitle() throws Exception { return this.title; }
+public String getTitle() { return this.title; }
 public void setTitle(String title) { this.title = title; }
 /** ce qui est affiché dans la div "title" de la page. */
 public String getTitleInTitle() throws Exception { return getTitle(); }

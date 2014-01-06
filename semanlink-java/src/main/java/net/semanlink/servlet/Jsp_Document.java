@@ -64,9 +64,11 @@ public Bean_KwList prepareParentsList() {
 //
 //
 
-public String getTitle() throws Exception{
+public String getTitle() {
 	// List objects = this.slRes.getProperty();
-	return getLabel(this.slDoc);
+	try {
+		return getLabel(this.slDoc);
+	} catch (Exception e) { throw new RuntimeException(e) ; }
 }
 
 /** ce qui est affiché dans la div "title" de la page : pour aussi mettre un lien vers le doc */

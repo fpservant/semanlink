@@ -3,6 +3,6 @@ package net.semanlink.util.index;
 
 import java.util.Collection;
 
-public interface IndexInterface<ITEM> {
-	Collection<ITEM> searchText(String searchString);
+public interface IndexInterface<E> {
+	Collection<E> searchText(String searchString);
 }

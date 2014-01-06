@@ -13,7 +13,8 @@ import com.hp.hpl.jena.vocabulary.DC;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
 public class RDFWriterUtil {
-
+private RDFWriterUtil() {}
+	
 public static void writeRDF(Model model, File rdfFile, String xmlBase, String rdfKind, String relativeURIsProp) throws IOException {
     OutputStream out = new BufferedOutputStream(new FileOutputStream(rdfFile));
     writeRDF(model, out, xmlBase, rdfKind, relativeURIsProp);

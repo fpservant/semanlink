@@ -30,7 +30,7 @@ import net.semanlink.util.URLUTF8Encoder;
  */
 public class CharConverter {
 private static int MAX_DIM = 256*256;
-private static String WEIRD_CHAR_DEFAULT_SUBSTITUTION = "_";
+private static final String WEIRD_CHAR_DEFAULT_SUBSTITUTION = "_";
 private static char MAX_ASCII = 122; // z, in fact
 private boolean weirdCharNeedToBeURLEncoded;
 
@@ -235,40 +235,6 @@ public String urlConvert(String s) {
 	} else {
 		return sb.toString();
 	}
-}
-
-//
-// TEST
-//
-
-public static void main (String args[]) {
-	tryIt();
-}
-
-static void tryIt() {
-	tryIt(new Locale("fr","FR"));
-	tryIt(new Locale("el")); // grec
-	/*Locale[] locs = Locale.getAvailableLocales();
-	for (int i = 0; i < locs.length; i++) {
-		System.out.println(locs[i] + " : " + locs[i].getDisplayLanguage());
-	}
-	System.out.println((int) 'λ' + " : " + "λ");*/
-}
-
-private static void tryIt(Locale loc) {
-	System.out.println("*** Converter for locale: " + loc.getLanguage() + ", weird chars replaced by \"" + WEIRD_CHAR_DEFAULT_SUBSTITUTION + "\"");
-	tryIt(new CharConverter(loc, WEIRD_CHAR_DEFAULT_SUBSTITUTION));
-	/*System.out.println("*** Converter for dim: " + dim + " locale: " + loc.getLanguage() + ", weird chars removed");
-	tryIt(new CharConverter(dim, loc, ""));*/
-}
-private static void tryIt(CharConverter con) {
-	String s = "é,è,ê,ç,à,ù,ä,ü,ö,á,Á,œ,ñ,,,,Æ,æ---Ü,™,Λ,λ,Λεωνίδας";
-	System.out.println(s + " gets converted to:");
-	System.out.println(con.convert(s));
-	// System.out.println(URLUTF8Encoder.encode(con.convert(s)));
-	System.out.println("url converted to:");
-	System.out.println(con.urlConvert(s));
-
 }
 
 } // class CharConverter

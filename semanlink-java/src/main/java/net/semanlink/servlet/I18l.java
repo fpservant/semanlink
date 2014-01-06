@@ -25,10 +25,10 @@ public class I18l { // we could say extends ResourceBundle
 
 private static String[] availableLanguages = {"el","en","fr"};
 /** Hashmap of available I18l. Key lang, data for that language. */
-static HashMap i18lHM;
+static HashMap<String, I18l> i18lHM;
 static Locale preferedLocale;
 public static void initAvailableLanguages(SLServlet slServlet, Locale prefLocale) throws IOException {
-	i18lHM = new HashMap();
+	i18lHM = new HashMap<String, I18l>();
 	for (int i = 0; i < availableLanguages.length; i++) {
 			loadAvailableLang(availableLanguages[i], slServlet);
 	}
@@ -333,10 +333,9 @@ private static void load(Properties props, ServletContext context, String dirPat
 
 	if (langDirURL != null) {
 		// String[] sfn = dirLang.list();
-		Set paths = context.getResourcePaths(dirPath);
+		Set<String> paths = context.getResourcePaths(dirPath);
 		
-		for (Iterator it = paths.iterator(); it.hasNext(); ) {
-			String s = (String) it.next();
+		for (String s : paths ) {
 			if (s.endsWith(".xml")) {
 				in = context.getResourceAsStream(s);
 				props.loadFromXML(in);
@@ -452,10 +451,7 @@ static public void main (String args[]) {
 }
 
 static protected void test(String folder,  String lang) throws IOException {
-	Properties props = new Properties();
 	File dir = new File(folder);
-	/*load(props, dir, lang);
-	storeToXML(props, dir, lang);*/
 	dir = new File(dir,lang);
 	File txtFile = new File(dir,"strings-" + lang + ".txt");
 	File xmlFile = new File(dir,"strings-" + lang + ".xml");

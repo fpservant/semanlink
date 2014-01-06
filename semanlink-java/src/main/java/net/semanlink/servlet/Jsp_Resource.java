@@ -78,8 +78,7 @@ public URI getURI() throws URISyntaxException {
 	return new URI(this.uri);
 }
 
-public String getTitle() throws Exception{
-	// List objects = this.slRes.getProperty();
+public String getTitle() {
 	return this.slRes.getLabel();
 }
 

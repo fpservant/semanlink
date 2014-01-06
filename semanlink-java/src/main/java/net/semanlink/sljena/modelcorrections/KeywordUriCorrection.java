@@ -47,17 +47,15 @@ boolean changeKeywordURI(Model model) {
  * ATTENTION, A APPELER DS SLServlet chercher correctOldKwUris (le model doit avoir déjà été chargé
  * ??? A VOIR */
 static public void recomputeAllKwUrisFromLabel(ModelCorrector corrector, SLModel slModel) { //
-	List kwList = slModel.getKWsInConceptsSpaceArrayList();
-	for (int i = 0; i < kwList.size(); i++) {
-		SLKeyword kw = (SLKeyword) kwList.get(i);
+	List<SLKeyword> kwList = slModel.getKWsInConceptsSpaceArrayList();
+	for (SLKeyword kw : kwList) {
 		KeywordUriCorrection correction = kwUriCorrectionFromLabel(slModel, kw);
 		if (correction != null) corrector.add(correction);
 	}
 	// restent les alias
-	kwList = new ArrayList();
-	slModel.aliasesIntoCollectionOfUris(kwList);
-	for (int i = 0; i < kwList.size(); i++) {
-		String aliasUri = (String) kwList.get(i);
+	List<String> aliases = new ArrayList<String>();
+	slModel.aliasesIntoCollectionOfUris(aliases);
+	for (String aliasUri : aliases) {
 		SLKeyword kw = slModel.getKeyword(aliasUri);
 		KeywordUriCorrection correction = kwUriCorrectionFromLabel(slModel, kw);
 		if (correction != null) corrector.add(correction);

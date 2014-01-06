@@ -50,8 +50,8 @@ private boolean correctVocabUri(Model model) throws JenaException, IOException {
 	int nn = oldVocabUri.length();
 	Property hasKwPpty = model.getProperty(SLVocab.HAS_KEYWORD_PROPERTY);
 	StmtIterator it = model.listStatements(null, hasKwPpty, (RDFNode) null);
-	ArrayList aVirer = new ArrayList();
-	ArrayList aAjouter = new ArrayList();
+	ArrayList<Statement> aVirer = new ArrayList<Statement>();
+	ArrayList<Statement> aAjouter = new ArrayList<Statement>();
 	for (;it.hasNext();) {
 		Statement sta = it.nextStatement();
 		RDFNode obj = sta.getObject();
@@ -67,10 +67,10 @@ private boolean correctVocabUri(Model model) throws JenaException, IOException {
 	int n = aVirer.size(); // le même que celle de aAjouter
 	if (n > 0) {
 		for (int i = 0; i < n; i++) {
-			model.remove((Statement) aVirer.get(i));
+			model.remove(aVirer.get(i));
 		}
 		for (int i = 0; i < n; i++) {
-			model.add((Statement) aAjouter.get(i));
+			model.add(aAjouter.get(i));
 		}
 		x = true;
 	}

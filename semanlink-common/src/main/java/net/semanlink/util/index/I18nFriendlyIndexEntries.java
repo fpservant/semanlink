@@ -9,7 +9,7 @@ import net.semanlink.util.text.WordsInString;
 
 /**
  * Computes index entries in a normalized form useful for fast i18n friendly searches. 
- * <p>This class allows indeed to converts words of latin languages in a form
+ * <p>This class allows indeed to convert word of latin languages to a form
  * without accents nor diacritics.</p>
  */
 public class I18nFriendlyIndexEntries implements IndexEntriesCalculator {

@@ -26,9 +26,9 @@ import com.hp.hpl.jena.shared.JenaException;
  */
 public class ModelCorrector {
 /** ArrayList de Correction */
-private ArrayList corrections;
+private ArrayList<Correction> corrections;
 public ModelCorrector() {
-	this.corrections = new ArrayList(10);
+	this.corrections = new ArrayList<Correction>(10);
 }
 public void add(Correction correction) { this.corrections.add(correction); }
 
@@ -51,8 +51,7 @@ private boolean correctModel(String slFile, String base, int modelType) throws J
 	long lastModified = file.lastModified();
 	JFileModel jFileModel = null;
 	boolean hasChanged = false;
-	for (int i = 0; i < corrections.size(); i++) {
-		Correction correction = (Correction) corrections.get(i);
+	for (Correction correction : corrections) {
 		if (lastModified < correction.getTime()) {
 			if (jFileModel == null) jFileModel = new JFileModel(slFile, base);
 			Model mod = jFileModel.getModel();

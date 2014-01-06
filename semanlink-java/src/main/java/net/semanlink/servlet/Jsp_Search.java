@@ -2,12 +2,17 @@
 package net.semanlink.servlet;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.hp.hpl.jena.rdf.model.Model;
 
+import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLModel;
 import net.semanlink.util.URLUTF8Encoder;
 
@@ -18,12 +23,16 @@ import net.semanlink.util.URLUTF8Encoder;
 public class Jsp_Search extends Jsp_Page {
 private String searchString;
 /** BEWARE, the list contains aliases that are not resolved. */
-private List kws;
+private List<SLKeyword> kws;
 public Jsp_Search(String searchString, HttpServletRequest request) {
 	super(request);
 	this.searchString = searchString;
 	SLModel mod = SLServlet.getSLModel();
-	this.kws = mod.getThesaurusIndex().search(searchString);
+	Set<SLKeyword> kwSet = mod.getThesaurusIndex().searchText(searchString);
+	this.kws = new ArrayList<SLKeyword>(kwSet.size());
+  this.kws.addAll(kwSet);
+	
+	
 	// System.out.println("Jsp_Search size "+ this.kws.size());
 	Collections.sort(this.kws);
 	this.beanKwList.setList(kws);

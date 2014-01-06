@@ -29,7 +29,7 @@ public SelectResult(InputStream sparqlSelectIS) throws ValidityException, Parsin
   
   Elements variableElements = headElement.getChildElements("variable", ns);
   int varNb = variableElements.size();
-  String[] variables = new String[varNb];
+  variables = new String[varNb];
   for (int i = 0; i < varNb; i++) {
   	variables[i] = variableElements.get(i).getAttributeValue("name");
   }
@@ -129,24 +129,24 @@ static public class Binding {
 <?xml version="1.0"?>
 <sparql xmlns="http://www.w3.org/2005/sparql-results#">
   <head>
-    <variable name="elt"/>
+    <variable name="tag"/>
     <variable name="label"/>
   </head>
   <results>
     <result>
-      <binding name="elt">
-        <uri>http://www.renault.com/euro5/referentiel/rdc/element_176</uri>
+      <binding name="tag">
+        <uri>http://www.semanlink.net/tag/niger</uri>
       </binding>
       <binding name="label">
-        <literal xml:lang="fr">commande de blocage de levier de bo√Æte de vitesses</literal>
+        <literal xml:lang="fr">Niger</literal>
       </binding>
     </result>
     <result>
-      <binding name="elt">
-        <uri>http://www.renault.com/euro5/referentiel/rdc/element_4</uri>
+      <binding name="tag">
+        <uri>http://www.semanlink.net/tag/mali</uri>
       </binding>
       <binding name="label">
-        <literal xml:lang="fr">√©l√©ments porteurs avant</literal>
+        <literal xml:lang="fr">Mali</literal>
       </binding>
     </result>
   </results>

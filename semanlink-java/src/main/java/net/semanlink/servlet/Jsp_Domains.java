@@ -25,7 +25,7 @@ public Jsp_Domains(HttpServletRequest request) throws Exception {
 	super(request);
 }
 
-public String getTitle() throws Exception {
+public String getTitle() {
 	// String x = i18l("topmenu.newEntries");
 	String x = "Domains used in bookmarks";
 	return x;

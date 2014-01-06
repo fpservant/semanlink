@@ -56,12 +56,6 @@ protected SPARQLUpdateEndPoint getSparqlUpdateEndPoint() {
 	return this.sparqlUpdateEndPoint;
 }
 
-
-
-public void init() {
-	super.init();
-}
-
 //
 // POST CF SPARQL UPDATE
 //

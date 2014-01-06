@@ -1,4 +1,5 @@
 package net.semanlink.graph;
+/** Listener receiving the events generated during a GraphTraversal */
 public interface WalkListener<NODE> {
 	/** Gets called when beginning a seed. */
   public void startSeed(NODE seed) throws Exception;

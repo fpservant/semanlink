@@ -15,20 +15,6 @@ import net.semanlink.util.servlet.Jsp_Page;
 public class Jsp_RDF2HTMLPage extends Jsp_Page {
 
 /**
- * @param rdfUrl: the URL the RDF can be downloaded from. Supposed to be on this server
- */
-public Jsp_RDF2HTMLPage(HttpServletRequest request, HttpServletResponse response, String rdfUrl) {
-	this(request, response, "centercontent", rdfUrl, null, false);
-}
-
-/**
- * @deprecated use Jsp_RDF2HTMLPage(request, response, "centercontent", rdfUrl, mainResUri, displayAllResInList) instead
- */
-public Jsp_RDF2HTMLPage(HttpServletRequest request, HttpServletResponse response, String rdfUrl, String mainResUri, boolean displayAllResInList) {
-	this(request, response, "centercontent", rdfUrl, mainResUri, displayAllResInList);
-}
-
-/**
  * @param divId id of the div into which the rdf will be displayed
  * @param rdfUrl the URL the RDF can be downloaded from. Supposed to be on this server.
  * @param mainResUri Main resource to be displayed, if one res in the RDF located at rdfUrl is the focus of the display. 

@@ -60,8 +60,8 @@ String changedUri(Resource res) {
 public boolean correct(Model mod) {
 	StmtIterator it = mod.listStatements();
 	
-	List oldStaList = new ArrayList();
-	List newStaList = new ArrayList();
+	List<Statement> oldStaList = new ArrayList<Statement>();
+	List<Statement> newStaList = new ArrayList<Statement>();
 
 	for (;it.hasNext();) {
 		Statement sta = it.nextStatement();

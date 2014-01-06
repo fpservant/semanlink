@@ -6,16 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.semanlink.semanlink.SLSchema;
-import net.semanlink.skos.SKOS;
-import net.semanlink.sljena.JModel;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.NodeIterator;
-import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
-import com.hp.hpl.jena.vocabulary.RDFS;
 
 /**
  * To be used to correct some documents that are tagged with aliases

@@ -41,7 +41,7 @@ public LODDataset getLODDataset() {
 	return this.dataset;
 }
 
-public void init() {
+public void init() throws ServletException {
 	super.init();
 	dataset = initDataset();
 	//getServletContext().setAttribute("LODServletPaths", dataset)

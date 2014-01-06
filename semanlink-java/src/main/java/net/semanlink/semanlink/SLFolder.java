@@ -12,7 +12,7 @@ public class SLFolder {
 private File dir;
 private String uri;
 private SLModel mod;
-private ArrayList docList;
+private ArrayList<SLDocument> docList;
 /**
  * A directory (in  the meaning of the OS), seen as a list of SLDocuments. 
  * 
@@ -28,17 +28,17 @@ public SLFolder(File dir, String uri, SLModel mod) {
 }
 
 /** Content of this directory, as a List of SLDocument */
-public List getDocList() throws URISyntaxException {
+public List<SLDocument> getDocList() throws URISyntaxException {
 	if (this.docList == null) {
 		this.docList = computeDocList();
 	}
 	return this.docList;
 }
 
-private ArrayList computeDocList() throws URISyntaxException {
+private ArrayList<SLDocument> computeDocList() throws URISyntaxException {
 	boolean fileProtocol = (this.uri.startsWith("file:"));
 	String[] list = dir.list();
-	ArrayList al = new ArrayList();
+	ArrayList<SLDocument> al = new ArrayList<SLDocument>();
 	// String encodedUri = URLUTF8Encoder.encode(uri); // TODO RECREER CA : encodage une seule fois de la dir
 	for (int i = 0; i < list.length; i++) {
 		String sf = list[i];
@@ -56,18 +56,18 @@ private ArrayList computeDocList() throws URISyntaxException {
 					if (!(sf.endsWith("/"))) sf += "/";
 				}
 				// doc = mod.getDocument( FileUriFormat.fileToUri(this.uri, AccentComposer.composeAccents(sf))); // AccentComposer 2004-08
-				// La situation : uri est correcte, �ventuellement avec des car quot�s, (genre %20)
-				// Mais sf n'a pas ses car quot�s. Pb : quoter ces car.
-				// Ceci ne marche pas si uri contient, par ex, des %20 (cad si c'est une uri correcte, mais avec des car quot�s)
-				// � cause d'un pb ds laxistRelativPath2Uri sur ces cas (voir laxistRelativPath2Uri)
+				// La situation : uri est correcte, éventuellement avec des car quotés, (genre %20)
+				// Mais sf n'a pas ses car quotés. Pb : quoter ces car.
+				// Ceci ne marche pas si uri contient, par ex, des %20 (cad si c'est une uri correcte, mais avec des car quotés)
+				// à cause d'un pb ds laxistRelativPath2Uri sur ces cas (voir laxistRelativPath2Uri)
 				// doc = mod.getDocument( SLUtils.laxistRelativPath2Uri(this.uri, AccentComposer.composeAccents(sf))); // AccentComposer 2004-08
-				// d'o� (2006/01) ce hack pour quoter les car de sf : utiliser SLUtils.laxistRelativPath2Uri avec une uri sans car quot�s
+				// d'où (2006/01) ce hack pour quoter les car de sf : utiliser SLUtils.laxistRelativPath2Uri avec une uri sans car quotés
 				/* String s = SLUtils.laxistRelativPath2Uri("http://www.semanlink.net/", AccentComposer.composeAccents(sf)); // AccentComposer 2004-08
 				s = s.substring("http://www.semanlink.net/".length());
-				// je me suis assur� � la construction que uri est "/" terminated
+				// je me suis assuré à la construction que uri est "/" terminated
 				s = this.uri + s; */
 				String s = SLUtils.notQuotedToQuotedUriRelativPath(AccentComposer.composeAccents(sf)); // AccentComposer 2004-08
-				// je me suis assur� � la construction que uri est "/" terminated
+				// je me suis assuré à la construction que uri est "/" terminated
 				s = this.uri + s;
 				doc = mod.getDocument(s);
 			}

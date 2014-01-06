@@ -4,11 +4,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Locale;
+
 import net.semanlink.semanlink.SLModel;
 import net.semanlink.sljena.JenaUtils;
 import net.semanlink.util.Util;
+
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ResIterator;
 import com.hp.hpl.jena.rdf.model.Resource;
@@ -35,13 +36,12 @@ public BadFileUrisCorrection(SLModel slModel) {
 public boolean correctDocsModel(Model mod) {
 	ResIterator resIte = mod.listSubjects();
 	// pour ne pas risquer des pbs en modifiant le model en cours d'iteration :
-	ArrayList al = new ArrayList();
+	ArrayList<Resource> al = new ArrayList<Resource>();
 	for (;resIte.hasNext();) {
 		al.add(resIte.next());
 	}
 	boolean hasChanged = false;
-	for (Iterator ite = al.iterator(); ite.hasNext();) {
-		Resource res = (Resource) ite.next();
+	for (Resource res : al) {
 		String uri = res.getURI();
 		try {
 			new URI(uri);

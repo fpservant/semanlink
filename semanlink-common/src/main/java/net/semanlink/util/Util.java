@@ -118,8 +118,8 @@ public static long shortDate2Long(String date, Locale locale) throws ParseExcept
 //
 
 public static void printParams(HttpServletRequest request) {
-	for (Enumeration e = request.getParameterNames();e.hasMoreElements();) {
-		String param = (String) e.nextElement();
+	for (Enumeration<String> e = request.getParameterNames();e.hasMoreElements();) {
+		String param = e.nextElement();
 		String val = request.getParameter(param);
 		System.out.println(param + ": " + val);
 	}
@@ -172,9 +172,9 @@ public static boolean isIE(HttpServletRequest req) {
 }
 
 public static void printHttpHeaders(HttpServletRequest req) {
-	java.util.Enumeration nue = req.getHeaderNames();
+	Enumeration<String> nue = req.getHeaderNames();
 	for (;nue.hasMoreElements();) {
-		String header = (String) nue.nextElement();
+		String header = nue.nextElement();
 		System.out.println(header + " : " + req.getHeader(header));
 	}
 }
@@ -192,7 +192,7 @@ public static void printHttpHeaders(HttpServletRequest req) {
 public static String removeIllegalXMLChars(String s) {
 	if (s == null) return null;
 	int n = s.length();
-	StringBuffer sb = new StringBuffer(n);
+	StringBuilder sb = new StringBuilder(n);
 	for (int i = 0; i < n; i++) {
 	  char c = s.charAt(i);
 	  if (isLegalXMLChar(c)) sb.append(c);
@@ -229,7 +229,7 @@ public static String handleAmpersandInHREF(String uri) {
 	k = uri.indexOf("?");
 	if (k < 0) return uri;
 	k++;
-	StringBuffer x = new StringBuffer(uri.substring(0,k));
+	StringBuilder x = new StringBuilder(uri.substring(0,k));
 	if (k < uri.length()) {
 		String end = uri.substring(k);
 		for(;;) {

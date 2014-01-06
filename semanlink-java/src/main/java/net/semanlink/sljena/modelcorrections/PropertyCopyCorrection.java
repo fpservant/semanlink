@@ -2,7 +2,6 @@
 package net.semanlink.sljena.modelcorrections;
 
 import java.io.IOException;
-import java.util.List;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Property;

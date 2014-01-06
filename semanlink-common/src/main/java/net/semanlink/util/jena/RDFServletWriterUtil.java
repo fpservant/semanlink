@@ -9,14 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.hp.hpl.jena.rdf.model.Model;
 
 public class RDFServletWriterUtil {
+private RDFServletWriterUtil() {}
 
 public static void writeRDF(Model model, HttpServletResponse response) throws IOException, ServletException {
 	RDFServletWriterUtil.writeRDF(model, response, null, null, null);
 }
 
-public static void writeRDF(Model model, HttpServletResponse response, String xmlBase, String rdfKind, String relativeURIsProp) throws IOException, ServletException {
-	try {
-		
+public static void writeRDF(Model model, HttpServletResponse response, String xmlBase, String rdfKind, String relativeURIsProp) throws IOException, ServletException {	
 			// TODO !!!
 		
 			// BEWARE: XMLHTTPRequests prefers "text/xml" - but we should return application/rdf+xml
@@ -32,10 +31,6 @@ public static void writeRDF(Model model, HttpServletResponse response, String xm
 			}
 			
 			RDFWriterUtil.writeRDF(model, response.getOutputStream(), xmlBase, rdfKind, relativeURIsProp);
-	} catch (Exception e) {
-	 e.printStackTrace();
-	 throw new RuntimeException(e);
-	}
 }
 
 }

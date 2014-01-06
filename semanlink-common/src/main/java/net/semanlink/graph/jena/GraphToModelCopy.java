@@ -19,7 +19,7 @@ import com.hp.hpl.jena.rdf.model.*;
  */
 public class GraphToModelCopy extends WalkListenerImpl<Resource> {
 	
-public static String SEPARATOR_IN_POSITION = ".";
+public static final String SEPARATOR_IN_POSITION = ".";
 protected Graph<Resource> sourceGraph;
 /** the Model to be constructed. */
 protected Model mod;

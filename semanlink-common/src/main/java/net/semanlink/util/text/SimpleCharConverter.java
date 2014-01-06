@@ -123,36 +123,7 @@ public static char[] computeCollatorBasedConversionTable(int dim, Collator coll)
 	  }
 	  x[s[i].charAt(0)] = smallestAmongEqualChars.charAt(0);
 	}
-  /*for (int i = 0; i < dim; i++) {
-      System.out.println(i + " " + (char) i + " " + x[i]);
-  }*/
 	return x;
 } // computeSimpleConversionTable
-
-//
-// TEST
-//
-
-public static void main (String args[]) {
-	String testString;
-	if (args.length > 0) {
-		testString = args[0];
-	} else {
-		testString = "é,è,ê,ç,à,ù,ä,ü,ö,á,Á,œ,ñ,Æ,ü";
-	}
-	tryIt(testString);
 }
-
-static void tryIt(String testString) {
-	// tryIt(testString, collatorBasedConverter(256, new Locale("fr","FR")));
-	tryIt(testString, collatorBasedConverter(256*256, new Locale("fr","FR")));
-}
-
-static void tryIt(String s, SimpleCharConverter con) {
-	System.out.println(s + " gets converted to:");
-	System.out.println(con.convert(s));
-	System.out.println("");
-}
-
-} // class CharConverter
 

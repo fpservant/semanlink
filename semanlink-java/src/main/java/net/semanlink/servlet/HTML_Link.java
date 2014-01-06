@@ -3,19 +3,16 @@ import glguerin.io.AccentComposer;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.semanlink.semanlink.PropertyValues;
 import net.semanlink.semanlink.SLDocument;
 import net.semanlink.semanlink.SLKeyword;
-import net.semanlink.semanlink.PropertyValues;
 import net.semanlink.semanlink.SLThesaurus;
 import net.semanlink.util.FileUriFormat;
-import net.semanlink.util.Util;
 
 /**
  * De quoi documenter un lien HTML, et des methodes statiques pour les creer pour

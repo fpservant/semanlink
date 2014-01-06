@@ -51,7 +51,6 @@ public static String res2string(Resource res) {
 	StmtIterator it = res.listProperties();
 	for (;it.hasNext();) {
 		Statement sta = it.nextStatement();
-		// sb.append("\t" + sta.getPredicate().getLocalName() + ": " + sta.getObject() + "\n");
 		sb.append("\t" + sta.getPredicate() + ": " + sta.getObject() + "\n");
 	}
 	return sb.toString();
@@ -132,7 +131,6 @@ private static boolean loadRDFFileUtil(File f, Model model, String base, Logger 
 	if (s.endsWith(".rdf")) lang = "RDF/XML";
 	else if (s.endsWith(".n3")) lang = "N3";
 	else if (s.endsWith(".ttl")) lang = "TURTLE";
-	else { } // throw new RuntimeException("Unexpected file " + f);
 	boolean x = false;
 	if (lang != null) {
 		if (logger != null) logger.info("Loading " + f);
@@ -141,8 +139,6 @@ private static boolean loadRDFFileUtil(File f, Model model, String base, Logger 
 		in.close();
 		x = true;
 	}
-	/*if (x) System.out.println("\tmodel.size: " + model.size());
-	else System.out.println();*/
 	return x;
 }
 
@@ -207,30 +203,6 @@ public static Literal getLabelAsLiteral(Resource res, String lang) {
  * @param a property whose values are String Literals
  * @param lang the searched language. Null if search for a label without defined language. */
 public static String getLabel(Resource res, Property labelProp, String lang) {
-	/*
-	NodeIterator it = res.getModel().listObjectsOfProperty(res, labelProp);
-	String x = null;
-	if (lang == null) {
-		for(;it.hasNext();) {
-			Literal lit = (Literal) it.next();
-			String litLang = lit.getLanguage();
-			if ((litLang == null) || ("".equals(litLang))) {
-				x = lit.getString();
-				break;
-			}
-		}
-	} else {
-		for(;it.hasNext();) {
-			Literal lit = (Literal) it.next();
-			if (lang.equals(lit.getLanguage())) {
-				x = lit.getString();
-				break;
-			}
-		}
-	}
-	it.close();
-	return x;
-	*/
 	Literal x = getLabelAsLiteral(res, labelProp, lang);
 	if (x == null) return null;
 	return x.getString();	
@@ -275,16 +247,6 @@ public static Literal getLabelAsLiteral(Resource res, Property labelProp, String
  * @return null if no label in any of the languages listed in langs
  */
 public static String getLabel(Resource res, Property labelProp, String... langs) {
-	/*if (langs == null) {
-		String x = getLabel(res, labelProp, (String) null);
-		if (x != null) return x;
-	} else {
-		for(String lang: langs)	{
-			String x = getLabel(res, labelProp, lang);
-			if (x != null) return x;
-		}
-	}
-	return null;*/
 	Literal x = getLabelAsLiteral(res, labelProp, langs);
 	if (x == null) return null;
 	return x.getString();	
@@ -322,33 +284,6 @@ public static Literal getLabelAsLiteral(Resource res, Property labelProp, String
  * (In that case, if there is a lit without any defined language, this one is returned.)
  */
 public static String getLabel(Resource res, Property labelProp, String lang, boolean returnAnyLabelIfNoneInLang) {
-	/*
-	NodeIterator it = res.getModel().listObjectsOfProperty(res, labelProp);
-	try {
-		Literal lit = null;
-		Literal litWithoutDefinedLang = null;
-		for(;it.hasNext();) {
-			lit = (Literal) it.next();
-			String litLang = lit.getLanguage();
-			if (lang == null) {
-				if (litLang == null) return lit.getString();
-				if ("".equals(litLang)) return lit.getString();
-			} else {
-				if (lang.equals(litLang)) {
-					return lit.getString();
-				}
-				if (litLang == null) litWithoutDefinedLang = lit;
-				if ("".equals(litLang)) litWithoutDefinedLang = lit;
-			}
-		}
-		if (lit == null) return null;
-		if (returnAnyLabelIfNoneInLang) {
-			if (litWithoutDefinedLang != null) return litWithoutDefinedLang.getString();
-			return lit.getString();
-		}
-	} finally {it.close();}
-	return null;
-	*/
 	Literal x = getLabelAsLiteral(res, labelProp, lang, returnAnyLabelIfNoneInLang);
 	if (x == null) return null;
 	return x.getString();
@@ -382,17 +317,6 @@ public static Literal getLabelAsLiteral(Resource res, Property labelProp, String
 	return null;
 }
 
-
-/*
-public static String getLabel(Resource res, Property labelProp, boolean returnAnyLabelIfNoneInLangs, String... langs) {
-	for(String lang: langs)	{
-		String x = getLabel(res, labelProp, lang);
-		if (x != null) return x;
-	}
-	if (returnAnyLabelIfNoneInLangs) return getLabel(res, labelProp, (String) null);
-	return null;
-}
-*/
 
 //
 //

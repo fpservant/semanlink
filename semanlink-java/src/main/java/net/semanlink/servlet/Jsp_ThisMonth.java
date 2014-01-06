@@ -54,7 +54,7 @@ protected void computeKWs() throws Exception {
 //
 //
 
-public String getTitle() throws Exception {
+public String getTitle() {
 	// String x = "New Entries (" + this.getDocs().size() + " documents in the last " + nbOfDays + " days)";
 	String x = i18l("topmenu.newEntries");
 	if (this.kws == null) return x;

@@ -13,7 +13,6 @@ protected ServletContext servletContext;
 protected HttpServletRequest request;
 protected HttpServletResponse response;
 protected String title;
-private String moreHeadersJsp = null;
 private List<String> moreHeadersJspList = null;
 private Set<String> onLoadEvents = null;
 
@@ -56,8 +55,6 @@ public void setCenterBoxJsp(String jsp) { this.centerBoxJsp = jsp; }
 // THINGS THAT CAN BE CUSTOMIZED IN template.jsp
 //
 
-/** JSP used to include headers in addition to those already defined in template.jsp (@see template.jsp) */
-public String getMoreHeadersJsp() { return this.moreHeadersJsp; }
 // public void setMoreHeadersJsp(String x) { this.moreHeadersJsp = x; } // added to be used by about.jsp to display sparql results as html
 public void setMoreHeadersJsp(String x) { // added to be used by about.jsp to display sparql results as html
 	addMoreHeadersJsp(x);
@@ -70,10 +67,6 @@ public void addMoreHeadersJsp(String jspName) {
 
 /** return null to just have a simple "<body>" tag. */
 public String getBodyTag() { return null; }
-/** @see Jsp_RDF2HTMLPage 
- * @deprecated see RDFIntoDiv */
-public String loadRDFScript() { return null; }
-// 2010-06
 
 /** To add "onLoad" events to the body of the generated html page.
  * BEWARE that the corresponding javascript methods must be defined somewhere. You can use addMoreHeadersJsp for this purpose. */
@@ -153,9 +146,8 @@ public String getContextPath() { return this.request.getContextPath(); }
 /** /dtc */
 public String getServletPath() { return this.request.getServletPath(); }
 
-/** /9106 */
 public String getPathInfo() {
-    // return this.request.getPathInfo();
+    // instead of: return this.request.getPathInfo();
     return BasicServlet.getPathInfo_Patched(this.request);
 }
 
@@ -168,7 +160,7 @@ public String getContextURL() throws MalformedURLException {
 //
 
 public void setTitle(String s) { this.title = s; }
-public String getTitle() throws Exception { 
+public String getTitle() { 
     if (this.title != null) return this.title;
     return "Untitled";
 }

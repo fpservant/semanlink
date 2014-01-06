@@ -3,7 +3,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import net.semanlink.semanlink.SLKeywordAdapter;
+import net.semanlink.semanlink.SLDocument;
+import net.semanlink.semanlink.SLKeyword;
+import net.semanlink.semanlink.SLResourceAdapter;
 import net.semanlink.semanlink.SLVocab;
 
 import com.hp.hpl.jena.rdf.model.Literal;
@@ -12,8 +14,7 @@ import com.hp.hpl.jena.rdf.model.NodeIterator;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 
-/** implemente l'interface de SLKeyword. */
-public class JKeyword extends SLKeywordAdapter { // , Transferable {
+public class JKeyword extends SLResourceAdapter implements SLKeyword {
 private Resource res;
 private JModel jModel;
 
@@ -116,16 +117,15 @@ static String res2shortString(Resource res) {
 }
 
 
-public List getParents() {
-  ArrayList x = this.jModel.getParentsList(this.res);
-  return x;
+public List<SLKeyword> getParents() {
+  return this.jModel.getParentsList(this.res);
 }
 
-public List getChildren() {
+public List<SLKeyword> getChildren() {
 	return this.jModel.getChildrenList(this.res);
 }
 
-public List getFriends() {
+public List<SLKeyword> getFriends() {
 	return this.jModel.getFriendsList(this.res);
 }
 
@@ -134,7 +134,7 @@ public boolean hasChild() {
 	return this.jModel.hasChild(this.res);
 }
 
-public List getDocuments() {
+public List<SLDocument> getDocuments() {
   return this.jModel.getDocumentsList(this.res);
 }
 

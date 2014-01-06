@@ -35,13 +35,6 @@ String commentString = "<!--" + jsp.getClass().getName() + "-->";
 	</script>
 	
 	<%
-	// 2010-06 : on n'avait qu'une seule moreHeadersJsp, mais on a ajouté une liste pour RDFIntoDiv
-	// Faudra nettoyer ça (gardr que la liste ?)
-	String moreHeadersJsp = jsp.getMoreHeadersJsp();
-	if (moreHeadersJsp != null) {
-		%><jsp:include flush="true" page="<%=moreHeadersJsp%>"></jsp:include><%
-	}
-
 	List<String> moreHeadersJspList = jsp.getMoreHeadersJspList();
 	if (moreHeadersJspList != null) {
 		for (String moreHeaders : moreHeadersJspList) {

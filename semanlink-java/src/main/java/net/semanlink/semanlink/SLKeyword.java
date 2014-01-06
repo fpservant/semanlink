@@ -13,10 +13,10 @@ import java.util.List;
  * @author fps
  */
 public interface SLKeyword extends SLLabeledResource, SLVocab, Comparable {
-	public List getParents();
-	public List getChildren();
-	public List getFriends();
-	public List getDocuments();
+	public List<SLKeyword> getParents();
+	public List<SLKeyword> getChildren();
+	public List<SLKeyword> getFriends();
+	public List<SLDocument> getDocuments();
 	// used by livetree
 	public boolean hasChild();
 	public boolean hasDocument();

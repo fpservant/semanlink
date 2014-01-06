@@ -15,7 +15,7 @@ import com.hp.hpl.jena.rdf.model.Resource;
 
 /** to check that we don't get a java.lang.ClassNotFoundException: org.w3c.dom.ElementTraversal
  * that may happen depending on conflict resolution about xml-apis between xom and jena.
- * Has been solved by an exclusion in the dependecy to xom (semanlinkcommons.pom)
+ * Has been solved by an exclusion in the dependency to xom (semanlinkcommon.pom)
  */
 public class XMLAPIDependencyTest {
 

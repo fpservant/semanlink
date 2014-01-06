@@ -19,7 +19,7 @@ public Jsp_Thesaurus(SLThesaurus th, HttpServletRequest request) throws Exceptio
 	kws = getSLModel().getKWs(th);
 }
 
-public String getTitle() throws Exception { return "Thesaurus : " + th.toString() ; }
+public String getTitle() { return "Thesaurus : " + th.toString() ; }
 public String getLinkToThis() throws UnsupportedEncodingException {
 	String x = HTML_Link.linkToThesaurus(this.th).getPage();
 	// String x = super.getLinkToThis() + "?uri=" + URLEncoder.encode(this.th.getURI(), "UTF-8");

@@ -7,30 +7,27 @@ import java.util.Locale;
 
 /** Represents a pair (object, label). 
  *  The label is just a String: doesn't contain lang information. */
-public class ObjectLabelPair<ITEM> { // implements Comparable<ResourceLabelPair> {
-protected ITEM res;
+public class ObjectLabelPair<E> {
+protected E res;
 protected String label;
 
-public ObjectLabelPair(ITEM res, String label) {
+public ObjectLabelPair(E res, String label) {
 	this.res = res;
 	this.label = label;
 }
+
 public boolean equals(Object o) {
 	if (!(o instanceof ObjectLabelPair<?>)) return false;
 	ObjectLabelPair<?> opair = (ObjectLabelPair<?>) o;
 	return res.equals(opair.res) && label.equals(opair.label);
 }
+
 public int hashCode() {
 	return res.hashCode();
 }
-public ITEM getObject() { return this.res; }
-public String getLabel() { return this.label; }
 
-/*public int compareTo(ResourceLabelPair p) {
-	int x = getLabel().compareTo(p.getLabel());
-	if (x != 0) return x;
-	return getURI().compareTo(p.getURI());
-}*/
+public E getObject() { return this.res; }
+public String getLabel() { return this.label; }
 
 /** Allows to compare ObjectLabelPair on the text of their labels. */
 public static class CollatorBasedComparator implements Comparator<ObjectLabelPair<?>> {
@@ -43,7 +40,4 @@ public static class CollatorBasedComparator implements Comparator<ObjectLabelPai
 		return collator.getCollationKey(p0.getLabel()).compareTo(collator.getCollationKey(p1.getLabel()));
 	}
 }
-/*public static MultiLabelGetter<ResourceLabelPair> getMultiLabelGetterInstance() {
-	
-}*/
 }

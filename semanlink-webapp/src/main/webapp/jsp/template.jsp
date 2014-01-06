@@ -197,12 +197,6 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 	</script>
 	
 	<%
-	String moreHeadersJsp = jsp.getMoreHeadersJsp();
-	if (moreHeadersJsp != null) {
-		%><jsp:include page="<%=moreHeadersJsp%>" /><%
-	}
-	
-	// 2010-06
 	List<String> moreHeadersJspList = jsp.getMoreHeadersJspList();
 	if (moreHeadersJspList != null) {
 		for (String moreHeaders : moreHeadersJspList) {

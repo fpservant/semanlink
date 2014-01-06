@@ -1,20 +1,21 @@
 package net.semanlink.servlet;
 import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Locale;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.httpclient.HttpException;
-import org.apache.struts.action.*;
-
-import net.semanlink.semanlink.*;
-import net.semanlink.util.SimpleHttpClient;
+import net.semanlink.semanlink.SLDocument;
+import net.semanlink.semanlink.SLKeyword;
+import net.semanlink.semanlink.SLModel;
+import net.semanlink.semanlink.SLUtils;
+import net.semanlink.semanlink.SLVocab;
 import net.semanlink.util.Util;
 import net.semanlink.util.html.HTMLPageDownload;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 /*
  // YA 2 TRUCS NULS : 

@@ -56,7 +56,7 @@ private File schemaRDFFile;
 /** The folder inside the web app folder that contains the JSP. */ // TODO a mettre dans BasicServlet. Accès d'ailleurs ? ds contexte ?
 protected String JSPFolder = "/jsp/iso3166/";
 
-public void init() {
+public void init() throws ServletException {
 	// setTemplateJSP("/jsp/iso3166/template.jsp");
 	String s = this.getInitParameter("WebAppURL");
 	if (!s.endsWith("/")) s += "/";
@@ -166,7 +166,7 @@ public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOExce
 		uri = uri.substring(0, uri.length()-5);
 		
 		//Jsp_RDFPage_JSBased jsp = new Jsp_RDFPage_JSBased(req, res, this, uri, uri);
-		Jsp_RDF2HTMLPage jsp = new Jsp_RDF2HTMLPage(req, res, uri, null, true);
+		Jsp_RDF2HTMLPage jsp = new Jsp_RDF2HTMLPage(req, res, "centercontent", uri, null, true);
 		forward2Jsp(req, res, jsp);
 		return;
 
@@ -183,7 +183,7 @@ public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOExce
 		uri = uri.substring(0, uri.length()-5);
 		
 		//Jsp_RDFPage_JSBased jsp = new Jsp_RDFPage_JSBased(req, res, this, uri, uri);
-		Jsp_RDF2HTMLPage jsp = new Jsp_RDF2HTMLPage(req, res, uri, null, true);
+		Jsp_RDF2HTMLPage jsp = new Jsp_RDF2HTMLPage(req, res, "centercontent", uri, null, true);
 		forward2Jsp(req, res, jsp);
 		return;
 
