@@ -74,6 +74,10 @@ public static void writeRDF(Model model, OutputStream out, String xmlBase, Strin
 	  model.setNsPrefix("rdf",RDF.getURI());
 	}
 
+  //WRITING THE RDF FILE
+  // using RDF/XML-ABBREV to have lists serialized as rdf:parseType="Collection" // ??
+  if (rdfKind == null) rdfKind = "RDF/XML"; // "RDF/XML-ABBREV"
+  
 	// There is a problem when we have a NS prefix whose prefix is ""
 	// The writer writes things such as:
 	/*
@@ -85,13 +89,11 @@ public static void writeRDF(Model model, OutputStream out, String xmlBase, Strin
 	                     xmlns="&;"
 	*/
 	// and that gives problems // Which ones? not a problem to report to Jena?
-  if (!("N3".equals(rdfKind))) {
+  if (rdfKind.indexOf("XML") > -1) {
   	model.removeNsPrefix("");
   }
 	
-  //WRITING THE RDF FILE
-  // using RDF/XML-ABBREV to have lists serialized as rdf:parseType="Collection" // ??
-  if (rdfKind == null) rdfKind = "RDF/XML"; // "RDF/XML-ABBREV"
+
   RDFWriter rdfWriter = model.getWriter(rdfKind);
   
 	if (relativeURIsProp != null) {

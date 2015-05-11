@@ -203,7 +203,12 @@ private boolean isLocal(String docUri) {
 		if (docUri.startsWith("file:/")) return true;
 		if (docUri.startsWith("http://127.0.0.1")) return true;
 		if (docUri.startsWith("http://localhost")) return true;
-		if (docUri.contains("renault")) return true; //
+		if (docUri.contains("renault")) {
+			if (docUri.contains("rplug.renault.com")) {
+				return false;
+			}
+			return true;
+		}
 		return false;
 }
 

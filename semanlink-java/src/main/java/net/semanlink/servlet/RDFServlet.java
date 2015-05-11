@@ -9,13 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.semanlink.lod.JsonLDSerializer;
 import net.semanlink.skos.SKOS;
 import net.semanlink.util.AcceptHeader;
 import net.semanlink.util.jena.RDFWriterUtil;
-import net.semanlink.util.jsonld.JsonLDSerializerImpl;
-
-import org.openjena.riot.SysRIOT;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.sparql.vocabulary.FOAF;
@@ -29,13 +25,7 @@ import com.hp.hpl.jena.vocabulary.RDFS;
  * @author fps
  */
 public class RDFServlet extends HttpServlet {
-private JsonLDSerializer jsonRDFSerializer;
 // protected static boolean rdfJsonTalisInited = false;
-
-public void init() throws ServletException {
-	SysRIOT.wireIntoJena();
-	jsonRDFSerializer = new JsonLDSerializerImpl(true);
-}
 
 public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 	doIt(request, response);
@@ -79,8 +69,9 @@ private void doIt(HttpServletRequest request, HttpServletResponse response) thro
 	if (isN3) {
 		contentType = AcceptHeader.RDF_N3;
 		jenaRDFKind = "N3";
-	} else if (isJSONLD) { // 2012-08 JSON-LD
+	} else if (isJSONLD) { // 2012-08 JSON-LD 
 		contentType = AcceptHeader.JSON_LD;		
+		jenaRDFKind = "JSON-LD"; // v1.6.2
 	} else if (isTalisRDFJson) { // 2012-08 RDF/JSON TALIS
 		contentType = AcceptHeader.RDF_JSON_TALIS;		
 		jenaRDFKind = "RDF/JSON";
@@ -95,22 +86,18 @@ private void doIt(HttpServletRequest request, HttpServletResponse response) thro
 	response.setHeader("Access-Control-Allow-Origin", "*"); // CORS 2012-08
 	OutputStream out = response.getOutputStream();
 
-	if (isJSONLD) { // 2012-08 JSON-LD
-		jsonRDFSerializer.rdf2jsonld(rdfMod, out);
+	setPrefixes(rdfMod);
+	String relativeURIsProp = "same-document, absolute, relative";
+	// I wanted to write in the file a base different from the base I use to actually write the file
+	// But there seems to be a bug in jena 2.4: when setting the "xmlbase" attribute
+	// (that documents the xml base), the base arg in RDFWriter.write is not used as base
+	// (the value of property xmlbase is used instead)
+	// String thURI = SLServlet.getSLModel().getDefaultThesaurus().getBase(); // assure un / à la fin
+	// rdfWriter.setProperty("xmlbase", Util.getContextURL(request) + "/tag/");
+	// rdfWriter.setProperty("xmlbase", thURI);
+	String xmlBase = null;
+	RDFWriterUtil.writeRDF(rdfMod, out, xmlBase, jenaRDFKind, relativeURIsProp, false);
 
-	} else {
-		setPrefixes(rdfMod);
-		String relativeURIsProp = "same-document, absolute, relative";
-		// I wanted to write in the file a base different from the base I use to actually write the file
-		// But there seems to be a bug in jena 2.4: when setting the "xmlbase" attribute
-		// (that documents the xml base), the base arg in RDFWriter.write is not used as base
-		// (the value of property xmlbase is used instead)
-		// String thURI = SLServlet.getSLModel().getDefaultThesaurus().getBase(); // assure un / à la fin
-		// rdfWriter.setProperty("xmlbase", Util.getContextURL(request) + "/tag/");
-		// rdfWriter.setProperty("xmlbase", thURI);
-		String xmlBase = null;
-		RDFWriterUtil.writeRDF(rdfMod, out, xmlBase, jenaRDFKind, relativeURIsProp, false);
-	}
 	out.flush();
 }
 

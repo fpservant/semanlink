@@ -31,10 +31,6 @@ protected SPARQLUpdateEndPoint sparqlUpdateEndPoint;
 protected String xmlBase;
 protected String getXMLBase() { return xmlBase; }
 
-// 2012-08 JSON-LD
-private JsonLDSerializer jsonLDSerializer;
-protected void setJsonLDSerializer(JsonLDSerializer jsonLDSerializer) { this.jsonLDSerializer = jsonLDSerializer;}
-
 //
 // INIT
 //
@@ -139,12 +135,11 @@ protected void doGetSparql(HttpServletRequest req, HttpServletResponse res) thro
 		Model resultModel = endpoint.getResultModel(query);
 		if ("n3".equals(as)) { 
 			RDFServletWriterUtil.writeRDF(resultModel,res, getXMLBase() , "N3", null);
-		} else if ("json".equals(as)) { // 2012-08 JSON-LD
-			if (jsonLDSerializer == null) throw new RuntimeException("No jsonLDSerializer defined");
+		} else if ("jsonld".equals(as)) { // 2012-08 JSON-LD
 			res.setContentType(AcceptHeader.JSON_LD);
-			jsonLDSerializer.rdf2jsonld(resultModel, res.getOutputStream());
-		} else if ("rj".equals(as)) { // 2012-08 RDF/JSON TALIS // cf http://dvcs.w3.org/hg/rdf/raw-file/default/rdf-json/index.html
-			res.setContentType(AcceptHeader.RDF_JSON_TALIS);
+			RDFServletWriterUtil.writeRDF(resultModel,res, getXMLBase() , "JSON-LD", null); // 2014-10
+//		} else if ("rj".equals(as)) { // 2012-08 RDF/JSON TALIS // cf http://dvcs.w3.org/hg/rdf/raw-file/default/rdf-json/index.html
+//			res.setContentType(AcceptHeader.RDF_JSON_TALIS);
 		} else {
 			RDFServletWriterUtil.writeRDF(resultModel,res, getXMLBase() , "RDF/XML", null); // "RDF/XML-ABBREV"
 		}

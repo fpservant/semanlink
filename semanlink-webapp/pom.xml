@@ -2,14 +2,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>semanlink-webapp</artifactId>
-	<version>0.4.2</version>
+	<version>0.5.0</version>
 	<packaging>war</packaging>
 	<name>semanlink</name>
 
 	<parent>
 		<groupId>net.semanlink</groupId>
 		<artifactId>semanlink-parent</artifactId>
-		<version>1</version>
+		<version>1.0.1</version>
 		<relativePath>../semanlink-parent</relativePath>
 	</parent>
 
@@ -17,7 +17,7 @@
 		<dependency>
 			<groupId>net.semanlink</groupId>
 			<artifactId>semanlink-java</artifactId>
-			<version>${project.version}</version>
+			<version>0.5.0</version>
 		</dependency>
 
 		<dependency>

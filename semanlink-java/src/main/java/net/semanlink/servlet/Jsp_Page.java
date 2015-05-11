@@ -50,7 +50,7 @@ public static String SHOW_DEFAULT_MODE = SHOW_TREE;*/
  * Must be reset to null if state of this changes
  */
 protected Bean_DocList docList;
-/** list of SLDocuments.
+/**
  * Achtung, must be accessed through its getter as it's computed only when needed. */
 protected Bean_KwList beanKwList;
 

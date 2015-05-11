@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>semanlink-lod-parent</artifactId>
-	<version>0.1.0</version>
+	<version>0.1.1</version>
 	<packaging>pom</packaging>
 	<name>Semanlink LOD parent</name>
 	<description>Implement some common features of a web application that publishes RDF data (sparql endpoint GUI, displaying RDF data using Tabulator's javascript parser)</description>
@@ -11,7 +11,7 @@
 	<parent>
 		<groupId>net.semanlink</groupId>
 		<artifactId>semanlink-parent</artifactId>
-		<version>1</version>
+		<version>1.0.1</version>
 		<relativePath>../semanlink-parent</relativePath>
 	</parent>
 

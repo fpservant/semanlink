@@ -5,20 +5,28 @@
 	<parent>
 		<groupId>net.semanlink</groupId>
 		<artifactId>semanlink-parent</artifactId>
-		<version>1</version>
+		<version>1.0.1</version>
 		<relativePath>../semanlink-parent</relativePath>
 	</parent>
 
 	<artifactId>semanlink-common</artifactId>
-	<version>0.1.0</version>
+	<version>0.1.1</version>
 	<packaging>jar</packaging>
 
 	<name>semanlink-common</name>
 
 	<dependencies>
+	<!-- 
 		<dependency>
 			<groupId>org.apache.jena</groupId>
 			<artifactId>jena-arq</artifactId>
+			<version>${version.jena}</version>
+		</dependency>
+	 -->
+		<dependency>
+			<groupId>org.apache.jena</groupId>
+		    <artifactId>apache-jena-libs</artifactId>
+		    <type>pom</type>
 			<version>${version.jena}</version>
 		</dependency>
 

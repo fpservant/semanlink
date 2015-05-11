@@ -108,7 +108,7 @@ public void depthFirstWalk(WalkListener<NODE> walkListener, Stack<NODE> stack, S
         walkListener.startSeed(node);
         if (notVisitedYet) {
             walk(node, walkListener, stack, treePosition);
-         } else {
+        } else {
             walkListener.repeatNode(node);
         }
         walkListener.endSeed(node);

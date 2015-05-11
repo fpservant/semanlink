@@ -7,11 +7,14 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.*;
 
+import org.apache.log4j.Logger;
+
 import net.semanlink.semanlink.SLVocab;
 import net.semanlink.sljena.ModelFileIOManager;
 
 import com.hp.hpl.jena.rdf.model.*;
 import com.hp.hpl.jena.shared.JenaException;
+import com.hp.hpl.jena.vocabulary.DC;
 
 
 
@@ -36,9 +39,25 @@ public SemanlinkConfigProps(File configFile, String servletUrl) throws JenaExcep
 	this.usePropertyProp = this.model.createProperty(SemanlinkConfig.SLC_USE_PROPERTY_PROP);
 	
 	if (! (configFile.exists()) ) {
-		System.out.println("Creation of props config file: " + configFile);
-		init();		
+		Logger.getLogger(getClass()).info("Creation of props config file: " + configFile);
+		init();	
 	}
+
+	// corrects bug found by Jeriel Perlman:
+	// exception when changing doc's title on a fresh install
+	// java.lang.Exception: Invalid property URI:dc:title
+	// at net.semanlink.servlet.Action_SetOrAddProperty.setOrAddProp(Action_SetOrAddProperty.java:80)
+	// (le setTitle utilise dc:title pour définir la prop qu'il modifie dans le mess envoyé au serveur)
+	this.model.setNsPrefix("dc",DC.NS);
+	for (SLVocab.EasyProperty easyProp : getEasyProps()) {
+		String shortProp = easyProp.getName();
+		Resource prop = model.createProperty(easyProp.getUri());
+		int k = shortProp.indexOf(":");
+		if ( k > 0) {
+			this.model.setNsPrefix(shortProp.substring(0,k),prop.getNameSpace());			
+		}
+	}
+
 	/* on ne peut tolérer aucune erreur sur la lecture
 	(for instance, we cannot tolerate a warning such as:
 	WARN [Thread-1] (RDFDefaultErrorHandler.java:36) - unknown-source: {W107} Bad U
@@ -75,6 +94,7 @@ public void save() throws JenaException, IOException, URISyntaxException {
 	try {
 		this.model.setNsPrefix("sl","http://www.semanlink.net/2001/00/semanlink-schema#");
 		this.model.setNsPrefix("slc",SemanlinkConfig.SEMANLINK_CONFIG_SCHEMA);
+		this.model.setNsPrefix("dc",DC.NS);
 		ModelFileIOManager.getInstance().writeModel(this.model, file.getPath(), base);
 	} finally {		}
 }

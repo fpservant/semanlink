@@ -4,8 +4,15 @@
 %>
 <h1>Release notes</h1>
 <div class="graybox">
+<h2>0.5.0 2015-05-09</h2>
+<ul>
+<li>Upgrade Jena to 2.13 -- Beware, <b>requires Java 7</b></li>
+<li>Corrects an exception that was thrown on a fresh install when changing the title of a document (thanks to Jarriel Perlman for reporting the problem)</li>
+<li>https documents can now be downloaded</li>
+</ul>
+
 <h2>0.4.2 2013-09-30</h2>
-<ul><li>now use maven</li></ul>
+<ul><li>now uses maven</li></ul>
 
 <h2>0.4.1 2013-08-26</h2>
 <ul><li>some bugs corrected</li></ul>

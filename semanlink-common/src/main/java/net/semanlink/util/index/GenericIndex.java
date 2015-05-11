@@ -46,6 +46,8 @@ protected HashMap<String, List<E>> getHashMap() { return this.word2tagsHM; }
 //
 //
 
+// 2014 TODO jma 
+
 /**
  *  Search the items of the thesaurus containing all words in wordStarts. 
  *  <p>(search for the beginning of words: if wordStarts is "sem", returns "semanlink", "semantic web", etc.)</p>

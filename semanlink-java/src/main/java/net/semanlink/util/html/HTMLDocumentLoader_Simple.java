@@ -108,7 +108,8 @@ protected Reader getReader(URL url) throws IOException {
 	*/
 	InputStream in = null;
 	String surl = url.toString();
-	if (surl.startsWith("http://")) {
+	// if (surl.startsWith("http://")) {
+	if (surl.startsWith("http")) {
 		if (this.content == null) {
 			// url not read yet
 			

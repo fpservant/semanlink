@@ -50,7 +50,6 @@ public void save(File saveAsFile) throws IOException {
 
 private String getNiceLinkedContent() throws MalformedURLException, UnsupportedEncodingException {
 	URL base = this.htmlDocument.getBase();
-	// System.out.println("HTMLPageDownload " + (this.content == null) + " / " + (this.charSet == null));
 	String x = new String(this.content, this.charSet);
 	HTMLDocument.Iterator it;
 	// liens href

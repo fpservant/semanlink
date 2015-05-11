@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>semanlink-java</artifactId>
-	<version>0.4.2</version>
+	<version>0.5.0</version>
 	<packaging>jar</packaging>
 	<name>semanlink-java</name>
 
@@ -17,13 +17,13 @@
 		<dependency>
 			<groupId>net.semanlink</groupId>
 			<artifactId>semanlink-common</artifactId>
-			<version>0.1.0</version>
+			<version>0.1.1</version>
 		</dependency>
 
 		<dependency>
 			<groupId>net.semanlink</groupId>
 			<artifactId>semanlink-lod-java</artifactId>
-			<version>0.1.0</version>
+			<version>0.1.1</version>
 		</dependency>
 
 		<dependency>
@@ -59,8 +59,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.5.1</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 		</plugins>

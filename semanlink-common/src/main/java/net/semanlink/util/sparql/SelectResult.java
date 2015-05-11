@@ -12,7 +12,7 @@ import nu.xom.*;
 public class SelectResult {
 private String[] variables;
 private Result[] results;
-public SelectResult(InputStream sparqlSelectIS) throws ValidityException, ParsingException, IOException {
+public SelectResult(InputStream sparqlSelectIS) throws ParsingException, IOException {
   Builder parser = new Builder();
   Document doc = parser.build(sparqlSelectIS);
   Element root = doc.getRootElement();
@@ -38,7 +38,7 @@ public SelectResult(InputStream sparqlSelectIS) throws ValidityException, Parsin
   
   Elements resultsElements = root.getChildElements("results", ns);
   if (resultsElements.size() < 1) throw new RuntimeException("No results!");
-  if (resultsElements.size() > 1) throw new RuntimeException("Too many results tag for me!");
+  if (resultsElements.size() > 1) throw new RuntimeException("Too many result tags for me!");
   Element resultsElement = resultsElements.get(0);
   
   Elements resultElements = resultsElement.getChildElements("result", ns);

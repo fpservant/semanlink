@@ -32,14 +32,9 @@ import net.semanlink.semanlink.ThesaurusIndex;
 import net.semanlink.servlet.Jsp_Page;
 import net.semanlink.util.index.IndexInterface;
 import net.semanlink.util.index.jena.TextMatchMagicProp;
-import net.semanlink.util.jsonld.JsonLDSerializerImpl;
 
 public class SLSparqlServlet extends LODServlet {
 	
-public void init() {
-	setJsonLDSerializer(new JsonLDSerializerImpl(true));
-}
-
 public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 	req.setCharacterEncoding("UTF-8");
 

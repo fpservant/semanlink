@@ -33,14 +33,14 @@ public class Action_PasteKeyword extends BaseAction {
 			} else {
 				// paste to a keyword
 				if (pasteToUri == null) pasteToUri = getTagUri(request);
-				if (asWhat.indexOf("child") > -1) {
+				if (asWhat == null) {
+					throw new IllegalArgumentException("No as parameter in request");
+				} else if (asWhat.indexOf("child") > -1) {
 					field = "children";
 				} else if (asWhat.indexOf("parent") > -1) {
 					field = "parents";
 				} else if (asWhat.indexOf("friend") > -1) {
 					field = "friends";
-				} else if (asWhat == null) {
-					throw new IllegalArgumentException("No as parameter in request");
 				} else {
 					throw new IllegalArgumentException("Incorrect as parameter in request");
 				}			

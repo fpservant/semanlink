@@ -23,8 +23,10 @@ public static void writeRDF(Model model, HttpServletResponse response, String xm
 			// (there is a special thing in the javascript in case "the server fails to set the content type to "text/html")
 			// I should try again with ""application/rdf+xml"
 			// AND see what should really be returned for content type: doesn't it depend on the request?
-			if ("N3".equals(rdfKind)) {
+			if ("N3".equals(rdfKind) || ("TURTLE".equals(rdfKind))) {
 				response.setContentType("text/rdf+n3; charset=UTF-8"); 
+			} else if ("JSON-LD".equals(rdfKind)) {
+				response.setContentType("application/ld+json; charset=UTF-8"); 
 			} else {
 				response.setContentType("application/rdf+xml; charset=UTF-8"); // cf javadoc The given content type may include a character encoding specification, for example, text/html;charset=UTF-8
 				// response.setContentType("text/xml"); // cf javadoc The given content type may include a character encoding specification, for example, text/html;charset=UTF-8
