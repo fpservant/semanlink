@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.semanlink</groupId>
 	<artifactId>semanlink-parent</artifactId>
-	<version>1.0.1</version>
+	<version>0.5.4</version>
 	<packaging>pom</packaging>
 	<url>http://www.semanlink.net</url>
 	<name>semanlink-parent</name>
@@ -15,6 +15,13 @@
 			<email>fps@semanlink.net</email>
 		</developer>
 	</developers>
+
+    <modules>
+        <module>../semanlink-common</module>
+        <module>../semanlink-lod-parent</module>
+        <module>../semanlink-java</module>
+        <module>../semanlink-webapp</module>
+    </modules>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,7 +36,8 @@
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
 		<semanlink.release.date>${maven.build.timestamp}</semanlink.release.date>
 
-		<version.jena>2.13.0</version.jena>
+		<version.jena>3.3.0</version.jena>
+
 		<version.servlet.api>3.0.1</version.servlet.api>
 		<version.jsp.api>2.1</version.jsp.api>
 		<version.junit>4.11</version.junit>
@@ -51,6 +59,13 @@
 		</dependency>
 
 		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
+
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${version.junit}</version>
@@ -65,8 +80,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.5.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 
@@ -128,6 +143,21 @@
 
 		</plugins>
 	</build>
+
+	<!-- to connect to the jena SNAPSHOTS I got problme to get this working 
+		within eclipse (proxy authen failed). But OK from terminal -->
+	<repositories>
+		<repository>
+			<id>apache-repo-snapshots</id>
+			<url>https://repository.apache.org/content/repositories/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 	<!-- <distributionManagement> <repository> <id>github</id> <name>GitHub 
 		Semanlink Repository</name> <url>https://raw.github.com/fpservant/semanlink/mvn-repo</url> 
