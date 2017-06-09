@@ -3,23 +3,23 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>semanlink-lod-java</artifactId>
-	<packaging>jar</packaging>
-	<name>semanlink-lod-java</name>
 
 	<parent>
 		<groupId>net.semanlink</groupId>
 		<artifactId>semanlink-lod-parent</artifactId>
-		<version>0.1.1</version>
+		<version>0.5.4</version>
 		<relativePath>../semanlink-lod-parent</relativePath>
 	</parent>
 
+    <artifactId>semanlink-lod-java</artifactId>
+    <packaging>jar</packaging>
+    <name>semanlink-lod-java</name>
 
 	<dependencies>
 		<dependency>
 			<groupId>net.semanlink</groupId>
 			<artifactId>semanlink-common</artifactId>
-			<version>0.1.1</version>
+			<version>0.5.4</version>
 		</dependency>
 	</dependencies>
 

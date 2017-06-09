@@ -4,7 +4,7 @@ package net.semanlink.lod;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.hp.hpl.jena.rdf.model.*;
+import org.apache.jena.rdf.model.*;
 
 public class FacetedBrowsing {
 /* Model of reference. */

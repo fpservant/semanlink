@@ -3,10 +3,10 @@ package net.semanlink.lod;
 
 import net.semanlink.graph.jena.TreeDefinition;
 
-import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.query.DatasetFactory;
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.vocabulary.RDFS;
+import org.apache.jena.query.Dataset;
+import org.apache.jena.query.DatasetFactory;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.vocabulary.RDFS;
 
 /**
  * A set of "Non Information Resources", using slash URIs, to be published as Linked Data. 

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 //// import org.apache.commons.httpclient.HttpException;
 
-import com.hp.hpl.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Model;
 
 import net.semanlink.util.AcceptHeader;
 import net.semanlink.util.CopyFiles;
@@ -26,7 +26,8 @@ abstract public class LODServlet extends SparqlServlet {
 // ATTRIBUTES
 //
 	
-protected LODDataset dataset;
+/** use getLODDataset(HttpServletRequest) */
+private LODDataset dataset;
 /** use getter! */
 // private URIDereferencer uriDereferencer; // @find generic uri dereferencing
 
@@ -36,17 +37,17 @@ protected LODDataset dataset;
 //
 
 // abstract public LODDataset initDataset(LODServlet lodServlet);
-abstract public LODDataset initDataset();
-public LODDataset getLODDataset() {
-	if (this.dataset == null) this.dataset = initDataset();
+abstract public LODDataset initDataset(HttpServletRequest req);
+public LODDataset getLODDataset(HttpServletRequest req) {
+	if (this.dataset == null) this.dataset = initDataset(req);
 	return this.dataset;
 }
 
-public void init() throws ServletException {
-	super.init();
-	dataset = initDataset();
-	//getServletContext().setAttribute("LODServletPaths", dataset)
-}
+//public void init() throws ServletException {
+//	super.init();
+//	dataset = initDataset();
+//	//getServletContext().setAttribute("LODServletPaths", dataset)
+//}
 
 //
 //
@@ -90,8 +91,7 @@ String htmlGet_jsScript() {
 //
 //
 
-@Override
-protected SPARQLEndPoint initSparqlEndPoint() { return getLODDataset().getSPARQLEndPoint() ; }
+@Override protected SPARQLEndPoint initSparqlEndPoint(HttpServletRequest req) { return getLODDataset(req).getSPARQLEndPoint() ; }
 protected SPARQLUpdateEndPoint initSparqUpdatelEndPoint() { return null ; }
 
 //
@@ -213,7 +213,8 @@ public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOExce
 		uri = req.getParameter("uri");
 		if (uri == null) throw new RuntimeException("Asked to dereference a URI, but no uri found in parameters (no 'uri' param)"); // @TODO fixme
 		
-		if (!this.dataset.owns(uri)) {
+		LODDataset dataset = getLODDataset(req);
+		if (!dataset.owns(uri)) {
 			
 			/*
 			URIDereferencer uriDeref = getURIDereferencer();
@@ -268,6 +269,7 @@ public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOExce
 		// we probably can safely assume that this is a request for a URI of the dataset
 		// except for path such as "home"
 		uri = req.getRequestURL().toString(); // http://127.0.0.1:9080/semanlink/tag/%CE%91%E1%BC%B4%CE%B1%CF%82.html
+		LODDataset dataset = getLODDataset(req);
 		if (!dataset.owns(uri)) {
 			super.doGet(req, res);
 			return;
@@ -308,7 +310,8 @@ protected void clickedLinkToResourceInHTMLDisplayingRDF(HttpServletRequest req, 
 	String uri = req.getParameter("uri");
 	if (uri == null) throw new RuntimeException("Asked to dereference a URI, but no uri found in parameters (no 'uri' param)"); // @TODO fixme
 	
-	if (!this.dataset.owns(uri)) {
+	LODDataset dataset = getLODDataset(req);
+	if (!dataset.owns(uri)) {
 		clickedLinkToOutsideResourceInHTMLDisplayingRDF(req, res, uri);
 		return;
 
@@ -333,7 +336,7 @@ protected void clickedLinkToResourceInHTMLDisplayingRDF(HttpServletRequest req, 
  * @throws IOException 
  */
 protected void getLocalURI(HttpServletRequest req, HttpServletResponse res, String uri) throws IOException, ServletException {
-
+	LODDataset dataset = getLODDataset(req);
 	boolean isNir = dataset.isNonInformationResource(uri);
 	if (isNir) {
 		// return a 303. Redirect to html or rdf depending on HTTP accept header

@@ -3,7 +3,7 @@ package net.semanlink.lod;
 
 import net.semanlink.graph.jena.TreeDefinition;
 
-import com.hp.hpl.jena.rdf.model.*;
+import org.apache.jena.rdf.model.*;
 
 /**
  * A set of "Non Information Resources", using slash URIs, to be published as Linked Data. 

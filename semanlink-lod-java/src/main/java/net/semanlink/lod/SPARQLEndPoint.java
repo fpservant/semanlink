@@ -1,21 +1,20 @@
 package net.semanlink.lod;
 import java.io.*;
-import java.util.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
 import net.semanlink.util.jena.RDFServletWriterUtil;
 
-import com.hp.hpl.jena.query.*;
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.sparql.util.Context;
-import com.hp.hpl.jena.sparql.util.Symbol;
+import org.apache.jena.query.*;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.sparql.util.Context;
+import org.apache.jena.sparql.util.Symbol;
 
 /**
  * SPARQL endpoint. 
  * 
- * This is just some util methods around a "com.hp.hpl.jena.query.DataSource".
+ * This is just some util methods around a "org.apache.jena.query.DataSource".
  * 
  * Includes methods <ul>
  * <li>to execute a query included in an HttpServletRequest, </li>
@@ -183,17 +182,17 @@ public Model getResultModel(Query query, QueryExecution qexec, boolean close) {
 // PREFIXES
 //
 
-public void prefixes() {
-	// System.out.println("Prefixes defined in datasource 's defaultmodel");
-	Map prefixMap = this.dataset.getDefaultModel().getNsPrefixMap();
-	Set keySet = prefixMap.keySet();
-	Iterator keys = keySet.iterator();
-	for (;keys.hasNext();) {
-		String prefix = (String) keys.next();
-		String ns = (String) prefixMap.get(prefix);
-		// System.out.println("PREFIX " + prefix + " : " + ns);
-	}
-}
+//public void prefixes() {
+//	// System.out.println("Prefixes defined in datasource 's defaultmodel");
+//	Map prefixMap = this.dataset.getDefaultModel().getNsPrefixMap();
+//	Set keySet = prefixMap.keySet();
+//	Iterator keys = keySet.iterator();
+//	for (;keys.hasNext();) {
+//		String prefix = (String) keys.next();
+//		String ns = (String) prefixMap.get(prefix);
+//		// System.out.println("PREFIX " + prefix + " : " + ns);
+//	}
+//}
 
 /** Get the URI bound to a specific prefix, null if there isn't one. */
 public String getNsPrefixURI(String prefix) {

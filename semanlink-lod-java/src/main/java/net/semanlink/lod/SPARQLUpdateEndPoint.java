@@ -4,12 +4,12 @@ import java.io.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
-import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.query.DatasetFactory;
-import com.hp.hpl.jena.query.QuerySolutionMap;
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.sparql.util.Symbol;
-import com.hp.hpl.jena.update.*;
+import org.apache.jena.query.Dataset;
+import org.apache.jena.query.DatasetFactory;
+import org.apache.jena.query.QuerySolutionMap;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.sparql.util.Symbol;
+import org.apache.jena.update.*;
 
 public class SPARQLUpdateEndPoint {
 protected Dataset dataset;

@@ -11,8 +11,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 
 import net.semanlink.util.jena.JenaUtils;
 import net.semanlink.util.servlet.Jsp_Page;
@@ -28,7 +28,7 @@ protected String JSPFolder = "/jsp/simplelodservlet/";
  */
 	
 /** A simple servlet with a sparql endpoint (path /sparql) and a linked data set (path /LINKED_DATA) */
-public LODDataset initDataset() {
+@Override public LODDataset initDataset(HttpServletRequest req) {
 	String rdfFolder = getInitParameter("RDFFolder");
 	if (rdfFolder == null) throw new RuntimeException("Init parameter RDFFolder undefined.");
 	String base = getInitParameter("base");

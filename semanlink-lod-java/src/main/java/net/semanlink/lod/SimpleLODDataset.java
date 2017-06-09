@@ -1,7 +1,7 @@
 /* Created on 26 sept. 08 */
 package net.semanlink.lod;
 
-import com.hp.hpl.jena.rdf.model.*;
+import org.apache.jena.rdf.model.*;
 
 public class SimpleLODDataset extends LODDataset_ModelBased {
 protected Model model;

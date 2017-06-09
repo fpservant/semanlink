@@ -7,8 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.rdf.model.Model;
+import org.apache.jena.query.Query;
+import org.apache.jena.rdf.model.Model;
 
 import net.semanlink.util.AcceptHeader;
 import net.semanlink.util.jena.RDFServletWriterUtil;
@@ -35,10 +35,10 @@ protected String getXMLBase() { return xmlBase; }
 // INIT
 //
 
-abstract protected SPARQLEndPoint initSparqlEndPoint();
+abstract protected SPARQLEndPoint initSparqlEndPoint(HttpServletRequest req);
 /** The SPARQLEndPoint used by this servlet. */
-protected SPARQLEndPoint getSparqlEndPoint() {
-	if (this.sparqlEndPoint == null) this.sparqlEndPoint = initSparqlEndPoint();
+protected SPARQLEndPoint getSparqlEndPoint(HttpServletRequest req) {
+	if (this.sparqlEndPoint == null) this.sparqlEndPoint = initSparqlEndPoint(req);
 	return this.sparqlEndPoint;
 }
 
@@ -114,7 +114,7 @@ public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOExce
  * if the query is DESCRIBE or CONSTRUCT, AND there is a "as" parameter with value "html" or "n3".
  */
 protected void doGetSparql(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-	SPARQLEndPoint endpoint = getSparqlEndPoint();
+	SPARQLEndPoint endpoint = getSparqlEndPoint(req);
 	Query query = endpoint.createQuery(req);
 	boolean isRDFQuery = (query.isDescribeType() || (query.isConstructType()));
 	
@@ -190,7 +190,7 @@ protected String getSparqlQueryUri(HttpServletRequest req) throws MalformedURLEx
  */
 
 protected Jsp_SparqlGui sparqlGUI(HttpServletRequest req, HttpServletResponse res) {
-	Jsp_SparqlGui x = new Jsp_SparqlGui(req, res, this.getSparqlEndPoint());
+	Jsp_SparqlGui x = new Jsp_SparqlGui(req, res, this.getSparqlEndPoint(req));
 	x.setCenterBoxJsp(sparqlGUIPageName());
 	return x;
 }
