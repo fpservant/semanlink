@@ -7,10 +7,10 @@ import java.util.List;
 
 import net.semanlink.util.index.MultiLabelGetter;
 
-import com.hp.hpl.jena.rdf.model.Literal;
-import com.hp.hpl.jena.rdf.model.NodeIterator;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.vocabulary.RDFS;
+import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.NodeIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.vocabulary.RDFS;
 
 public class RDFSLabelGetter implements MultiLabelGetter<Resource> {
 private String lang;

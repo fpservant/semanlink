@@ -1,13 +1,31 @@
 package net.semanlink.util.jena;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 
+import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.NodeIterator;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
 import org.apache.log4j.Logger;
 
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.vocabulary.RDF;
-import com.hp.hpl.jena.vocabulary.RDFS;
+
 
 /**
  * Various static methods.
@@ -18,10 +36,25 @@ private JenaUtils() {}
 public static void printModel(Model mod) {
 	StmtIterator stmtIt = mod.listStatements();
 	for (;stmtIt.hasNext();) {
-		com.hp.hpl.jena.rdf.model.Statement sta = stmtIt.nextStatement();
+		Statement sta = stmtIt.nextStatement();
 		System.out.println(sta);
 	}
 }
+
+public static void printModelExtract(Model mod) {
+	StmtIterator stmtIt = mod.listStatements();
+	int k = 0;
+	for (;stmtIt.hasNext();) {
+		k++;
+		Statement sta = stmtIt.nextStatement();
+		System.out.println(sta);
+		if (k > 10) {
+			stmtIt.close();
+			break;
+		}
+	}
+}
+
 
 public static void printSubjects(Model mod) {
 	ResIterator it = mod.listSubjects();
@@ -76,6 +109,9 @@ public static void loadModel(File fileOrFolder, Model model, String base, boolea
 	loadModel(fileOrFolder, model, base, includeSubfolders, null);
 }
 
+/**
+ * BEWARE, si fileOrFolder est un File, les fichiers sans extension répertoriée sont lus en tant que RDF-XML (stupid!)
+ */
 public static void loadModel(File fileOrFolder, Model model, String base, boolean includeSubfolders, Logger logger) throws IOException {
 	if (fileOrFolder.isDirectory()) {
 		loadRDFFolder(fileOrFolder, model, base, includeSubfolders, logger);
@@ -89,7 +125,7 @@ public static void loadModel(File fileOrFolder, Model model, String base, boolea
 /**
  * Loads the rdf files in a folder into a given model. 
  * 
- * Only the ".rdf", ".ttl" or ".n3" files (whatever the case of the suffix) are loaded.
+ * Only the ".rdf", ".ttl", ".jsonld" or ".n3" files (whatever the case of the suffix) are loaded.
  * @param base optional param allowing to set the base if none is used in the files.
  * @param includeSubfolders true to recursively load files from subfolders
  * @throws IOException */
@@ -124,16 +160,18 @@ public static void loadRDFFile(File f, Model model, String base) throws IOExcept
 	}
 }
 
-/** return true if loaded, that is if the filename ends with ".rdf", ".ttl" or ".n3" (insensitive to case) */
+/** return true if loaded, that is if the filename ends with ".rdf", ".ttl", "jsonld" or ".n3" (insensitive to case) */
 private static boolean loadRDFFileUtil(File f, Model model, String base, Logger logger) throws IOException {
 	String s = f.getName().toLowerCase();
 	String lang = null;
 	if (s.endsWith(".rdf")) lang = "RDF/XML";
 	else if (s.endsWith(".n3")) lang = "N3";
 	else if (s.endsWith(".ttl")) lang = "TURTLE";
+	else if (s.endsWith(".jsonld")) lang = "JSON-LD";
 	boolean x = false;
 	if (lang != null) {
 		if (logger != null) logger.info("Loading " + f);
+		// System.out.println("Loading " + f); // A VIRER
 		InputStream in = new BufferedInputStream(new FileInputStream(f));
 		model.read(in, base, lang);
 		in.close();
@@ -420,7 +458,7 @@ static public void replaceResource(Resource oldRes, Resource newRes) {
 //
 
 /*
- * Was included in jena com.hp.hpl.jena.sparql.util.StringUtils, but not with ARQ 2.8.5
+ * Was included in jena org.apache.jena.sparql.util.StringUtils, but not with ARQ 2.8.5
  * I therefore copy/pasted it here
  */
 /** Join an array of strings */

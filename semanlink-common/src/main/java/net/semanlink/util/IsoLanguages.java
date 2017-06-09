@@ -4,6 +4,7 @@ package net.semanlink.util;
 import java.util.HashSet;
 import java.util.Locale;
 
+/** cf ISO 630 2 car langs */
 public class IsoLanguages {
 private HashSet<String> langs;
 public IsoLanguages() {

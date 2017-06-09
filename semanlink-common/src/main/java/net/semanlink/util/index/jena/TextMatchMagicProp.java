@@ -2,27 +2,28 @@ package net.semanlink.util.index.jena;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.function.Function;
 
 import net.semanlink.util.index.IndexInterface;
 
-import com.hp.hpl.jena.graph.Node;
-import com.hp.hpl.jena.graph.Node_Literal;
-import com.hp.hpl.jena.query.QueryBuildException;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.sparql.core.Var;
-import com.hp.hpl.jena.sparql.engine.ExecutionContext;
-import com.hp.hpl.jena.sparql.engine.QueryIterator;
-import com.hp.hpl.jena.sparql.engine.binding.Binding;
-import com.hp.hpl.jena.sparql.engine.binding.BindingFactory;
-import com.hp.hpl.jena.sparql.engine.binding.BindingMap;
-import com.hp.hpl.jena.sparql.engine.iterator.QueryIterNullIterator;
-import com.hp.hpl.jena.sparql.engine.iterator.QueryIterPlainWrapper;
-import com.hp.hpl.jena.sparql.pfunction.PropFuncArg;
-import com.hp.hpl.jena.sparql.pfunction.PropFuncArgType;
-import com.hp.hpl.jena.sparql.pfunction.PropertyFunctionEval;
-import com.hp.hpl.jena.sparql.util.IterLib;
-import com.hp.hpl.jena.util.iterator.Map1;
-import com.hp.hpl.jena.util.iterator.Map1Iterator;
+import org.apache.jena.graph.Node;
+import org.apache.jena.graph.Node_Literal;
+import org.apache.jena.query.QueryBuildException;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.sparql.core.Var;
+import org.apache.jena.sparql.engine.ExecutionContext;
+import org.apache.jena.sparql.engine.QueryIterator;
+import org.apache.jena.sparql.engine.binding.Binding;
+import org.apache.jena.sparql.engine.binding.BindingFactory;
+import org.apache.jena.sparql.engine.binding.BindingMap;
+import org.apache.jena.sparql.engine.iterator.QueryIterNullIterator;
+import org.apache.jena.sparql.engine.iterator.QueryIterPlainWrapper;
+import org.apache.jena.sparql.pfunction.PropFuncArg;
+import org.apache.jena.sparql.pfunction.PropFuncArgType;
+import org.apache.jena.sparql.pfunction.PropertyFunctionEval;
+import org.apache.jena.sparql.util.IterLib;
+import org.apache.jena.util.iterator.Map1;
+import org.apache.jena.util.iterator.Map1Iterator;
 // import org.openjena.atlas.logging.Log;
 // import org.apache.jena.atlas.logging.Log;
 // ATTENTION: in TextMatchMagicProp2, it has been necessary to create literal with lang (necessary, or nasty bug). Should also be done here? -- CHECK IT
@@ -35,7 +36,7 @@ public class TextMatchMagicProp extends PropertyFunctionEval
 		private static IndexInterface<Resource> index; // use getter. One by lang ??? TODO
 		/** MUST be called */
 		public static void setIndex(IndexInterface<Resource> textIndex) { index = textIndex; }
-		public TextMatchMagicProp() // must be public or Class com.hp.hpl.jena.sparql.pfunction.PropertyFunctionFactoryAuto can not access a member of class sicg.euro5.magicprop.TextMatch with modifiers "protected"
+		public TextMatchMagicProp() // must be public or Class org.apache.jena.sparql.pfunction.PropertyFunctionFactoryAuto can not access a member of class sicg.euro5.magicprop.TextMatch with modifiers "protected"
     {
         // super(PropFuncArgType.PF_ARG_EITHER,
         //      PropFuncArgType.PF_ARG_EITHER) ;
@@ -139,7 +140,7 @@ public class TextMatchMagicProp extends PropertyFunctionEval
         return qIter ;
     }
     
-    static class HitConverter implements Map1<Resource, Binding>
+    static class HitConverter implements Function<Resource, Binding>
     {
         private Binding binding ;
         private Var match ;
@@ -150,16 +151,18 @@ public class TextMatchMagicProp extends PropertyFunctionEval
             this.match = matchVar ;
          }
         
-        public Binding map1(Resource hit)
-        {
-      		// MOVING FROM JENA-ARQ 2.7.? TO 2.9.3 (under apache now), this doesn't compile anymore:
-          // Binding b = new BindingMap(binding) ;
-          BindingMap b = BindingFactory.create(binding) ;
-          b.add(match, hit.asNode()) ;
-          
-          return b;
-        }
-        
+     // moving to jena 3 
+        // public Binding map1(Resource hit)
+		@Override
+		public Binding apply(Resource hit) {
+			// MOVING FROM JENA-ARQ 2.7.? TO 2.9.3 (under apache now), this doesn't compile anymore:
+	          // Binding b = new BindingMap(binding) ;
+	          BindingMap b = BindingFactory.create(binding) ;
+	          b.add(match, hit.asNode()) ;
+	          
+	          return b;
+		}
+       
     }
     
     public QueryIterator boundSubject(Binding binding, 

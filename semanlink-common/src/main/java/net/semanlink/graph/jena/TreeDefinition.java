@@ -1,8 +1,8 @@
 /* Created on 7 janv. 08 */
 package net.semanlink.graph.jena;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
 
 /** Definition of a tree in a jena graph*/
 public class TreeDefinition {

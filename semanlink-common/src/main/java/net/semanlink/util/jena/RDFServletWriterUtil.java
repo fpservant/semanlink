@@ -6,7 +6,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
-import com.hp.hpl.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Model;
 
 public class RDFServletWriterUtil {
 private RDFServletWriterUtil() {}

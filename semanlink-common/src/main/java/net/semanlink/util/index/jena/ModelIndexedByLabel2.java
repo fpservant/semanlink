@@ -10,9 +10,9 @@ import net.semanlink.util.index.MultiLabelIndex2;
 import net.semanlink.util.text.CharConverter;
 import net.semanlink.util.text.WordsInString;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ResIterator;
-import com.hp.hpl.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
 
 /**
  * Indexing (Resource, label) pairs.

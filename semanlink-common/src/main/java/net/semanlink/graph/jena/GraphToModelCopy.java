@@ -7,7 +7,7 @@ import net.semanlink.graph.Graph;
 import net.semanlink.graph.GraphTraversal;
 import net.semanlink.graph.WalkListenerImpl;
 
-import com.hp.hpl.jena.rdf.model.*;
+import org.apache.jena.rdf.model.*;
 
 /** Implements the copy of a Graph into a Jena Model. 
  * 

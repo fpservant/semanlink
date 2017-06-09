@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 import net.semanlink.graph.Graph;
 
-import com.hp.hpl.jena.rdf.model.*;
+import org.apache.jena.rdf.model.*;
 
 /**
  * Allows to use a Jena Model as a net.semanlink.semanlink.graph.Graph based on a TreeDefinition. */

@@ -3,7 +3,7 @@ package net.semanlink.util.index.jena;
 
 import java.util.*;
 
-import com.hp.hpl.jena.rdf.model.*;
+import org.apache.jena.rdf.model.*;
 
 import net.semanlink.util.index.I18nFriendlyIndexEntries;
 import net.semanlink.util.index.IndexEntriesCalculator;
