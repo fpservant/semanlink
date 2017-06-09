@@ -69,16 +69,16 @@
 		<servlet-class>net.semanlink.servlet.SLSparqlServlet</servlet-class>
 	</servlet>
 	
-	<!-- JERSEY -->
-    <servlet>
-        <servlet-name>Jersey Based Semanlink</servlet-name>
-        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-		  <init-param>
-		    <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
-		    <param-value>net.semanlink.jersey.MediaTypeFilter;</param-value>
-		  </init-param>
-          <load-on-startup>1</load-on-startup>
-    </servlet>
+ 	<!-- JERSEY -->
+<!--     <servlet> -->
+<!--         <servlet-name>Jersey Based Semanlink</servlet-name> -->
+<!--         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class> -->
+<!-- 		  <init-param> -->
+<!-- 		    <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name> -->
+<!-- 		    <param-value>net.semanlink.jersey.MediaTypeFilter;</param-value> -->
+<!-- 		  </init-param> -->
+<!--           <load-on-startup>1</load-on-startup> -->
+<!--     </servlet> -->
 
 
 	<!-- SERVLET MAPPINGS -->
@@ -94,6 +94,11 @@
 		<url-pattern>/doc/*</url-pattern>
 	</servlet-mapping>
 	
+    <servlet-mapping>
+        <servlet-name>CoolUriServlet</servlet-name>
+        <url-pattern>/md/*</url-pattern>
+    </servlet-mapping>
+    
 	<servlet-mapping>
 		<servlet-name>CoolUriServlet</servlet-name>
 		<url-pattern>/note/*</url-pattern>
@@ -209,11 +214,11 @@
 	
 	
 	
-	<!-- JERSEY -->
-    <servlet-mapping>
-        <servlet-name>Jersey Based Semanlink</servlet-name>
-        <url-pattern>/sl/resources/*</url-pattern>
-    </servlet-mapping>
+<!-- 	JERSEY -->
+<!--     <servlet-mapping> -->
+<!--         <servlet-name>Jersey Based Semanlink</servlet-name> -->
+<!--         <url-pattern>/sl/resources/*</url-pattern> -->
+<!--     </servlet-mapping> -->
 	
 	
 	

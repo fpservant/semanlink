@@ -61,6 +61,9 @@
 <entry key="x.comment">Comment</entry>
 <entry key="x.comment-colon">Comment:</entry>
 <entry key="x.setComment">Set Comment</entry>
+<entry key="x.markdown">Markdown File</entry>
+<entry key="x.setMarkdown">Set Markdown</entry>
+<entry key="x.createMarkdown">Create</entry>
 <entry key="x.title-colon">Title:</entry>
 <entry key="x.bookmark">Bookmark</entry>
 <entry key="x.aboutModel">About this data</entry>
@@ -134,4 +137,7 @@
 <!--  2013/03 -->
 <entry key="docList.firstLevelDocs">Short List</entry>
 <entry key="docList.allDocs">Long List</entry>
+<!--  2017/04 -->
+<entry key="markdown.raw">Raw Markdown</entry>
+
 </properties>

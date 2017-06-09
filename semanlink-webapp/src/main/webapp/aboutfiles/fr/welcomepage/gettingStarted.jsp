@@ -18,4 +18,6 @@
 </ul>
 <h3>Consultez le manuel <a href="<%=contextUrl%><%=CoolUriServlet.ABOUT_SERVLET_PATH%>/getting_started_tutorial.htm">"Getting started tutorial</a>"</h3>
 <ul><li>Plus de documentation est disponible : consultez "<a href="<%=contextUrl%><%=CoolUriServlet.ABOUT_SERVLET_PATH%>/help.htm">l'aide</a>" (bouton en haut de page)...</li></ul>
+<!-- 
 <h3>Éventuellement, <a href="<%=contextUrl%>/sl/delicious">importez votre compte delicious...</a></h3>
+ -->

@@ -4,6 +4,33 @@
 %>
 <h1>Release notes</h1>
 <div class="graybox">
+<h2>0.5.4 2017-06-09</h2>
+<ul>
+<li>refactoring (all jars with same version num, no more aggregator project)</li>
+<li>Upgrade Jena to 3.3.0</li>
+<li>some stuff related to markdown</li>
+</ul>
+
+<h2>0.5.3 2017-04-01</h2>
+<ul>
+<li>markdown<ul>
+	<li>using markdown-it (instead of markdown-js)</li>
+	<li>possibility to edit markdown files</li>
+</ul></li>
+<li>textarea now 100% of their contening div</li>
+</ul>
+<h2>0.5.2</h2>
+<ul>
+<li>Upgrade Jena to 3.0.0 -- Beware, <b>requires Java 8</b> (implied several changes because of conflicts with some old libs that were used here or there)</li>
+<li>Delicious removed</li>
+</ul>
+
+<h2>0.5.1 2015-10-10</h2>
+<ul>
+<li>Bookmarklet was not working with https</li>
+<li>Some of the examples on the sparql page were not working</li>
+</ul>
+
 <h2>0.5.0 2015-05-09</h2>
 <ul>
 <li>Upgrade Jena to 2.13 -- Beware, <b>requires Java 7</b></li>
@@ -12,7 +39,7 @@
 </ul>
 
 <h2>0.4.2 2013-09-30</h2>
-<ul><li>now uses maven</li></ul>
+<ul><li>now available on <a href="https://github.com/fpservant/semanlink">github</a></li></ul>
 
 <h2>0.4.1 2013-08-26</h2>
 <ul><li>some bugs corrected</li></ul>

@@ -4,7 +4,7 @@
 	language="java"
 	session="true"
 	import="net.semanlink.servlet.*,java.io.*,java.util.*,net.semanlink.semanlink.*"
-%><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
+%><!DOCTYPE HTML>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -46,6 +46,12 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 	<title>Semanlink - <%=jsp.getTitle()%></title>
 	<link rel="stylesheet" href="<%=contextPath%>/css/sidemenu.css" type="text/css" />
 	<link rel="stylesheet" href="<%=contextPath%>/css/slstyles.css" type="text/css" />
+	
+	<!-- https://github.com/evilstreak/markdown-js -->
+    <script src="<%=contextPath%>/scripts/markdown-it.min.js"></script>   
+	<script src="<%=contextPath%>/scripts/markdown-it-replace-link.min.js"></script>   
+	<script src="<%=contextPath%>/scripts/markdown-sl.js"></script>   
+	
 	<%    
 	if ((jsp instanceof Jsp_Keyword) || (jsp instanceof Jsp_ThisMonth)) { // 2007-03 remplace 2007-01
 		%>
@@ -70,30 +76,6 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 	if (rss != null) {%>	<link rel="alternate" type="application/rss+xml" title="RSS" href="<%=contextPath%>/<%=rss%>" /> <%}%>
 
 	
-	<%
-	// @find create.js Bergie
-	if (jsp instanceof Jsp_Keyword) {
-		boolean bergie = false;
-		if (bergie) {%>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<script src="<%=contextPath%>/scripts/create/deps/jquery-1.7.1.min.js"></script>   
-	    <script src="<%=contextPath%>/scripts/create/deps/jquery-ui-1.8.18.custom.min.js"></script>    
-	    <script src="<%=contextPath%>/scripts/create/deps/modernizr.custom.80485.js"></script>    
-	    <script src="<%=contextPath%>/scripts/create/deps/underscore-min.js"></script>    
-	    <script src="<%=contextPath%>/scripts/create/deps/backbone-min.js"></script>    
-	    <script src="<%=contextPath%>/scripts/create/deps/vie-min.js"></script>    
-	    <script src="<%=contextPath%>/scripts/create/deps/jquery.rdfquery.min.js"></script>    
-	    <script src="<%=contextPath%>/scripts/create/deps/annotate-min.js"></script>   
-	    <script src="<%=contextPath%>/scripts/create/deps/create.js"></script>
-	    <script src="<%=contextPath%>/scripts/create/deps/rangy-core-1.2.3.js"></script>
-	    <script src="<%=contextPath%>/scripts/create/deps/hallo.js"></script>
-	    
-		<script src="<%=contextPath%>/scripts/create/fps_create.js"></script>   
-	    <link rel="stylesheet" href="http://createjs.org/js/deps/font-awesome/css/font-awesome.css" />   
-	    <link rel="stylesheet" href="http://createjs.org/css/themes/create-ui/css/create-ui.css" />   
-	    <link rel="stylesheet" href="http://createjs.org/css/themes/midgard-notifications/midgardnotif.css" />
-	<%}}%>
-
 	<script type="text/JavaScript">
 	<%
 	// .../semanlink/loadsubtree.
@@ -211,34 +193,11 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 
 	// 2010-06
 	%>
-	<script type="text/JavaScript">
-		Tools = {
-			'addEvent': function(obj, evType, fn) { 
-				 if (obj.addEventListener){ 
-				   obj.addEventListener(evType, fn, false); 
-				   return true; 
-				 } else if (obj.attachEvent){ 
-				   var r = obj.attachEvent("on"+evType, fn); 
-				   return r; 
-				 } else { 
-				   return false; 
-				 } 
-			}
-		}
-		<%
-		Set<String> onLoadEvents = jsp.getOnLoadEvents();
-		if (onLoadEvents != null) {
-		for (String onLoadEvent : onLoadEvents) {%>
-		Tools.addEvent(window, 'load', <%=onLoadEvent%>);
-		<%}}%>
-	</script>
-	
-	
+
+<% // 2017-01 DRAG TEST %>
 	
 
 </head>
-<!-- body onload="liveSearchInit(); setFocus();" 2010-06: see Jsp_page find addOnLoadEvents -->
-<!-- body xmlns:skos="http://www.w3.org/2004/02/skos/core#"> --><%// @find create.js bergie %>
 <body>
 <div id="top"> <%// j'ai essayé de le mettre après via css, mais raté%>
 	<%
@@ -264,7 +223,7 @@ Si on le met après middle, un seul, mais effet perçu plus mauvais(barre à dro
 	<jsp:include page="<%=jsp.getSideMenu()%>"/>
 </div> <!-- </div id="right"> -->
 
-<% // @find RDFa Bergie
+<%
 if (jsp instanceof Jsp_Keyword) { // 2013-08 RDFa added typeof
 	%><div id="middle" about="<%=tagUri%>" typeof="<%=SLVocab.KEYWORD_CLASS%> <%=net.semanlink.skos.SKOS.Concept%>"><%	
 } else {
@@ -359,6 +318,30 @@ if (jsp instanceof Jsp_Keyword) { // 2013-08 RDFa added typeof
 
 </div> <!-- middle -->
 </body>
+
+<% // put at the end, in order to allow included .jsp to add events  to jsp(it is the case of document.jsp, for the markdown) %>
+<script type="text/JavaScript">
+    Tools = {
+        'addEvent': function(obj, evType, fn) { 
+             if (obj.addEventListener){ 
+               obj.addEventListener(evType, fn, false); 
+               return true; 
+             } else if (obj.attachEvent){ 
+               var r = obj.attachEvent("on"+evType, fn); 
+               return r; 
+             } else { 
+               return false; 
+             } 
+        }
+    }
+    <%
+    Set<String> onLoadEvents = jsp.getOnLoadEvents();
+    if (onLoadEvents != null) {
+    for (String onLoadEvent : onLoadEvents) {%>
+    Tools.addEvent(window, 'load', <%=onLoadEvent%>);
+    <%}}%>
+</script>
+
 </html>
 <%}// if template%>
 <!--/template.jsp-->

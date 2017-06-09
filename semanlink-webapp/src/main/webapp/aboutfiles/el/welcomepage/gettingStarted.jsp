@@ -16,5 +16,7 @@
 <h3>Για περισσότερες πληροφορίες ανατρέξτε στο <a href="<%=contextUrl%><%=CoolUriServlet.ABOUT_SERVLET_PATH%>/getting_started_tutorial.htm">εγχειρίδιο «ξεκινώντας»</a>"</h3>
 <ul><li>Περισσότερη τεκμηρίωση θα βρείτε στην ενότητα "<a href="<%=contextUrl%><%=CoolUriServlet.ABOUT_SERVLET_PATH%>/help.htm">Βοήθεια</a>" της αρχικής μας λίστας…
 </li></ul>
+<!-- 
 <h3>Αν θέλετε <a href="<%=contextUrl%>/sl/delicious">μπορείτε να εισάγετε τις δικές σας καταχωρήσεις…</a></h3>
+ -->
 <h3>Καλή διασκέδαση !</h3>

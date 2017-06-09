@@ -28,6 +28,5 @@
 					<ul><li>Access from generic RDF browsers such as <a href="http://sites.wiwiss.fu-berlin.de/suhl/bizer/ng4j/disco/">Disco</a></li></ul>
 				</li>
 				<li>Access from javascript</li>
-				<li>Delicious synchronization</li>
 			</ul>
 	</div>
