@@ -2,17 +2,17 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
+  <parent>
+      <groupId>net.semanlink</groupId>
+      <artifactId>semanlink-lod-parent</artifactId>
+      <version>0.5.4</version>
+      <relativePath>../semanlink-lod-parent</relativePath>
+  </parent>
+  
   <artifactId>semanlink-lod-webapp</artifactId>
   <packaging>war</packaging>  
   <name>semanlink-lod-webapp</name>
     
-  <parent>
-    <groupId>net.semanlink</groupId>
-    <artifactId>semanlink-lod-parent</artifactId>
-    <version>0.1.1</version>
-	<relativePath>../semanlink-lod-parent</relativePath>
-  </parent>
-  
   <dependencies>
      <dependency>
       <groupId>net.semanlink</groupId>
@@ -21,9 +21,4 @@
     </dependency>
 
   </dependencies>
-<!-- 
-  <build>
-    <finalName>semanlink-lod</finalName>
-  </build>
- -->  
 </project>
