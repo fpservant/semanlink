@@ -7,7 +7,7 @@ import java.util.Locale;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import com.hp.hpl.jena.rdf.model.*;
+import org.apache.jena.rdf.model.*;
 
 import net.semanlink.semanlink.SLModel;
 import net.semanlink.servlet.SLServlet;

@@ -7,10 +7,10 @@ import java.util.List;
 
 import net.semanlink.semanlink.SLSchema;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
 
 /**
  * To be used to correct some documents that are tagged with aliases
@@ -40,11 +40,6 @@ public AliasCorrection(List<Statement> kw2AliasStatements) {
 			remove.add(oldst);
 			Statement newst = mod.createStatement(oldst.getSubject(), SLSchema.tag, kw);
 			add.add(newst);
-//			if (alias.getURI().endsWith("lost_boy")) {
-//				System.out.println("hello " + kw + " alais : " + alias);
-//				System.out.println("\tvire " + oldst);
-//				System.out.println("\tadd  " + newst);
-//			}
 		}
 	}
 	mod.remove(remove);

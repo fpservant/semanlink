@@ -1,22 +1,18 @@
 package net.semanlink.sljena;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import net.semanlink.semanlink.SLDocument;
 import net.semanlink.semanlink.SLKeyword;
-import net.semanlink.semanlink.SLResourceAdapter;
 import net.semanlink.semanlink.SLVocab;
 
-import com.hp.hpl.jena.rdf.model.Literal;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.NodeIterator;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.NodeIterator;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
 
-public class JKeyword extends SLResourceAdapter implements SLKeyword {
-private Resource res;
-private JModel jModel;
+public class JKeyword extends JResource implements SLKeyword {
 
 // CONSTRUCTION
 
@@ -33,10 +29,7 @@ private JModel jModel;
 
 /** @param res est une resource de rdfs:Class JKeyword. */
 public JKeyword(JModel jModel, Resource res) {
-  super(res.getURI());
-  this.jModel = jModel;
-  this.res = res;
-  // System.out.println("JKeyword.NEW : " + res);
+  super(jModel, res);
 }
 
 // GETS

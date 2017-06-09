@@ -1,12 +1,12 @@
 /* Created on 16 sept. 03 */
 package net.semanlink.sljena;
 import java.util.*;
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.vocabulary.RDF;
-import com.hp.hpl.jena.vocabulary.RDFS;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
 import net.semanlink.semanlink.SLVocab;
 // 2012-08 jena at apache
-// import com.hp.hpl.jena.iri.*;
+// import org.apache.jena.iri.*;
 import org.apache.jena.iri.*;
 
 /**

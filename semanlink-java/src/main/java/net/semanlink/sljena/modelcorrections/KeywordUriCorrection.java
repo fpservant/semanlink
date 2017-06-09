@@ -6,8 +6,8 @@ import java.util.Locale;
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLModel;
 import net.semanlink.sljena.JenaUtils;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Resource;
 
 /** Classe permettant de changer l'uri d'un keyword. 
  *  Une méthode statique pour recalculer toutes les uris à partir des labels MAIS ATTENTION, A APPELER DS SLServlet chercher correctOldKwUris */

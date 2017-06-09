@@ -2,8 +2,13 @@
 package net.semanlink.util.html;
 import javax.swing.text.html.*;
 import javax.swing.text.*;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
-import net.semanlink.util.SimpleHttpClient;
+import net.semanlink.servlet.SLServlet;
 
 import java.io.*;
 import java.net.*;
@@ -20,7 +25,7 @@ public class Test {
 public static void main(String[] args) {
 	try {
 		// String urlString = "file:///Users/fps/_fps/2004/02/BBC%20NEWS%20-%20Americas%20-%20Science%20wins%20ancient%20bones%20battle.html";
-		String urlString = "http://www.lemonde.fr/web/imprimer_element/0,40-0@2-3232,50-647233,0.html";
+		String urlString = "http://www.lemonde.fr/proche-orient/article/2015/11/10/deux-nouvelles-attaques-au-couteau-a-jerusalem_4806619_3218.html";
 		new Test(urlString);
 	} catch (Exception e) {
 		e.printStackTrace();
@@ -28,18 +33,32 @@ public static void main(String[] args) {
 }
 
 Test(String urlString) throws Exception {
+	// test1(urlString); // javax.swing.text.ChangedCharSetException
+	// test3(urlString);
 	test4(urlString);
 }
 void test4(String urlString) throws Exception {
 	URL url = new URL(urlString);
-	HTMLPageDownload htmlPageDownload = new HTMLPageDownload(new SimpleHttpClient(), url);
-	htmlPageDownload.save(new File("/Users/fps/space/trash/index.html"));
+	Client simpleHttpClient = ClientBuilder.newClient();
+	WebTarget webTarget = simpleHttpClient.target(urlString);
+	Response res = webTarget.request(MediaType.WILDCARD_TYPE).get();
+	boolean isHTML = false;
+	if (res.getMediaType().isCompatible(MediaType.TEXT_HTML_TYPE)) {
+		isHTML = true;
+	}
+	System.out.println("isHTML: " + isHTML);
+	assert(isHTML);
+	HTMLPageDownload download = new HTMLPageDownload(url, res);
+	download.save(new File("/Users/fps/space/trash/index.html"));
 }
 
 void test3(String urlString) throws Exception {
 	URL url = new URL(urlString);
-	HTMLDocumentLoader_Extended htmlLoader = new HTMLDocumentLoader_Extended(new SimpleHttpClient());
-	HTMLDocument htmlDocument = htmlLoader.loadDocument(url);
+	Client simpleHttpClient = ClientBuilder.newClient();
+  WebTarget webTarget = simpleHttpClient.target(urlString);
+  Response res = webTarget.request(MediaType.WILDCARD_TYPE).get();
+	HTMLDocumentLoader_Extended htmlLoader = new HTMLDocumentLoader_Extended(url, res);
+	HTMLDocument htmlDocument = htmlLoader.loadDocument();
 	// h23s(htmlDocument);
 	// System.out.println("TEXT : \n" + htmlDocument.getText(0,htmlDocument.getLength()));
 	System.out.println("LINKS : \n" + getLinks(htmlDocument));
@@ -75,8 +94,11 @@ void test1(String urlString) throws Exception {
 	System.out.println("-------------------------------------");	
 	//
 	
-	HTMLDocumentLoader_Simple htmlLoader = new HTMLDocumentLoader_Simple(new SimpleHttpClient());
-	HTMLDocument htmlDocument = htmlLoader.loadDocument(url);
+	Client simpleHttpClient = ClientBuilder.newClient();
+  WebTarget webTarget = simpleHttpClient.target(urlString);
+  Response res = webTarget.request(MediaType.WILDCARD_TYPE).get();
+	HTMLDocumentLoader_Simple htmlLoader = new HTMLDocumentLoader_Simple(url, res);
+	HTMLDocument htmlDocument = htmlLoader.loadDocument();
 
 	// le texte, à partir du HTMLDocument
 	

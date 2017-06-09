@@ -4,8 +4,8 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import net.semanlink.sljena.JFileModel;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.shared.JenaException;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.shared.JenaException;
 
 
 

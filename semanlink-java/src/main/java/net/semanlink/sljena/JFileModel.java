@@ -1,6 +1,6 @@
 package net.semanlink.sljena;
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.shared.JenaException;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.shared.JenaException;
 
 import java.io.*;
 import java.net.URISyntaxException;

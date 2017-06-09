@@ -65,11 +65,19 @@ protected String getPropValue(HttpServletRequest request) {
 	return request.getParameter("value");
 }
 
+protected boolean subjectIsKwNotDoc(HttpServletRequest request) {
+	return ("kw".equals(request.getParameter("docorkw")));
+}
+
+protected String getSubjectUri(HttpServletRequest request) {
+	return request.getParameter("uri");
+}
+
 protected void setOrAddProp(String propertyUri, String propertyValue, HttpServletRequest request, HttpServletResponse response) throws Exception {
 	String redirectURL = null;
-	boolean isKwNotDoc = ("kw".equals(request.getParameter("docorkw")));
+	boolean isKwNotDoc = subjectIsKwNotDoc(request);
 		
-	String uri = request.getParameter("uri");
+	String uri = getSubjectUri(request);
 	SLModel mod = SLServlet.getSLModel();
 	
 	boolean isAddAction = (request.getParameter(ADD) != null);

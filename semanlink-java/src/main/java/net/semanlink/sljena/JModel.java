@@ -6,10 +6,10 @@ import net.semanlink.util.Util;
 import net.semanlink.util.YearMonthDay;
 import net.semanlink.metadataextraction.MetadataExtractorManager;
 
-import com.hp.hpl.jena.rdf.listeners.StatementListener;
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.shared.JenaException;
-import com.hp.hpl.jena.vocabulary.*;
+import org.apache.jena.rdf.listeners.StatementListener;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.shared.JenaException;
+import org.apache.jena.vocabulary.*;
 import java.io.*;
 import java.net.*;
 import java.util.*;

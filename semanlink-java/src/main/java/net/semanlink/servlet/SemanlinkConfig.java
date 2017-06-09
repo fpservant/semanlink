@@ -34,9 +34,9 @@ import net.semanlink.sljena.modelcorrections.ThesaurusUriCorrection;
 import net.semanlink.sljena.modelcorrections.KeywordUriCorrection;
 import net.semanlink.util.Util;
 
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.shared.JenaException;
-import com.hp.hpl.jena.vocabulary.RDF;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.shared.JenaException;
+import org.apache.jena.vocabulary.RDF;
 
 
 
@@ -119,8 +119,8 @@ public SemanlinkConfig(File configFile, String servletUrl, ServletContext servle
 	this.configFile = configFile;
 	this.servletUrl = slashEndedServletUrl(servletUrl);
 	this.servletContext = servletContext;
-	//
 	this.model = ModelFactory.createDefaultModel();
+	
 	
 	if (! (configFile.exists()) ) throw new IllegalArgumentException(configFile + " doesn't exist");
 	/* on ne peut tolérer aucune erreur sur la lecture
@@ -139,15 +139,15 @@ public SemanlinkConfig(File configFile, String servletUrl, ServletContext servle
 	InputStream in = new BufferedInputStream(new FileInputStream(configFile));
 	rdfReader.read(model, in, this.servletUrl);
 	
-	this.filePathProp = model.getProperty(SL_FILE_PATH_PROP);
-	this.pathRelativeToMainDataDirProp = model.getProperty(SL_PATH_RELATIVE_TO_MAIN_DATA_DIR_PROP);
+	this.filePathProp = model.createProperty(SL_FILE_PATH_PROP);
+	this.pathRelativeToMainDataDirProp = model.createProperty(SL_PATH_RELATIVE_TO_MAIN_DATA_DIR_PROP);
 	this.mainDataDir = this.configFile.getParentFile(); // en afit dir "conf"
 	if (this.mainDataDir == null) throw new LoadException(this.configFile + " has no parent: impossible to define a path relative to it.");
 	this.mainDataDir = this.mainDataDir.getParentFile();
 	if (this.mainDataDir == null) throw new LoadException(this.configFile.getParentFile() + " has no parent: impossible to define a path relative to it.");
-	this.fileURIProp = model.getProperty(SL_FILE_URI_PROP);
-	this.thesaurusProp = model.getProperty(SL_THESAURUS_PROP);
-	this.loadFileModeProp = model.getProperty(SL_LOADING_MODE_PROP);
+	this.fileURIProp = model.createProperty(SL_FILE_URI_PROP);
+	this.thesaurusProp = model.createProperty(SL_THESAURUS_PROP);
+	this.loadFileModeProp = model.createProperty(SL_LOADING_MODE_PROP);
 }
 
 
@@ -252,6 +252,21 @@ public ArrayList load(ArrayList slModelList) throws IOException, URISyntaxExcept
 		if (defaultDataFolderRes == null) throw new LoadException("defaultFolder undefined");
 		SLDataFolder defaultDataFolder = loadSLFile(slModel, defaultDataFolderRes, defaultThesaurus);
 	 	slModel.setDefaultDataFolder(defaultDataFolder);
+	 	webServer.setDefaultDocFolder(defaultDataFolder.getFile()); // @find CORS pb with markdown
+	 	
+	 	
+	 	
+	 	
+//	 	// on ajoute systématiquement un (1/2) mapping de servlet/document vers le feault data folder
+//	 	// (cf pb CORS pour markdown file chez moi : le doc est servi par apache, on ne peut getter le fichier en ajax.
+//	 	// Je veux donc donner la possibilité de linker vers 127.0.0.1:8080/semanlink/document/2015/10/UnFichier.md
+//	 	// et il faut donc que cela envoie vers le fichier correspondant pour être servi par static file servlet
+//	 	defaultDataFolder
+//	 	webServer.addMapping(null, mainDataDir);
+	 	
+	 	
+	 	
+	 	
 
 	 	// bookmark folder
 		/*  // pas obligatoire, pour moi. 

@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import net.semanlink.sljena.JModel;
 
-import com.hp.hpl.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Model;
 
 /**
  * Interface a implementer pour definir une correction a apporter a un model.

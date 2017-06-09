@@ -35,5 +35,8 @@ public int compareTo(Object arg0) { return this.slDoc.compareTo(arg0); }
 //
 //
 //
+@Override public String getMarkdownUri(String lang) {
+	return null;
+}
 
 } // class

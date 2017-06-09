@@ -4,8 +4,8 @@ import java.net.URISyntaxException;
 
 import net.semanlink.semanlink.SLVocab;
 
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.shared.JenaException;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.shared.JenaException;
 /**
  * Un Model dont une partie des statements se retrouve dans un JFileModel.
  * @author fps

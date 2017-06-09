@@ -15,10 +15,10 @@ import net.semanlink.util.index.MultiLabelGetter;
 import net.semanlink.util.index.MultiLabelIndex;
 import net.semanlink.util.text.WordsInString;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.util.iterator.ExtendedIterator;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.util.iterator.ExtendedIterator;
 
 /**
  * Index a thesaurus by text of words included in tags. 

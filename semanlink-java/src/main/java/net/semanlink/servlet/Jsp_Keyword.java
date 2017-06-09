@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import javax.servlet.http.*;
 
-import com.hp.hpl.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Model;
 
 /** Affichage d'un SLKeyword */
 public class Jsp_Keyword extends Jsp_Resource {
@@ -78,9 +78,10 @@ public Bean_DocList computeDocList(String sortProp, DisplayMode mode)  throws Ex
 	SLKeyword[] dontShow = null;
 	boolean showKwsOfDocs = true; // UNUSED cf setShowKwsOfDocs TODO
 	
-	if (edit()) {
-		list = this.slKw.getDocuments();
-	} else {
+// 2015-10: allow to display long list of docs when kw is edited
+//	if (edit()) {
+//		list = this.slKw.getDocuments();
+//	} else {
 		if (!mode.isLongListOfDocs()) {
 			list = this.slKw.getDocuments();
 		} else {
@@ -92,7 +93,7 @@ public Bean_DocList computeDocList(String sortProp, DisplayMode mode)  throws Ex
 			}
 			list = Arrays.asList(tree.getDocs());
 		}
-	}
+//	}
 	// dontShow = new SLKeyword[1]; dontShow[0] = this.slKw; // used to not show this tag in the list of tags of the docs ; removed 2013-08 RDFa 
 	sort(list, dontShow, sortProp);
 

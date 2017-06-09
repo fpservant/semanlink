@@ -10,9 +10,9 @@ import net.semanlink.semanlink.SLModel;
 import net.semanlink.sljena.JenaUtils;
 import net.semanlink.util.Util;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ResIterator;
-import com.hp.hpl.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
 
 /** Corrige dans le fichier slFile les uri de protocol file qui ne seraient pas correctes.
  *  Retourne s'il y a eu des changements

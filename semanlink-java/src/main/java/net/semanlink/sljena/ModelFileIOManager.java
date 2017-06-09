@@ -6,8 +6,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.shared.JenaException;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.shared.JenaException;
 
 import net.semanlink.semanlink.SLModel;
 import net.semanlink.semanlink.SLThesaurus;

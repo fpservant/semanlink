@@ -8,11 +8,10 @@ import java.util.List;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLDocument;
-
-import net.semanlink.util.SimpleHttpClient;
+import javax.ws.rs.core.Response;
 
 /**
- * Allow to download an HTML page and to save it, replacing relativ links with absolut
+ * Allow to download an HTML page and to save it, replacing relative links with absolute ones
  * Special action on pages from www.lemonde.fr, in print format: remove advertising
  */
 public class HTMLPageDownload extends HTMLDocumentLoader_Extended {
@@ -20,10 +19,10 @@ HTMLDocument htmlDocument;
 private String fileContent;
 
 /** The constructor downloads the page. */
-public HTMLPageDownload(SimpleHttpClient client, URL url) throws IOException {
-	super(client);
+public HTMLPageDownload(URL url, Response res) throws IOException {
+	super(url, res);
 	this.url = url;
-	this.htmlDocument = loadDocument(url);
+	this.htmlDocument = loadDocument();
 	this.fileContent = getNiceLinkedContent();
 	purgeFileContent(); 
 }
@@ -50,7 +49,10 @@ public void save(File saveAsFile) throws IOException {
 
 private String getNiceLinkedContent() throws MalformedURLException, UnsupportedEncodingException {
 	URL base = this.htmlDocument.getBase();
-	String x = new String(this.content, this.charSet);
+
+	// 2015-11: si this.charset est null, c'est mauvais signe, cf par ex http://www.tensorflow.org/tutorials/mnist/beginners/index.md
+	String x = new String(this.content, (this.charSet == null) ? "UTF-8" : this.charSet);
+	x = new String(this.content);
 	HTMLDocument.Iterator it;
 	// liens href
 	it = this.htmlDocument.getIterator(HTML.Tag.A);
@@ -95,20 +97,38 @@ private String getNiceLinkedContent() throws MalformedURLException, UnsupportedE
 			it.next();
 		}	
 	}*/
-	try {
+//	try {
+//		List al = getImages();
+//		for (int i = 0; i < al.size(); i++) {
+//			String imgSrc = (String) al.get(i);
+//			if (imgSrc.indexOf("://") > -1) {
+//			} else {
+//				// transforme en absolue
+//				String absolut = (new URL(base, imgSrc)).toString();
+//				x = x.replace("\"" + imgSrc + "\"", "\"" + absolut + "\"");
+//			}
+//		}
+//	} catch (Exception e) {
+//		System.err.println("HTMLPageDownload: Exception caught trying to replace images : " + e);
+//	}
+	
+	{
 		List al = getImages();
 		for (int i = 0; i < al.size(); i++) {
 			String imgSrc = (String) al.get(i);
 			if (imgSrc.indexOf("://") > -1) {
 			} else {
 				// transforme en absolue
-				String absolut = (new URL(base, imgSrc)).toString();
-				x = x.replace("\"" + imgSrc + "\"", "\"" + absolut + "\"");
+				try {
+					String absolut = (new URL(base, imgSrc)).toString();
+					x = x.replace("\"" + imgSrc + "\"", "\"" + absolut + "\"");
+				} catch (Exception e) {
+					System.err.println("HTMLPageDownload: Exception caught trying to replace images : " + e + " imgSrc: " + imgSrc);
+				}
 			}
 		}
-	} catch (Exception e) {
-		System.err.println("HTMLPageDownload: Exception caught trying to replace images : " + e);
 	}
+
 
 	// les liens vers css, ...
 	/* Ceci devrait (?) marcher, mais ne marche pas

@@ -1,10 +1,12 @@
 package net.semanlink.util.html;
+import java.net.URL;
 import java.util.*;
 
 import javax.swing.text.*;
 import javax.swing.text.html.*;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.core.Response;
 
-import net.semanlink.util.SimpleHttpClient;
 
 /**
  * Reads the data located at a URL and loads an HTMLDocument.
@@ -18,7 +20,7 @@ HTMLEditorKit.ParserCallback superParserCallback;
 Result result;
 Object state;
 // HTMLWriter htmlWriter;
-public HTMLDocumentLoader_Extended(SimpleHttpClient client) { super(client); }
+public HTMLDocumentLoader_Extended(URL url, Response res) { super(url, res); }
 static class Result {
 	StringBuffer titre = new StringBuffer();
 	ArrayList linkHrefsAl = new ArrayList(); // pour les tag link genre css

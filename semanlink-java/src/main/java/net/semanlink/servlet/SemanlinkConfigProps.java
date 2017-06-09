@@ -12,9 +12,9 @@ import org.apache.log4j.Logger;
 import net.semanlink.semanlink.SLVocab;
 import net.semanlink.sljena.ModelFileIOManager;
 
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.shared.JenaException;
-import com.hp.hpl.jena.vocabulary.DC;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.shared.JenaException;
+import org.apache.jena.vocabulary.DC;
 
 
 

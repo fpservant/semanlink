@@ -6,9 +6,9 @@ import net.semanlink.semanlink.SLVocab;
 import net.semanlink.skos.SKOS;
 import net.semanlink.util.jena.JenaUtils;
 
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.sparql.core.describe.*;
-import com.hp.hpl.jena.sparql.util.Context;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.sparql.core.describe.*;
+import org.apache.jena.sparql.util.Context;
 
 /**
  * Used to modify the content returned by DESCRIBE queries for tags

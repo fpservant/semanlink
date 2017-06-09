@@ -4,7 +4,7 @@ package net.semanlink.semanticsemanticweb;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import com.hp.hpl.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Model;
 
 import net.semanlink.util.text.WordsInString;
 

@@ -13,11 +13,11 @@ import net.semanlink.skos.SKOS;
 import net.semanlink.util.AcceptHeader;
 import net.semanlink.util.jena.RDFWriterUtil;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.sparql.vocabulary.FOAF;
-import com.hp.hpl.jena.vocabulary.DC;
-import com.hp.hpl.jena.vocabulary.RDF;
-import com.hp.hpl.jena.vocabulary.RDFS;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.sparql.vocabulary.FOAF;
+import org.apache.jena.vocabulary.DC;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
 
 /** This servlet writes RDF to the outputStream. 
  *  The RDF returned is contained in a model passed as a request attribute. 

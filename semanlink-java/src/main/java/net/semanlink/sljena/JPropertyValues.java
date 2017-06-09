@@ -1,7 +1,7 @@
 /* Created on 5 juin 2004 */
 package net.semanlink.sljena;
 import net.semanlink.semanlink.*;
-import com.hp.hpl.jena.rdf.model.*;
+import org.apache.jena.rdf.model.*;
 import java.util.*;
 /**
  * BOF //TODO

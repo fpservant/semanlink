@@ -7,15 +7,13 @@ import java.util.Set;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-import org.apache.commons.httpclient.HttpException;
-
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.shared.PrefixMapping;
-import com.hp.hpl.jena.sparql.core.describe.DescribeHandlerRegistry;
-import com.hp.hpl.jena.sparql.path.Path;
-import com.hp.hpl.jena.sparql.path.PathLib;
-import com.hp.hpl.jena.sparql.path.PathParser;
-import com.hp.hpl.jena.sparql.pfunction.PropertyFunctionRegistry;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.shared.PrefixMapping;
+import org.apache.jena.sparql.core.describe.DescribeHandlerRegistry;
+import org.apache.jena.sparql.path.Path;
+import org.apache.jena.sparql.path.PathLib;
+import org.apache.jena.sparql.path.PathParser;
+import org.apache.jena.sparql.pfunction.PropertyFunctionRegistry;
 
 import net.semanlink.lod.LODDataset;
 import net.semanlink.lod.LODServlet;
@@ -74,7 +72,7 @@ protected SPARQLUpdateEndPoint initSparqUpdatelEndPoint() {
 }
 
 @Override
-protected SPARQLEndPoint initSparqlEndPoint() {
+protected SPARQLEndPoint initSparqlEndPoint(HttpServletRequest req) {
 	JModel slModel = (JModel) SLServlet.getSLModel();
 	SPARQLEndPoint x = new SLSPARQLEndPoint(slModel.getKWsModel(), slModel.getDocsModel());
 	
@@ -247,8 +245,8 @@ class SLRDFIntoDiv extends RDFIntoDiv {
 }
 
 @Override
-public LODDataset initDataset() {
-	SPARQLEndPoint endpoint = getSparqlEndPoint();
+public LODDataset initDataset(HttpServletRequest req) {
+	SPARQLEndPoint endpoint = getSparqlEndPoint(req);
 	
 	return new SLLODDataset(endpoint, SLServlet.getServletUrl());
 }
@@ -260,7 +258,7 @@ public LODDataset initDataset() {
 // 2010-12
 // cf pb in sparql: we have in html generated from rdf in js www.semanlink.net/tag... instead of 127...
 @Override
-protected void clickedLinkToResourceInHTMLDisplayingRDF(HttpServletRequest req, HttpServletResponse res) throws HttpException, IOException, ServletException {
+protected void clickedLinkToResourceInHTMLDisplayingRDF(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 	String uri = req.getParameter("uri");
 	if (uri == null) throw new RuntimeException("Asked to dereference a URI, but no uri found in parameters (no 'uri' param)"); // @TODO fixme
 	
@@ -273,7 +271,7 @@ protected void clickedLinkToResourceInHTMLDisplayingRDF(HttpServletRequest req, 
 	
 	// bof bof pour la suite
 	
-	LODDataset ds = getLODDataset();
+	LODDataset ds = getLODDataset(req);
 	if (!ds.owns(uri)) {
 		clickedLinkToOutsideResourceInHTMLDisplayingRDF(req, res, uri);
 		return;

@@ -9,6 +9,7 @@ public interface SLResource {
 	public String getURI();
 	public String getComment();
 	public String getDate();
+	public String getMarkdownUri(String lang);
 	/** Retourne une HashMap de cle les Property, et de data une PropertyValues */
 	public HashMap getProperties();
 	public HashMap getPropertiesAsStrings();

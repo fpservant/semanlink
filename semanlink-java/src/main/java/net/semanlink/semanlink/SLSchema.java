@@ -1,6 +1,6 @@
 /* CVS $Id: SLSchema.java,v 1.1 2010/06/25 16:15:22 fps Exp $ */
 package net.semanlink.semanlink; 
-import com.hp.hpl.jena.rdf.model.*;
+import org.apache.jena.rdf.model.*;
  
 /**
  * Vocabulary definitions from ./WebContent/schema/semanlink-schema.rdf 
@@ -58,4 +58,6 @@ public class SLSchema {
     
     public static final Resource Thesaurus = m_model.createResource( "http://www.semanlink.net/2001/00/semanlink-schema#Thesaurus" );
     
+    // public static final Property markdown = m_model.createProperty( "http://www.semanlink.net/2001/00/semanlink-schema#markdown" );
+    public static final Property markdownOf = m_model.createProperty( "http://www.semanlink.net/2001/00/semanlink-schema#markdownOf" );
 }

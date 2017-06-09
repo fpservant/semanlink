@@ -23,6 +23,7 @@ public static final String PATH = "/document";
 public static final String PATH_FOR_FILES_OUTSIDE_DATAFOLDERS = "/file"; 	// 2006/10 file outside dataFolders
 public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
 	File f;
+	boolean b404 = false;
 	try {
 		// We could serve any file with this servlet (including files outside the dataFolder)
 		// (I implemented it with the "/file" servlet path)
@@ -70,18 +71,46 @@ public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOExce
 
 		} else { */
 			f = SLServlet.getWebServer().getFile(req.getRequestURL().toString());
-			if (f == null) throw new RuntimeException("no such file, or access not allowed");
-			if (!f.exists()) throw new RuntimeException("file " + f + " doesn't exist, or access not allowed.");
+			if (f == null) {
+				// @find CORS pb with markdown
+				// defautDataFolder servi (aussi) en /document
+				File defaultDir = SLServlet.getWebServer().getDefaultDocFolder();
+				if (defaultDir != null) {
+					String s = defaultDir.getAbsolutePath();
+					if (s.endsWith("/")) {
+						s += req.getPathInfo().substring(1);
+					} else {
+						s += req.getPathInfo();
+					}
+					f = new File(s);
+				}
+			}
+	  	
+			if (f == null) {
+				b404 = true;
+				throw new RuntimeException("no such file, or access not allowed");
+			}
+			if (!f.exists()) {
+				b404 = true;
+				throw new RuntimeException("file " + f + " doesn't exist, or access not allowed.");
+			}
 		// }
 		if (f.isDirectory()) {
+			b404 = true; // TODO CHANGE
 			throw new RuntimeException("file " + f + " is a directory -- not supported, sorry.");
 			/*SLModel mod = SLServlet.getSLModel();
 			SLDocument doc = mod.getDocument(mod.fileToUri(f));
 			Jsp*/
 		}
-	} catch (URISyntaxException e) {
-		throw new RuntimeException(e);
+		BasicServlet.writeFile2ServletResponse(f, res);
+	} catch (Exception e) {
+		if (b404) {
+			res.sendError(404);
+		} else {
+			res.sendError(500);
+		}
 	}
-	BasicServlet.writeFile2ServletResponse(f, res);
 }
+
+
 }

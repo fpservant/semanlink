@@ -1,6 +1,6 @@
 /* Created on 13 sept. 03 */
 package net.semanlink.sljena;
-import com.hp.hpl.jena.rdf.model.*;
+import org.apache.jena.rdf.model.*;
 
 /**
  * Classe utilitaire pour travailler avec subject, property et object

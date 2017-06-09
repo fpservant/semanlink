@@ -1,6 +1,6 @@
 /* CVS $Id: SKOS.java,v 1.1 2010/06/25 16:15:23 fps Exp $ */
 package net.semanlink.skos; 
-import com.hp.hpl.jena.rdf.model.*;
+import org.apache.jena.rdf.model.*;
  
 /**
  * BEWARE THIS IS AN OLD VERSION OS SKOS // TODO

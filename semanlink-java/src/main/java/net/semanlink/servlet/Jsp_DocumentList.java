@@ -5,7 +5,7 @@ import java.util.*;
 import java.io.IOException;
 import javax.servlet.http.*;
 
-import com.hp.hpl.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Model;
 
 /**
  * Permet de faire des pages affichant une liste de docs qui supporte, en plus,

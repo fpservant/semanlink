@@ -6,8 +6,8 @@ import java.util.List;
 
 import net.semanlink.semanlink.SLKeyword;
 
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
 
 public class RDFOutput_Keyword extends RDFOutput {
 private SLKeyword thisKw;

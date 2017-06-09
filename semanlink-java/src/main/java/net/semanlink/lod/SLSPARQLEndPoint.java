@@ -1,8 +1,8 @@
 package net.semanlink.lod;
 import net.semanlink.servlet.SLServlet;
 
-import com.hp.hpl.jena.query.*;
-import com.hp.hpl.jena.rdf.model.*;
+import org.apache.jena.query.*;
+import org.apache.jena.rdf.model.*;
 
 public class SLSPARQLEndPoint extends SPARQLEndPoint {
 public SLSPARQLEndPoint(Model kwsModel, Model docsModel) {

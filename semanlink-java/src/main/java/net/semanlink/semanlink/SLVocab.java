@@ -2,8 +2,8 @@ package net.semanlink.semanlink;
 
 import net.semanlink.skos.SKOS;
 
-import com.hp.hpl.jena.vocabulary.RDFS;
-import com.hp.hpl.jena.vocabulary.DC;
+import org.apache.jena.vocabulary.RDFS;
+import org.apache.jena.vocabulary.DC;
 
 /**
  * Definition of Semanlink RDF vocabulary
@@ -30,6 +30,8 @@ public static final String COMMENT_PROPERTY = SLSchema.comment.getURI();
 public static final String SL_CREATION_DATE_PROPERTY =  SLSchema.creationDate.getURI();
 public static final String SL_CREATION_TIME_PROPERTY =  SLSchema.creationTime.getURI();
 public static final String SL_REPLACED_BY_PROPERTY =  SLSchema.replacedBy.getURI();
+// public static final String SL_MARKDOWN_PROPERTY =  SLSchema.markdown.getURI();
+public static final String SL_MARKDOWN_OF_PROPERTY =  SLSchema.markdownOf.getURI();
 
 public static final String SOURCE_PROPERTY = DC.source.getURI();
 public static final String DATE_PARUTION_PROPERTY = DC.date.getURI();
@@ -62,7 +64,8 @@ public static EasyProperty[] COMMON_PROPERTIES = {
 	,new EasyProperty("sl:creationDate", SL_CREATION_DATE_PROPERTY)
 	,new EasyProperty("sl:creationTime", SL_CREATION_TIME_PROPERTY)
 	,new EasyProperty("rdfs:seeAlso" , RDFS.seeAlso.getURI())
-	,new EasyProperty("replaced by" , SL_REPLACED_BY_PROPERTY)
+	,new EasyProperty("sl:replacedBy" , SL_REPLACED_BY_PROPERTY)
+	,new EasyProperty("sl:markdown" , SL_MARKDOWN_OF_PROPERTY)
 };
 
 /** Associe un "petit nom", genre "dc:title" a une uri. */

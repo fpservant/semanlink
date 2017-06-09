@@ -2,8 +2,8 @@ package net.semanlink.sljena;
 import net.semanlink.semanlink.*;
 import java.util.*;
 import java.lang.reflect.*;
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.shared.JenaException;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.shared.JenaException;
 public class SLJenaUtils {
 /** parce qu'il n'y a que des methodes statiques dans cette classe. */
 private SLJenaUtils() {}

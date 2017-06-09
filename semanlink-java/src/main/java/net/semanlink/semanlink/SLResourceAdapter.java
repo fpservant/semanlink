@@ -77,5 +77,9 @@ private void readObject(java.io.ObjectInputStream in) throws IOException, ClassN
 	 this.uri = ((String) in.readObject());
 }
 
+@Override public String getMarkdownUri(String lang) {
+	return null;
+}
+
 
 }

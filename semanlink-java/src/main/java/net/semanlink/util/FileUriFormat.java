@@ -4,7 +4,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-// import com.hp.hpl.jena.iri.impl.XercesURI;
+// import org.apache.jena.iri.impl.XercesURI;
 
 /** Used to define the way we get an uri string from a filename.
  * 
@@ -169,7 +169,7 @@ static public String filenameToUri(String filename) throws URISyntaxException {
 /*static public String fileToARPSafeUri(File file) throws IOException, URISyntaxException {
 	String x = fileToUri(file);
 	// following line, to check whether this uri is ARP compliant
-	// new com.hp.hpl.jena.rdf.arp.URI(x); // a été déprécié, d'où remplacement, non testé, par :
+	// new org.apache.jena.rdf.arp.URI(x); // a été déprécié, d'où remplacement, non testé, par :
 	new XercesURI(x);
 	return x;
 }*/

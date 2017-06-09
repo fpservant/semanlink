@@ -11,10 +11,10 @@ import net.semanlink.semanlink.SLSchema;
 import net.semanlink.skos.SKOS;
 import net.semanlink.util.Util;
 
-import com.hp.hpl.jena.vocabulary.OWL;
-import com.hp.hpl.jena.vocabulary.RDF;
-import com.hp.hpl.jena.vocabulary.RDFS;
-import com.hp.hpl.jena.vocabulary.DC;
+import org.apache.jena.vocabulary.OWL;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
+import org.apache.jena.vocabulary.DC;
 
 import javax.servlet.http.*;
 

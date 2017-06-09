@@ -24,7 +24,7 @@ import net.semanlink.util.Util;
 
 import javax.servlet.http.*;
 
-import com.hp.hpl.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Model;
 
 /** Modélise une page à afficher. */
 // public class Jsp_Page implements SLVocab {
@@ -95,6 +95,8 @@ public Jsp_Page(HttpServletRequest request, HttpServletResponse response) {
 	// this.addOnLoadEvents("liveSearchInit"); // 2013-08: found a way to avoid having to do that on load
 	this.addOnLoadEvents("setFocus");
 	// System.out.println("NEW Jsp_Page " + getUri());
+	// 2017-07 sl:comment as markdown
+	this.addOnLoadEvents("displayCommentAsMarkdown");
 }
 
 public SLModel getSLModel() {

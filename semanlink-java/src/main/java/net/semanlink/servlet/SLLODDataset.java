@@ -1,9 +1,9 @@
 /* Created on 25 juil. 2010 */
 package net.semanlink.servlet;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.vocabulary.RDFS;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.vocabulary.RDFS;
 
 import net.semanlink.graph.jena.TreeDefinition;
 import net.semanlink.lod.LODDataset;

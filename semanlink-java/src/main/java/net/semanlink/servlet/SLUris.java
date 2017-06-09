@@ -1,6 +1,6 @@
 package net.semanlink.servlet;
 
-import com.hp.hpl.jena.rdf.model.*;
+import org.apache.jena.rdf.model.*;
 
 import net.semanlink.semanlink.SLVocab;
 import net.semanlink.skos.SKOS;

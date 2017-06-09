@@ -6,7 +6,7 @@ import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.util.*;
 
-import com.hp.hpl.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Property;
 
 import net.semanlink.servlet.SLServlet;
 import net.semanlink.util.FileUriFormat;
@@ -275,7 +275,7 @@ public static String laxistUri2Uri(String laxistUri) throws URISyntaxException {
 		// On recherche l'exception émise si l'uri est laxiste 
 		// ceci qui parait bien a priori (pour traiter le file:/ en particulier)
 		// accepte "test ééé" dans broncher !!!
-		// new com.hp.hpl.jena.rdf.arp.URI(laxistUri);
+		// new org.apache.jena.rdf.arp.URI(laxistUri);
 
 		// Everything was allright with the following code
 		// new URI(laxistUri);
@@ -321,7 +321,7 @@ public static String laxistUri2Uri(String laxistUri) throws URISyntaxException {
 		// On recherche l'exception émise si l'uri est laxiste 
 		// ceci qui parait bien a priori (pour traiter le file:/ en particulier)
 		// accepte "test ééé" dans broncher !!!
-		// new com.hp.hpl.jena.rdf.arp.URI(laxistUri);
+		// new org.apache.jena.rdf.arp.URI(laxistUri);
 		new URI(laxistUri);
 		return FileUriFormat.fileSlashSlashSlashProblem(laxistUri);
 	} catch (Exception e) {
@@ -331,7 +331,6 @@ public static String laxistUri2Uri(String laxistUri) throws URISyntaxException {
 		return laxistRelativPath2Uri(dir,shortName);  		
 	}
 }*/
-
 
 /**
  * @param dirUri peut être une uri http locale MAIS SUPPOSEE CORRECTE (sinon URISyntaxException)

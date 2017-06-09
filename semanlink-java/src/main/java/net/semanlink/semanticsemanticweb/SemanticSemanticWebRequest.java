@@ -13,8 +13,8 @@ import net.semanlink.util.URLUTF8Encoder;
 import net.semanlink.util.text.CharConverter;
 import net.semanlink.util.text.WordsInString;
 
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.vocabulary.RDFS;
+import org.apache.jena.rdf.model.*;
+import org.apache.jena.vocabulary.RDFS;
 
 public class SemanticSemanticWebRequest {
 public static String PROBABLY_SAME_AS_PROP_URI = "http://www.semanlink.net/semanticsemanticweb#probablySameAs";

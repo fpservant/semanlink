@@ -7,8 +7,8 @@ import java.util.List;
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.util.URLUTF8Encoder;
 
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
 
 // http://127.0.0.1:9080/semanlink/sl/search.rdf?text=afric+musi
 

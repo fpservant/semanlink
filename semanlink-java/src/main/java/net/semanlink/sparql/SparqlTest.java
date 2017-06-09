@@ -3,8 +3,8 @@ package net.semanlink.sparql;
 import net.semanlink.servlet.SLServlet;
 import net.semanlink.sljena.JModel;
 
-import com.hp.hpl.jena.query.* ;
-import com.hp.hpl.jena.rdf.model.*;
+import org.apache.jena.query.* ;
+import org.apache.jena.rdf.model.*;
 public class SparqlTest {
 public static void main(String[] args) {
 	new SparqlTest();

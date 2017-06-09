@@ -2,9 +2,9 @@ package net.semanlink.sljena.modelcorrections;
 
 import net.semanlink.semanlink.SLVocab;
 import net.semanlink.skos.SKOS;
-import com.hp.hpl.jena.vocabulary.RDFS;
-import com.hp.hpl.jena.vocabulary.DC;
-import com.hp.hpl.jena.vocabulary.DCTerms;
+import org.apache.jena.vocabulary.RDFS;
+import org.apache.jena.vocabulary.DC;
+import org.apache.jena.vocabulary.DCTerms;
 
 
 /**

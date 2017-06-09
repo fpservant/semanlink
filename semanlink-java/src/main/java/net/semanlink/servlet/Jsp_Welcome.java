@@ -25,6 +25,7 @@ public String getTitle() { return "Semanlink Home Page"; }
 public Bean_DocList getDocList() { return this.bean_DocList; }
 public Bean_KwList getKwList() { return this.bean_KwList; }
 
+
 /** A appeler pour préparer la liste des ancêtres avant d'inclure dans la jsp kwslist.jsp. */
 public void prepareKwsWithoutParentsList() {
 	//this.bean_KwList = new Bean_KwList();

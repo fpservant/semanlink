@@ -1,17 +1,24 @@
 package net.semanlink.servlet;
+
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
 import javax.servlet.http.*;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
-import org.apache.commons.httpclient.HttpException;
 import org.apache.struts.action.*;
 
 import net.semanlink.semanlink.*;
-import net.semanlink.util.SimpleHttpClient;
+import net.semanlink.util.CopyFiles;
 import net.semanlink.util.Util;
 import net.semanlink.util.html.HTMLPageDownload;
 
@@ -73,7 +80,7 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 
 
 
-static String getShortFilename(String title, String docuri, String contentType) {
+static String getShortFilename(String title, String docuri, boolean isHTML) {
 	String dotExtension = null;
 	if (docuri != null) {
 		if (!docuri.endsWith(".")) {
@@ -91,7 +98,7 @@ static String getShortFilename(String title, String docuri, String contentType) 
 		}
 	}
 	*/
-	if ((contentType != null) && (contentType.indexOf("html") > -1)) {
+	if (isHTML) {
 		dotExtension = ".html";
 	} else {
 		if (dotExtension == null) dotExtension = "";
@@ -135,24 +142,31 @@ public static String shortFilenameFromString(String sfn) {
  * @throws HttpException 
  * @throws RuntimeException if overwrite is false and file already exists
  */
-public static File downloadFile(String downloadFromUri, String title, boolean overwrite, SLModel mod) throws HttpException, IOException {
+public static File downloadFile(String downloadFromUri, String title, boolean overwrite, SLModel mod) throws IOException {
 	// if (!downloadFromUri.startsWith("http:")) throw new RuntimeException("Not an http uri"); // TODO : on pourrait vouloir faire une copie d'un file
 	
-	SimpleHttpClient simpleHttpClient = SLServlet.getSimpleHttpClient();
-	String contentType = simpleHttpClient.getContentType(downloadFromUri, false);
-	if (contentType == null) {
-		if ((downloadFromUri.endsWith(".html"))||(downloadFromUri.endsWith(".htm"))) contentType = "text/html";
+	Client simpleHttpClient = SLServlet.getSimpleHttpClient();
+	// String contentType = null; //  = simpleHttpClient.getContentType(downloadFromUri, false);
+	
+  WebTarget webTarget = simpleHttpClient.target(downloadFromUri);
+  Response res = webTarget.request(MediaType.WILDCARD_TYPE).get();
+	boolean isHTML = false;
+  if ((res.getMediaType() != null) && (res.getMediaType().isCompatible(MediaType.TEXT_HTML_TYPE))) {
+  	isHTML = true;
+  } else {
+		if ((downloadFromUri.endsWith(".html"))||(downloadFromUri.endsWith(".htm"))) isHTML = true;
 	}
+	
 	File dir = mod.goodDirToSaveAFile(); ////// !!!
-	String sfn = getShortFilename(title, downloadFromUri, contentType);
+	String sfn = getShortFilename(title, downloadFromUri, isHTML);
 	File saveAs = new File(dir, sfn);
 	if (saveAs.exists()) {
 		if (!overwrite) throw new RuntimeException ("A file " + saveAs.toString() + " already exists.");
 	}
 
 	// if ("text/html".equals(contentType)) {
-	if ((contentType != null) && (contentType.indexOf("html") > -1)) {
-		HTMLPageDownload download = new HTMLPageDownload(simpleHttpClient, new URL(downloadFromUri));
+	if (isHTML) {
+		HTMLPageDownload download = new HTMLPageDownload(new URL(downloadFromUri), res);
 		if (HTMLPageDownload.isLeMondePrintPage(downloadFromUri)) {
 			// remplacer le titre ds le html
 			if (title != null) {
@@ -161,10 +175,28 @@ public static File downloadFile(String downloadFromUri, String title, boolean ov
 		}
 		download.save(saveAs);						
 	} else {
-		simpleHttpClient.save(downloadFromUri, null, saveAs);
+		save(res, saveAs);
 	}
 	return saveAs;
 }
+
+
+static private void save(Response res, File saveAsFile) throws IOException {	
+  	File dir = new File(saveAsFile.getParent());
+  	if (!dir.exists()) dir.mkdirs();
+    OutputStream out = new FileOutputStream(saveAsFile);
+    Object o = res.getEntity();
+    InputStream in;
+	  if (o instanceof InputStream) {
+	  	in = (InputStream) o;
+	  } else {
+	  	throw new RuntimeException("No content");
+	  }
+  	CopyFiles.writeIn2Out(in, out, new byte[1024]);
+  	in.close();
+  	out.close();
+}
+
 
 /**
  * to state that file is a local copy of docUri

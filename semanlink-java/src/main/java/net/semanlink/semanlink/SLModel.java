@@ -24,15 +24,18 @@
 
 package net.semanlink.semanlink;
 import net.semanlink.metadataextraction.MetadataExtractorManager;
+import net.semanlink.servlet.HTML_Link;
+import net.semanlink.servlet.SLServlet;
 import net.semanlink.sljena.modelcorrections.ModelCorrector;
 import net.semanlink.util.*;
 import net.semanlink.util.text.CharConverter;
 import net.semanlink.util.text.WordsInString;
 
-import com.hp.hpl.jena.shared.JenaException;
+import org.apache.jena.shared.JenaException;
 
 import java.io.*;
 import java.net.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 /*
  * Le "modele" Semanlink.
@@ -199,6 +202,20 @@ public SLDocument doc2Source(String docUri) throws Exception { // pas optimisé 
 	if (al.size() == 0) return null;
 	return (SLDocument) al.get(0);
 }
+
+
+public String doc2markdownHref(String docUri) throws IOException, URISyntaxException {
+	if (!docUri.endsWith(".md")) return null;
+	if (getFile(docUri) == null) return null;
+	return HTML_Link.markdownLink(docUri);
+}
+
+
+
+
+
+
+
 
 // attention, ajout rapide en 2003-07-01 pour servlet
 /** Attention, ne retourne jamais null. 
@@ -595,11 +612,11 @@ abstract public void addDocProperty(SLDocument doc, String propertyUri, String o
 abstract public void addDocProperty(SLDocument doc, String propertyUri, String[] objectUris);
 abstract public void setDocProperty(SLDocument doc, String propertyUri, String propertyValue, String lang);
 abstract public void setDocProperty(SLDocument doc, String propertyUri, String objectUri);
-/** kw sensé exister */
+/** kw censé exister */
 public void addKwProperty(SLKeyword kw, String propertyUri, String objectUri) {
 	addKwProperty(kw.getURI(), propertyUri, objectUri);
 }
-/** kw sensé exister */
+/** kw censé exister */
 public void setKwProperty(SLKeyword kw, String propertyUri, String propertyValue, String lang) {
 	setKwProperty(kw.getURI(), propertyUri, propertyValue, lang);
 }
@@ -1753,5 +1770,19 @@ abstract public SLKeyword object2Tag(String propUri, String objectUri);
 
 /** list of rdf:type used for tags. */
 abstract public Iterator rdfTypes4Tags();
+
+// 2017-04 saving modified md files
+public void saveDocFile(String docUri, String docContent) throws IOException, URISyntaxException {
+	File docf = getFileIfLocal(docUri);
+	if (docf == null) throw new RuntimeException("Not a local file");
+	// should not happen, so verify it (could probably be removed, )
+	if (!docf.exists()) throw new RuntimeException("Unexpected");
+	InputStream in = new ByteArrayInputStream(docContent.getBytes(StandardCharsets.UTF_8));
+  OutputStream out = new FileOutputStream(docf);
+	CopyFiles.writeIn2Out(in, out, new byte[1024]);
+	in.close();
+	out.close();
+
+}
 
 } // class SLModel

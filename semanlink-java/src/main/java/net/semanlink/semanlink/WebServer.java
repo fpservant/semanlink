@@ -23,6 +23,9 @@ private ArrayList associationsSortedByDir = new ArrayList(10);
 static private ByUriComparator byUriComparator = new ByUriComparator();
 static private ByDirComparator byDirComparator = new ByDirComparator();
 
+// can be served at semanlink/document/...
+private File defaultDocFolder;
+
 /** ne fait rien si uri est déjà uri d'un Mapping. */
 public void addMapping(URI uri, File dir) {
 	// this.associations.add(new Mapping(uri, dir));
@@ -35,6 +38,15 @@ public void addMapping(URI uri, File dir) {
 	Collections.sort(this.associationsSortedByUri, byUriComparator);
 	this.associationsSortedByDir.add(assoc);
 	Collections.sort(this.associationsSortedByDir, byDirComparator);
+}
+
+// 2015-10 @find CORS pb with markdown
+public void setDefaultDocFolder(File defaultDocFolder) {
+	this.defaultDocFolder = defaultDocFolder;
+}
+
+public File getDefaultDocFolder() {
+	return this.defaultDocFolder;
 }
 
 /** Represents the association between an url and a dir whose content is served by this WebServer */
@@ -137,6 +149,7 @@ public String getURI(File file) throws URISyntaxException {
 			return x.toASCIIString();
 		}
 	}
+	
 	return null;
 }
 
@@ -164,6 +177,10 @@ private Mapping assoc(URI docURI) throws IOException, URISyntaxException {
 public File getFile(String docUri) throws IOException, URISyntaxException {
 	URI docURI = new URI(docUri);
 	Mapping assoc = assoc(docURI);
+	// 2015-10 @find CORS pb with markdown 
+	// (ex chez moi: les fichiers du main datafolder sont servis par apache
+	// et ko pour cors)
+	// Adding the possibility to serve files inside the default data folder using 
 	if (assoc == null) return null;
 	URI rootURI = assoc.uri;
 	// je ferais bien qlq chose genre :
@@ -182,74 +199,4 @@ public File getFile(String docUri) throws IOException, URISyntaxException {
 	return new File(root, docFilename.substring((rootURI).getPath().length()));
 }
 
-/* public File getFileSVG(String docUri) throws IOException, URISyntaxException {
-	URI docURI = new URI(docUri);
-	// relativize
-	for (int i = 0; i < associations.size(); i++) {
-		Mapping assoc = (Mapping) associations.get(i);
-		URI rootURI = assoc.uri;
-		URI rel = rootURI.relativize(docURI);
-		if (rel.equals(docURI)) continue;
-		// je ferais bien qlq chose genre :
-		// String rel = docUri.substring(rootUri.length());
-		// return assoc.file + rel;
-		// mais il y a le pb des file separator
-		String docFilename = docURI.getPath(); // à ne pas oublier ! (cf les %20) mais...
-		// mais retourne quelque chose genre /~fps/...
-		String rootFilename = assoc.dir.getAbsolutePath();
-		if (!(rootFilename.endsWith("/"))) rootFilename += "/"; // QUOI ??? (2005/12) : et windaube ??? // TODO
-		docFilename = rootFilename + docFilename.substring((rootURI).getPath().length());
-		// System.out.println("WebServer.getFile de " + docUri + " returns " + docFilename);
-		return new File(docFilename);
-	}
-	return null;
-}
-
-
-public File getFile1(String docUri) throws IOException, URISyntaxException {
-	URI docURI = new URI(docUri);
-	// relativize
-	for (int i = 0; i < associations.size(); i++) {
-		Mapping assoc = (Mapping) associations.get(i);
-		URI rootURI = assoc.uri;
-		String rootUri = rootURI.toString(); // par ex "http://127.0.0.1/~fps/"
-		if (!(docUri.startsWith(rootUri))) continue;
-		String docFilename = docURI.getPath(); // à ne pas oublier ! (cf les %20) mais...
-		// mais retourne quelque chose genre /~fps/...
-		String rootFilename = assoc.dir.getAbsolutePath();
-		if (!(rootFilename.endsWith("/"))) rootFilename += "/";
-		docFilename = rootFilename + docFilename.substring((rootURI).getPath().length());
-		return new File(docFilename);
-	}
-	return null;
-}
-*/
-
-/*public static void main(String[] args) {
-	String webServerRoot = "http://127.0.0.1/~fps/";
-	String fileRoot = "/Users/fps/Sites/";
-	WebServer ws = new WebServer();
-	try {
-		ws.addAssociation(new URI(webServerRoot), new File(fileRoot));
-		String uri = "http://127.0.0.1/~fps/si cg/journal/articles/";
-		System.out.println("uri : " + uri);
-		File x = ws.getFile(uri);
-		System.out.println("file : " + x);
-		System.out.println("uri : " + ws.getURI(x));
-		System.out.println();
-		
-		String dirPath = "/Users/fps/Sites/si cg/journal";
-		File dir = new File(dirPath);
-		String[] names = dir.list();
-		for (int i = 0; i < names.length; i++) {
-			File file = new File(dir, names[i]);
-			System.out.println(file+" : " + ws.getURI(file));
-		}
-		
-	} catch (Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-	
-}*/
 } // 

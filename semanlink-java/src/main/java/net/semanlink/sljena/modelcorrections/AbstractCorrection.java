@@ -4,7 +4,7 @@ package net.semanlink.sljena.modelcorrections;
 import java.io.IOException;
 import net.semanlink.sljena.JModel;
 
-import com.hp.hpl.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.Model;
 
 /**
  * Correction qui ne fait rien. L'etendre et overrider correctDocsModel et/ou correctKwsModel
@@ -31,7 +31,7 @@ public boolean correct(JModel mod) throws IOException {
 }
 
 /* (non-Javadoc)
- * @see net.semanlink.sljena.modelcorrections.Correction#correctDocsModel(com.hp.hpl.jena.rdf.model.Model)
+ * @see net.semanlink.sljena.modelcorrections.Correction#correctDocsModel(org.apache.jena.rdf.model.Model)
  */
 public boolean correctDocsModel(Model mod) throws IOException {
 	return false;

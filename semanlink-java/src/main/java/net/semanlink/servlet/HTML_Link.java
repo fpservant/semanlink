@@ -64,9 +64,15 @@ public static String htmlLinkPage(SLDocument slDoc) throws UnsupportedEncodingEx
 }
 
 public static String docLink(String docUri) throws UnsupportedEncodingException {
-	// return "/doc/?uri=" + URLEncoder.encode(docUri, "UTF-8");
 	return CoolUriServlet.DOC_SERVLET_PATH + "/?uri=" + URLEncoder.encode(docUri, "UTF-8");
 }
+
+// docUri supposed to be a local md file
+public static String markdownLink(String mdDocUri) throws UnsupportedEncodingException {
+	// return CoolUriServlet.MD_SERVLET_PATH + "/?uri=" + URLEncoder.encode(mdDocUri, "UTF-8");
+	return docLink(mdDocUri);
+}
+
 
 /*marche pas : on perd les liens relatifs genre css, images, etc.
 public static String fileUriServedByServletLink(String fileUri) throws UnsupportedEncodingException {

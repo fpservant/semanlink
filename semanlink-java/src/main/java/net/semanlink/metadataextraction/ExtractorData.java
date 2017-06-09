@@ -6,11 +6,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.swing.text.html.HTMLDocument;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import net.semanlink.semanlink.SLDocument;
 import net.semanlink.semanlink.SLModel;
-import net.semanlink.util.SimpleHttpClient;
 import net.semanlink.util.html.HTMLDocumentLoader_Simple;
+import net.semanlink.util.html.HTMLPageDownload;
 
 public class ExtractorData {
 private SLDocument slDoc;
@@ -19,19 +24,25 @@ private HTMLDocument htmlDocument;
 private String text;
 /** peut être setté pour transporter une info supplémentaire. */
 private Object data;
-public ExtractorData(SLDocument slDoc, SLModel mod, SimpleHttpClient simpleHttpClient) {
+public ExtractorData(SLDocument slDoc, SLModel mod, Client simpleHttpClient) {
 	this.slDoc = slDoc;
 	this.mod = mod;
 	
 	try { // TODO : si ce n'est pas un doc html !!! (comment : ds Action_Bookmark ? mais si création à partir de doc ds un folder ?
 
 		String uri = slDoc.getURI();
-		String contentType = simpleHttpClient.getContentType(uri, false);
-		if (contentType == null) {
-			if ((uri.endsWith(".html"))||(uri.endsWith(".htm"))) contentType = "text/html";
+
+		WebTarget webTarget = simpleHttpClient.target(uri);
+		Response res = webTarget.request(MediaType.WILDCARD_TYPE).get();
+		boolean isHTML = false;
+		if (res.getMediaType().isCompatible(MediaType.TEXT_HTML_TYPE)) {
+			isHTML = true;
+		} else {
+			if ((uri.endsWith(".html"))||(uri.endsWith(".htm"))) isHTML = true;
 		}
-		if ((contentType != null) && (contentType.indexOf("text/html") > -1)) {
-			this.htmlDocument = (new HTMLDocumentLoader_Simple(simpleHttpClient)).loadDocument(new URL(uri));
+
+		if (isHTML) {
+			this.htmlDocument = (new HTMLDocumentLoader_Simple(new URL(uri), res).loadDocument());
 		}
 	} catch (MalformedURLException e) { // TODO
 		// TODO Auto-generated catch block
