@@ -79,8 +79,9 @@ public class TextMatchMagicProp extends PropertyFunctionEval
          
         Node searchStringNode = argObject.getArg() ;
 
-        if ( !isValidSearchString(searchStringNode) )
-            return IterLib.noResults(execCxt) ;
+        // 2017-06 commented out
+        // if ( !isValidSearchString(searchStringNode) )
+        //     return IterLib.noResults(execCxt) ;
         
         Node_Literal searchLit = (Node_Literal) searchStringNode;
         String lang = searchLit.getLiteralLanguage();
