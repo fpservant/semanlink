@@ -40,7 +40,8 @@ private static String[] otherKwUris(String[] kwUris) {
 /**
  * Attention, ceci n'est que la liste des documents affectés du 1er des kws.
  * Elle est réduite ensuite via l'appel à setDocs fait par le constructeur.
- * Liste des SLDocuments, dépend du "mode" (children only ou tree)
+ * Liste des SLDocuments NE DOIT PAS dépendre du "mode" (children only ou tree) : doit être en  "long mode" (tree)
+ * (cela, depuis 2013-03)
  */
 protected List computeDocs()  throws Exception {
 	List docs = null;
@@ -57,6 +58,17 @@ protected List computeDocs()  throws Exception {
 	// }
 	return docs;
 }
+
+// 0.5.5 ajout de cet override pour systématiquement prendre la liste "longue" (tree) des docs dans le and
+// (corrige bug depuis modif 2013-03, voir computeDocs)
+@Override
+public void setDocs() throws Exception {
+	this.docs = computeDocs();
+	if (this.kws != null) {
+		filterDocsByKws(this.docs, kws, false);
+	}
+}
+
 
 //
 //

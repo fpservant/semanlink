@@ -5,12 +5,12 @@
 	<parent>
 		<groupId>net.semanlink</groupId>
 		<artifactId>semanlink-parent</artifactId>
-		<version>0.5.4</version>
+		<version>0.5.5</version>
 		<relativePath>../semanlink-parent</relativePath>
 	</parent>
 
 	<artifactId>semanlink-common</artifactId>
-	<version>0.5.4</version>
+	<version>0.5.5</version>
 	<packaging>jar</packaging>
 
 	<name>semanlink-common</name>

@@ -5,26 +5,26 @@ import java.util.*;
 import net.semanlink.util.index.Index;
 import net.semanlink.util.index.jena.ResourceLabelPair_SVG2;
 
-import com.hp.hpl.jena.util.iterator.Map1;
-import com.hp.hpl.jena.util.iterator.Map1Iterator;
+import org.apache.jena.util.iterator.Map1;
+import org.apache.jena.util.iterator.Map1Iterator;
 
-import com.hp.hpl.jena.graph.Node;
-import com.hp.hpl.jena.graph.Node_Literal;
+import org.apache.jena.graph.Node;
+import org.apache.jena.graph.Node_Literal;
 
-import com.hp.hpl.jena.sparql.core.Var;
-import com.hp.hpl.jena.sparql.engine.ExecutionContext;
-import com.hp.hpl.jena.sparql.engine.QueryIterator;
-import com.hp.hpl.jena.sparql.engine.binding.Binding;
-import com.hp.hpl.jena.sparql.engine.binding.BindingFactory;
-import com.hp.hpl.jena.sparql.engine.binding.BindingMap;
-import com.hp.hpl.jena.sparql.engine.iterator.QueryIterNullIterator;
-import com.hp.hpl.jena.sparql.engine.iterator.QueryIterPlainWrapper;
-import com.hp.hpl.jena.sparql.pfunction.PropFuncArg;
-import com.hp.hpl.jena.sparql.pfunction.PropFuncArgType;
-import com.hp.hpl.jena.sparql.pfunction.PropertyFunctionEval;
-import com.hp.hpl.jena.sparql.util.IterLib;
-import com.hp.hpl.jena.query.QueryBuildException;
-import com.hp.hpl.jena.query.QueryExecException;
+import org.apache.jena.sparql.core.Var;
+import org.apache.jena.sparql.engine.ExecutionContext;
+import org.apache.jena.sparql.engine.QueryIterator;
+import org.apache.jena.sparql.engine.binding.Binding;
+import org.apache.jena.sparql.engine.binding.BindingFactory;
+import org.apache.jena.sparql.engine.binding.BindingMap;
+import org.apache.jena.sparql.engine.iterator.QueryIterNullIterator;
+import org.apache.jena.sparql.engine.iterator.QueryIterPlainWrapper;
+import org.apache.jena.sparql.pfunction.PropFuncArg;
+import org.apache.jena.sparql.pfunction.PropFuncArgType;
+import org.apache.jena.sparql.pfunction.PropertyFunctionEval;
+import org.apache.jena.sparql.util.IterLib;
+import org.apache.jena.query.QueryBuildException;
+import org.apache.jena.query.QueryExecException;
 // import org.openjena.atlas.logging.Log;
 // import org.apache.jena.atlas.logging.Log;
 
@@ -36,7 +36,7 @@ import com.hp.hpl.jena.query.QueryExecException;
  * 		(?res ?textMatch) <http://www.renault.com/euro5/schema#magic_symptomLabel> "fum blanche"@fr.
  * }
  * </pre>
- * <p>Based on com.hp.hpl.jena.query.larq.LuceneSearch</p>
+ * <p>Based on org.apache.jena.query.larq.LuceneSearch</p>
  */
 
 public class TextMatchMagicProp2_svg extends PropertyFunctionEval
@@ -45,7 +45,7 @@ public class TextMatchMagicProp2_svg extends PropertyFunctionEval
 		/** MUST be called */
 		public static void setIndex(Index<ResourceLabelPair_SVG2> textIndex) { index = textIndex; }
 		
-		public TextMatchMagicProp2_svg() // must be public or Class com.hp.hpl.jena.sparql.pfunction.PropertyFunctionFactoryAuto can not access a member of class package net.semanlink.util.jena.TextMatchMagicProp2 with modifiers "protected"
+		public TextMatchMagicProp2_svg() // must be public or Class org.apache.jena.sparql.pfunction.PropertyFunctionFactoryAuto can not access a member of class package net.semanlink.util.jena.TextMatchMagicProp2 with modifiers "protected"
     {
         // super(PropFuncArgType.PF_ARG_EITHER,
         //      PropFuncArgType.PF_ARG_EITHER) ;

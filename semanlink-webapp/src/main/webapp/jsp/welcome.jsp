@@ -147,11 +147,11 @@ String fn = I18l.pathToI18lFile("/welcomepage/veryshortintro.jsp", session, serv
 		<h2><%=jsp.i18l("welcome.download")%></h2>
 			<p><a href="http://www.semanlink.net/files/download/semanlink-<%=SLServlet.getSemanlinkVersion()%>.zip"><%=jsp.getI18l().getFormatedMessage("welcome.download2","Semanlink-" + SLServlet.getSemanlinkVersion() + ".zip")%></a></p>
 			<p><a href="<%=contextUrl%><%=CoolUriServlet.ABOUT_SERVLET_PATH%>/releasenotes.htm"><%=jsp.i18l("welcome.releaseNotes")%></a></p>
-	</div>
+            <p><a href="https://github.com/fpservant/semanlink">Github</a></p>	</div>
 <%} else { %>
 	<div class="graybox">
 	<h2><%=jsp.getI18l().getFormatedMessage("welcome.version", SLServlet.getSemanlinkVersion())%></h2>
-		<p><a href="<%=contextUrl%><%=CoolUriServlet.ABOUT_SERVLET_PATH%>/releasenotes.htm"><%=jsp.i18l("welcome.releaseNotes")%></a></p>
+		<p><a href="<%=contextUrl%><%=CoolUriServlet.ABOUT_SERVLET_PATH%>/releasenotes.htm"><%=jsp.i18l("welcome.releaseNotes")%></a></p>		<p><a href="https://github.com/fpservant/semanlink">Github</a></p>
 </div>
 <%	
 } // 	if (SLServlet.isSemanlinkWebSite()) or not  %>

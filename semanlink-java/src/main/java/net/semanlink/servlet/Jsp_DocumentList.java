@@ -48,7 +48,7 @@ public Jsp_DocumentList(String[] kwUris, HttpServletRequest request) throws Exce
 }
 
 /** doit être appelée pour compléter la construction */
-public final void setDocs() throws Exception {
+public void setDocs() throws Exception {
 	this.docs = computeDocs();
 	if (this.kws != null) {
 		filterDocsByKws(this.docs, kws, !getDisplayMode().isLongListOfDocs());

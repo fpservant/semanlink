@@ -5,7 +5,7 @@ import java.text.CollationKey;
 import java.text.Collator;
 import java.util.*;
 
-import com.hp.hpl.jena.rdf.model.*;
+import org.apache.jena.rdf.model.*;
 
 import net.semanlink.util.index.I18nFriendlyIndexEntries;
 import net.semanlink.util.index.Index;

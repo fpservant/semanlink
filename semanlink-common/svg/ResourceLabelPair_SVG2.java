@@ -3,7 +3,7 @@ package net.semanlink.util.index.jena;
 
 import net.semanlink.util.index.ObjectLabelPair;
 
-import com.hp.hpl.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Resource;
 
 /** Represents a pair (resource, label). 
  *  The label is just a String: doesn't contain lang information. */
