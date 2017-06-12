@@ -21,8 +21,8 @@ if (!(jsp.isDisplaySnipOnly())) {
 				 	<%if (homePage != null) { %>
 				 		<a href="<%=homePage%>"><%=jsp.i18l("tag.homePage")%></a>
 				 	<%} %>
-				 	<%if (getDescribedByPage != null) { %>
-				 		&nbsp;<a href="<%=getDescribedByPage%>"><%=jsp.i18l("tag.getDescribedByPage")%></a>
+				 	<%if (getDescribedByPage != null) { 				 	String linkLabel = null;				 	if (getDescribedByPage.indexOf("wikipedia.org") > -1) {				 		linkLabel = "Wikipedia";				 	} else {				 		linkLabel = jsp.i18l("tag.getDescribedByPage");				 	}				 					 	%>
+				 		&nbsp;<a href="<%=getDescribedByPage%>"><%=linkLabel%></a>
 				 	<%} %>
 				 </span>
 			<%} // @find RDFa bergie%>			<span property="<%=SLVocab.PREF_LABEL_PROPERTY%>"><%=jsp.getTitle()%></span>			<!--  <p property="skos:prefLabel" contenteditable="true"><%=jsp.getTitle()%></p>  -->		</div> <!-- class="title" -->		<%
