@@ -4,6 +4,13 @@
 %>
 <h1>Release notes</h1>
 <div class="graybox">
+
+<h2>0.5.5 2017-06-xx</h2>
+<ul>
+<li>Docs in expanded tree were not sorted by sortProperty (that is, date by default)</li>
+<li>Clic on the cloud of tags always return docs in subtrees</li>
+</ul>
+
 <h2>0.5.4 2017-06-09</h2>
 <ul>
 <li>refactoring (all jars with same version num, no more aggregator project)</li>

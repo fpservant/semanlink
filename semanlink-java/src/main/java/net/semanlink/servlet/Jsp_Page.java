@@ -82,7 +82,10 @@ public Jsp_Page(HttpServletRequest request, HttpServletResponse response) {
 	super(request, response);
 	// this.request = request;
 	this.isIE = Util.isIE(request);
-	setSortProperty((String) request.getSession().getAttribute("net.semanlink.servlet.SortProperty"));
+	// 2017-06 docs not sorted in tree
+	// setSortProperty((String) request.getSession().getAttribute("net.semanlink.servlet.SortProperty"));
+	setSortProperty(getSortProperty());
+	
 	this.beanKwList = new Bean_KwList();
 	this.beanKwList.setUri(getUri());
 	// au sujet de la ligne qui suit : 
