@@ -55,9 +55,14 @@ public boolean doIt(SLDocument slDoc, SLModel mod) throws Exception {
 	for (int i = 0; i < this.extractors.size(); i++) {
 		extractor = (Extractor) this.extractors.get(i);
 		if (extractor.dealWith(extractorData)) {
-			modelHasChanged = (extractor.doIt(extractorData) || modelHasChanged);
-			// on s'arrête au premier extracteur pertinent
-			done = true;
+			try {
+				modelHasChanged = (extractor.doIt(extractorData) || modelHasChanged);
+				// on s'arrête au premier extracteur pertinent
+				done = true;
+			} catch (Exception e) { // TODO on ne veut pas sortir si pb extractor parce qu'on arrive pas à se connecter ! // 2017-06
+				e.printStackTrace();
+				
+			}
 			break;
 		}
 	}

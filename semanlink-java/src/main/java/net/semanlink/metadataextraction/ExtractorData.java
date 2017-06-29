@@ -4,6 +4,7 @@ package net.semanlink.metadataextraction;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 
 import javax.swing.text.html.HTMLDocument;
 import javax.ws.rs.client.Client;
@@ -45,12 +46,13 @@ public ExtractorData(SLDocument slDoc, SLModel mod, Client simpleHttpClient) {
 			this.htmlDocument = (new HTMLDocumentLoader_Simple(new URL(uri), res).loadDocument());
 		}
 	} catch (MalformedURLException e) { // TODO
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		System.err.println(e);
+	} catch (UnknownHostException e) { // TODO cf quand on n'arrive pas à se connecter
+		System.err.println(e);
 	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		System.err.println(e);
 	}
+		
 }
 
 public Object getData() { return this.data; }

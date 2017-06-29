@@ -25,6 +25,7 @@ public class LeMonde extends Extractor {
 	
 	public String getDateParution(ExtractorData data) throws IOException, ParseException {
 		String t = data.getText();
+		if (t == null) return null;
 		String marc = "Article paru dans l'édition du";  // à partir de mars 2005
 		int n = t.indexOf(marc);
 		if (n < 0) {
@@ -50,6 +51,7 @@ public class LeMonde extends Extractor {
 	
 	public String getCreator(ExtractorData data) {
 		String t = data.getText();
+		if (t== null) return null;
 		if (t.indexOf("Eric Le Boucher") > -1) {
 			return "Eric Le Boucher";
 		}
