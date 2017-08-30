@@ -26,7 +26,7 @@ form select {	/* background-color:none; */
 }
 
 
-.browser .kw2 a {	text-decoration: none;	color: #005050;}.browser .kw2 a:visited {	/*color: #8C0028;*/	color: #663399;}.browser .kw2 a:hover {	text-decoration: underline;}.indocline {	font-size: 11px;	font-family: Verdana, Palatino, Arial, Helvetica, serif;	color: #666;}/** pour decaler les triangles des kws par rapports au docs ds liste tree centrale */.graybox ul li img {	margin-left:-8px;}.screenshot {}	.screenshot img {		border: 1px solid #999999;	}	.screenshot p {		text-align: center;	}
+.browser .kw2 a {	text-decoration: none;	color: #005050;}.browser .kw2 a:visited {	/*color: #8C0028;*/	color: #663399;}.browser .kw2 a:hover {	text-decoration: underline;}/* comment in a docline */.docline_comment {	font-size: 11px;	font-family: Verdana, Palatino, Arial, Helvetica, serif;	color: #666;}/* prop, other than comment and kw in a docline */.docline_prop {    font-size: 11px;    font-family: Verdana, Palatino, Arial, Helvetica, serif;    color: #666;}/** pour decaler les triangles des kws par rapports au docs ds liste tree centrale */.graybox ul li img {	margin-left:-8px;}.screenshot {}	.screenshot img {		border: 1px solid #999999;	}	.screenshot p {		text-align: center;	}
 
  /* to keep aqua buttons in safari 3 // @find aquaform: safari 3 */
 .aquaform {

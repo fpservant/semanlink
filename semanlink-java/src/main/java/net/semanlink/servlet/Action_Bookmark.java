@@ -135,7 +135,9 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 				if (lang != null) {
 					locale = new Locale(lang);
 				} else {
-					locale = Locale.getDefault();
+					// 2017-08
+					// locale = Locale.getDefault();
+					locale = null;
 				}
 				SLKeyword kw = mod.kwLabel2KwCreatingItIfNecessary(kwLabel, mod.getDefaultThesaurus().getURI(), locale);
 				String kwUri = kw.getURI();

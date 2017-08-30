@@ -9,6 +9,9 @@
 <ul>
 <li>Docs in expanded tree were not sorted by sortProperty (that is, date by default)</li>
 <li>Clic on the cloud of tags always return docs in subtrees</li>
+<li>Markdown for comments in lists of docs</li>
+<li>Better handling of relative urls in markdown: have them point to the sl display of md</li>
+<li>Label of tags created on "Create Bookmark" form doesn't have a lang anymore (Action_Bookmark.java: was default locale's lang) TODO improve</li>
 </ul>
 
 <h2>0.5.4 2017-06-09</h2>
