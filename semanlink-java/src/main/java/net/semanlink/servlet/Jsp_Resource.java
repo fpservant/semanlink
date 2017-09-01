@@ -60,8 +60,8 @@ public String getHREF() throws UnsupportedEncodingException, IOException, URISyn
 			u = new URI(this.uri);
 			String path = u.getRawPath();
 			return this.request.getContextPath() + StaticFileServlet.PATH_FOR_FILES_OUTSIDE_DATAFOLDERS + path;
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
+		} catch (URISyntaxException e) { 
+			throw new RuntimeException(e) ;
 		}
 	}
 	return Util.handleAmpersandInHREF(this.uri);

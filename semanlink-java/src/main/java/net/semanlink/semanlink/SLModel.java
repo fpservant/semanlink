@@ -187,9 +187,8 @@ public SLDocument smarterGetDocument(String uri) throws URISyntaxException {
 	}
 	return x;
 }
-/** Retourne la local copy du doc docUri, ou null s'il n'en a pas. 
- *  (ou - ce qui revient au même - le doc local dont docUri est la source)
- *  retourne (x, source, docUri) */
+/** Retourne la local copy du doc sourceUri, ou null s'il n'en a pas. 
+ *  (ou - ce qui revient au même - le doc local dont sourceUri est la source) */
 public SLDocument source2LocalCopy(String sourceUri) throws Exception {
 	List al = getDocumentsList(SLVocab.SOURCE_PROPERTY, sourceUri);
 	if (al == null) return null;
@@ -204,10 +203,13 @@ public SLDocument doc2Source(String docUri) throws Exception { // pas optimisé 
 }
 
 
-public String doc2markdownHref(String docUri) throws IOException, URISyntaxException {
+/** null if docUri not the uri of a md file 
+ * @param contextUrl @see Util.getContextURL(HttpServletRequest) ou Jsp_Page.getContextURL()
+ */
+public String doc2markdownHref(String contextUrl, String docUri) throws IOException, URISyntaxException {
 	if (!docUri.endsWith(".md")) return null;
 	if (getFile(docUri) == null) return null;
-	return HTML_Link.markdownLink(docUri);
+	return contextUrl + HTML_Link.docLink(docUri);
 }
 
 
@@ -481,7 +483,7 @@ YYYYMM doc2YYYYMM(SLDocument doc) {
 
 
 
-/** Returns the file corresponding to an URI (or null in case of failure to do so). 
+/** Returns the file corresponding to a URI (or null in case of failure to do so). 
  *  @param uri either a file-protocol uri, or the uri of a file served by this.getWebServer. */
 public File getFile(String uri) throws IOException, URISyntaxException {
 	// System.out.println("SLModel.getFile: " + uri);
