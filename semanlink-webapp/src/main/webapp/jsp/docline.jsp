@@ -7,7 +7,7 @@ SLModel mod = SLServlet.getSLModel();// HTML_Link link = HTML_Link.linkToDocume
 		} else {
 			docLabel = doc.getLabel();
 		}
-		if (docLabel != null) docLabel = Util.toHTMLOutput(docLabel);				//		// LINK TO DOC		//				if ((edit) || 			((uri.endsWith("/")) && ( (SLServlet.getWebServer().owns(uri)) || (uri.startsWith("file:"))))) { // cas dossier			%><html:link page="<%=HTML_Link.htmlLinkPage(doc)%>" styleClass="a1"><span property="rdfs:label"><%=docLabel%></span></html:link><% // 2013-08 RDFa				} else { // !edit						String mdHref = mod.doc2markdownHref(jsp.getContextUrl(), uri);		    if (mdHref != null) {	           %><a href="<%=mdHref%>"><span property="rdfs:label"><%=docLabel%></span></a><%		    } else {
+		if (docLabel != null) docLabel = Util.toHTMLOutput(docLabel);				//		// LINK TO DOC		//				if ((edit) || 			((uri.endsWith("/")) && ( (SLServlet.getWebServer().owns(uri)) || (uri.startsWith("file:"))))) { // cas dossier			%><html:link page="<%=HTML_Link.htmlLinkPage(doc)%>" styleClass="a1"><span property="rdfs:label"><%=docLabel%></span></html:link><% // 2013-08 RDFa				} else { // !edit			// 2017-09 similar stuff in comment.jsp @find doc2markdownHref			String mdHref = mod.doc2markdownHref(jsp.getContextUrl(), uri);		    if (mdHref != null) {	           %><a href="<%=mdHref%>"><span property="rdfs:label"><%=docLabel%></span></a><%		    } else {
 			   %><a href="<%=Util.handleAmpersandInHREF(uri)%>"><span property="rdfs:label"><%=docLabel%></span></a><% // 2013-08 RDFa		    }		}
 				//		// LINK TO LOCAL COPY		//		
 		SLDocument localCopy = mod.source2LocalCopy(uri);

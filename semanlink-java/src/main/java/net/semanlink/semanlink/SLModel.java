@@ -209,7 +209,8 @@ public SLDocument doc2Source(String docUri) throws Exception { // pas optimisé 
 public String doc2markdownHref(String contextUrl, String docUri) throws IOException, URISyntaxException {
 	if (!docUri.endsWith(".md")) return null;
 	if (getFile(docUri) == null) return null;
-	return contextUrl + HTML_Link.docLink(docUri);
+	// ATTENTION adherence markdown-sl.js replaceLinkFct
+	return contextUrl + HTML_Link.docLink(docUri); // http://127.0.0.1:8080/semanlink + /doc/?uri=...
 }
 
 
