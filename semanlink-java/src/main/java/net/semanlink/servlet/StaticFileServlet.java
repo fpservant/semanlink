@@ -72,8 +72,9 @@ public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOExce
 		} else { */
 			f = SLServlet.getWebServer().getFile(req.getRequestURL().toString());
 			if (f == null) {
-				// @find CORS pb with markdown
-				// defautDataFolder servi (aussi) en /document
+				// @find CORS pb with markdown:
+				// defautDataFolder servi (aussi) en /document (parce que on est obligé de servir les .md via la servlet sl pour appels en ajax)
+				// (2017-09 : ce qui est maintenant utilisé plus largement, me semble-t-il, en cas de webserver apache)
 				File defaultDir = SLServlet.getWebServer().getDefaultDocFolder();
 				if (defaultDir != null) {
 					String s = defaultDir.getAbsolutePath();
