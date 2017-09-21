@@ -24,6 +24,7 @@
 
 package net.semanlink.semanlink;
 import net.semanlink.metadataextraction.MetadataExtractorManager;
+import net.semanlink.servlet.CoolUriServlet;
 import net.semanlink.servlet.HTML_Link;
 import net.semanlink.servlet.SLServlet;
 import net.semanlink.sljena.modelcorrections.ModelCorrector;
@@ -210,14 +211,10 @@ public String doc2markdownHref(String contextUrl, String docUri) throws IOExcept
 	if (!docUri.endsWith(".md")) return null;
 	if (getFile(docUri) == null) return null;
 	// ATTENTION adherence markdown-sl.js replaceLinkFct
-	return contextUrl + HTML_Link.docLink(docUri); // http://127.0.0.1:8080/semanlink + /doc/?uri=...
+	// return contextUrl + HTML_Link.docLink(docUri); // http://127.0.0.1:8080/semanlink + /doc/?uri=...
+	
+	return contextUrl + HTML_Link.docLink(docUri, getWebServer()); // 2017-09-20
 }
-
-
-
-
-
-
 
 
 // attention, ajout rapide en 2003-07-01 pour servlet

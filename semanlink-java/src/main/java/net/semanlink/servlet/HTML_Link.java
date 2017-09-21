@@ -12,6 +12,7 @@ import net.semanlink.semanlink.PropertyValues;
 import net.semanlink.semanlink.SLDocument;
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLThesaurus;
+import net.semanlink.semanlink.WebServer;
 import net.semanlink.util.FileUriFormat;
 
 /**
@@ -39,12 +40,12 @@ public String getLabel() { return this.label; }
 //
 
 /** @deprecated */
-public static HTML_Link linkToDocument(SLDocument slDoc) throws UnsupportedEncodingException {
+public static HTML_Link linkToDocument(SLDocument slDoc) {
 	// return linkToDocument(slDoc.getURI(), slDoc.getLabel(), "/showdocument.do");
 	return new HTML_Link(htmlLinkPage(slDoc), slDoc.getLabel());
 }
 
-public static String getDocHref(HttpServletResponse response, String contextUrl, String docUri) throws UnsupportedEncodingException {
+public static String getDocHref(HttpServletResponse response, String contextUrl, String docUri) {
 	// pb avec : 11 avril 1241 - les Mongols écrasent les Hongrois; l'Europe tremble.html ds CoolUriServlet
 	// return response.encodeURL(contextUrl + "/doc/" + URLUTF8Encoder.encode(docUri));
 	// avec slservlet :
@@ -54,7 +55,7 @@ public static String getDocHref(HttpServletResponse response, String contextUrl,
 }
 
 /** à utiliser en remplacement de linkToDocument (cf struts). */
-public static String htmlLinkPage(SLDocument slDoc) throws UnsupportedEncodingException {
+public static String htmlLinkPage(SLDocument slDoc) {
 	// pb avec : 11 avril 1241 - les Mongols écrasent les Hongrois; l'Europe tremble.html ds CoolUriServlet
 	// return "/doc/" + getRelativHREF(slDoc);
 	// avec slservlet :
@@ -63,9 +64,26 @@ public static String htmlLinkPage(SLDocument slDoc) throws UnsupportedEncodingEx
 	return docLink(slDoc.getURI());
 }
 
-public static String docLink(String docUri) throws UnsupportedEncodingException {
-	return CoolUriServlet.DOC_SERVLET_PATH + "/?uri=" + URLEncoder.encode(docUri, "UTF-8");
+public static String docLink(String docUri) { // hello
+	return docLink(docUri, SLServlet.getWebServer());
 }
+
+
+public static String docLink(String docUri, WebServer ws) {
+	try {
+		if (ws != null) { // 2017-09-20
+			String base = ws.getURI(ws.getDefaultDocFolder()); // http://127.0.0.1/~fps/fps/
+			if (docUri.startsWith(base)) {
+				return CoolUriServlet.DOC_SERVLET_PATH2017 + docUri.substring(base.length() - 1); // http://127.0.0.1:8080/semanlink/SL/DOC/2017/...
+			}
+		}
+		
+		// ATTENTION adherence markdown-sl.js replaceLinkFct
+		return CoolUriServlet.DOC_SERVLET_PATH + "/?uri=" + URLEncoder.encode(docUri, "UTF-8"); // http://127.0.0.1:8080/semanlink + /doc/?uri=...
+	} catch (Exception e) { throw new RuntimeException(e) ; }
+}
+
+
 
 /*marche pas : on perd les liens relatifs genre css, images, etc.
 public static String fileUriServedByServletLink(String fileUri) throws UnsupportedEncodingException {

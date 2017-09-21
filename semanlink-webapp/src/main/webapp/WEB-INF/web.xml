@@ -94,10 +94,10 @@
 		<url-pattern>/doc/*</url-pattern>
 	</servlet-mapping>
 	
-    <servlet-mapping>
-        <servlet-name>CoolUriServlet</servlet-name>
-        <url-pattern>/md/*</url-pattern>
-    </servlet-mapping>
+<!--     <servlet-mapping> -->
+<!--         <servlet-name>CoolUriServlet</servlet-name> -->
+<!--         <url-pattern>/md/*</url-pattern> -->
+<!--     </servlet-mapping> -->
     
 	<servlet-mapping>
 		<servlet-name>CoolUriServlet</servlet-name>
@@ -155,6 +155,12 @@
 		<url-pattern>/page/*</url-pattern>
 	</servlet-mapping>
 	
+	<!--  2017-09-19 serve things in default document folder - basically the same as doc/?docuri=xxx -->
+    <servlet-mapping>
+        <servlet-name>CoolUriServlet</servlet-name>
+        <url-pattern>/sl/doc/*</url-pattern>
+    </servlet-mapping>
+
 	<servlet-mapping>
 		<servlet-name>StaticFileServlet</servlet-name>
 		<url-pattern>/document/*</url-pattern>
