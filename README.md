@@ -5,4 +5,4 @@ semanlink
 
 Web site: http://www.semanlink.net
 
-See <a href="install.htm">install instructions</a>
+See <a href="install.md">install instructions</a>
