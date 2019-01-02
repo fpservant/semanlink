@@ -3,39 +3,56 @@
 <web-app id="WebApp_ID">
 	<display-name>Semanlink</display-name>
 
- 	<!-- SERVLETS -->
- 		
+	<!-- SERVLETS -->
+
 	<!-- this is the main semanlink servlet -->
 	<servlet>
 		<servlet-name>SLServlet</servlet-name>
 		<servlet-class>net.semanlink.servlet.SLServlet</servlet-class>
-		
-		
+
+
 		<!-- url of the semanlink web site -->
 		<init-param>
 			<param-name>semanlinkDotNet</param-name>
 			<param-value>http://www.semanlink.net</param-value>
 		</init-param>
-		
-		<!-- name of welcome page jsp. (the release version and the version running at www.semanlink.net are different) -->
+
+		<!-- name of welcome page jsp. (the release version and the version running 
+			at www.semanlink.net are different) -->
 		<init-param>
 			<param-name>welcomePageJsp</param-name>
 			<param-value>/jsp/welcome.jsp</param-value>
 		</init-param>
 
-		<!-- name of semanlink config file, relativ to "main data dir/conf".
-		(Dev note: there must be a file with that name in WEB-INF. It is used as a template to create user's one in dataDir)-->
+		<!-- name of semanlink config file, relativ to "main data dir/conf". (Dev 
+			note: there must be a file with that name in WEB-INF. It is used as a template 
+			to create user's one in dataDir) -->
 		<init-param>
 			<param-name>semanlinkConfigShortFilename</param-name>
 			<param-value>semanlink-config.xml</param-value>
 		</init-param>
 
-		<init-param><param-name>application</param-name><param-value>net.semanlink.servlet.ApplicationResources</param-value></init-param>
-		<init-param><param-name>config</param-name><param-value>/WEB-INF/struts-config.xml</param-value></init-param>
-		<init-param><param-name>debug</param-name><param-value>0</param-value></init-param>
-		<init-param><param-name>detail</param-name><param-value>4</param-value></init-param>
-		<init-param><param-name>validate</param-name><param-value>true</param-value></init-param>
-		
+		<init-param>
+			<param-name>application</param-name>
+			<param-value>net.semanlink.servlet.ApplicationResources</param-value>
+		</init-param>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>/WEB-INF/struts-config.xml</param-value>
+		</init-param>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>0</param-value>
+		</init-param>
+		<init-param>
+			<param-name>detail</param-name>
+			<param-value>4</param-value>
+		</init-param>
+		<init-param>
+			<param-name>validate</param-name>
+			<param-value>true</param-value>
+		</init-param>
+
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
@@ -58,7 +75,7 @@
 		<servlet-name>RDFServlet</servlet-name>
 		<servlet-class>net.semanlink.servlet.RDFServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet>
 		<servlet-name>RealWorldServlet</servlet-name>
 		<servlet-class>net.semanlink.realworld.RealWorldServlet</servlet-class>
@@ -68,17 +85,33 @@
 		<servlet-name>SLSparqlServlet</servlet-name>
 		<servlet-class>net.semanlink.servlet.SLSparqlServlet</servlet-class>
 	</servlet>
-	
- 	<!-- JERSEY -->
-<!--     <servlet> -->
-<!--         <servlet-name>Jersey Based Semanlink</servlet-name> -->
-<!--         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class> -->
-<!-- 		  <init-param> -->
-<!-- 		    <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name> -->
-<!-- 		    <param-value>net.semanlink.jersey.MediaTypeFilter;</param-value> -->
-<!-- 		  </init-param> -->
-<!--           <load-on-startup>1</load-on-startup> -->
-<!--     </servlet> -->
+
+	<!-- JERSEY -->
+	<!-- voir ici on peut faire miuex ? https://stackoverflow.com/questions/22022114/org-glassfish-jersey-servlet-servletcontainer-classnotfoundexception -->
+	<servlet>
+		<servlet-name>Jersey Based Semanlink</servlet-name>
+
+		<!-- <servlet-class>org.glassfish.jersey.spi.container.servlet.ServletContainer</servlet-class> -->
+		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+		<init-param>
+			<param-name>javax.ws.rs.Application</param-name>
+			<param-value>
+				net.semanlink.jersey.SLJerseyApp
+			</param-value>
+		</init-param>
+		<!-- <init-param> <param-name>org.glassfish.jersey.spi.container.ContainerRequestFilters</param-name> 
+			<param-value>net.semanlink.jersey.MediaTypeFilter;</param-value> </init-param> -->
+		<!-- 2018-08 : sinon les Viewable (retour via jsp) ne marchent plus org.glassfish.jersey.message.internal.WriterInterceptorExecutor$TerminalWriterInterceptor 
+			aroundWriteTo GRAVE: MessageBodyWriter not found for media type=text/plain, 
+			type=class org.glassfish.jersey.server.mvc.Viewable, genericType=class org.glassfish.jersey.server.mvc.Viewable. 
+			cf https://stackoverflow.com/questions/19865738/cannot-have-jsp-page-load-with-jersey-server 
+			Vraiment, jersey, quelle merde -->
+		<init-param>
+			<param-name>jersey.config.server.provider.classnames</param-name>
+			<param-value>org.glassfish.jersey.server.mvc.jsp.JspMvcFeature</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 
 
 	<!-- SERVLET MAPPINGS -->
@@ -88,78 +121,72 @@
 		<servlet-name>CoolUriServlet</servlet-name>
 		<url-pattern>/tag/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet-mapping>
 		<servlet-name>CoolUriServlet</servlet-name>
 		<url-pattern>/doc/*</url-pattern>
 	</servlet-mapping>
-	
-<!--     <servlet-mapping> -->
-<!--         <servlet-name>CoolUriServlet</servlet-name> -->
-<!--         <url-pattern>/md/*</url-pattern> -->
-<!--     </servlet-mapping> -->
-    
+
+	<!-- <servlet-mapping> -->
+	<!-- <servlet-name>CoolUriServlet</servlet-name> -->
+	<!-- <url-pattern>/md/*</url-pattern> -->
+	<!-- </servlet-mapping> -->
+
 	<servlet-mapping>
 		<servlet-name>CoolUriServlet</servlet-name>
 		<url-pattern>/note/*</url-pattern>
 	</servlet-mapping>
-	
-	<!-- changed to /sl/about/* because of kattare
-	<servlet-mapping>
-		<servlet-name>CoolUriServlet</servlet-name>
-		<url-pattern>/about/*</url-pattern>
-	</servlet-mapping>
-	-->
-	  
+
+	<!-- changed to /sl/about/* because of kattare <servlet-mapping> <servlet-name>CoolUriServlet</servlet-name> 
+		<url-pattern>/about/*</url-pattern> </servlet-mapping> -->
+
 	<servlet-mapping>
 		<servlet-name>CoolUriServlet</servlet-name>
 		<url-pattern>/sl/about/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet-mapping>
 		<servlet-name>SemanticSemanticWebServlet</servlet-name>
 		<url-pattern>/sl/semanticsemanticweb/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet-mapping>
-		<servlet-name>SLServlet</servlet-name>
-		<url-pattern>/sl/*</url-pattern>
+	   <servlet-name>SLServlet</servlet-name>
+	   <url-pattern>/sl/*</url-pattern> 
 	</servlet-mapping>
-	
+
 	<servlet-mapping>
 		<servlet-name>SLServlet</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 
-	<!-- 
-	<servlet-mapping>
-		<servlet-name>CoolUriServlet</servlet-name>
-		<url-pattern>/bookmark/*</url-pattern>
-	</servlet-mapping>
-	 -->
-	
-	<!-- comme /doc/, mais avec un double encodeUriComponent (cas d'appels from js) -->
+	<!-- <servlet-mapping> <servlet-name>CoolUriServlet</servlet-name> <url-pattern>/bookmark/*</url-pattern> 
+		</servlet-mapping> -->
+
+	<!-- comme /doc/, mais avec un double encodeUriComponent (cas d'appels from 
+		js) -->
 	<servlet-mapping>
 		<servlet-name>CoolUriServlet</servlet-name>
 		<url-pattern>/doc2/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet-mapping>
 		<servlet-name>CoolUriServlet</servlet-name>
 		<url-pattern>/rss/*</url-pattern>
 	</servlet-mapping>
-	
-	<!--  ??? -->
+
+	<!-- ??? -->
 	<servlet-mapping>
 		<servlet-name>CoolUriServlet</servlet-name>
 		<url-pattern>/page/*</url-pattern>
 	</servlet-mapping>
-	
-	<!--  2017-09-19 serve things in default document folder - basically the same as doc/?docuri=xxx -->
-    <servlet-mapping>
-        <servlet-name>CoolUriServlet</servlet-name>
-        <url-pattern>/sl/doc/*</url-pattern>
-    </servlet-mapping>
+
+	<!-- 2017-09-19 serve things in default document folder - basically the 
+		same as doc/?docuri=xxx -->
+	<servlet-mapping>
+		<servlet-name>CoolUriServlet</servlet-name>
+		<url-pattern>/sl/doc/*</url-pattern>
+	</servlet-mapping>
 
 	<servlet-mapping>
 		<servlet-name>StaticFileServlet</servlet-name>
@@ -171,27 +198,23 @@
 		<url-pattern>/rdf</url-pattern>
 	</servlet-mapping>
 
-	<!-- //2006/10 file outside dataFolders -->		
-	<!--
-	<servlet-mapping>
-		<servlet-name>StaticFileServlet</servlet-name>
-		<url-pattern>/file/*</url-pattern>
-	</servlet-mapping>
-	-->
-	
+	<!-- //2006/10 file outside dataFolders -->
+	<!-- <servlet-mapping> <servlet-name>StaticFileServlet</servlet-name> <url-pattern>/file/*</url-pattern> 
+		</servlet-mapping> -->
+
 	<servlet-mapping>
 		<servlet-name>RealWorldServlet</servlet-name>
 		<url-pattern>/sl/realworld/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet-mapping>
 		<servlet-name>SLSparqlServlet</servlet-name>
 		<url-pattern>/sl/sparql/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- 2010-07 -->
 	<!-- @find generic uri dereferencing -->
-	<!--  SLSparqlServlet est une LODServlet -->
+	<!-- SLSparqlServlet est une LODServlet -->
 	<servlet-mapping>
 		<servlet-name>SLSparqlServlet</servlet-name>
 		<url-pattern>/sl/get/*</url-pattern>
@@ -216,47 +239,35 @@
 		<servlet-name>SLSparqlServlet</servlet-name>
 		<url-pattern>/sl/linkeddata/*</url-pattern>
 	</servlet-mapping>
-	
-	
-	
-	
-<!-- 	JERSEY -->
-<!--     <servlet-mapping> -->
-<!--         <servlet-name>Jersey Based Semanlink</servlet-name> -->
-<!--         <url-pattern>/sl/resources/*</url-pattern> -->
-<!--     </servlet-mapping> -->
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<!-- WELCOME FILE LIST	-->
-	
-	
+
+
+
+
+	<!-- JERSEY -->
+	<servlet-mapping>
+		<servlet-name>Jersey Based Semanlink</servlet-name>
+		<url-pattern>/resources/*</url-pattern>
+	</servlet-mapping>
+
+
+
+
+
+
+
+
+
+	<!-- WELCOME FILE LIST -->
+
+
 	<welcome-file-list>
 		<welcome-file>sl/new</welcome-file>
 	</welcome-file-list>
-	
+
 	<!-- Struts Tag Library Descriptors -->
 	<!-- no more needed with struts > 1.1 -->
-	<!--
-	<taglib>
-		<taglib-uri>/WEB-INF/struts-bean.tld</taglib-uri>
-		<taglib-location>/WEB-INF/struts-bean.tld</taglib-location>
-	</taglib>
-	
-	<taglib>
-		<taglib-uri>/WEB-INF/struts-html.tld</taglib-uri>
-		<taglib-location>/WEB-INF/struts-html.tld</taglib-location>
-	</taglib>
-	
-	<taglib>
-		<taglib-uri>/WEB-INF/struts-logic.tld</taglib-uri>
-		<taglib-location>/WEB-INF/struts-logic.tld</taglib-location>
-	</taglib>
-	-->
+	<!-- <taglib> <taglib-uri>/WEB-INF/struts-bean.tld</taglib-uri> <taglib-location>/WEB-INF/struts-bean.tld</taglib-location> 
+		</taglib> <taglib> <taglib-uri>/WEB-INF/struts-html.tld</taglib-uri> <taglib-location>/WEB-INF/struts-html.tld</taglib-location> 
+		</taglib> <taglib> <taglib-uri>/WEB-INF/struts-logic.tld</taglib-uri> <taglib-location>/WEB-INF/struts-logic.tld</taglib-location> 
+		</taglib> -->
 </web-app>

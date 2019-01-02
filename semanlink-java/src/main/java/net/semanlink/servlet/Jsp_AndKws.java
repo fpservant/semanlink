@@ -136,7 +136,7 @@ public SLKeyword toNewKeyword() throws Exception {
 	}
 	SLModel mod = SLServlet.getSLModel();
 	SLKeyword x = mod.kwLabel2NewKeyword(getTitle(), mod.getDefaultThesaurus().getURI(),null);
-	if (x == null) throw new RuntimeException("A keyword already exists with that label/uri");
+	if (x == null) throw new RuntimeException("A keyword already exists with that label/uri: " + getTitle());
 	List docs = getDocs();
 	for (int i = 0; i < docs.size(); i++) {
 		SLDocument doc = (SLDocument) docs.get(i);

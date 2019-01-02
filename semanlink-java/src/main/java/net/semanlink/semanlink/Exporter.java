@@ -35,8 +35,7 @@ private SLModel slMod;
 private SLDataFolder dataFolder;
 
 /**
- * 
- * @param slMod
+ * @param slMod model to be exported
  * @param dataFolder the dir that will contain the exported files (a dir tags and a dir bookmarks will be created inside)
  * @param SLServletContextURL par ex http://127.0.0.1:8080/semanlink ou http://www.semanlink.net
  * BEWARE: remplace les éventuelles dir "tags" et "bookmarks" existant à l'intérieur vont être remplacées
@@ -59,14 +58,24 @@ public Exporter(SLModel slMod, SLDataFolder dataFolder) throws Exception {
 }
 
 /**
+ * Export an SLModel into a given dir
+ * 
  * Ne prend que les bookmarks (docs qui ne sont pas locaux)
  * @param nbOfDays if < 0, all things after 2000-00-00
  */
 public void export(int nbOfDays) throws Exception {
 	Model kwsModel = ((JModel) this.slMod).getKWsModel();
 	HashSet tagHS = new HashSet();
+	
+	//
+	// export the docs, keeping track of the tags used
+	//
+	
 	exportDocuments(nbOfDays, tagHS);
+	
+	//
 	// maintenant, on a dans tagHS tous les kws publiables affectés aux docs
+	//
 	
 	// ce qui suit pourrait être considérablement optimisé.
 	// Ici, pour les parents, on fait un graphe de SLKeywords
@@ -161,43 +170,6 @@ class ParentTagsGraph implements Graph {
 	}
 	
 }
-///**
-// * Ne prend que les bookmarks (docs qui ne sont pas locaux)
-// * @param tagHS si non null, y met tous les tags associés aux docs.
-// * @deprecated : ne traite que les bookmarks 
-// */
-//private void exportBookmarks(int nbOfDays, HashSet tagHS) throws Exception {
-//	// pourrait être optimisé : ici, on ajoute jour par jour
-//	// les docs au fichier du mois (30 lectures écriture du fichier, là où il pourrait
-//	// n'y en avoir qu'une.
-//	for (int i = 0; i < nbOfDays+1; i++) {
-//		String dateString = (YearMonthDay.daysAgo(i)).getYearMonthDay("-");
-//		List docsOfDayList = this.slMod.getDocumentsList(SLVocab.SL_CREATION_DATE_PROPERTY, dateString, null);
-//		File slDotRdfFile = getSLDotRdfFileUsingCreationMonth(this.dataFolder, "bookmarks", dateString);
-//		String base = this.dataFolder.getBase(slDotRdfFile);
-//		JFileModel jFileModel = new JFileModel(slDotRdfFile.getPath(), base);
-//		Model mod = jFileModel.getModel(); // les docs pour ce jour
-//		boolean emptyModel = true;
-//		for (int idoc = 0; idoc < docsOfDayList.size(); idoc++) {
-//			JDocument doc = (JDocument) docsOfDayList.get(idoc);
-//			Resource res = doc.getRes();
-//			// this takes uris such as http://127.0.0.1:8080/otherservlet or 
-//			// if (slMod.isLocalDocument(res.getURI())) continue;
-//			if (isLocal(res.getURI())) continue;
-//			List kws = doc.getKeywords();
-//			if (tagHS != null) tagHS.addAll(kws);
-//			StmtIterator ite = res.listProperties ();
-//			if (ite.hasNext()) {
-//				emptyModel = false;
-//				mod.add(ite);
-//			}
-//			ite.close();
-//		}		
-//		if (!emptyModel) jFileModel.save();
-//	}
-//	// tagHS contient tous les kws directement attaché à un doc.
-//	// On va maintenant ramasser tous leurs parents, (et leurs related (?) ?)
-//}
 
 private boolean isLocal(String docUri) {
 		if (docUri.startsWith("file:/")) return true;
@@ -236,6 +208,7 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 			bookmarksJFileModel = new JFileModel(slDotRdfFile.getPath(), base);
 			bookmarksMod = bookmarksJFileModel.getModel(); // les docs pour ce jour
 		}
+		
 		JFileModel notesJFileModel = null;
 		Model notesMod = null; // les notes pour ce jour
 		{
@@ -244,6 +217,7 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 			notesJFileModel = new JFileModel(slDotRdfFile.getPath(), base);
 			notesMod = notesJFileModel.getModel(); // les docs pour ce jour
 		}
+		
 		JFileModel docsJFileModel = null;
 		Model docsMod = null; // les docs pour ce jour
 		File destDir4Docs = null;
@@ -271,7 +245,7 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 			boolean addToNotes = false;
 			boolean addToDocs = false;
 			String docUri = res.getURI();
-			// this takes doesn't include docs such as http://127.0.0.1:8080/otherservlet or http://127.0.0.1/toto
+			// this doesn't include docs such as http://127.0.0.1:8080/otherservlet or http://127.0.0.1/toto
 			// if (slMod.isLocalDocument(res.getURI())) continue;
 			if (isLocal(res.getURI())) {
 				// document local.
@@ -294,7 +268,9 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 			} else {
 				// par défaut, on publie (exporte) les bookmarks
 				if (publish != null) {
-					if ("false".equals(publish.trim())) continue;
+					if ("false".equals(publish.trim())) {
+						continue;
+					}
 				}
 				addToBookmarks = true;
 			}
@@ -315,41 +291,6 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 			}
 			
 
-				// 2013-03
-//			StmtIterator ite = res.listProperties ();
-//			if (addToBookmarks) {
-//				if (ite.hasNext()) {
-//					emptyBookmarksModel = false;
-//					bookmarksMod.add(ite);
-//				}
-//			} else if (addToNotes) {
-//				if (ite.hasNext()) {
-//					emptyNotesModel = false;
-//					notesMod.add(ite);
-//				}
-//			} else if (addToDocs) {
-//				File source = this.slMod.getFile(docUri);
-//				if (source == null) {
-//					System.err.println("Exporter: no source for " + docUri);
-//				} else {
-//					// ATTENTION ne suporte pas la publication de dirs
-//					File destFile = CopyFiles.copyFile2Dir(source, destDir4Docs, false); // ATTENTION SI ON CHANGE QLQ CHOSE, VOIR ATTENTION PLUS BAS
-//					// String newDocUri = slMod.fileToUri(destFile); NON donne une uri file
-//					String newDocUri = base4docs + destFile.getName(); // ATTENTION suppose que le nouveau fichier n'est pas ds un osus-dossier de destDir4Docs
-//					Resource newDocRes = docsMod.getResource(newDocUri);
-//					if (ite.hasNext()) {
-//						emptyDocsModel = false;
-//						for (;ite.hasNext();) {
-//							Statement sta = ite.nextStatement();
-//							Property prop = docsMod.getProperty(sta.getPredicate().getURI());
-//							RDFNode obj = sta.getObject().inModel(docsMod);
-//							// BUG ICI dans le cas où obj est un document local
-//							docsMod.add(newDocRes, prop, obj);
-//						}
-//					}
-//				}
-//			} 
-//			ite.close();
 			StmtIterator ite = res.listProperties ();
 			if (ite.hasNext()) {
 				if (addToBookmarks) {
@@ -357,6 +298,7 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 						emptyBookmarksModel = false;
 						bookmarksMod.add(ite);
 					} else {
+						// only add statements that are not of the form res p aKWThatMustNotBePublished
 						for (;ite.hasNext();) {
 							Statement sta = ite.nextStatement();
 							RDFNode obj = sta.getObject();
@@ -450,10 +392,6 @@ private boolean publish(String publish, boolean defaut) {
 }
 
 
-// TODO 
-/*private void exportTags(Model tags, Model docs) {
-	
-}*/
 /** @param subDir par ex "bookmarks" */
 private File getSLDotRdfFileUsingCreationMonth(SLDataFolder dataFolder, String subDir, String creationDateString) {
 	File x = dataFolder.getFile();

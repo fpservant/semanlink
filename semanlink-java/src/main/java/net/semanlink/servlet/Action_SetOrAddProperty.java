@@ -12,8 +12,6 @@ import java.net.*;
 /**
  * Action demandant d'affecter une propriété à un document. 
  * 
- * ATTENTION FAIT UN SET DE LA PPTE, PAS UN ADD // @todo : avoir les 2 possibilites
- * 
  * Qlqs questions se posent :
  * <B>au sujet de la propriete</B>
  * elle est passee via le parameter "property" de la request.
@@ -111,7 +109,9 @@ protected void setOrAddProp(String propertyUri, String propertyValue, HttpServle
 			// if (valUrlString.startsWith("file:/")) valUrlString = FileUriFormat.one2threeSlashs(valUrlString);
 			valUrlString = FileUriFormat.fileSlashSlashSlashProblem(valUrlString);
 			
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			// yes, nada
+		}
 		// 2007-04
 		if (valUrlString != null) {
 			if (JenaUtils.uriHasViolation(valUrlString)) {
@@ -164,7 +164,7 @@ protected void setOrAddProp(String propertyUri, String propertyValue, HttpServle
 		if (isAddAction) {
 			if (valUrlString != null) {
 				mod.addDocProperty(doc, propertyUri, valUrlString);
-			} else {		
+			} else {
 				mod.addDocProperty(doc, propertyUri, propertyValue, lang);
 			}
 			

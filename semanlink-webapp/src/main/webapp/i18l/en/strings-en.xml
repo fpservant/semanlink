@@ -139,5 +139,7 @@
 <entry key="docList.allDocs">Long List</entry>
 <!--  2017/04 -->
 <entry key="markdown.raw">Raw Markdown</entry>
+<!-- 2018/01 -->
+<entry key="doc.about">(About)</entry>
 
 </properties>

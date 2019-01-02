@@ -38,7 +38,11 @@
 
 		<version.jena>3.3.0</version.jena>
 
-		<version.servlet.api>3.0.1</version.servlet.api>
+<!-- 2018-08 trying to reuse jersey
+cf https://stackoverflow.com/questions/26436463/getdispatchertype-is-undefined-for-the-type-httpservletrequest
+		<version.servlet.api>3.1.0</version.servlet.api>
+ -->
+        <version.servlet.api>3.1.0</version.servlet.api>
 		<version.jsp.api>2.1</version.jsp.api>
 		<version.junit>4.11</version.junit>
 	</properties>

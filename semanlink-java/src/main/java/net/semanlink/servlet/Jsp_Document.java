@@ -34,6 +34,7 @@ private String pagePathInfo;
 protected Jsp_Document(SLDocument slDoc, HttpServletRequest request) throws IOException, URISyntaxException {
 	super(slDoc, request);
 	this.slDoc = slDoc;
+	// System.out.println("Jsp_Document slDoc \n\t" + slDoc.getURI() + "\n\treq.getRequestURL " + request.getRequestURL());
 	// computeFile();
 }
 

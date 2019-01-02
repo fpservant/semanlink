@@ -23,21 +23,17 @@
  */
 
 package net.semanlink.semanlink;
-import net.semanlink.metadataextraction.MetadataExtractorManager;
-import net.semanlink.servlet.CoolUriServlet;
-import net.semanlink.servlet.HTML_Link;
-import net.semanlink.servlet.SLServlet;
-import net.semanlink.sljena.modelcorrections.ModelCorrector;
-import net.semanlink.util.*;
-import net.semanlink.util.text.CharConverter;
-import net.semanlink.util.text.WordsInString;
-
-import org.apache.jena.shared.JenaException;
-
-import java.io.*;
-import java.net.*;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
 /*
  * Le "modele" Semanlink.
  * <P>
@@ -55,6 +51,26 @@ import java.util.*;
  * Du coup, je suis oblige, là où j'esperais pouvoir utiliser getResource puis tester son retour
  * (vis à vis de null) de systématiquement faire un CreateResource.
  */
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Vector;
+
+import org.apache.jena.shared.JenaException;
+
+import net.semanlink.metadataextraction.MetadataExtractorManager;
+import net.semanlink.servlet.HTML_Link;
+import net.semanlink.sljena.modelcorrections.ModelCorrector;
+import net.semanlink.util.CopyFiles;
+import net.semanlink.util.FileUriFormat;
+import net.semanlink.util.YearMonthDay;
+import net.semanlink.util.text.CharConverter;
+import net.semanlink.util.text.WordsInString;
 
 /**
  * The semanlink "model". 

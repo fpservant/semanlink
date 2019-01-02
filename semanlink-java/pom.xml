@@ -28,20 +28,75 @@
 			<version>0.5.5</version>
 		</dependency>
 
+
+<!--  voir ici on peut faire miuex 
+https://stackoverflow.com/questions/22022114/org-glassfish-jersey-servlet-servletcontainer-classnotfoundexception
+ -->
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-client</artifactId>
-			<version>2.15</version>
+			<version>2.27</version>
 		</dependency>
 	
+	<dependency>
+	    <groupId>org.glassfish.jersey.containers</groupId>
+	    <artifactId>jersey-container-servlet</artifactId>
+	    <version>2.27</version>
+	</dependency>
+	
+	<!--
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>2.27</version>
+        </dependency>
+	-->
+	
+	<!--  cf Viewable for jsp 
+	https://stackoverflow.com/questions/19458858/jersey-with-mvc-templates-and-tomcat
+	
+	sauf que cette saloperie de jersey inclut une dépendance à servlet-api 2.4
+	qui fait qu'on a ensuite des erreurs tq
+	https://stackoverflow.com/questions/26436463/getdispatchertype-is-undefined-for-the-type-httpservletrequest
+	-->
+
+<!-- nécessaire, sinon ServletContext.getContextPath ds SLJerseyApp et je comprends pas -->
+ 
+<dependency>
+  <groupId>javax.servlet</groupId>
+  <artifactId>javax.servlet-api</artifactId>
+  <version>${version.servlet.api}</version>
+  <scope>provided</scope>
+</dependency>
+
+  
+	<dependency>
+        <groupId>org.glassfish.jersey.ext</groupId>
+        <artifactId>jersey-mvc-jsp</artifactId>
+        <version>2.27</version>
+	    <exclusions>
+	        <exclusion>
+	            <groupId>javax.servlet</groupId>
+	            <artifactId>javax.servlet-api</artifactId>
+	        </exclusion>
+	    </exclusions>
+    </dependency>
+ 
 		<!--  cf connection through proxy, see SLServlet.getSimpleHttpClient -->
 		
 		<dependency>
 			<groupId>org.glassfish.jersey.connectors</groupId>
 			<artifactId>jersey-apache-connector</artifactId>
-			<version>2.15</version>
+			<version>2.27</version>
 		</dependency>
 		
+		<!--  2018-08 cf https://stackoverflow.com/questions/44088493/jersey-stopped-working-with-injectionmanagerfactory-not-found -->
+		<dependency>
+		    <groupId>org.glassfish.jersey.inject</groupId>
+		    <artifactId>jersey-hk2</artifactId>
+            <version>2.27</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts-core</artifactId>

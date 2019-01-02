@@ -74,7 +74,7 @@ public static String docLink(String docUri, WebServer ws) {
 		if (ws != null) { // 2017-09-20
 			String base = ws.getURI(ws.getDefaultDocFolder()); // http://127.0.0.1/~fps/fps/
 			if (docUri.startsWith(base)) {
-				return CoolUriServlet.DOC_SERVLET_PATH2017 + docUri.substring(base.length() - 1); // http://127.0.0.1:8080/semanlink/SL/DOC/2017/...
+				return CoolUriServlet.DOC_SERVLET_PATH2017 + docUri.substring(base.length() - 1); // http://127.0.0.1:8080/semanlink/sl/doc/2017/...
 			}
 		}
 		
