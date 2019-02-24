@@ -47,7 +47,7 @@ String pagePathInfo = jsp.getPagePathInfo();if (pagePathInfo != null) {	%><jsp
 boolean isNote = Note.isNote(uri);
 if (!isNote) {
 String href = jsp.getHREF();
-%><% /////////////////////////////////////////// FILE INFO %><div class="graybox">	<div class="what"><%=jsp.i18l("doc.fileInfo")%></div>	<ul>		<li>URI: <a href="<%=href%>"><%=href%></a></li>		<% 		if (file != null) {
+%><% /////////////////////////////////////////// FILE INFO // 2019-02 %><div class="graybox" id="file_info">	<div class="what"><%=jsp.i18l("doc.fileInfo")%></div>	<ul>		<li>URI: <a href="<%=href%>"><%=href%></a></li>		<% 		if (file != null) {
 			if ( (uri.startsWith("file:")) || (jsp.isEditor()) ) {				%><li><%=jsp.i18l("doc.path")%> <%=file.getPath()%></li><%			}
 			if (file.exists()) {
 				

@@ -79,6 +79,10 @@ https://stackoverflow.com/questions/22022114/org-glassfish-jersey-servlet-servle
 	            <groupId>javax.servlet</groupId>
 	            <artifactId>javax.servlet-api</artifactId>
 	        </exclusion>
+            <exclusion> <!-- 2019-02 -->
+	            <groupId>javax.servlet</groupId>
+                <artifactId>servlet-api</artifactId>
+            </exclusion>
 	    </exclusions>
     </dependency>
  
