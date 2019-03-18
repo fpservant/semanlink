@@ -60,4 +60,8 @@ public class SLSchema {
     
     // public static final Property markdown = m_model.createProperty( "http://www.semanlink.net/2001/00/semanlink-schema#markdown" );
     public static final Property markdownOf = m_model.createProperty( "http://www.semanlink.net/2001/00/semanlink-schema#markdownOf" );
+    
+    // 2019-03 uris for bookmark
+    public static final Property bookmarkOf = m_model.createProperty( "http://www.semanlink.net/2001/00/semanlink-schema#bookmarkOf" );
+    
 }

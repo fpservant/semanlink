@@ -318,6 +318,7 @@ private SLDataFolder load(File file, String base, SLThesaurus thesaurus, Loading
 
 // attention à la question du "/" final de rootBase 
 /**  rootBase must not be null */
+// base du genre webserver url si ws
 private void load(File file, SLDataFolder dataFolder) throws IOException {
 // private void load(File file, String rootBase, File rootFile, SLThesaurus thesaurus, LoadingMode loadingMode) throws IOException { 	//2006-11
 

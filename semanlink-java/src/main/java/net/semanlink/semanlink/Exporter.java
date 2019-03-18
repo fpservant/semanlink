@@ -239,7 +239,7 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 			
 			String publish = null;
 			PropertyValues vals = doc.getProperty(PUBLISH_PROP);
-			if (vals != null) publish = vals.getFirstAsString();
+			if (vals != null) publish = vals.getFirstAsString().trim().toLowerCase();
 			Resource res = doc.getRes();
 			boolean addToBookmarks = false;
 			boolean addToNotes = false;
@@ -254,7 +254,9 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 				if (publish == null) {
 					continue;
 				} else {
-					if (!("true".equals(publish.trim()))) {
+					// 2019-03: hack to avoid problem if the prop value contains a lang
+					// if (!("true".equals(publish.trim()))) {
+					if (!(publish.startsWith("true"))) {
 						continue;
 					}
 					// cas des notes
@@ -268,7 +270,9 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 			} else {
 				// par défaut, on publie (exporte) les bookmarks
 				if (publish != null) {
-					if ("false".equals(publish.trim())) {
+					// 2019-03: hack to avoid problem if the prop value contains a lang
+					// if ("false".equals(publish.trim())) {
+					if (publish.startsWith("false")) {
 						continue;
 					}
 				}
@@ -386,8 +390,11 @@ private boolean publish(Resource res, boolean defaut) {
 private boolean publish(String publish, boolean defaut) {
 	if (publish == null) return defaut;
 	publish = publish.trim().toLowerCase();
-	if ("true".equals(publish)) return true;
-	if ("false".equals(publish)) return false;
+	// 2019-03: hack to avoid problem if the prop value contains a lang
+	// if ("true".equals(publish)) return true;
+	// if ("false".equals(publish)) return false;
+	if (publish.startsWith("true")) return true;
+	if (publish.startsWith("false")) return true;
 	return defaut;
 }
 

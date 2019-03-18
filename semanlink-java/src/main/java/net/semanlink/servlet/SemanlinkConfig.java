@@ -176,7 +176,7 @@ public ArrayList load(ArrayList slModelList) throws IOException, URISyntaxExcept
 	// the web server
 	ite = model.listSubjectsWithProperty(RDF.type, model.getProperty(SL_WEBSERVER_MAPPING_TYPE));
 	// if (ite.hasNext()) webServer = new WebServer();
-	webServer = new WebServer();
+	webServer = new WebServer(); // 2019-03 : quoi, tjrs un webserver ???
 	if (!ite.hasNext()) {
 		// j'ajoute les mapping trivial de la servlet
 		// (par sécurité, parce que je ne suis pas trop sûr que tout se passe bien
@@ -284,7 +284,9 @@ public ArrayList load(ArrayList slModelList) throws IOException, URISyntaxExcept
 		}
 		site.close();
 		if (bookmarkFolderRes != null) {
-			SLDataFolder bookmarkDataFolder = loadSLFile(slModel, bookmarkFolderRes, defaultThesaurus, null, true);
+			// 2019-03 uris for bookmarks
+			// SLDataFolder bookmarkDataFolder = loadSLFile(slModel, bookmarkFolderRes, defaultThesaurus, null, true);
+			SLDataFolder bookmarkDataFolder = loadSLFile(slModel, bookmarkFolderRes, defaultThesaurus, bookmarkFolderRes.getURI(), true);
 		 	slModel.setBookmarkFolder(bookmarkDataFolder);
 		}
 
@@ -408,16 +410,19 @@ private SLDataFolder loadSLFile(SLModel slMod, Resource dataFolderRes, SLThesaur
 
 	String sLoadingMode = iterator2StringValue(dataFolderRes.listProperties(this.loadFileModeProp));
 	LoadingMode loadingMode= new LoadingMode(sLoadingMode);
-	if (isBookmarkDataFolder) {
-		loadingMode.setBaseRelativeToFile(false); // pour utiliser thesaurus comme base (idem "absoluteBase" dans loadingmode - pour ne pas
-		// avoir à mettre "absoluteBase" dans le loadingmode du fichier xml
-	}
+	
+	// 2019-03 uris for bookmarks -> commented out
+//	if (isBookmarkDataFolder) {
+//		loadingMode.setBaseRelativeToFile(false); // pour utiliser thesaurus comme base (idem "absoluteBase" dans loadingmode - pour ne pas
+//		// avoir à mettre "absoluteBase" dans le loadingmode du fichier xml
+//	}
 
 	File file = getResFile(dataFolderRes, true);
 	// TODO VERIFY 2006/09
 	trace("loadSLFile: " + file);
 	
-	if ((isBookmarkDataFolder) || (base == null)) {
+	// if ((isBookmarkDataFolder) || (base == null)) { // 2019-03 uris for bookmarks
+	if (base == null) {
 		base = thesaurusURI;
 		// ATTENTION base must be slash terminated (ou # si on avait choisi l'autre option pour les uris de thesaurus ? // #thing)
 		if (!base.endsWith("/")) base += "/";

@@ -64,22 +64,45 @@ public static String htmlLinkPage(SLDocument slDoc) {
 	return docLink(slDoc.getURI());
 }
 
-public static String docLink(String docUri) { // hello
+public static String docLink(String docUri) {
 	return docLink(docUri, SLServlet.getWebServer());
 }
 
-
+/**
+ * Le lien (relatif au contexte) pour afficher la page du doc (pas le doc lui même)
+ * retourne :
+ * - /sl/doc/2017/... ou bien
+ * - /doc/?uri=...
+ */
 public static String docLink(String docUri, WebServer ws) {
 	try {
-		if (ws != null) { // 2017-09-20
-			String base = ws.getURI(ws.getDefaultDocFolder()); // http://127.0.0.1/~fps/fps/
-			if (docUri.startsWith(base)) {
-				return CoolUriServlet.DOC_SERVLET_PATH2017 + docUri.substring(base.length() - 1); // http://127.0.0.1:8080/semanlink/sl/doc/2017/...
-			}
-		}
+		
+		// avant 2019-03 : la règle générale, c'est /doc/?uri=...
+		// On fait cependant un truc spécial ds le
+		// cas d'un doc qui est un fichier local, servi par web server
+		// docuri est dans le namespace de celui-ci
+		// Pourquoi ?
+		// hum : 
+		// - on peut alors avoir une url du genre /sl/doc/2017/.. (et donc on le fait parce qu'on en est capable ?)
+		// (ou bien : il faut le faire, parce que on a une uri en webserver, et que c du coup pas bon)
+		//
+		// (tout ça, supposant en plus qu'on est ds le default folder, et qu'il est servi par ws)
+		
+	  // 2019-03 uris for bookmarks
+		// commented this out :
+		// (sinon le about d'un doc local ko)
+//		if (ws != null) { // 2017-09-20
+//			String base = ws.getURI(ws.getDefaultDocFolder()); // http://127.0.0.1/~fps/fps/
+//			if (docUri.startsWith(base)) {
+//				// cas d'un doc qui est un fichier local, servi par web server
+//				// docuri est dans le namespace de celui-ci
+//				return CoolUriServlet.DOC_SERVLET_PATH2017 + docUri.substring(base.length() - 1); // /sl/doc/2017/...
+//			}
+//		}
+		
 		
 		// ATTENTION adherence markdown-sl.js replaceLinkFct
-		return CoolUriServlet.DOC_SERVLET_PATH + "/?uri=" + URLEncoder.encode(docUri, "UTF-8"); // http://127.0.0.1:8080/semanlink + /doc/?uri=...
+		return CoolUriServlet.DOC_SERVLET_PATH + "/?uri=" + URLEncoder.encode(docUri, "UTF-8"); // /doc/?uri=...
 	} catch (Exception e) { throw new RuntimeException(e) ; }
 }
 
@@ -356,7 +379,7 @@ public static String getTagHref(HttpServletResponse response, String contextUrl,
  * dans contextUrl @see Util.getContextURL(HttpServletRequest) ou Jsp_Page.getContextURL()
  * OU BIEN non comprise le host:port (commençant par /)
  * si on passe dans contextUrl request.getContextPath (ex "/semanlink"),
- * @deprecated : use form getTagURL with dotExtension explicitely
+ * @deprecated : use form getTagURL with dotExtension explicitely 
  */
 public static String getTagHref(String contextUrl, String kwUri, boolean resolveAlias) throws UnsupportedEncodingException {
 	return getTagURL(contextUrl, kwUri, resolveAlias, ".html");
@@ -368,13 +391,13 @@ public static String getTagHref(String contextUrl, String kwUri, boolean resolve
  * dans contextUrl @see Util.getContextURL(HttpServletRequest) ou Jsp_Page.getContextURL()
  * OU BIEN non comprise le host:port (commençant par /)
  * si on passe dans contextUrl request.getContextPath (ex "/semanlink"),
- * @param contextUrl
- * @param kwUri
+ * @param contextUrl eg. /semanlink
+ * @param kwUri eg. http://www.semanlink.net/tag/favoris
  * @param resolveAlias
  * @param dotExtension ".html" ou ".rdf"
- * @return
+ * @return eg. /semanlink/tag/favoris.html
  * @throws UnsupportedEncodingException
- */
+ */ // 2019-03 to see
 public static String getTagURL(String contextUrl, String kwUri, boolean resolveAlias, String dotExtension) throws UnsupportedEncodingException {
 	return contextUrl + CoolUriServlet.TAG_SERVLET_PATH + "/" + getKwRelativHREF(kwUri, dotExtension, resolveAlias);
 }
