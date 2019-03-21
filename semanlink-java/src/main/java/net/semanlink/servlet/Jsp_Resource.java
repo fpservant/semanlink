@@ -53,17 +53,17 @@ public SLLabeledResource getSLResource() {
 // <QUESTION> Utiliser java.net.URLEncoder.encode(this.uri, "UTF-8") ? NON!!!
 // Et c'est quoi ça, ds la cas d'un tag : lien vers le concept ?
 public String getHREF() throws UnsupportedEncodingException, IOException, URISyntaxException {
-	//2006/10 file outside dataFolders // should'nt this be in Jsp_Document ?
-	if (uri.startsWith("file:")) {
-		URI u;
-		try {
-			u = new URI(this.uri);
-			String path = u.getRawPath();
-			return this.request.getContextPath() + StaticFileServlet.PATH_FOR_FILES_OUTSIDE_DATAFOLDERS + path;
-		} catch (URISyntaxException e) { 
-			throw new RuntimeException(e) ;
-		}
-	}
+	//2006/10 file outside dataFolders // should'nt this be in Jsp_Document ? // 2019-03 moved over there
+//	if (uri.startsWith("file:")) {
+//		URI u;
+//		try {
+//			u = new URI(this.uri);
+//			String path = u.getRawPath();
+//			return this.request.getContextPath() + StaticFileServlet.PATH_FOR_FILES_OUTSIDE_DATAFOLDERS + path;
+//		} catch (URISyntaxException e) { 
+//			throw new RuntimeException(e) ;
+//		}
+//	}
 	return Util.handleAmpersandInHREF(this.uri);
 }
 

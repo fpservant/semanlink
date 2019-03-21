@@ -282,7 +282,26 @@ public String getHREF() throws IOException, URISyntaxException {
 	if (isDirectory()) {
 		return this.request.getContextPath() + HTML_Link.docLink(this.uri);
 	}
-	return super.getHREF();
+	
+	// 2019-03 uris for bookmarks
+  String bookmarkOf = getSLDocument().bookmarkOf();
+  if (bookmarkOf != null) {
+  	return Util.handleAmpersandInHREF(bookmarkOf);
+  }
+
+	// 2019-03 moved from Jsp_Resource
+	if (uri.startsWith("file:")) {
+		URI u;
+		try {
+			u = new URI(this.uri);
+			String path = u.getRawPath();
+			return this.request.getContextPath() + StaticFileServlet.PATH_FOR_FILES_OUTSIDE_DATAFOLDERS + path;
+		} catch (URISyntaxException e) { 
+			throw new RuntimeException(e) ;
+		}
+	}
+	
+  return super.getHREF();
 }
 
 
