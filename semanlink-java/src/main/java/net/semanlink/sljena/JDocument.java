@@ -119,7 +119,9 @@ private String computeDate() {
 }
 public String toString() {
   try {
-    return getLabel();
+    String x = getLabel();
+    if (x != null) return x;
+    return this.getURI();
   } catch (Throwable t) { return t.toString(); }
 }
 
