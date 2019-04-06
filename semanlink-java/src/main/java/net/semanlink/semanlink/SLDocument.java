@@ -14,6 +14,7 @@ public List getKeywords();
 // 2019-03 uris for bookmarks -- quick'n dirty
 /**
  * @return null if not a bookmark, the url this res is bookmark of otherwise
+ * @since 0.6
  */
 default String bookmarkOf() {
 	PropertyValues pv = getProperty(SLSchema.bookmarkOf.getURI());

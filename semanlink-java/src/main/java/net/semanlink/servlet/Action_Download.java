@@ -117,6 +117,15 @@ static String getShortFilename(String title, String docuri, boolean isHTML) {
 	return "untitled.html"; // TODO
 }
 
+/**
+ * since 0.6
+ */ // 2019-03 uris for bookmarks
+public static String title2uriPathComponent(String title) {
+	if (title == null) throw new RuntimeException("title is null");
+	String sfn = title.trim();
+	if (sfn.length() > 32) sfn = sfn.substring(0,31);
+	return shortFilenameFromString(sfn);
+}
 
 /** juste le remplacement des cars à la con. Pas d'extension la dedans */
 public static String shortFilenameFromString(String sfn) {
@@ -133,52 +142,97 @@ public static String shortFilenameFromString(String sfn) {
  * Download et sauve un fichier.
  * Pour en plus dire que le fichier a pour source downloadFromUri, faire :
  * setSource(downloadFromUri, [the returned file], mod);
- * @param downloadFromUri
- * @param title
- * @param overwrite
- * @param mod
  * @return the new file.
- * @throws IOException 
- * @throws HttpException 
  * @throws RuntimeException if overwrite is false and file already exists
- */
+ */ // pre 2019-03 uris for bookmarks
 public static File downloadFile(String downloadFromUri, String title, boolean overwrite, SLModel mod) throws IOException {
 	// if (!downloadFromUri.startsWith("http:")) throw new RuntimeException("Not an http uri"); // TODO : on pourrait vouloir faire une copie d'un file
 	
-	Client simpleHttpClient = SLServlet.getSimpleHttpClient();
-	// String contentType = null; //  = simpleHttpClient.getContentType(downloadFromUri, false);
+	Response res = getResponse(downloadFromUri);
+	boolean isHTML = isHTML(downloadFromUri, res);
+
+	File dir = mod.goodDirToSaveAFile(); ////// !!!
+	String sfn = getShortFilename(title, downloadFromUri, isHTML);
+	File saveAs = new File(dir, sfn);
 	
+	download(downloadFromUri, saveAs, overwrite, res, isHTML);
+
+	return saveAs;
+}
+
+public static void download(String downloadFromUri, File saveAs, boolean overwrite, Response res, boolean isHTML) throws IOException {
+	if (saveAs.exists()) {
+		if (!overwrite) throw new RuntimeException ("A file " + saveAs.toString() + " already exists.");
+	}
+
+	if (isHTML) {
+		HTMLPageDownload download = new HTMLPageDownload(new URL(downloadFromUri), res);
+//		if (HTMLPageDownload.isLeMondePrintPage(downloadFromUri)) {
+//			// remplacer le titre ds le html
+//			if (title != null) {
+//				download.replaceTitle(title);
+//			}
+//		}
+		download.save(saveAs);						
+	} else {
+		save(res, saveAs);
+	}
+}
+
+public static Response getResponse(String downloadFromUri) {
+	Client simpleHttpClient = SLServlet.getSimpleHttpClient();
+	// String contentType = simpleHttpClient.getContentType(downloadFromUri, false);
   WebTarget webTarget = simpleHttpClient.target(downloadFromUri);
-  Response res = webTarget.request(MediaType.WILDCARD_TYPE).get();
+  return webTarget.request(MediaType.WILDCARD_TYPE).get(); 
+}
+
+public static boolean isHTML(String downloadFromUri, Response res) {
 	boolean isHTML = false;
   if ((res.getMediaType() != null) && (res.getMediaType().isCompatible(MediaType.TEXT_HTML_TYPE))) {
   	isHTML = true;
   } else {
 		if ((downloadFromUri.endsWith(".html"))||(downloadFromUri.endsWith(".htm"))) isHTML = true;
 	}
-	
-	File dir = mod.goodDirToSaveAFile(); ////// !!!
-	String sfn = getShortFilename(title, downloadFromUri, isHTML);
-	File saveAs = new File(dir, sfn);
-	if (saveAs.exists()) {
-		if (!overwrite) throw new RuntimeException ("A file " + saveAs.toString() + " already exists.");
-	}
-
-	// if ("text/html".equals(contentType)) {
-	if (isHTML) {
-		HTMLPageDownload download = new HTMLPageDownload(new URL(downloadFromUri), res);
-		if (HTMLPageDownload.isLeMondePrintPage(downloadFromUri)) {
-			// remplacer le titre ds le html
-			if (title != null) {
-				download.replaceTitle(title);
-			}
-		}
-		download.save(saveAs);						
-	} else {
-		save(res, saveAs);
-	}
-	return saveAs;
+  return isHTML;
 }
+
+//public static File downloadFile_SVG(String downloadFromUri, String title, boolean overwrite, SLModel mod) throws IOException {
+//	// if (!downloadFromUri.startsWith("http:")) throw new RuntimeException("Not an http uri"); // TODO : on pourrait vouloir faire une copie d'un file
+//	
+//	Client simpleHttpClient = SLServlet.getSimpleHttpClient();
+//	// String contentType = null; //  = simpleHttpClient.getContentType(downloadFromUri, false);
+//	
+//  WebTarget webTarget = simpleHttpClient.target(downloadFromUri);
+//  Response res = webTarget.request(MediaType.WILDCARD_TYPE).get();
+//	boolean isHTML = false;
+//  if ((res.getMediaType() != null) && (res.getMediaType().isCompatible(MediaType.TEXT_HTML_TYPE))) {
+//  	isHTML = true;
+//  } else {
+//		if ((downloadFromUri.endsWith(".html"))||(downloadFromUri.endsWith(".htm"))) isHTML = true;
+//	}
+//	
+//	File dir = mod.goodDirToSaveAFile(); ////// !!!
+//	String sfn = getShortFilename(title, downloadFromUri, isHTML);
+//	File saveAs = new File(dir, sfn);
+//	if (saveAs.exists()) {
+//		if (!overwrite) throw new RuntimeException ("A file " + saveAs.toString() + " already exists.");
+//	}
+//
+//	// if ("text/html".equals(contentType)) {
+//	if (isHTML) {
+//		HTMLPageDownload download = new HTMLPageDownload(new URL(downloadFromUri), res);
+//		if (HTMLPageDownload.isLeMondePrintPage(downloadFromUri)) {
+//			// remplacer le titre ds le html
+//			if (title != null) {
+//				download.replaceTitle(title);
+//			}
+//		}
+//		download.save(saveAs);						
+//	} else {
+//		save(res, saveAs);
+//	}
+//	return saveAs;
+//}
 
 
 static private void save(Response res, File saveAsFile) throws IOException {	

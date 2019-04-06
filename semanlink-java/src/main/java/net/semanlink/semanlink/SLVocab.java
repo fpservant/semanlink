@@ -32,6 +32,7 @@ public static final String SL_CREATION_TIME_PROPERTY =  SLSchema.creationTime.ge
 public static final String SL_REPLACED_BY_PROPERTY =  SLSchema.replacedBy.getURI();
 // public static final String SL_MARKDOWN_PROPERTY =  SLSchema.markdown.getURI();
 public static final String SL_MARKDOWN_OF_PROPERTY =  SLSchema.markdownOf.getURI();
+public static final String SL_BOOKMARK_OF_PROPERTY =  SLSchema.bookmarkOf.getURI();
 
 public static final String SOURCE_PROPERTY = DC.source.getURI();
 public static final String DATE_PARUTION_PROPERTY = DC.date.getURI();

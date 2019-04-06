@@ -214,7 +214,8 @@ public void replaceTitle(String newTitle) {
 }
 
 public static boolean isLeMondePrintPage(String uri) {
-	return (uri.startsWith("http://www.lemonde.fr/web/imprimer_element"));
+	// return (uri.startsWith("http://www.lemonde.fr/web/imprimer_element"));
+	return (uri.startsWith("http://www.lemonde.fr/"));
 }
 
 }

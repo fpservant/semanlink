@@ -69,63 +69,7 @@ private void bordelEncoding(Form_Bookmark bookmarkForm) throws UnsupportedEncodi
 		// a bit of formatting (cf unwanted spaces or returns coming from the html)
 		s = s.replaceAll("\t", " ");
 		s = s.replaceAll("  ", " ");
-		/*BufferedReader reader = new BufferedReader(new StringReader(s));
-		StringBuffer comment = new StringBuffer();
-		boolean dejaUneVide = false;
-		String line;
-		String eol = System.getProperty("line.separator");
-		boolean addABr = false;
-		try {
-			for (;;) {
-				line = reader.readLine();
-				if (line == null) break;
-				line = line.trim();
-				if ("".equals(line)) {
-					if (dejaUneVide) {
-						comment.append(eol);
-					} else {
-						dejaUneVide = true;
-					}
-					continue;
-				} else {
-					dejaUneVide = false;
-				}
-				if (addABr) {
-					addABr = false;
-					comment.append("<br/>" + eol);
-				}
-				if (line.endsWith(".")) {
-					addABr = true;
-				} else {
-					line += " ";
-				}
-				comment.append(line);
-			}
-			s = comment.toString();
-		} catch (Exception e) {e.printStackTrace();}*/
-		/*
-		BufferedReader reader = new BufferedReader(new StringReader(s));
-		StringBuffer comment = new StringBuffer();
-		String line;
-		String eol = System.getProperty("line.separator");
-		boolean nada = true;
-		try {
-			for (;;) {
-				line = reader.readLine();
-				if (line == null) break;
-				line = line.trim();
-				if ("".equals(line)) {
-					if (nada) continue;
-					comment.append(eol);
-					continue;
-				} else {
-					comment.append(line);
-					comment.append(eol);
-				}
-			}
-			s = comment.toString();
-		} catch (Exception e) {e.printStackTrace();}
-		*/
+
 		BufferedReader reader = new BufferedReader(new StringReader(s));
 		StringBuffer comment = new StringBuffer();
 		String line;
@@ -179,6 +123,17 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
         SLDocument doc = mod.smarterGetDocument(docuri);
 
         boolean alreadyExists = false;
+        
+        
+  			// 2019-03 : uris for bookmarks
+  			SLDocument bookmark2019 = mod.bookmarkUrl2Doc(doc.getURI());
+  			if (bookmark2019 != null) {
+  				
+        	response.sendRedirect(response.encodeRedirectURL(bookmark2019.getURI())); // TODO PAS SUR : voir + bas alreadyExists, HTML_Link.docLink
+        	return null; // EXIT !!!
+  			}
+        
+        
         if (mod.existsAsSubject(doc)) {
         		alreadyExists = true;
         } else {
@@ -192,12 +147,23 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
         }
         
         if (alreadyExists) {
-      			// 2007-01 (POST REDIRECT)
-      			// getJsp_Document(doc, request); // documente l'attribut jsp de la request
-      			String redirectURL = Util.getContextURL(request) + HTML_Link.docLink(doc.getURI());
-          	response.sendRedirect(response.encodeRedirectURL(redirectURL));
-          	return null; // EXIT !!!
+    			// 2007-01 (POST REDIRECT)
+    			// getJsp_Document(doc, request); // documente l'attribut jsp de la request
 
+        	// 2019-03 :
+        	// ce qu'il y avait, mais pb issu du changement ds HTML_Link.docLink
+        	// quand il s'agit d'un .../document/... ?
+
+        	String redirectURL = Util.getContextURL(request) + HTML_Link.docLink(doc.getURI());
+//        	String redirectURL = null;
+//         	if (SLServlet.getWebServer().owns(doc.getURI())) {
+//        		redirectURL = doc.getURI(); // ben non, on reste sur place !
+//        	} else {
+//        		redirectURL = Util.getContextURL(request) + HTML_Link.docLink(doc.getURI());
+//        	}
+        	response.sendRedirect(response.encodeRedirectURL(redirectURL));
+        	return null; // EXIT !!!
+          		
         } else {
         	
         	// can be the homepage or the sl:describedBy of a tag

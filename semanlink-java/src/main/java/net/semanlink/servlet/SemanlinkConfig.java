@@ -257,7 +257,7 @@ public ArrayList load(ArrayList slModelList) throws IOException, URISyntaxExcept
 	 	
 	 	
 	 	
-//	 	// on ajoute systématiquement un (1/2) mapping de servlet/document vers le feault data folder
+//	 	// on ajoute systématiquement un (1/2) mapping de servlet/document vers le default data folder
 //	 	// (cf pb CORS pour markdown file chez moi : le doc est servi par apache, on ne peut getter le fichier en ajax.
 //	 	// Je veux donc donner la possibilité de linker vers 127.0.0.1:8080/semanlink/document/2015/10/UnFichier.md
 //	 	// et il faut donc que cela envoie vers le fichier correspondant pour être servi par static file servlet
@@ -311,13 +311,6 @@ public ArrayList load(ArrayList slModelList) throws IOException, URISyntaxExcept
 
 		// other data folders
 	
-	 	/*site = slModelRes.listProperties();
-		for (;site.hasNext();) {
-			Statement sta = site.nextStatement();
-			System.out.print(sta.getPredicate().getURI());
-			System.out.println( " : " + sta.getObject());
-		}*/
-	 	
 	 	site = slModelRes.listProperties(model.getProperty(SL_DATA_FOLDER_PROP));
 		for (;site.hasNext();) {
 			node = site.nextStatement().getObject();

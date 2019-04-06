@@ -263,11 +263,66 @@ public String getContent() throws Exception {
 }
 
 //
-// ce doc peut-etre objet de ppté
 //
+//
+
 public SLDocument getLocalCopy() throws Exception {
-	if (getFile() != null) return null;
-	return SLServlet.getSLModel().source2LocalCopy(this.slDoc.getURI());
+
+	// moved to SLModel
+	return SLServlet.getSLModel().getLocalCopy(this.slDoc);
+	
+//	// 2019-03 uris for bookmarks
+//	
+//	// THIS IS VERSION B4 2019-03
+//	
+//	// this was OK when docs (bookmarks created for an internet url) had that internet url as uri
+//	// if (getFile() != null) return null; // si doc local, pas de local copy
+//	// return SLServlet.getSLModel().source2LocalCopy(this.slDoc.getURI());
+//	
+//	
+//	
+//	// TODO REVOIR LA SUITE
+//	//
+//	// EN DEFINITIVE, CE QUI PASSE C LE 3
+//	// (comme avant MAIS IL A FALLU VIRER LE TEST getFile() != null)
+//	//
+//	// VOIR AUSSI CE QUI SE PASSE DS docline.jsp
+//	
+//	
+//	
+//	
+//	
+//  // But now: the local copy may be linked to the internet url
+//	SLDocument x = null;
+//	String url = this.slDoc.bookmarkOf();
+//	if (url != null) {
+//		x = SLServlet.getSLModel().source2LocalCopy(url);
+//		System.out.println("Jsp_Document getLocalCopy 1 " + url); // TODO REMOVE
+//		if (x != null) {
+//			return x;
+//		}
+//	}
+//	
+//	// not a post 2019-03 bkm, or local copy linked to 2019-03 bkm
+//	
+////	x = SLServlet.getSLModel().doc2Source(this.slDoc.getURI());
+////	System.out.println("Jsp_Document getLocalCopy 2 " + this.slDoc.getURI()); // TODO REMOVE
+////	if (x != null) {
+////		return x;
+////	}
+//	
+//	// pre 2019-03
+//	
+//	// 2019-03 en fait, faut virer ce test
+//	// if (getFile() != null) return null; // si doc local, pas de local copy // ATTENTION, ce test retourne qlq chose si servi par webserver - donc pas à mettre plu shat
+//
+//	x = SLServlet.getSLModel().source2LocalCopy(this.slDoc.getURI());
+//	System.out.println("Jsp_Document getLocalCopy 3 " + this.slDoc.getURI()); // TODO REMOVE
+//	if (x != null) {
+//		return x;
+//	}
+//	System.out.println("Jsp_Document getLocalCopy NOT FOUND"); // TODO REMOVE
+//	return null;
 }
 
 //
