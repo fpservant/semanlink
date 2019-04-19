@@ -8,55 +8,56 @@ import net.semanlink.util.*;
 public class LeMonde extends Extractor {
 	public boolean dealWith(ExtractorData data) {
 		if (data.getUri().indexOf("/www.lemonde.fr/") > -1) return true;
-		try {
-			String text = data.getText();
-			if (text.lastIndexOf("©Le Monde") > -1) return true; // après mars 2005
-			if (text.lastIndexOf("© Le Monde") > -1) return true; // avant mars 2005
-			if (text.indexOf("LE MONDE |") > -1) return true; // à partir de mars 2005
-			return false;
-		} catch (Exception e) { 
-			return false;
-		}
+//		try {
+//			String text = data.getText();
+//			if (text.lastIndexOf("©Le Monde") > -1) return true; // après mars 2005
+//			if (text.lastIndexOf("© Le Monde") > -1) return true; // avant mars 2005
+//			if (text.indexOf("LE MONDE |") > -1) return true; // à partir de mars 2005
+//			return false;
+//		} catch (Exception e) { 
+//			return false;
+//		}
+		return false;
 	}
 
 	/*public String getSource(ExtractorData data) { // viré, pour cause double emploi
 		return "Le Monde";
 	}*/
 	
-	public String getDateParution(ExtractorData data) throws IOException, ParseException {
-		String t = data.getText();
-		if (t == null) return null;
-		String marc = "Article paru dans l'édition du";  // à partir de mars 2005
-		int n = t.indexOf(marc);
-		if (n < 0) {
-			marc = "ARTICLE PARU DANS L'EDITION DU"; // avant mars 2005
-			n = t.indexOf(marc);
-			if (n < 0) {
-				marc = "LEMONDE.FR |"; // avant mars 2005
-				n = t.indexOf(marc);
-			}
-		}
-		if (n < 0) return null;
-		n = n + marc.length() +1;
-		t = t.substring(n);
-		LineNumberReader lineReader = new LineNumberReader(new StringReader(t));
-		String x = lineReader.readLine();
-		Calendar cal = dateInLeMonde2Calendar(x,Locale.FRANCE);
-		if (cal != null) {
-			return (new YearMonthDay(cal)).getYearMonthDay(SLVocab.DATE_DELIM);
-		} else {
-			return null;
-		}
-	}
+//	public String getDateParution(ExtractorData data) throws IOException, ParseException {
+//		String t = data.getText();
+//		if (t == null) return null;
+//		String marc = "Article paru dans l'édition du";  // à partir de mars 2005
+//		int n = t.indexOf(marc);
+//		if (n < 0) {
+//			marc = "ARTICLE PARU DANS L'EDITION DU"; // avant mars 2005
+//			n = t.indexOf(marc);
+//			if (n < 0) {
+//				marc = "LEMONDE.FR |"; // avant mars 2005
+//				n = t.indexOf(marc);
+//			}
+//		}
+//		if (n < 0) return null;
+//		n = n + marc.length() +1;
+//		t = t.substring(n);
+//		LineNumberReader lineReader = new LineNumberReader(new StringReader(t));
+//		String x = lineReader.readLine();
+//		Calendar cal = dateInLeMonde2Calendar(x,Locale.FRANCE);
+//		if (cal != null) {
+//			return (new YearMonthDay(cal)).getYearMonthDay(SLVocab.DATE_DELIM);
+//		} else {
+//			return null;
+//		}
+//	}
 	
-	public String getCreator(ExtractorData data) {
-		String t = data.getText();
-		if (t== null) return null;
-		if (t.indexOf("Eric Le Boucher") > -1) {
-			return "Eric Le Boucher";
-		}
-		return null;
-	}
+//	public String getCreator(ExtractorData data) {
+//		String t = data.getText();
+//		if (t== null) return null;
+//		if (t.indexOf("Eric Le Boucher") > -1) {
+//			return "Eric Le Boucher";
+//		}
+//		return null;
+//	}
 	
 	/** Parse une date telle que apparaît ds un article ("paru ds l'édition du ...")
 	 * Attention, problème avec les dates genre "09.02.04".Palié en supposant

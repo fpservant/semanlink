@@ -22,6 +22,7 @@ import net.semanlink.util.CopyFiles;
 import net.semanlink.util.Util;
 import net.semanlink.util.html.HTMLPageDownload;
 
+// TODO !!
 /*
  // YA 2 TRUCS NULS : 
   // 1) on lit le html une fois ici, et aune autre ds le addedDoc pour extraire metadata
@@ -107,35 +108,14 @@ static String getShortFilename(String title, String docuri, boolean isHTML) {
 	if (title != null) {
 		String sfn = title.trim();
 		if (sfn.length() > 32) sfn = sfn.substring(0,31);
-		if (!("".equals(sfn))) return shortFilenameFromString(sfn) +  dotExtension;
+		if (!("".equals(sfn))) return SLUtils.shortFilenameFromString(sfn) +  dotExtension;
 	}
 	String x = null;
 	if ((docuri != null) && (!("".equals(docuri)))) {
-		x = shortFilenameFromString(Util.getLastItem(docuri,'/'));
+		x = SLUtils.shortFilenameFromString(Util.getLastItem(docuri,'/'));
 	}
 	if (!("".equals(x))) return x;
 	return "untitled.html"; // TODO
-}
-
-/**
- * since 0.6
- */ // 2019-03 uris for bookmarks
-public static String title2uriPathComponent(String title) {
-	if (title == null) throw new RuntimeException("title is null");
-	String sfn = title.trim();
-	if (sfn.length() > 32) sfn = sfn.substring(0,31);
-	return shortFilenameFromString(sfn);
-}
-
-/** juste le remplacement des cars à la con. Pas d'extension la dedans */
-public static String shortFilenameFromString(String sfn) {
-	sfn = SLModel.converter.convert(sfn);
-	// virer les car interdits. Ceci n'est pas suffisant? TODO
-	sfn = sfn.replaceAll("/","-");
-	sfn = sfn.replaceAll(":","-");
-	sfn = sfn.replaceAll("'",""); // cf pb en javascript
-	sfn = sfn.replaceAll("\"",""); // cf pb en javascript
-	return sfn;
 }
 
 /**
@@ -152,7 +132,7 @@ public static File downloadFile(String downloadFromUri, String title, boolean ov
 	boolean isHTML = isHTML(downloadFromUri, res);
 
 	File dir = mod.goodDirToSaveAFile(); ////// !!!
-	String sfn = getShortFilename(title, downloadFromUri, isHTML);
+	String sfn = getShortFilename(title, downloadFromUri, isHTML); // TODO IMPROVE SEE ActionBookmark
 	File saveAs = new File(dir, sfn);
 	
 	download(downloadFromUri, saveAs, overwrite, res, isHTML);

@@ -64,8 +64,8 @@ import java.util.Vector;
 import org.apache.jena.shared.JenaException;
 
 import net.semanlink.metadataextraction.MetadataExtractorManager;
+import net.semanlink.servlet.Action_Download;
 import net.semanlink.servlet.HTML_Link;
-import net.semanlink.servlet.SLServlet;
 import net.semanlink.sljena.modelcorrections.ModelCorrector;
 import net.semanlink.util.CopyFiles;
 import net.semanlink.util.FileUriFormat;
@@ -184,8 +184,8 @@ abstract public boolean existsAsSubject(SLDocument doc); // pertinent en pre 201
  * the SLDocument corresponding to the url of a bookmark (url on the web)
  * or null if it doesn't exist yet
  * @since 0.6
- */ // 2019-03 uris for bookmarks
-public SLDocument bookmarkUrl2Doc(String bookmarkUrl) throws Exception {
+ */ 
+public SLDocument bookmarkUrl2Doc(String bookmarkUrl) throws Exception { // 2019-03 uris for bookmarks
 	List al = getDocumentsList(SLVocab.SL_BOOKMARK_OF_PROPERTY, bookmarkUrl);
 	if (al == null) return null;
 	if (al.size() == 0) return null;
@@ -258,7 +258,7 @@ public SLDocument getLocalCopy(SLDocument slDoc) throws Exception {
 	String url = slDoc.bookmarkOf();
 	if (url != null) {
 		x = source2LocalCopy(url);
-		System.out.println("getLocalCopy 1 " + url); // TODO REMOVE
+		// System.out.println("getLocalCopy 1 " + url); // TODO REMOVE
 		if (x != null) {
 			return x;
 		}
@@ -278,11 +278,11 @@ public SLDocument getLocalCopy(SLDocument slDoc) throws Exception {
 	// if (getFile() != null) return null; // si doc local, pas de local copy // ATTENTION, ce test retourne qlq chose si servi par webserver - donc pas à mettre plu shat
 
 	x = source2LocalCopy(slDoc.getURI());
-	System.out.println("getLocalCopy 3 " + slDoc.getURI()); // TODO REMOVE
+	// System.out.println("getLocalCopy 3 " + slDoc.getURI()); // TODO REMOVE
 	if (x != null) {
 		return x;
 	}
-	System.out.println("getLocalCopy NOT FOUND"); // TODO REMOVE
+	// System.out.println("getLocalCopy NOT FOUND"); // TODO REMOVE
 	return null;
 }
 
@@ -1477,7 +1477,6 @@ public class DocMetadataFile {
 	private SLDataFolder dataFolder;
 	private File slDotRdfFile;
 	private String base;
-	private DocMetadataFile() {}
 	DocMetadataFile(SLDataFolder dataFolder, File slDotRdfFile, String base) {
 		this.dataFolder = dataFolder;
 		this.slDotRdfFile = slDotRdfFile;
@@ -1493,21 +1492,46 @@ public class DocMetadataFile {
 		if (docf != null) {
 			dataFolder = getDataFolderFromLoadingList(docf);
 			if (dataFolder == null) {
-				// dataFolder = getDefaultFolder(); // or throw Exception to forbid file outside an opened SLDataFolder ?
-				dataFolder = getBookmarkFolder(); // or throw Exception to forbid file outside an opened SLDataFolder ?
+				// 2019-04 uris for bookmark je (re-?)mets getDefaultFolder plutôt que getBookmarkFolder // TODO CHECK
+				dataFolder = getDefaultFolder(); // or throw Exception to forbid file outside an opened SLDataFolder ?
+				// dataFolder = getBookmarkFolder(); // or throw Exception to forbid file outside an opened SLDataFolder ?
 			} else {
 				if (!computeOnlyDataFolder) slDotRdfFile = getSlDotRdfFileFromDataFolder(docf, docUri, dataFolder);
 			}
 		} else { // ni file protocol url, ni servie par notre webserver
-			// Dans le cas d'une url genre www.apple.com,
+			// Dans le cas d'une url genre www.hypersolutions.fr,
 			// et bien on ne sait pas dans quel fichier l'écrire,
 			// sauf peut-etre si elle a déjà été écrite !
-			dataFolder = getBookmarkFolder();
+			
+			//
+			// 2019-04 uris for bookmarks
+			//
+			
+			// on avait
+			// dataFolder = getBookmarkFolder();
+			
+			// MAIS pb avec mes "anciens" bookmarks :
+			// conduit à les sauver dans bookmark folder,
+			// alors qu'ils sont dans ds defaultDataFolder
+			// (enfin : ds ancienne version, les 2 sont la même chose
+			// mais au moins ds une phase transitoire avant de tout convertir,
+			// on veut donc que les "anciens bkmrks -- les docs genre hypersolutions.fr restent
+			// dans defaultDataFolder (le site web / svg de mes fichiers), mais les nouveaux
+			// dans bookmarkFolder)
+			
+			// ASSUMANT que le cas de "nouveaux bookmarks" sont traités plus haut,
+			// cad qu'ils retournent qlq chose ds getFileIfLocal() (== servis par le webserver ?)
+			// on va ici (contre ce qui semblerait être logique) retourner defaultDataFolder
+			// pour les docuri genre hypersolutions.fr
+			
+			// [NORMALEMENT, après fin des travaux uris for bookmarks, le cas présent ne se produira plus (???)]
+			
+			dataFolder = getDefaultFolder();
 		}
 
 		if (computeOnlyDataFolder) return;
 
-		if (slDotRdfFile == null) { // on n'a pas trouvé avec dataFolderList, ou bien url genre apple.com
+		if (slDotRdfFile == null) { // on n'a pas trouvé avec dataFolderList, ou bien url genre www.hypersolutions.fr
 			slDotRdfFile = getSLDotRdfFileUsingCreationMonth(dataFolder, docUri);
 		}
 
@@ -1522,7 +1546,7 @@ public class DocMetadataFile {
 
 /** Si docUri est de protocol File, ou si elle est servie par notre serveur, retourne le fichier correspondant, 
  *  sinon return null */
-private File getFileIfLocal(String docUri) throws IOException, URISyntaxException {
+File getFileIfLocal(String docUri) throws IOException, URISyntaxException {
 	URI docURI = new URI(docUri);
 	if ("file".equals(docURI.getScheme())) {
 		String filename = docURI.getPath(); // à ne pas oublier ! (cf les %20)
@@ -1543,7 +1567,7 @@ private File getFileIfLocal(String docUri) throws IOException, URISyntaxExceptio
  * One (positive) effect of using this method is that, by using the path to the file to retrieve the data folder,
  * (and not the creation date), information about a file such as "20004/01/x.htm" is stored in "2004/01", 
  * even if the file has been created at another date (or has no creation date) */
-private SLDataFolder getDataFolderFromLoadingList(File f) {
+SLDataFolder getDataFolderFromLoadingList(File f) {
 	// un petit doute la dessous pour le cas où f est une dir, égale au dataFolder
 	String fn = null;
 	if (f.isDirectory()) {
@@ -1576,7 +1600,7 @@ private SLDataFolder getDataFolderFromLoadingList(File f) {
  * Supposes that dataFolder is the SLDataFolder to be used for document docUri,
  * and that docUri corresponds to file docf
  */
-private File getSlDotRdfFileFromDataFolder(File docf, String docUri, SLDataFolder dataFolder) {
+File getSlDotRdfFileFromDataFolder(File docf, String docUri, SLDataFolder dataFolder) {
 	try {
 		// on a trouvé un dossier de dataFolderList (dataFolder) qui est 
 		// égal au début du nom long du fichier docf
@@ -1757,5 +1781,86 @@ public void saveDocFile(String docUri, String docContent) throws IOException, UR
 	out.close();
 
 }
+
+//
+// uris for bookmarks // 2019-04
+//
+
+abstract public SLDocument convertOld2NewBookmark(String onlineUri) throws Exception;
+
+
+/**
+ * uri for a new bookmark, taking care to create a uri that doesn't exists yet
+ */
+// il faut vérifier :
+// que l'uri correspondante n'existe pas déjà
+// qu'un fichier n'existe pas déjà non plus (pour être sûr d'avoir
+// des noms d'uri de bookmark et de downloaded file qui correspondent)
+public SLDocument newBookmark(String title) throws MalformedURLException, URISyntaxException {
+	NewBookmarkCreationData data = new NewBookmarkCreationData(this, title);
+	return data.getSLDocument();
+}
+
+public static class NewBookmarkCreationData {
+	private SLDocument bkm;
+	/** the dir to save the file if we save a copy */
+	private File saveAsDir;
+	private String shortFilename; // sans dot extension, par ex "titre_du_bkm_2" 
+	
+	public NewBookmarkCreationData(SLModel mod, String title) throws MalformedURLException, URISyntaxException {
+		File bkmDir = mod.dirToSaveBookmarks();
+		// the dir to save the file if we save a copy
+		saveAsDir = mod.goodDirToSaveAFile();
+		if (title == null) throw new RuntimeException("No title");	  
+		String sfn = SLUtils.title2shortFilename(title); // ATTENTION, ne convertit pas tout, ex : "«"
+		String shortFilename = sfn; // sans dot extension, par ex "titre_du_bkm"
+		SLDocument bkm = null;
+//		File saveAs = null; // the file for the saveAs
+		int i = 0;
+		String bkmUri = null;
+		for(;;) {
+			bkmUri = mod.fileToUri(new File(bkmDir, shortFilename));
+			bkm = mod.getDocument(bkmUri);
+			if (!mod.existsAsSubject(bkm)) {
+				
+				// vérifier que le nom du fichier où on sauverait le download n'exsite pas déjà
+//				saveAs = new File(saveAsDir, ln + dotExtension);
+//				if (!saveAs.exists()) {
+//					break;
+//				}
+				// en fait on va faire plus : s'assurer que là où on sauverait le download
+				// il n'y a pas aucun fichier downloadshortname "." ext
+				String[] names = saveAsDir.list();
+				boolean ok = true;
+				if (names != null) {
+					for (String name : names) {
+						if (name.equals(shortFilename)) {
+							ok = false;
+							break;
+						}
+						if (name.startsWith(shortFilename + ".")) {
+							ok = false;
+							break;
+						}
+					}
+				}
+				if (ok) {
+					break;
+				}
+			}
+			i++;
+			shortFilename = sfn + "_" + i;												
+		}
+		this.bkm = bkm;
+		this.shortFilename = shortFilename;
+	}
+	
+	public SLDocument getSLDocument() { return this.bkm ; }
+	public File getSaveAsFile(String dotExtension) { 
+		return new File(saveAsDir, shortFilename + dotExtension);
+	}
+}
+
+
 
 } // class SLModel

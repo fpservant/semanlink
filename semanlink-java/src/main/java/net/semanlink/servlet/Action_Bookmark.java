@@ -1,5 +1,7 @@
 package net.semanlink.servlet;
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +14,8 @@ import net.semanlink.semanlink.SLModel;
 import net.semanlink.semanlink.SLSchema;
 import net.semanlink.semanlink.SLUtils;
 import net.semanlink.semanlink.SLVocab;
+import net.semanlink.semanlink.SLModel.NewBookmarkCreationData;
+import net.semanlink.sljena.JDocument;
 import net.semanlink.util.Util;
 import net.semanlink.util.html.HTMLPageDownload;
 
@@ -197,44 +201,18 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 				
 				// 2019-03 uris for bookmarks
 				// which (sl) uri for this new bookmark?
-				// elt's create it from title (as we were doing for files)
+				// let's create it from title (as we were doing for files)
 				if (title == null) return error(mapping, request, "No title for doc");
-				String ln = Action_Download.title2uriPathComponent(title);
 				
-				// il faut vérifier :
-				// que l'uri correspondante n'existe pas déjà
-				// qu'un fichier n'existe pas déjà non plus (pour être sûr d'avoir
-				// des noms d'uri de bookmark et de downloaded file qui correspondent)
-				// Si existe, déjà suffixer par _i
-				
-				// quelle serait l'uri complète de bookmark ?
-				
-				String bkmUri = null;
-				
-				// pour la calcul du ns l'uri du bkm, je ne sais pas bien comment faire
-				// à partir du SLDataFolder, à part faire comme s'il s'agissait d'un fichier,
-				// comme fait dans Action_NewNote; // TODO améliorer ça (?)
-				
-				// the dir to save the data about bookmark's uri
-				File bkmDir = mod.dirToSaveBookmarks();
-				// the dir to save the file if we save a copy
-				File saveAsDir = mod.goodDirToSaveAFile();
-				String sfn = ln; // sans dot extension, par ex "titre_du_bkm"
-				SLDocument bkm = null;
-				File saveAs = null; // the file for the saveAs
-				int i = 0;
-				for(;;) {
-					bkmUri = mod.fileToUri(new File(bkmDir, sfn));
-					bkm = mod.getDocument(bkmUri);
-					if (!mod.existsAsSubject(bkm)) {
-						saveAs = new File(saveAsDir, sfn + dotExtension);
-						if (!saveAs.exists()) {
-							break;
-						}
-					}
-					i++;
-					sfn = ln + "_" + i;														
-				}
+				// Hum, marche pas parce qu'il puet y avoir des car à la con ds le nom fichier
+				// et donc, on ne peut retrouver le nom du fichier à partir du localname du bkm
+//				SLDocument bkm = mod.newBookmark(title);	
+//				File saveAsDir = mod.goodDirToSaveAFile();				
+//				File saveAs = new File(saveAsDir, Util.getLocalName(bkm.getURI() + dotExtension));
+//				if (saveAs.exists()) throw new RuntimeException(saveAs + " already exists. Unexpected :-(");
+				SLModel.NewBookmarkCreationData bkmData = new SLModel.NewBookmarkCreationData(mod, title);
+				SLDocument bkm = bkmData.getSLDocument();
+				File saveAs = bkmData.getSaveAsFile(dotExtension);
 
 				if (downloadRequested) {
 					Action_Download.download(downloadFromUri, saveAs, false, res, isHTML);	
@@ -364,6 +342,7 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
  * de l'execute
  * @param bookmarkForm
  * @return
+ * @throws URISyntaxException 
  * @throws MalformedURLException
  * @throws IOException
  */
@@ -380,5 +359,6 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
  // title = getDownload(bookmarkForm).getTitle();
   return title;
  }*/
+
 
 } // end Action

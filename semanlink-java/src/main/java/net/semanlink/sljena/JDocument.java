@@ -16,7 +16,6 @@ private List<SLKeyword> keywords;
 
 // CONSTRUCTION
 
-/** @param res est une resource de rdfs:Class SLKeyword. */
 public JDocument(JModel jModel, Resource res) {
   super(jModel, res);
 }

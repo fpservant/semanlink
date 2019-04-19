@@ -314,7 +314,7 @@ public void aliasIt(SLKeyword alias, SLKeyword kw) {
 		SLThesaurus thalias = kwUri2Thesaurus(alias.getURI());
 		if (thalias == null) throw new IllegalArgumentException("No opened thesaurus for " + alias.getURI());
 		if (!thalias.equals(th)) throw new UnsupportedOperationException();
-		JFileModel smallJFileModel = new JFileModel(this.kwsModel,th.getDefaultFile(), th.getBase()); // HASK NOT GOOD
+		JFileModel smallJFileModel = new JFileModel(this.kwsModel,th.getDefaultFile(), th.getBase()); // HACK NOT GOOD
 		smallJFileModel.save();
 		
 	} catch (Exception e) { throw new SLRuntimeException(e); }	
@@ -1213,6 +1213,7 @@ public void onNewDoc(SLDocument doc) throws IOException, URISyntaxException {
 		}
 	} catch (Throwable e) { // on ne veut pas planter
 		System.err.println("Error extracting metadata for " + doc.getURI() + " : " + e.getMessage());
+		e.printStackTrace();
 	}
 }
 
@@ -1671,6 +1672,79 @@ public SLKeyword object2Tag(String propUri, String objectUri) {
 /** list of rdf:type used for tags. */ // TODO OPTIM: don't compute each time. See where it can change: rdf:type form in edit keywords
 public Iterator rdfTypes4Tags() {
 	return this.kwsModel.listObjectsOfProperty(RDF.type);
+}
+
+
+//
+// uris for bookmarks
+//
+
+@Override
+public SLDocument convertOld2NewBookmark(String onlineUri) throws Exception {
+	
+	SLDocument docToDisplay = null;
+	SLDocument bookmark2019 = bookmarkUrl2Doc(onlineUri);
+	if (bookmark2019 != null) {	
+		docToDisplay = bookmark2019;
+		return docToDisplay;
+	}
+	
+	// onlineUri n'existe pas en tant que "nouveau bookmark"
+	SLDocument docOnline = smarterGetDocument(onlineUri);
+	if (!(existsAsSubject(docOnline))) {
+		throw new RuntimeException("that doc doesn't exist");
+	}
+	
+	// onlineUri URI d'un doc bookmarké de l'ancienne manière
+	
+	// il faut :
+	// - récupérer tous les statements le concernant
+	// - les virer de là où ils sont écrits
+	// 		- où est-ce ? là où on sauverait les choses ds une modif du doc tel qu'il est
+	// - créer le nouveau bookmark, y ajouter les statements qui vont bien
+	// 		- attention à la date de création à conserver
+	// 		- attention à l'éventuelle copie locale
+	// sauver tout ça
+	
+	// 
+	
+	// a new model where we'll store the statements about the new bookmark
+	Model m = ModelFactory.createDefaultModel();
+	
+	// creation of the "new bookmark" res
+	// which URI? created from the title, if any
+	String title = SLUtils.getLabel(docOnline);
+	SLDocument newBookmark = newBookmark(title);
+	Resource newBookmarkRes = m.createResource(newBookmark.getURI());
+	
+	Resource resOnline = this.docsModel.getResource(onlineUri);
+	
+	// move all statements about resOnline to m, replacing resOnline by newBookmarkRes
+	StmtIterator it = this.docsModel.listStatements (resOnline, (Property) null, (RDFNode) null);
+	for(;it.hasNext();) {
+		Statement s = it.next();
+		m.add(newBookmarkRes, s.getPredicate(), s.getObject());
+	}
+	
+	// statements with resOnline as object: not so clear what to do:
+	// - source de copie locales
+	// removeStats(mod, mod.listStatements (resOnline, (Property) null, (RDFNode) null));
+
+	StmtIterator it2 = this.docsModel.listStatements ((Resource) null, (Property) null, resOnline);
+
+	
+	/*
+	 * public SLDocument getDocument(String uri) {
+	Resource res = this.docsModel.getResource(uri);
+	return new JDocument(this, res);
+}
+
+	JFileModel smallJFileModel = getJFileModel4Docs(doc.getURI());
+	JFileBiModel bi = new JFileBiModel(this.docsModel, smallJFileModel);
+	*/
+	
+	
+	return null;
 }
 
 } // class JModel

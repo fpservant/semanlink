@@ -6,6 +6,7 @@ import java.util.*;
 import java.io.UnsupportedEncodingException;
 
 import net.semanlink.semanlink.*;
+import net.semanlink.semanlink.SLModel.DocMetadataFile;
 import net.semanlink.util.*;
 
 import javax.servlet.http.*;
@@ -333,13 +334,13 @@ void setPagePathInfo(String pagePathInfo) { this.pagePathInfo = pagePathInfo; }
 public String getPagePathInfo() { return this.pagePathInfo; }
 
 // 2006/11 StaticFileServlet ne peut pas servir un dossier
+// 2019-04 retourne le href de la res online, dans le cas d'un bkmark (pas l'uri du doc ds sl)
 public String getHREF() throws IOException, URISyntaxException {
 	if (isDirectory()) {
 		return this.request.getContextPath() + HTML_Link.docLink(this.uri);
 	}
 	
-	// 2019-03 uris for bookmarks
-  String bookmarkOf = getSLDocument().bookmarkOf();
+  String bookmarkOf = getSLDocument().bookmarkOf(); // 2019-03 uris for bookmarks
   if (bookmarkOf != null) {
   	return Util.handleAmpersandInHREF(bookmarkOf);
   }
@@ -369,5 +370,14 @@ public String getGoToDocUri() {
 	return getUri();
 }
 
+//
+// 2019-04 uris for bookmark
+//
+
+
+// pour tests
+public DocMetadataFile getDocMetadataFile() throws IOException, URISyntaxException {
+	return SLServlet.getSLModel().doc2DocMetadataFile(this.uri);
+}
 
 }

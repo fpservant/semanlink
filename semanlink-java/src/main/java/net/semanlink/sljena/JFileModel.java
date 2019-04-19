@@ -95,8 +95,10 @@ public void save() throws JenaException, IOException, URISyntaxException {
 				File f = new File(dir, sf);
 				f.delete();
 			}
-			// boolean sucess = file.renameTo (svgFile);
-			file.renameTo (svgFile);
+			boolean success = file.renameTo (svgFile);
+			if (!success) {
+				throw new IOException("Unable to rename: " + file + " to svgFile: " + svgFile);
+			}
 		}
 	} else {
 		// make sure the directory exists, else writing will fail
@@ -121,7 +123,12 @@ public void save() throws JenaException, IOException, URISyntaxException {
 			// TODO : arriver � eviter ca.
 			System.err.println("JFileModel.save : writeModel error, reverting to backupFile "+this.longFileName);
 			if (file.exists()) file.delete();
-			if (svgFile.exists()) svgFile.renameTo(file);
+			if (svgFile.exists()) {
+				boolean success = svgFile.renameTo(file);
+				if (!success) {
+					throw new IOException("Unable to rename " + svgFile + " to : " + file);
+				}
+			}
 		}
 	}
 }
