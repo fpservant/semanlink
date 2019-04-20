@@ -1,5 +1,6 @@
 package net.semanlink.servlet;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.semanlink.util.Util;
 import net.semanlink.util.servlet.BasicServlet;
 
 // 2006/10 file outside dataFolders : this should not stay, as it is a high security risk
@@ -103,6 +105,18 @@ public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOExce
 			SLDocument doc = mod.getDocument(mod.fileToUri(f));
 			Jsp*/
 		}
+		
+		boolean openInApp = false;
+		if (req.getRequestURL().toString().indexOf("://127.0.0.1") > -1) {
+			String ext = Util.getLastItem(f.getName(), '.');
+			if (!("html".equals(ext) || ("htm".equals(ext)))) {
+				openInApp = true;
+			}
+		}		
+		if (openInApp) {
+			Desktop.getDesktop().open(f);
+		}
+		
 		BasicServlet.writeFile2ServletResponse(f, res);
 	} catch (Exception e) {
 		if (b404) {
