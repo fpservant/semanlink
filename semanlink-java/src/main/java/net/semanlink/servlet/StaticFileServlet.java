@@ -24,9 +24,22 @@ public class StaticFileServlet extends HttpServlet {
 public static final String PATH = "/document";
 public static final String PATH_FOR_FILES_OUTSIDE_DATAFOLDERS = "/file"; 	// 2006/10 file outside dataFolders
 public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-	File f;
+	File f = null;
 	boolean b404 = false;
 	try {
+		
+		// 2019-04 local use of local files
+		String uriqp = req.getParameter("uri");
+		if (uriqp != null) {
+			f = SLServlet.getWebServer().getFile(uriqp);
+		}
+		
+		
+		
+		
+		
+		
+		
 		// We could serve any file with this servlet (including files outside the dataFolder)
 		// (I implemented it with the "/file" servlet path)
 		// we cannot do it using the url of the file as a parameter (cf .../?uri=...)
@@ -72,7 +85,11 @@ public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOExce
 			if (suri == null) throw new RuntimeException("Access to file " + f + " not allowed.");
 
 		} else { */
+		
+		if (f == null) {
 			f = SLServlet.getWebServer().getFile(req.getRequestURL().toString());
+		}
+		
 			if (f == null) {
 				// @find CORS pb with markdown:
 				// defautDataFolder servi (aussi) en /document (parce que on est obligé de servir les .md via la servlet sl pour appels en ajax)
@@ -88,7 +105,7 @@ public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOExce
 					f = new File(s);
 				}
 			}
-	  	
+	  
 			if (f == null) {
 				b404 = true;
 				throw new RuntimeException("no such file, or access not allowed");
@@ -98,30 +115,34 @@ public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOExce
 				throw new RuntimeException("file " + f + " doesn't exist, or access not allowed.");
 			}
 		// }
-		if (f.isDirectory()) {
-			b404 = true; // TODO CHANGE
-			throw new RuntimeException("file " + f + " is a directory -- not supported, sorry.");
-			/*SLModel mod = SLServlet.getSLModel();
-			SLDocument doc = mod.getDocument(mod.fileToUri(f));
-			Jsp*/
-		}
+//		if (f.isDirectory()) {
+//			b404 = true; // TODO CHANGE
+//			throw new RuntimeException("file " + f + " is a directory -- not supported, sorry.");
+//			/*SLModel mod = SLServlet.getSLModel();
+//			SLDocument doc = mod.getDocument(mod.fileToUri(f));
+//			Jsp*/
+//		}
 		
 		boolean openInApp = false;
-		if (req.getRequestURL().toString().indexOf("://127.0.0.1") > -1) {
-			String ext = Util.getLastItem(f.getName(), '.');
-			if (!("html".equals(ext) || ("htm".equals(ext)))) {
-				openInApp = true;
-			}
+		if (SLServlet.mayOpenLocalFileWithDesktop()) {
+			openInApp = SLServlet.mayOpenLocalFileWithDesktop(f);
 		}		
 		if (openInApp) {
 			Desktop.getDesktop().open(f);
 		}
+		
+		if (f.isDirectory()) {
+			b404 = true; // TODO CHANGE
+			throw new RuntimeException("file " + f + " is a directory -- not supported, sorry.");
+		}
+
 		
 		BasicServlet.writeFile2ServletResponse(f, res);
 	} catch (Exception e) {
 		if (b404) {
 			res.sendError(404);
 		} else {
+			e.printStackTrace();
 			res.sendError(500);
 		}
 	}
