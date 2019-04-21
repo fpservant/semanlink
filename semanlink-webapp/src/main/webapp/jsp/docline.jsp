@@ -107,9 +107,11 @@ String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien
         // SLDocument localCopy = mod.source2LocalCopy(uri);
         SLDocument localCopy = mod.getLocalCopy(doc);
         if (localCopy != null) {
-          // TODO REMOVE
-          System.out.println("1 docline.jsp source of " + uri + " : " + localCopy.getURI());
-            %> <i>(<a href="<%=localCopy.getURI()%>"><%=jsp.i18l("doc.localCopy")%></a>)</i><%
+          // 2019-04 local use of local files
+          String href = SLServlet.hrefLocalUseOfLocalFile(localCopy.getURI(), Util.getContextURL(request));
+          
+          %> <i>(<a href="<%=href%>"><%=jsp.i18l("doc.localCopy")%></a>)</i><%
+            
         } else if (SLServlet.getWebServer().owns(uri)) {
             SLDocument source = mod.doc2Source(uri);
             if (source != null) {

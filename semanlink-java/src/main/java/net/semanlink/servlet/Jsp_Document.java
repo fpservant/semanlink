@@ -132,11 +132,13 @@ public String getLocalHREF() throws IOException, URISyntaxException {
 	return FileUriFormat.fileToUri(file);
 }
 
-/** Retourne une uri de type file, si le doc est local ou bien servi par notre WebServer. */
-public String getLocalFolderHREF() throws IOException, URISyntaxException {
-	String s = getLocalHREF();
-	if (s == null) return null;
-	return getParentDir(s);
+//2019-04 local use of local files
+public String getLocalFolderHREF2() throws IOException, URISyntaxException {
+	if (!isFile()) return null;
+	File file = this.getFile();
+	if (file == null) return null;
+	// return FileUriFormat.fileToUri(file.getParentFile());
+	return SLServlet.getWebServer().getURI(file.getParentFile());
 }
 
 
