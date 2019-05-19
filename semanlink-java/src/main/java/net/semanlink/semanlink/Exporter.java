@@ -394,7 +394,7 @@ private boolean publish(String publish, boolean defaut) {
 	// if ("true".equals(publish)) return true;
 	// if ("false".equals(publish)) return false;
 	if (publish.startsWith("true")) return true;
-	if (publish.startsWith("false")) return true;
+	if (publish.startsWith("false")) return false;
 	return defaut;
 }
 
