@@ -171,9 +171,7 @@ private WebServer getWebServer() { return this.webServer; }
  * 	Pour savoir si un doc existe, on peut regarder existsAsSubject // Attention, pre 2019-03 uris for bookmarks
  *  @see existsAsSubject(SLDocument)
  *  
- *  On peut préférer utiliser smarterGetDocument si l'on souhaite vérifier, dans le cas où l'uri
- *  est de type file, si le fichier en question n'est pas servi par this.getWebServer() - cas
- *  dans lequel smarterGetDocument retournera l'éventuel document correspondant à l'uri http.
+ *  Il faut mieux smarterGetDocument si l'on souhaite retomber sur ses pieds sur des pbs genre uri http vs https
  *  @see smarterGetDocument(String)
  */
 abstract public SLDocument getDocument(String uri);
@@ -187,8 +185,14 @@ abstract public boolean existsAsSubject(SLDocument doc); // pertinent en pre 201
  */ 
 public SLDocument bookmarkUrl2Doc(String bookmarkUrl) throws Exception { // 2019-03 uris for bookmarks
 	List al = getDocumentsList(SLVocab.SL_BOOKMARK_OF_PROPERTY, bookmarkUrl);
-	if (al == null) return null;
-	if (al.size() == 0) return null;
+	if ((al == null) || (al.size() == 0)) {
+		// peut-être https alors qu'on avait stocké http. Cool URIs don't change, they say
+		if (bookmarkUrl.startsWith("https://")) {
+			bookmarkUrl = "http://" + bookmarkUrl.substring(8);
+			al = getDocumentsList(SLVocab.SL_BOOKMARK_OF_PROPERTY, bookmarkUrl);
+		}
+	}
+	if ((al == null) || (al.size() == 0)) return null;
 	return (SLDocument) al.get(0);
 }
 
@@ -202,6 +206,10 @@ public SLDocument bookmarkUrl2Doc(String bookmarkUrl) throws Exception { // 2019
  *  	<LI>if this file is served by this.webServer, returns the http document.</LI>
  *  	<LI>else, returns the file document.</LI>
  *  </OL>
+ *  
+ *  if https uri and doesn't exist as subjetcs, checks whether the http one exist,
+ *  switch to it if it is the case. (URIs suck)
+ *  (and vice versa)
  */
 public SLDocument smarterGetDocument(String uri) throws URISyntaxException {
 	SLDocument x = getDocument(uri);
@@ -216,18 +224,44 @@ public SLDocument smarterGetDocument(String uri) throws URISyntaxException {
 				}
 			}
 		}
+	} 
+	
+	if (!existsAsSubject(x)) {
+		if (uri.startsWith("https://")) {
+			// peut-être https alors qu'on avait stocké http. Cool URIs don't change, they say
+			uri = "http://" + uri.substring(8);
+			SLDocument x2 = getDocument(uri);
+			if (existsAsSubject(x2)) {
+				x = x2;
+			}
+		} else if (uri.startsWith("http://")) {
+			// ou l'inverse
+			uri = "https://" + uri.substring(7);
+			SLDocument x2 = getDocument(uri);
+			if (existsAsSubject(x2)) {
+				x = x2;
+			}			
+		}
 	}
+
 	return x;
 }
 
 /** Retourne la local copy du doc sourceUri, ou null s'il n'en a pas. 
- *  (ou - ce qui revient au même - le doc local dont sourceUri est la source) */
+ *  (ou - ce qui revient au même - le doc local dont sourceUri est la source) 
+ *  ATTENTION : c'est le "doc" qui est retourné, pas forcément le fichier lui-même. */
 public SLDocument source2LocalCopy(String sourceUri) throws Exception {
 	// 2019-03 uris for bookmarks
 	// this, OK before 2019-03, sourceUri étant l'url internet du bookmark
 	List al = getDocumentsList(SLVocab.SOURCE_PROPERTY, sourceUri);
-	if (al == null) return null;
-	if (al.size() == 0) return null;
+	if ((al == null) || (al.size() == 0)) {
+		// peut-être https alors qu'on avait stocké http. Cool URIs don't change, they say
+		if (sourceUri.startsWith("https://")) {
+			sourceUri = "http://" + sourceUri.substring(8);
+			al = getDocumentsList(SLVocab.SOURCE_PROPERTY, sourceUri);
+		}
+	}
+	if ((al == null) || (al.size() == 0)) return null;
 	return (SLDocument) al.get(0);
 }
 
@@ -496,7 +530,7 @@ public String filenameToUri(String filename) throws MalformedURLException, URISy
 	return fileToUri(new File(filename));
 }
 
-public String fileToUri(File f) throws MalformedURLException, URISyntaxException {
+public String fileToUri(File f) throws MalformedURLException, URISyntaxException {  // THE WS QUESTION
 	WebServer ws = this.getWebServer();
 	if (ws != null) {
 		String uri = ws.getURI(f);
@@ -534,18 +568,18 @@ YYYYMM doc2YYYYMM(SLDocument doc) {
 }
 
 
-
+// THE WS QUESTION
 /** Returns the file corresponding to a URI (or null in case of failure to do so). 
  *  @param uri either a file-protocol uri, or the uri of a file served by this.getWebServer. */
-public File getFile(String uri) throws IOException, URISyntaxException {
+public File getFile(String uri) throws IOException, URISyntaxException { // HUM TODO identique à getFileIfLocal(String docUri)
 	// System.out.println("SLModel.getFile: " + uri);
 	if (uri.startsWith("file:")) {
 		return fileUri2File(uri);
 	} else {
-		return getFile(uri, this.getWebServer()); // no need to remove fragment component ?
+		return getFile(uri, this.getWebServer()); // no need to remove fragment component ?  
 	}
 }
-
+// THE WS QUESTION
 /** Returns the file corresponding to an URI (or null in case of failure to do so). 
  *  @param uri either a file-protocol uri, or the uri of a file served by ws. */
 static public File getFile(String uri, WebServer ws) throws IOException, URISyntaxException {
@@ -1546,7 +1580,8 @@ public class DocMetadataFile {
 
 /** Si docUri est de protocol File, ou si elle est servie par notre serveur, retourne le fichier correspondant, 
  *  sinon return null */
-File getFileIfLocal(String docUri) throws IOException, URISyntaxException {
+// THE WS QUESTION
+File getFileIfLocal(String docUri) throws IOException, URISyntaxException { // HUM TODO ~identique File getFile(String)
 	URI docURI = new URI(docUri);
 	if ("file".equals(docURI.getScheme())) {
 		String filename = docURI.getPath(); // à ne pas oublier ! (cf les %20)
@@ -1559,6 +1594,7 @@ File getFileIfLocal(String docUri) throws IOException, URISyntaxException {
 	}
 	return null;
 }
+
 
 /** 
  * Search in dataFolderList the SLDataFolder corresponding to f, if any. 
@@ -1788,25 +1824,20 @@ public void saveDocFile(String docUri, String docContent) throws IOException, UR
 
 abstract public SLDocument convertOld2NewBookmark(String onlineUri) throws Exception;
 
+// DocMetadataFile doc2DocMetadataFile(String docUri)
 
 /**
- * uri for a new bookmark, taking care to create a uri that doesn't exists yet
- */
-// il faut vérifier :
-// que l'uri correspondante n'existe pas déjà
-// qu'un fichier n'existe pas déjà non plus (pour être sûr d'avoir
-// des noms d'uri de bookmark et de downloaded file qui correspondent)
-public SLDocument newBookmark(String title) throws MalformedURLException, URISyntaxException {
-	NewBookmarkCreationData data = new NewBookmarkCreationData(this, title);
-	return data.getSLDocument();
-}
-
+ * Pour calculer l'uri à utiliser pour un new bookmark
+ * ATTENTION, le bkm est créé ds default datafolder : suppose (en gros) que c'est pour une bkm externe
+ * (ne peut pas être utilisé pour un doc ldans une dir locale d'un des SLDataFolders qui ne serait pas ds default folder)
+  */
 public static class NewBookmarkCreationData {
 	private SLDocument bkm;
 	/** the dir to save the file if we save a copy */
 	private File saveAsDir;
 	private String shortFilename; // sans dot extension, par ex "titre_du_bkm_2" 
 	
+	// ATTENTION, le bkm est créé ds default datafolder : suppose que c'est pour une bkm externe
 	public NewBookmarkCreationData(SLModel mod, String title) throws MalformedURLException, URISyntaxException {
 		File bkmDir = mod.dirToSaveBookmarks();
 		// the dir to save the file if we save a copy

@@ -17,9 +17,9 @@ import java.io.*;
 public class WebServer {
 // private ArrayList associations = new ArrayList(10);
 /** les associations, en ordre INVERSE de leurs uri. */
-private ArrayList associationsSortedByUri = new ArrayList(10);
+private ArrayList<Mapping> associationsSortedByUri = new ArrayList<>(10);
 /** les associations, en ordre INVERSE de leurs dir. */
-private ArrayList associationsSortedByDir = new ArrayList(10);
+private ArrayList<Mapping> associationsSortedByDir = new ArrayList<>(10);
 static private ByUriComparator byUriComparator = new ByUriComparator();
 static private ByDirComparator byDirComparator = new ByDirComparator();
 
@@ -32,12 +32,21 @@ public void addMapping(URI uri, File dir) {
 	Mapping assoc = new Mapping(uri, dir);
 	uri = assoc.uri;
 	for (int i = 0; i < associationsSortedByUri.size(); i++) {
-		if (uri.equals(((Mapping) associationsSortedByUri.get(i)).uri)) return;
+		if (uri.equals(associationsSortedByUri.get(i).uri)) return;
 	}
 	this.associationsSortedByUri.add(assoc);
 	Collections.sort(this.associationsSortedByUri, byUriComparator);
 	this.associationsSortedByDir.add(assoc);
 	Collections.sort(this.associationsSortedByDir, byDirComparator);
+}
+
+@Override public String toString() {
+	StringBuilder sb = new StringBuilder();
+	sb.append("WebServer\n");
+	for (Mapping assoc : associationsSortedByUri) {
+		sb.append("\t" + assoc.toString() + "\n");
+	}
+	return sb.toString();
 }
 
 // 2015-10 @find CORS pb with markdown
@@ -73,23 +82,23 @@ public class Mapping {
 		this.uri = uri;
 		this.dir = dir;
 	}
+	
+	@Override public String toString() {
+		return "Mapping uri: " + uri + " dir: " + dir.toString();
+	}
 }
 
 /** pour trier les associations en ordre INVERSE de leurs uri. */
-static class ByUriComparator implements Comparator {
-	public int compare(Object arg0, Object arg1) {
-		Mapping assoc0 = (Mapping) arg0;
-		Mapping assoc1 = (Mapping) arg1;
+static class ByUriComparator implements Comparator<Mapping> {
+	public int compare(Mapping assoc0, Mapping assoc1) {
 		String s0 = assoc0.uri.toASCIIString();
 		String s1 = assoc1.uri.toASCIIString();
 		return s1.compareTo(s0);
 	}
 }
 /** pour trier les associations en ordre INVERSE de leurs dir. */
-static class ByDirComparator implements Comparator {
-	public int compare(Object arg0, Object arg1) {
-		Mapping assoc0 = (Mapping) arg0;
-		Mapping assoc1 = (Mapping) arg1;
+static class ByDirComparator implements Comparator<Mapping> {
+	public int compare(Mapping assoc0, Mapping assoc1) {
 		String s0 = assoc0.dir.getPath();
 		String s1 = assoc1.dir.getPath();
 		return s1.compareTo(s0);
@@ -121,8 +130,7 @@ public String getURI(File file) throws URISyntaxException {
 	
 	// on suppose que associationsSortedByDir est en ordre inverse des noms des dirs des assocsiations :
 	// ceci pour retourner l'assoc de path le plus long et qui est égal au début de fn
-	for (int i = 0; i < this.associationsSortedByDir.size(); i++) {
-		Mapping assoc = (Mapping) associationsSortedByDir.get(i);
+	for (Mapping assoc : associationsSortedByDir) {
 		String assocPath = assoc.dir.getAbsolutePath();
 		// System.out.println("assocPath: " + assocPath);
 		
@@ -163,8 +171,7 @@ private Mapping assoc(URI docURI) throws IOException, URISyntaxException {
 	// relativize
 	// on suppose que associationsSortedByUri est en ordre inverse des noms des uri des assocsiations :
 	// ceci pour retourner l'assoc de uri la plus longue et qui est égale au début de fndocURI
-	for (int i = 0; i < this.associationsSortedByUri.size(); i++) {
-		Mapping assoc = (Mapping) this.associationsSortedByUri.get(i);
+	for (Mapping assoc : this.associationsSortedByUri) {
 		URI rootURI = assoc.uri;
 		URI rel = rootURI.relativize(docURI);
 		if (rel.equals(docURI)) continue;
@@ -173,7 +180,7 @@ private Mapping assoc(URI docURI) throws IOException, URISyntaxException {
 	return null;
 }
 
-/** Retourne le fichier correspondant à une URL servi par ce WebServer, ou null s'il ne la sert pas. */
+/** Retourne le fichier correspondant à une URL servie par ce WebServer, ou null s'il ne la sert pas. */
 public File getFile(String docUri) throws IOException, URISyntaxException {
 	URI docURI = new URI(docUri);
 	Mapping assoc = assoc(docURI);

@@ -1,5 +1,6 @@
 package net.semanlink.sljena;
 import net.semanlink.semanlink.*;
+import net.semanlink.semanlink.SLModel.NewBookmarkCreationData;
 import net.semanlink.skos.SKOS;
 import net.semanlink.sljena.modelcorrections.*;
 import net.semanlink.util.Util;
@@ -1680,6 +1681,7 @@ public Iterator rdfTypes4Tags() {
 //
 
 @Override
+// ATTENTION, partiel, jamais utilisé, et chercher ATTENTION dans le code
 public SLDocument convertOld2NewBookmark(String onlineUri) throws Exception {
 	
 	SLDocument docToDisplay = null;
@@ -1714,7 +1716,7 @@ public SLDocument convertOld2NewBookmark(String onlineUri) throws Exception {
 	// creation of the "new bookmark" res
 	// which URI? created from the title, if any
 	String title = SLUtils.getLabel(docOnline);
-	SLDocument newBookmark = newBookmark(title);
+	SLDocument newBookmark = new NewBookmarkCreationData(this, title).getSLDocument(); // ATTENTION NE MARCHE QUE POUR UNE RES EXTERNE
 	Resource newBookmarkRes = m.createResource(newBookmark.getURI());
 	
 	Resource resOnline = this.docsModel.getResource(onlineUri);

@@ -60,18 +60,33 @@ public class Action_Download extends BaseAction {
 public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	try {
 		SLModel mod = SLServlet.getSLModel();
-		String uri = request.getParameter("docuri");
-		// kwuri = java.net.URLDecoder.decode(uri);
-		SLDocument doc = mod.getDocument(uri);
+		String docUri = request.getParameter("docuri");
+		SLDocument doc = mod.getDocument(docUri);
+		String contextURL = Util.getContextURL(request);
+		
+		// URIs for bookmarks: d'où est-ce qu'on downloade ?
+		SLDocumentStuff stuff = new SLDocumentStuff(doc, mod, contextURL);
+		String downloadFromUri = stuff.getHref(false);
+		
 		//
 		boolean overwrite = false;
-		File file = downloadFile(uri, doc.getLabel(), overwrite, mod);
-		setSource(uri, file, mod);
+		File file = downloadFile(downloadFromUri, doc.getLabel(), overwrite, mod);
+		setSource(docUri, file, mod);
+		setSource(downloadFromUri, file, mod);
+		
 		//
 		// POST REDIRECT
 		// getJsp_Document(doc, request);
 		// return mapping.findForward("continue");
-		String redirectURL = Util.getContextURL(request) + HTML_Link.docLink(doc.getURI());
+		// String redirectURL = contextURL + HTML_Link.docLink(doc.getURI());
+		String redirectURL = null;
+		if (docUri.startsWith(SLServlet.getServletUrl())) {
+			redirectURL = docUri; // hum pb de session, non ?
+		} else {
+			// pre uris for bookmarks
+			redirectURL = contextURL + HTML_Link.docLink(doc.getURI());
+		}
+		
   	response.sendRedirect(response.encodeRedirectURL(redirectURL));
   	return null;
 	} catch (Exception e) {

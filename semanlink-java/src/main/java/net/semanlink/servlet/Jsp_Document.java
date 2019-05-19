@@ -14,19 +14,15 @@ import javax.servlet.http.*;
 /** Affichage d'un SLDocument */
 public class Jsp_Document extends Jsp_Resource {
 private SLDocument slDoc;
-/*  TODO : voir si on ne peut pas faire mieux : on compute le file, alors qu'il n'y a peut-etre
- *  pas besoin/
-/** Not null if this is a file protocol uri or a uri served by this web server.
- * @see fileHasBeenComputed - must be accessed through its getter */
-private File file;
-/** indique si this.file a déjà été calculé. */
-private boolean fileHasBeenComputed = false;
 /** uri of containing folder. (temp var, must be accessed through its getter) */
 private String folderHREF;
 /** si c'est un dossier, liste des docs. (must be accessed through its getter) */
 private List docsInFolder;
 /** see CoolUriServlet.goPage */
 private String pagePathInfo;
+
+// 2019-04 uris for bookmraks
+private SLDocumentStuff docStuff;
 
 //
 // CONSTRUCTION
@@ -35,15 +31,8 @@ private String pagePathInfo;
 protected Jsp_Document(SLDocument slDoc, HttpServletRequest request) throws IOException, URISyntaxException {
 	super(slDoc, request);
 	this.slDoc = slDoc;
-	// System.out.println("Jsp_Document slDoc \n\t" + slDoc.getURI() + "\n\treq.getRequestURL " + request.getRequestURL());
-	// computeFile();
+	this.docStuff = new SLDocumentStuff(slDoc, SLServlet.getSLModel(), this.getContextURL());
 }
-
-private void computeFile() throws IOException, URISyntaxException {
-	this.file = SLServlet.getSLModel().getFile(this.uri);
-	this.fileHasBeenComputed = true;
-}
-
 
 //
 //
@@ -67,7 +56,6 @@ public Bean_KwList prepareParentsList() {
 //
 
 public String getTitle() {
-	// List objects = this.slRes.getProperty();
 	try {
 		return getLabel(this.slDoc);
 	} catch (Exception e) { throw new RuntimeException(e) ; }
@@ -75,7 +63,7 @@ public String getTitle() {
 
 /** ce qui est affiché dans la div "title" de la page : pour aussi mettre un lien vers le doc */
 public String getTitleInTitle() throws Exception {
-	return "<a href=\"" + getHREF() + "\">" + getTitle() + "</a>";
+	return "<a href=\"" + docStuff.getHref(true) + "\">" + getTitle() + "</a>";
 }
 
 public String getComment() { return this.slDoc.getComment(); }
@@ -106,7 +94,7 @@ public boolean isImage() {
 	return Util.isImage(this.uri);
 }
 
-/** Link to the parent directory, il applicable. */
+/** Link to the parent directory, if applicable. */
 public String getFolderHREF() {
 	if (this.folderHREF ==  null) {
 		this.folderHREF = getParentDir(this.uri);
@@ -125,24 +113,6 @@ private static String getParentDir(String uri) {
 	return s.substring(0,  s.lastIndexOf("/")+1); // bug si uri se termine par 2 /, I think
 }
 
-/** Retourne une uri de type file, si le doc est local ou bien servi par notre WebServer. */
-public String getLocalHREF() throws IOException, URISyntaxException {
-	if (!isFile()) return null;
-	File file = this.getFile();
-	return FileUriFormat.fileToUri(file);
-}
-
-//2019-04 local use of local files
-public String getLocalFolderHREF2() throws IOException, URISyntaxException {
-	if (!isFile()) return null;
-	File file = this.getFile();
-	if (file == null) return null;
-	// return FileUriFormat.fileToUri(file.getParentFile());
-	return SLServlet.getWebServer().getURI(file.getParentFile());
-}
-
-
-
 
 public String getFolderPage(HttpServletResponse response) throws MalformedURLException, UnsupportedEncodingException {
 	return response.encodeURL(getContextUrl() + HTML_Link.docLink(getFolderHREF()));
@@ -156,13 +126,12 @@ public String getFolderPage() throws UnsupportedEncodingException {
 }
 
 /** @deprecated use isFile() */
-public boolean isLocal() throws IOException, URISyntaxException {
+private boolean isLocal() throws IOException, URISyntaxException {
 	return (getFile() != null);
 }
 
 public File getFile() throws IOException, URISyntaxException {
-	if (!fileHasBeenComputed) computeFile();
-	return this.file;
+	return this.docStuff.getFile();
 }
 
 public String getEditLinkPage() throws UnsupportedEncodingException {
@@ -180,6 +149,9 @@ public String getLinkToThis(String action) throws UnsupportedEncodingException {
 	return x;
 }
 
+//
+// FOLDER CASE
+//
 
 /** au cas ou on a affaire a un dossier, liste des documents inclus.
  *  Cette methode devrait probablement etre ds SLDocument.
@@ -261,6 +233,10 @@ public HashMap getLinkedKeywords2NbHashMap() throws Exception {
 	}
 }
 
+//
+//
+//
+
 public String getContent() throws Exception {
 	return "/jsp/document.jsp";
 }
@@ -270,68 +246,14 @@ public String getContent() throws Exception {
 //
 
 public SLDocument getLocalCopy() throws Exception {
-
-	// moved to SLModel
 	return SLServlet.getSLModel().getLocalCopy(this.slDoc);
-	
-//	// 2019-03 uris for bookmarks
-//	
-//	// THIS IS VERSION B4 2019-03
-//	
-//	// this was OK when docs (bookmarks created for an internet url) had that internet url as uri
-//	// if (getFile() != null) return null; // si doc local, pas de local copy
-//	// return SLServlet.getSLModel().source2LocalCopy(this.slDoc.getURI());
-//	
-//	
-//	
-//	// TODO REVOIR LA SUITE
-//	//
-//	// EN DEFINITIVE, CE QUI PASSE C LE 3
-//	// (comme avant MAIS IL A FALLU VIRER LE TEST getFile() != null)
-//	//
-//	// VOIR AUSSI CE QUI SE PASSE DS docline.jsp
-//	
-//	
-//	
-//	
-//	
-//  // But now: the local copy may be linked to the internet url
-//	SLDocument x = null;
-//	String url = this.slDoc.bookmarkOf();
-//	if (url != null) {
-//		x = SLServlet.getSLModel().source2LocalCopy(url);
-//		System.out.println("Jsp_Document getLocalCopy 1 " + url); // TODO REMOVE
-//		if (x != null) {
-//			return x;
-//		}
-//	}
-//	
-//	// not a post 2019-03 bkm, or local copy linked to 2019-03 bkm
-//	
-////	x = SLServlet.getSLModel().doc2Source(this.slDoc.getURI());
-////	System.out.println("Jsp_Document getLocalCopy 2 " + this.slDoc.getURI()); // TODO REMOVE
-////	if (x != null) {
-////		return x;
-////	}
-//	
-//	// pre 2019-03
-//	
-//	// 2019-03 en fait, faut virer ce test
-//	// if (getFile() != null) return null; // si doc local, pas de local copy // ATTENTION, ce test retourne qlq chose si servi par webserver - donc pas à mettre plu shat
-//
-//	x = SLServlet.getSLModel().source2LocalCopy(this.slDoc.getURI());
-//	System.out.println("Jsp_Document getLocalCopy 3 " + this.slDoc.getURI()); // TODO REMOVE
-//	if (x != null) {
-//		return x;
-//	}
-//	System.out.println("Jsp_Document getLocalCopy NOT FOUND"); // TODO REMOVE
-//	return null;
 }
 
 //
 //
 //
 
+//ne sert probablement pas // TODO
 void setPagePathInfo(String pagePathInfo) { this.pagePathInfo = pagePathInfo; }
 public String getPagePathInfo() { return this.pagePathInfo; }
 
@@ -382,4 +304,8 @@ public DocMetadataFile getDocMetadataFile() throws IOException, URISyntaxExcepti
 	return SLServlet.getSLModel().doc2DocMetadataFile(this.uri);
 }
 
+
+public SLDocumentStuff getSLDocumentStuff() {
+	return docStuff;
+}
 }
