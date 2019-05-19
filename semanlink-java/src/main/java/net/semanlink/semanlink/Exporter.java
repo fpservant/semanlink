@@ -102,9 +102,6 @@ public void export(int nbOfDays) throws Exception {
 	for(;it.hasNext();) {
 		JKeyword tag = (JKeyword) it.next();
 		
-		if (tag.getURI().contains("iaa_sicg")) {
-			System.out.println("hello");
-		}
 		if (!(publish(tag,true))) continue;
 		Resource res = tag.getRes();
 		// res = kwsModel.getResource(res.getURI());
