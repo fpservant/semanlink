@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>net.semanlink</groupId>
 		<artifactId>semanlink-lod-parent</artifactId>
-		<version>0.5.5</version>
+		<version>0.6.0</version>
 		<relativePath>../semanlink-lod-parent</relativePath>
 	</parent>
 
@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>net.semanlink</groupId>
 			<artifactId>semanlink-common</artifactId>
-			<version>0.5.5</version>
+			<version>0.6.0</version>
 		</dependency>
 	</dependencies>
 

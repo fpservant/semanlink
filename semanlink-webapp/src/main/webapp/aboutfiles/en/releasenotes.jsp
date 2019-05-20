@@ -5,6 +5,15 @@
 <h1>Release notes</h1>
 <div class="graybox">
 
+<h2>0.6.0 2019-05-20</h2>
+<ul>
+<li>Statements about bookmarks now have a proper URI served by the servlet (semanlink/doc/...) 
+as subject (their subject is no more the bookmarked URL). This will allow many improvements (in 
+particular the possibility to change the bookmarked URL without changing the URI of the bookmark)</li>
+<li>When running locally (servlet on a desktop machine), possibility to directly open a local file (not only
+a downloaded version of it)</li>
+</ul>
+
 <h2>0.5.5 2017-06-xx</h2>
 <ul>
 <li>Docs in expanded tree were not sorted by sortProperty (that is, date by default)</li>
