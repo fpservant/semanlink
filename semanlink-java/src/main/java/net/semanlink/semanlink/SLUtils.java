@@ -441,5 +441,34 @@ static public String getLabel(SLDocument doc) throws IOException, URISyntaxExcep
 	} catch (UnsupportedEncodingException e) { throw new SLRuntimeException(e); }
 	return x;
 }
+
+//
+//
+//
+
+/**
+ * ATTENTION : reste des caractères qui ont besoin d'être encodés dans une url
+ * since 0.6
+ */ // 2019-03 uris for bookmarks
+public static String title2shortFilename(String title) {
+	if (title == null) throw new RuntimeException("title is null");
+	String sfn = title.trim();
+	if (sfn.length() > 32) sfn = sfn.substring(0,31);
+	return shortFilenameFromString(sfn);
+}
+
+/** juste le remplacement des cars à la con. Pas d'extension la dedans */
+public static String shortFilenameFromString(String sfn) {
+	sfn = SLModel.converter.convert(sfn);
+	// virer les car interdits. Ceci n'est pas suffisant? TODO
+	sfn = sfn.replaceAll("/","-");
+	sfn = sfn.replaceAll(":","-");
+	sfn = sfn.replaceAll("'",""); // cf pb en javascript
+	sfn = sfn.replaceAll("\"",""); // pb en javascript ?
+	sfn = sfn.replaceAll("\"",""); // cf pb en javascript
+	return sfn;
+}
+
+
 }
 

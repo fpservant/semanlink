@@ -89,7 +89,7 @@ public class Action_NewNote extends BaseAction {
 	  }*/
 	
 	private String getShortFilename(String title, String docuri) {
-		return Action_Download.shortFilenameFromString(title);
+		return SLUtils.shortFilenameFromString(title);
 	}
 	
 } // end Action

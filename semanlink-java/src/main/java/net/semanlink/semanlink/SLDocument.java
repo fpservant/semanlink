@@ -11,11 +11,12 @@ public interface SLDocument extends SLLabeledResource, SLVocab, Comparable {
 /** Retourne une List de SLKeyword. */
 public List getKeywords();
 
-// 2019-03 uris for bookmarks -- quick'n dirty
+
 /**
  * @return null if not a bookmark, the url this res is bookmark of otherwise
+ * @since 0.6
  */
-default String bookmarkOf() {
+default String bookmarkOf() { // 2019-03 uris for bookmarks -- quick'n dirty
 	PropertyValues pv = getProperty(SLSchema.bookmarkOf.getURI());
 	if (pv == null) return null;
 	return pv.getFirstAsString();

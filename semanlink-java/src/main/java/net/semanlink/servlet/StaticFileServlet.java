@@ -28,6 +28,7 @@ public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOExce
 	boolean b404 = false;
 	try {
 		
+		// THE WS QUESTION
 		// 2019-04 local use of local files
 		String uriqp = req.getParameter("uri");
 		if (uriqp != null) {
@@ -36,7 +37,7 @@ public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOExce
 		
 		
 		
-		
+		// THE WS QUESTION
 		
 		
 		
@@ -123,10 +124,11 @@ public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOExce
 //			Jsp*/
 //		}
 		
-		boolean openInApp = false;
-		if (SLServlet.mayOpenLocalFileWithDesktop()) {
-			openInApp = SLServlet.mayOpenLocalFileWithDesktop(f);
-		}		
+//		boolean openInApp = false;
+//		if (SLServlet.mayOpenLocalFileWithDesktop()) {
+//			openInApp = SLServlet.mayOpenLocalFileWithDesktop(f);
+//		}		
+		boolean openInApp = (req.getParameter("openInDesktop") != null);
 		if (openInApp) {
 			Desktop.getDesktop().open(f);
 		}

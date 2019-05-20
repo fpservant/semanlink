@@ -261,7 +261,7 @@ static public String getComment(Resource res) {
 static public void delete(Model mod, String uri) {
 	Resource res = mod.createResource(uri);
 	removeStats(mod, mod.listStatements ((Resource) null, (Property) null, res));
-	removeStats(mod, mod.listStatements (res, (Property) null, (Resource) null));
+	removeStats(mod, mod.listStatements (res, (Property) null, (RDFNode) null));
 }
 private static void removeStats(Model mod, StmtIterator staIte) {
 	// Peut-on, au fur et a mesure de l'enumeration,

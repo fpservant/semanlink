@@ -1,15 +1,15 @@
 package net.semanlink.metadataextraction;
 
 import java.util.Locale;
+
 import net.semanlink.semanlink.SLDocument;
 import net.semanlink.semanlink.SLModel;
 import net.semanlink.semanlink.SLUtils;
 import net.semanlink.semanlink.SLVocab;
-import net.semanlink.util.Util;
 
 /** Extract metadata from a document. 
  *  
- *  Extends this class to describe the particularities of one kind of doc.
+ *  Extends this class to describe the peculiarities of one kind of doc.
  *  Override dealWith to return true when doc is dealed with by this extractor
  *  Call doIt() to add properties to the model.
  *  Overrides the method like getSource(ExtractorData),... 
@@ -101,7 +101,6 @@ public class ExtractionResult {
 
 public String getText4kwExtraction(ExtractorData data) throws Exception {
 	SLDocument doc = data.getSLDocument();
-	// String x = Util.getWithoutExtension(SLUtils.getLabel(doc)); // vir� cette connerie 2007-04-08 (pour quel cas avais-je mis �a ? - s�rement le cas o� on a affaire � un nom de fichier
 	String x = SLUtils.getLabel(doc);
 	String s = doc.getComment();
 	if (s != null) x = x + " " + s;

@@ -115,6 +115,7 @@
 <entry key="doc.bytes">Size: {0} bytes</entry>
 <entry key="doc.kbytes">Size: {0} kb</entry>
 <entry key="doc.lastModified">Last modified:</entry>
+<entry key="doc.noSuchFile">No such file</entry>
 <entry key="doc.parentFolderInSL">Parent Folder in Semanlink</entry>
 <entry key="doc.parentFolderOnDisk">Parent Folder on Disk</entry>
 <entry key="doc.cpNavBar">(Copy/Paste link into navigation bar)</entry>

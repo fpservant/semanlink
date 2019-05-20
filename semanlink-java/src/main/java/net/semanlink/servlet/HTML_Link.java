@@ -64,17 +64,21 @@ public static String htmlLinkPage(SLDocument slDoc) {
 	return docLink(slDoc.getURI());
 }
 
+/**
+ * @deprecated
+ */
 public static String docLink(String docUri) {
 	return docLink(docUri, SLServlet.getWebServer());
 }
 
 /**
  * Le lien (relatif au contexte) pour afficher la page du doc (pas le doc lui même)
- * retourne :
+ * retournAIT :
  * - /sl/doc/2017/... ou bien
  * - /doc/?uri=...
+ * @deprecated
  */
-public static String docLink(String docUri, WebServer ws) {
+public static String docLink(String docUri, WebServer ws) { // ws no more used !!!
 	try {
 		
 		// avant 2019-03 : la règle générale, c'est /doc/?uri=...
@@ -104,6 +108,20 @@ public static String docLink(String docUri, WebServer ws) {
 		// ATTENTION adherence markdown-sl.js replaceLinkFct
 		return CoolUriServlet.DOC_SERVLET_PATH + "/?uri=" + URLEncoder.encode(docUri, "UTF-8"); // /doc/?uri=...
 	} catch (Exception e) { throw new RuntimeException(e) ; }
+}
+
+// 2019-05
+/**
+ * 
+ * @param href
+ * @param contextURL sans / final, comme BasicServlet.getContextURL()
+ */
+public static String removeContext(String href, String contextURL) {
+	if (contextURL.endsWith(("/"))) contextURL = contextURL.substring(0, contextURL.length()-1);
+	if (href.startsWith(contextURL)) {
+		return href.substring(contextURL.length());
+	}
+	return href;
 }
 
 

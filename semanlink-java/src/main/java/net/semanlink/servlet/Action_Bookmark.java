@@ -1,15 +1,23 @@
 package net.semanlink.servlet;
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.Response;
 
 import net.semanlink.semanlink.SLDocument;
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLModel;
+import net.semanlink.semanlink.SLSchema;
 import net.semanlink.semanlink.SLUtils;
 import net.semanlink.semanlink.SLVocab;
+import net.semanlink.semanlink.WebServer;
+import net.semanlink.semanlink.SLModel.DocMetadataFile;
+import net.semanlink.semanlink.SLModel.NewBookmarkCreationData;
+import net.semanlink.sljena.JDocument;
 import net.semanlink.util.Util;
 import net.semanlink.util.html.HTMLPageDownload;
 
@@ -42,7 +50,7 @@ import org.apache.struts.action.ActionMapping;
       at net.semanlink.util.html.HTMLDocumentLoader.loadDocument(HTMLDocumentLoader.java:18)
       at net.semanlink.util.html.HTMLPageDownload.<init>(HTMLPageDownload.java:31)
       at net.semanlink.servlet.Action_Bookmark.execute(Action_Bookmark.java:52)
-      */
+ */
 
 /**
  * On arrive ici après Action_BookmarkForm
@@ -72,18 +80,35 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 	if ("".equals(comment)) comment = null;
 
 	try {
-		
-		
-		
-		
-		if ((false) && (request.getParameter("nirTagBtn") != null)) { // @find nir2tag
-			// cas de création d'un tag à partir de l'uri d'une non information resource
-			String nonInformationResourceUri = request.getParameter("nir"); // pas de decode : issu d'un champ de saisie, non code (?)
-			if ((nonInformationResourceUri == null) || ("".equals(nonInformationResourceUri))) {
-				return error(mapping, request, "No 'non information resource' URI");
-			}
-			nonInformationResourceUri = SLUtils.laxistUri2Uri(nonInformationResourceUri);
-			// mod.setExternalNonInformationResource4Tag(nonInformationResourceUri)
+
+
+
+
+		SLDocument docToDisplay = null; // doc to be displayed
+		String docuri = request.getParameter("docuri"); // pas de decode : issu d'un champ de saisie, non code (?)
+		if ((docuri == null) || ("".equals(docuri))) {
+			return error(mapping, request, "No document's URI");
+		}
+
+		// docuri peut venir 
+		// 1) de la bookmarklet - auquel cas, elle a été URLDecoder.decodée, et se présente par ex
+		// sous la forme http://a/b/un exemple éé.html
+		// 2) d'un paste de uri récoltée sur une de nos pages (ou, au moins avant, d'une valeur prédoc
+		// à l'uri d'une de nos pages) - auquel cas elle est déjà toute bien comme il faut, avec
+		// des %20 et des %C3
+		// 3) d'une saisie -- auquel cas elle peut être n'importe quoi,
+		// y compris complétement fause
+		// Pour remettre d'équerre ce qui viendrait du cas 1, et refuser les erreurs du cas 3,
+		// on fait la chose suivante (cf Test.testUriSmall)
+		docuri = SLUtils.laxistUri2Uri(docuri);
+
+		SLDocument docOnline = mod.smarterGetDocument(docuri);
+
+		if (request.getParameter("bookmark2tagBtn") != null) { 		// @find bookmark2tag
+			
+			//
+			// CREATION OF A TAG FROM THE URI OF A BOOKMARK
+			//
 			
 			String kwLabel = title;
 			if (kwLabel == null) return error(mapping, request, "No label for tag");
@@ -91,165 +116,240 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 			if (lang != null) {
 				locale = new Locale(lang);
 			} else {
-				locale = Locale.getDefault();
+				// 2017-08
+				// locale = Locale.getDefault();
+				locale = null;
 			}
 			SLKeyword kw = mod.kwLabel2KwCreatingItIfNecessary(kwLabel, mod.getDefaultThesaurus().getURI(), locale);
 			String kwUri = kw.getURI();
-			mod.setKwProperty(kwUri, "http://xmlns.com/foaf/0.1/primaryTopic", nonInformationResourceUri);
+			mod.addKwProperty(kwUri, SLVocab.SL_DESCRIBED_BY_PROPERTY, docOnline.getURI());
 			if (comment != null) mod.addKwProperty(kwUri, SLVocab.COMMENT_PROPERTY, comment, lang); // si on était sûr que c'est un new kw, on pourrait faire set seulement
-			
+
 			redirectURL = HTML_Link.getTagURL(Util.getContextURL(request), kwUri, false, ".html");
 
-			
+
+
+
+
 		} else {
-			SLDocument docToDisplay = null; // doc to be displayed
-			String docuri = request.getParameter("docuri"); // pas de decode : issu d'un champ de saisie, non code (?)
-			if ((docuri == null) || ("".equals(docuri))) {
-				return error(mapping, request, "No document's URI");
-			}
-	
-			// docuri peut venir 
-			// 1) de la bookmarklet - auquel cas, elle a été URLDecoder.decodée, et se présente par ex
-			// sous la forme http://a/b/un exemple éé.html
-			// 2) d'un paste de uri récoltée sur une de nos pages (ou, au moins avant, d'une valeur prédoc
-			// à l'uri d'une de nos pages) - auquel cas elle est déjà toute bien comme il faut, avec
-			// des %20 et des %C3
-			// 3) d'une saisie -- auquel cas elle peut être n'importe quoi,
-			// y compris complétement fause
-			// Pour remettre d'équerre ce qui viendrait du cas 1, et refuser les erreurs du cas 3,
-			// on fait la chose suivante (cf Test.testUriSmall)
-			docuri = SLUtils.laxistUri2Uri(docuri);
 			
-			// SLDocument docOnline = mod.getDocument(docuri);
-			SLDocument docOnline = mod.smarterGetDocument(docuri);
+			//
+			// CREATION OF A BOOKMARK (OR LOCAL DOC) (if doesn't exist yet)
+			//
+			
+			// 2019-03 URIS for bookmarks
 			
 			
 			
+			// Before uris for bookmarks:
+			//
+			// il y a plusieurs cas possibles de pré-existence de l'url du docOnLine dans le mdoèle, mais
+			// on ne s'occupe pas de tous ici, ce qui se justifie
+			// - par le fait qu'il sont traités dans Action_BookmarkForm 
+			// (qui envoie directement sur la page, par ex du tag ql le doc est homopage du tag)
+			// - et que ça permet de tout de même créer un doc (via "new bookmark" dans la barre de droite)
+			// pour un tel cas si on y tient vraiment
+			//
+			// D'OU LE SIMPLE TEST existsAsSubject avant 2019-03
 			
-			
-			if (request.getParameter("bookmark2tagBtn") != null) { 		// @find bookmark2tag
-				// cas de création d'un tag à partir de l'uri d'un bookmark
-				String kwLabel = title;
-				if (kwLabel == null) return error(mapping, request, "No label for tag");
-				Locale locale = null;
-				if (lang != null) {
-					locale = new Locale(lang);
-				} else {
-					// 2017-08
-					// locale = Locale.getDefault();
-					locale = null;
-				}
-				SLKeyword kw = mod.kwLabel2KwCreatingItIfNecessary(kwLabel, mod.getDefaultThesaurus().getURI(), locale);
-				String kwUri = kw.getURI();
-				mod.addKwProperty(kwUri, SLVocab.SL_DESCRIBED_BY_PROPERTY, docOnline.getURI());
-				if (comment != null) mod.addKwProperty(kwUri, SLVocab.COMMENT_PROPERTY, comment, lang); // si on était sûr que c'est un new kw, on pourrait faire set seulement
+			// 2019-03 : on se préoccupe uniquement de l'existence du doc en tant que bookmark
+			SLDocument bookmark2019 = mod.bookmarkUrl2Doc(docOnline.getURI());
+			if (bookmark2019 != null) {
 				
-				redirectURL = HTML_Link.getTagURL(Util.getContextURL(request), kwUri, false, ".html");
+				docToDisplay = bookmark2019;
 				
+			} else if (mod.existsAsSubject(docOnline)) { // true ssi doc intervient dans au moins un statement en tant que sujet
+
+				// ALREADY EXISTS (en tant que doc)
 				
+				// - ne prend pas en compte le cas où c juste source d'un doc local, ou un truc pointé par un tag
+				// MAIS CELA EST TRAITE AVANT, DS Action_BookmarkForm
 				
-				
+				docToDisplay = docOnline;
 				
 			} else {
-				
-				
-				
-				
-				
-				
-				
-				// creation of a bookmark
-				if (mod.existsAsSubject(docOnline)) {
-					// 2007-01 (POST REDIRECT)
-					// getJsp_Document(docOnline, request); // documente l'attribut jsp de la request
+					
+				// il faut encore faire gaffe au cas : document (pas encore créé) situé dans un datafolder existant
+				// DocMetadataFile metadata = mod.doc2DocMetadataFile(docOnline.getURI());
+				// Problématique à voir avec les assoc du webserver telles qu'elles sont (url en /document/ vs /doc/)
+				// Contentons nous donc de voir si c'est une uri semanlink
+				// WebServer ws = SLServlet.getWebServer();
+				// if ((ws != null) && (ws.owns(docOnline.getURI()))) {
+				if (docOnline.getURI().startsWith(SLServlet.getServletUrl())) {
+					
+					// le sldoc n'existe pas, mais c'est (probablement) un fichier local dans au sein d'un SLDataFolder
+					// Pose des pbs (si on passait ds le code plus bas) -> on ne crée pas le truc, on se contente de l'afficher
+					
 					docToDisplay = docOnline;
+					
 				} else {
-					/*
-					Form_Bookmark bookmarkForm = (Form_Bookmark) form;
-					String title = bookmarkForm.getTitle().trim();
-					if ("".equals(title)) title = null;
-					String lang = bookmarkForm.getLang();
-					if (lang != null) lang = lang.trim();
-					if ("".equals(lang)) lang = null;
-					String comment = bookmarkForm.getComment().trim();
-					if ("".equals(comment)) comment = null;
-					*/
-		
+					// document qui n'existe pas (au sens sl), et qui n'est pas un fichier dans un sous-dossier d'un SLDataFolder
+
 					String downloadFromUri = request.getParameter("downloadfromuri"); // pas de decode : issu d'un champ de saisie, non code (?)
 					if ((downloadFromUri == null) || ("".equals(downloadFromUri))) {
 						downloadFromUri = docuri;
 					} else {
 						downloadFromUri = SLUtils.laxistUri2Uri(downloadFromUri);	    	
 					}
-		
-					if (HTMLPageDownload.isLeMondePrintPage(downloadFromUri)) {
-						// on a le titre à la con "Imprimer page"
-						if (comment != null) {
-							if ((title == null) || (title.indexOf("Imprimez un élément") > -1)) {
-								title = comment;
-								comment = null;
-							}
-						}
+	
+					boolean downloadRequested = ((request.getParameter("bookmarkWithCopyBtn") != null)
+							|| (request.getParameter("copyWithBookmarkBtn") != null));
+					Response res = null;
+					boolean isHTML = false;
+					String dotExtension = null;
+					if (downloadRequested) {
+						res = Action_Download.getResponse(downloadFromUri);		
+						isHTML = Action_Download.isHTML(downloadFromUri, res);
+						dotExtension = ".html"; // KWOI ???? TODO 
+					} else {
+						dotExtension = Util.getDotExtension(downloadFromUri);
 					}
-		
+	
+							
 					SLDocument doc = null; // local ou online, c'est selon.
 					// Attention ceci n'est pas bon, car reste documenté d'un appel à l'autre
 					// (ou alors il faudrait le mettre ces infos à null en fin de execute)
 					// if (bookmarkForm.getBookmarkBtn() != null) {
-					SLDocument localDoc_SourceToBeAdded = null; // sera !null (et égal a localDoc)
+					SLDocument localDoc_SourceToBeAdded = null; // sera !null ds les cas "bookmark avec copy" ou "local avec source" (et égal a localDoc)
 					// si on souhaite stocker la source
 					// (il faut prendre garde de ne pas créer en 1er le statement SOURCE_PROPERTY,
 					// (qui a nécessité un truc spécial dans le "onNewDocument" du listener jena
 					// pour ne pas entrainer la création des statements de new doc pour la source)
 					// parce que sinon, il n'y a pas le traitement new doc 
+					
+					// 2019-03 uris for bookmarks
+					// which (sl) uri for this new bookmark?
+					// let's create it from title (as we were doing for files)
+					if (title == null) return error(mapping, request, "No title for doc");
+					
+					// Hum, marche pas parce qu'il puet y avoir des car à la con ds le nom fichier
+					// et donc, on ne peut retrouver le nom du fichier à partir du localname du bkm
+//				SLDocument bkm = mod.newBookmark(title);	
+//				File saveAsDir = mod.goodDirToSaveAFile();				
+//				File saveAs = new File(saveAsDir, Util.getLocalName(bkm.getURI() + dotExtension));
+//				if (saveAs.exists()) throw new RuntimeException(saveAs + " already exists. Unexpected :-(");
+					
+					// 2019-05-11 ATTENTION, CECI N'IRAIT PAS POUR UN TRUC fichier ds une dir locale, autre peut-être que default folder				
+					SLModel.NewBookmarkCreationData bkmData = new SLModel.NewBookmarkCreationData(mod, title); 
+					
+					SLDocument bkm = bkmData.getSLDocument();
+					File saveAs = bkmData.getSaveAsFile(dotExtension);
+	
+					if (downloadRequested) {
+						Action_Download.download(downloadFromUri, saveAs, false, res, isHTML);	
+					}
+					
 					if (request.getParameter("bookmarkBtn") != null) {
-						doc = docOnline;
-					} else {
-						boolean overwrite = param2boolean("overwrite", request, false);
-						File saveAs = Action_Download.downloadFile(downloadFromUri, title, overwrite, mod);
+						
+						// clic on "Bookmark" btn
+						
+						// doc = docOnline;
+						doc = bkm;
+						
+						mod.setDocProperty(bkm, SLVocab.SL_BOOKMARK_OF_PROPERTY, docOnline.getURI());
+						mod.setDocProperty(bkm, SLVocab.TITLE_PROPERTY, title, lang);
+						if (comment != null) mod.setDocProperty(bkm, SLVocab.COMMENT_PROPERTY, comment, lang);
 		
-						// String localUri = mod.filenameToUri(saveAs.toString());
+						
+					} else {
+						
+						// boolean overwrite = param2boolean("overwrite", request, false); // 2019-03 : this param never set to true, semble-t-il
+						// File saveAs = Action_Download.downloadFile(downloadFromUri, title, overwrite, mod); // title sert à créer le nom du fichier
+	
 						String localUri = mod.fileToUri(saveAs);
 						SLDocument localDoc = mod.getDocument(localUri);
+						
 						if (request.getParameter("bookmarkWithCopyBtn") != null) {
-							doc = docOnline;
+							// doc = docOnline;
+							doc = bkm;
+							
 							localDoc_SourceToBeAdded = localDoc;
-							// mod.addDocProperty(addSourceTo, SLVocab.SOURCE_PROPERTY, docuri);
+	
+							mod.setDocProperty(bkm, SLVocab.SL_BOOKMARK_OF_PROPERTY, docOnline.getURI());
+							mod.setDocProperty(bkm, SLVocab.TITLE_PROPERTY, title, lang);
+							if (comment != null) mod.setDocProperty(bkm, SLVocab.COMMENT_PROPERTY, comment, lang);
+							// source : l'affecter à la vraie source (doconline) ou bien au bkm doc ???
+							if (localDoc_SourceToBeAdded != null) {
+								// AH,MAIS ATTENTION !!!
+								// Supposons qu'on change le lien bookmarkOf
+								// La copie locale a un dc:source qui n'est plus lié au bkm
+								// et ne peut donc plus être retrouvée à partir de lui
+								
+								// essayons en mettant les 2
+								// ne doit pas gêner pour affichage du lien source sur docline bkm
+	
+								// 1) à la source : la vraie source online ? -> localFile dc:source onlineUrl // avantage : lien 1 pour 1 au cas où on aurait plusiuers saved docs attachés au bkm
+								mod.addDocProperty(localDoc_SourceToBeAdded, SLVocab.SOURCE_PROPERTY, docOnline.getURI());
+								// 2) ou bien le bkm ? -> localFile dc:source bkm // avantage : doit marcher sans modif du code pre2019
+								mod.addDocProperty(localDoc_SourceToBeAdded, SLVocab.SOURCE_PROPERTY, bkm.getURI());		
+															
+							}
+	
+							
+							
+							
 						} else if (request.getParameter("copyWithBookmarkBtn") != null) {
-							doc = localDoc;
 							localDoc_SourceToBeAdded = localDoc;
 							// ne pas faire ça maintenant, sinon on perd les ajouts de metadata
 							// on new doc, becoz of un traitement spécial pour la prop source (voir listeenr
 							// avec enw doc)
 							// mod.addDocProperty(addSourceTo, SLVocab.SOURCE_PROPERTY, docuri);
-						} else if (request.getParameter("localDocBtn") != null) {
+	
+							// CREER OU PAS UN "BKM" ???
+							// oui -> on aurait aussi pour les docs locaux la possibilité de changer l'uri du doc pointé
+							// 			  mais : à la fois uri /doc/... et /document/... : on va se planter
+							// non -> séparation doc pointant vers le online et locaux
+							
+							// DISONS NON : 
 							doc = localDoc;
+							// doc = bkm;
+							
+							// mod.setDocProperty(bkm, SLVocab.SL_BOOKMARK_OF_PROPERTY, localDoc.getURI()); // DISONS NON
+							mod.setDocProperty(doc, SLVocab.TITLE_PROPERTY, title, lang);
+							if (comment != null) mod.setDocProperty(doc, SLVocab.COMMENT_PROPERTY, comment, lang);
+							if (localDoc_SourceToBeAdded != null) {
+								// la source : affectée au doc local 
+								mod.addDocProperty(localDoc_SourceToBeAdded, SLVocab.SOURCE_PROPERTY, docOnline.getURI());
+								// ou bien au bkm ? bkm source doconline // BEN COMME ON A DIT NON
+								// mod.addDocProperty(bkm, SLVocab.SOURCE_PROPERTY, docOnline.getURI());
+							}
+	
+						} else if (request.getParameter("localDocBtn") != null) {	
+							
+							// CREER OU PAS UN "BKM" ??? CONTINUONS A DIRE NON
+							doc = localDoc;
+							// doc = bkm;
+							
+							// mod.setDocProperty(bkm, SLVocab.SL_BOOKMARK_OF_PROPERTY, localDoc.getURI()); // DISONS NON
+							mod.setDocProperty(doc, SLVocab.TITLE_PROPERTY, title, lang);
+							if (comment != null) mod.setDocProperty(doc, SLVocab.COMMENT_PROPERTY, comment, lang);
+	
 						}
 					}
-					mod.setDocProperty(doc, SLVocab.TITLE_PROPERTY, title, lang);
-					if (comment != null) mod.setDocProperty(doc, SLVocab.COMMENT_PROPERTY, comment, lang);
-					if (localDoc_SourceToBeAdded != null) {
-						mod.addDocProperty(localDoc_SourceToBeAdded, SLVocab.SOURCE_PROPERTY, docuri);
-					}
+	
+					// b4 2019-03
+	//				mod.setDocProperty(doc, SLVocab.TITLE_PROPERTY, title, lang);
+	//				if (comment != null) mod.setDocProperty(doc, SLVocab.COMMENT_PROPERTY, comment, lang);
+	//				if (localDoc_SourceToBeAdded != null) {
+	//					mod.addDocProperty(localDoc_SourceToBeAdded, SLVocab.SOURCE_PROPERTY, docuri);
+	//				}
+	
+					
 					mod.onNewDoc(doc);
-					
-					
-					
+	
 					// 2007-01 (POST REDIRECT)
 					// getJsp_Document(doc, request); // documente l'attribut jsp de la request
 					docToDisplay = doc;
 				} // doc already exists or not
-		
-				// POST REDIRECT
-				// x = mapping.findForward("continue");
-				redirectURL = Util.getContextURL(request) + HTML_Link.docLink(docToDisplay.getURI());
 			}
-			
-			
-		}	
-			
 		
-		
+			// POST REDIRECT
+			// x = mapping.findForward("continue");
+			redirectURL = Util.getContextURL(request) + HTML_Link.docLink(docToDisplay.getURI());
+		}
+
+
+
 		response.sendRedirect(response.encodeRedirectURL(redirectURL));
 		return null;
 	} catch (Exception e) {
@@ -264,6 +364,7 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
  * de l'execute
  * @param bookmarkForm
  * @return
+ * @throws URISyntaxException 
  * @throws MalformedURLException
  * @throws IOException
  */
@@ -279,6 +380,7 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
  if ((title == null)||("".equals(title))) title = getDownload(bookmarkForm).getTitle();
  // title = getDownload(bookmarkForm).getTitle();
   return title;
-  }*/
+ }*/
+
 
 } // end Action

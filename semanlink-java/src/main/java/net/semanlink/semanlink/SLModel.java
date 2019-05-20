@@ -64,6 +64,7 @@ import java.util.Vector;
 import org.apache.jena.shared.JenaException;
 
 import net.semanlink.metadataextraction.MetadataExtractorManager;
+import net.semanlink.servlet.Action_Download;
 import net.semanlink.servlet.HTML_Link;
 import net.semanlink.sljena.modelcorrections.ModelCorrector;
 import net.semanlink.util.CopyFiles;
@@ -81,7 +82,7 @@ public abstract class SLModel implements SLVocab {
 //
 // ATTRIBUTS
 //
-// private String urlRelativToServlet;
+
 private String modelUrl;
 
 /** la liste des SLThesaurus ouverts. */
@@ -135,10 +136,6 @@ public void setDefaultThesaurus(SLThesaurus th) { this.defaultThesaurus = th; }
 
 public SLDataFolder getDefaultFolder() { return this.defaultFolder; }
 public void setDefaultDataFolder(SLDataFolder defaultFolder) { this.defaultFolder = defaultFolder; }
-/*protected String getDefaultDocsFile() {
-	File x = new File(getDefaultFolder().getFile(),"sl.rdf");
-	return x.getPath();
-}*/
 
 public SLDataFolder getBookmarkFolder() { 
 	if (this.bookmarkFolder != null) return this.bookmarkFolder;
@@ -171,22 +168,48 @@ private WebServer getWebServer() { return this.webServer; }
  *  si aucun statement ne lui corrrespond). Ne modifie pas le model.
  *  (Creer une fonction isNewDocument (ou isEmptyDocument) pour discerner ces cas la ? (a posteriori))
  * 
- * 	Pour savoir si un doc existe, on peut regarder existsAsSubject
+ * 	Pour savoir si un doc existe, on peut regarder existsAsSubject // Attention, pre 2019-03 uris for bookmarks
  *  @see existsAsSubject(SLDocument)
  *  
- *  On peut préférer utiliser smarterGetDocument si l'on souhaite vérifier, dans le cas où l'uri
- *  est de type file, si le fichier en question n'est pas servi par this.getWebServer() - cas
- *  dans lequel smarterGetDocument retournera l'éventuel document correspondant à l'uri http.
+ *  Il faut mieux smarterGetDocument si l'on souhaite retomber sur ses pieds sur des pbs genre uri http vs https
  *  @see smarterGetDocument(String)
  */
 abstract public SLDocument getDocument(String uri);
 /** Retourne true ssi doc intervient dans au moins un statement en tant que sujet. */
-abstract public boolean existsAsSubject(SLDocument doc);
+abstract public boolean existsAsSubject(SLDocument doc); // pertinent en pre 2019-03 uris for bookmarks
+
+/**
+ * the SLDocument corresponding to the url of a bookmark (url on the web)
+ * or null if it doesn't exist yet
+ * @since 0.6
+ */ 
+public SLDocument bookmarkUrl2Doc(String bookmarkUrl) throws Exception { // 2019-03 uris for bookmarks
+	List al = getDocumentsList(SLVocab.SL_BOOKMARK_OF_PROPERTY, bookmarkUrl);
+	if ((al == null) || (al.size() == 0)) {
+		// peut-être https alors qu'on avait stocké http. Cool URIs don't change, they say
+		if (bookmarkUrl.startsWith("https://")) {
+			bookmarkUrl = "http://" + bookmarkUrl.substring(8);
+			al = getDocumentsList(SLVocab.SL_BOOKMARK_OF_PROPERTY, bookmarkUrl);
+		}
+	}
+	if ((al == null) || (al.size() == 0)) return null;
+	return (SLDocument) al.get(0);
+}
+
+
+
+
+
+
 /** Returns the doc corresponding to uri. 
  *  if uri's protocol is file:<OL>
  *  	<LI>if this file is served by this.webServer, returns the http document.</LI>
  *  	<LI>else, returns the file document.</LI>
  *  </OL>
+ *  
+ *  if https uri and doesn't exist as subjetcs, checks whether the http one exist,
+ *  switch to it if it is the case. (URIs suck)
+ *  (and vice versa)
  */
 public SLDocument smarterGetDocument(String uri) throws URISyntaxException {
 	SLDocument x = getDocument(uri);
@@ -201,17 +224,116 @@ public SLDocument smarterGetDocument(String uri) throws URISyntaxException {
 				}
 			}
 		}
+	} 
+	
+	if (!existsAsSubject(x)) {
+		if (uri.startsWith("https://")) {
+			// peut-être https alors qu'on avait stocké http. Cool URIs don't change, they say
+			uri = "http://" + uri.substring(8);
+			SLDocument x2 = getDocument(uri);
+			if (existsAsSubject(x2)) {
+				x = x2;
+			}
+		} else if (uri.startsWith("http://")) {
+			// ou l'inverse
+			uri = "https://" + uri.substring(7);
+			SLDocument x2 = getDocument(uri);
+			if (existsAsSubject(x2)) {
+				x = x2;
+			}			
+		}
 	}
+
 	return x;
 }
+
 /** Retourne la local copy du doc sourceUri, ou null s'il n'en a pas. 
- *  (ou - ce qui revient au même - le doc local dont sourceUri est la source) */
+ *  (ou - ce qui revient au même - le doc local dont sourceUri est la source) 
+ *  ATTENTION : c'est le "doc" qui est retourné, pas forcément le fichier lui-même. */
 public SLDocument source2LocalCopy(String sourceUri) throws Exception {
+	// 2019-03 uris for bookmarks
+	// this, OK before 2019-03, sourceUri étant l'url internet du bookmark
 	List al = getDocumentsList(SLVocab.SOURCE_PROPERTY, sourceUri);
-	if (al == null) return null;
-	if (al.size() == 0) return null;
+	if ((al == null) || (al.size() == 0)) {
+		// peut-être https alors qu'on avait stocké http. Cool URIs don't change, they say
+		if (sourceUri.startsWith("https://")) {
+			sourceUri = "http://" + sourceUri.substring(8);
+			al = getDocumentsList(SLVocab.SOURCE_PROPERTY, sourceUri);
+		}
+	}
+	if ((al == null) || (al.size() == 0)) return null;
 	return (SLDocument) al.get(0);
 }
+
+
+/** @since 2019-03 uris for bookmark */ // was in Jsp_Document
+public SLDocument getLocalCopy(SLDocument slDoc) throws Exception {
+
+	// 2019-03 uris for bookmarks
+	
+	// THIS IS VERSION B4 2019-03
+	
+	// this was OK when docs (bookmarks created for an internet url) had that internet url as uri
+	// if (getFile() != null) return null; // si doc local, pas de local copy
+	// return SLServlet.getSLModel().source2LocalCopy(this.slDoc.getURI());
+	
+	
+	
+	// TODO REVOIR LA SUITE
+	//
+	// EN DEFINITIVE, CE QUI PASSE C LE 3
+	// (comme avant MAIS IL A FALLU VIRER LE TEST getFile() != null)
+	//
+	// VOIR AUSSI CE QUI SE PASSE DS docline.jsp
+	
+	
+  // But now: the local copy may be linked to the internet url
+	SLDocument x = null;
+	String url = slDoc.bookmarkOf();
+	if (url != null) {
+		x = source2LocalCopy(url);
+		// System.out.println("getLocalCopy 1 " + url); // TODO REMOVE
+		if (x != null) {
+			return x;
+		}
+	}
+	
+	// not a post 2019-03 bkm, or local copy linked to 2019-03 bkm
+	
+//	x = SLServlet.getSLModel().doc2Source(this.slDoc.getURI());
+//	System.out.println("Jsp_Document getLocalCopy 2 " + this.slDoc.getURI()); // TODO REMOVE
+//	if (x != null) {
+//		return x;
+//	}
+	
+	// pre 2019-03
+	
+	// 2019-03 en fait, faut virer ce test
+	// if (getFile() != null) return null; // si doc local, pas de local copy // ATTENTION, ce test retourne qlq chose si servi par webserver - donc pas à mettre plu shat
+
+	x = source2LocalCopy(slDoc.getURI());
+	// System.out.println("getLocalCopy 3 " + slDoc.getURI()); // TODO REMOVE
+	if (x != null) {
+		return x;
+	}
+	// System.out.println("getLocalCopy NOT FOUND"); // TODO REMOVE
+	return null;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 public SLDocument doc2Source(String docUri) throws Exception { // pas optimisé du tout @TODO
 	List al = getDocumentsList(SLVocab.SOURCE_PROPERTY, docUri, true);
@@ -310,19 +432,11 @@ private SLDataFolder load(File file, String base, SLThesaurus thesaurus, Loading
 	SLDataFolder x = new SLDataFolder(file, base, thesaurus, loadingMode);
 	this.dataFolderList.add(x);
 	this.dataFolderListSorted = false;
-	//2006-11
-	// load(file, base, file, thesaurus, loadingMode);
 	load(file, x);
 	return x;
 }
 
-// attention à la question du "/" final de rootBase 
-/**  rootBase must not be null */
-// base du genre webserver url si ws
 private void load(File file, SLDataFolder dataFolder) throws IOException {
-// private void load(File file, String rootBase, File rootFile, SLThesaurus thesaurus, LoadingMode loadingMode) throws IOException { 	//2006-11
-
-	// SLServlet.trace("load " + file); // A VIRER (rq marche pas à l'init : semanlinkconfigparmas pas encore doc. Marche seulement en changeant DEBUG
 	SLThesaurus thesaurus = dataFolder.getDefaultThesaurus();
 	LoadingMode loadingMode = dataFolder.getLoadingMode();
 	
@@ -387,11 +501,6 @@ private void load(File file, SLDataFolder dataFolder) throws IOException {
 			try {
 				// 2006-11
 				String base = dataFolder.getBase(file);
-				/*if (loadingMode.isBaseRelativeToFile()) {
-					base = getBase(file, rootBase, rootFile);
-				} else {
-					base = rootBase;
-				}*/
 				loadDocsModelFromFile(filename, base, thesaurus);
 			} catch (Throwable t) {
 				// Pour ne pas arreter le chargement pour un fichier qui ne marche pas
@@ -410,43 +519,6 @@ private void load(File file, SLDataFolder dataFolder) throws IOException {
 	} // dir or nor
 }
 
-//j'ai eu des pbs avec Sites/test avec ds LoadList.txt :
-///Users/fps/Sites/test	http://127.0.0.1/~fps/test
-//pas trop sûr pour le cas où file n'est pas ds une sous-dir de rootFileCorrespondingToBase
-/** Base à utiliser pour le fichier sl.rdf file, sachant que la base rootBase correspond à rootFileCorrespondingToBase,
- * dans le cas où le loadingMode.isBaseRelativeToFile(). 
- * @throws URISyntaxException 
- * @throws MalformedURLException */
-/* // 2006-11
-String getBase(File file, String rootBase, File rootFileCorrespondingToBase) throws MalformedURLException, URISyntaxException {
-	String xBase = rootBase;
-	if (rootFileCorrespondingToBase == null) throw new IllegalArgumentException("rootFileCorrespondingToBase " + rootBase + " null");
-	String dirPath = filenameToUri(file.getParent());
-	String basePath = filenameToUri(rootFileCorrespondingToBase.getPath());
-	if ((dirPath.startsWith(basePath)) && (!dirPath.equals(basePath))){ // si égaux ?
-		String relPath = dirPath.substring(basePath.length());
-		// 2005/12 :
-		boolean slash = xBase.endsWith("/");
-		// if (!slash) xBase += "/";
-		if (!slash) {
-			slash = relPath.startsWith("/");
-			if (!slash) xBase += "/";
-		}
-		//System.out.print ("RELPATH"+ relPath);
-		// if ((!slash) && (relPath.endsWith("/"))) relPath = relPath.substring(0, relPath.length()-1); // not tested
-		xBase += relPath; // un slash à la fin - j'insiste :
-		if (!(xBase.endsWith("/"))) xBase += "/";
-		//System.out.println(" base "+ xBase);
-	} else {
-		//  je rajoute ça à cause de pb ds le cas Sites/test
-		if (rootFileCorrespondingToBase.isDirectory()) {
-			if (!(xBase.endsWith("/"))) xBase += "/";
-		}
-	}
-	// System.out.println("getBase file "  + file + " rootbase " + rootBase + " rootFileCB " + rootFileCorrespondingToBase + " : " +xBase);
-	return xBase;
-}*/
-
 /** Très importante fonction qui détermine comment on passe du nom de fichier à l'uri qui sera
  *  écrite dans les fichiers pour y faire référence.
  * 
@@ -455,11 +527,10 @@ String getBase(File file, String rootBase, File rootFileCorrespondingToBase) thr
  * (Au moins ds certains cas. Toujours ? je suppose maintenant que oui A VOIR)
  */
 public String filenameToUri(String filename) throws MalformedURLException, URISyntaxException {
-	// return FileUriFormat.filenameToUri(filename);
 	return fileToUri(new File(filename));
 }
 
-public String fileToUri(File f) throws MalformedURLException, URISyntaxException {
+public String fileToUri(File f) throws MalformedURLException, URISyntaxException {  // THE WS QUESTION
 	WebServer ws = this.getWebServer();
 	if (ws != null) {
 		String uri = ws.getURI(f);
@@ -497,18 +568,18 @@ YYYYMM doc2YYYYMM(SLDocument doc) {
 }
 
 
-
+// THE WS QUESTION
 /** Returns the file corresponding to a URI (or null in case of failure to do so). 
  *  @param uri either a file-protocol uri, or the uri of a file served by this.getWebServer. */
-public File getFile(String uri) throws IOException, URISyntaxException {
+public File getFile(String uri) throws IOException, URISyntaxException { // HUM TODO identique à getFileIfLocal(String docUri)
 	// System.out.println("SLModel.getFile: " + uri);
 	if (uri.startsWith("file:")) {
 		return fileUri2File(uri);
 	} else {
-		return getFile(uri, this.getWebServer()); // no need to remove fragment component ?
+		return getFile(uri, this.getWebServer()); // no need to remove fragment component ?  
 	}
 }
-
+// THE WS QUESTION
 /** Returns the file corresponding to an URI (or null in case of failure to do so). 
  *  @param uri either a file-protocol uri, or the uri of a file served by ws. */
 static public File getFile(String uri, WebServer ws) throws IOException, URISyntaxException {
@@ -857,7 +928,6 @@ protected abstract void createKw(String uri, String label, Locale locale) throws
 public SLKeyword doCreateKeyword(String uri, String kwLabel, Locale locale) throws Exception {
 	createKw(uri,kwLabel,locale);
 	SLKeyword kw = getKeyword(uri);
-	// this.getThesaurusIndex().addKw(kw); // for ThesaurusIndexOK
 	this.getThesaurusIndex().addItem(kw, kwLabel, locale);
 	return kw;
 }
@@ -996,49 +1066,6 @@ abstract public void usedKWsIntoCollection(Collection coll);
 abstract public void kwsResIntoCollection(Collection<SLKeyword> coll);
 
 //
-// KWS RELATED
-//
-
-// Comportement si la res n'est pas de ce modele ?
-// on cherche ds le modele de la resource,
-// ou dans this ? Pourrait-on chercher (et trouver) ds this,
-// meme si la res n'en est pas ? (revoir ce qu'ils disent sur l'egalite de resources)
-// A VOIR
-
-// COMMENTAIRE DEPASSE :
-// REMARQUE : ça ne marche pas exactement de la meme façon pour les keywords
-// et les documents : pour les keywords, on cree ici des JKeyword,
-// alors que pour les documents, non : la List retournee contient simplement des
-// Resources.
-// Ceci parce que a priori, l'url d'un document me semblait suffire pour faire ce qu'on veut en faire
-// (l'ouvrir)
-// Et qu'il est encore temps de creer le document + tard (et ça se passe
-// dans le listmodel - on a alors besoin d'un objet de classe JDocument
-// pour ne pas etre contraint au toString qu'utilise la JList pour displayer
-// les elts du ListModel.
-// Dans un cas donc, on cree tous les objets de classe JKeyword au depart.
-// Dans l'autre, on ne les cree peut-etre pas tous (pas sûr d'ailleurs), et potentiellemnt,
-// on risque de creer plusieurs fois le meme. ??? A VOIR
-
-// de plus, il va faloir creer un ListModel different pour la liste de documents
-
-/** retourne une ArrayList de SLKeyword.
- *  Mettre cette methode dans la classe SLKeyword ?
- */
-//abstract public ArrayList getParentsList(SLKeyword kw);
-
-/** retourne une ArrayList de SLKeyword.
- *  Mettre cette methode dans la classe SLKeyword ?
- */
-//abstract public ArrayList getChildrenList(SLKeyword kw);
-
-/** Retourne une ArrayList de SLDocument affectes d'un certain keyword.
- *  ATTENTION, si des documents sont simplement affectes du label correspondant au keyword,
- *  ils ne seront pas retournes.
- */
-//abstract public ArrayList getDocumentsList(SLKeyword kw);
-
-//
 // KWS D'UN DOC RELATED
 //
 
@@ -1118,14 +1145,6 @@ public List getKWs(SLThesaurus th) {
 	Collections.sort(x);
 	return x;
 }
-/**
- * 
- * @return
- */
-
-/*public ArrayList getKWsWithoutParents() {
-	List list = getKWsInConceptsSpaceArrayList();
-}*/
 
 /** Retourne les kws sans parents d'une liste données de kws. */
 public ArrayList withoutParents(List kws) {
@@ -1157,14 +1176,12 @@ public Vector getThesauri() { return this.thesauri; }
 
 abstract public void delete(SLKeyword kw);
 abstract public void delete(SLDocument doc);
-// abstract public void deleteResource(SLResource res);
 
 //
 // THESAURI RELATED
 //
 
 static public String kwUri2ThesaurusUri(String kwUri) { // #thing
-	// int n = kwUri.lastIndexOf("#");
 	int n = kwUri.lastIndexOf("/");
 	return kwUri.substring(0,n);
 }
@@ -1211,7 +1228,6 @@ public SLThesaurus getThesaurus(String thesaurusURI) {
 }
 
 public List getActivFiles(SLThesaurus th) throws IOException, URISyntaxException { // 911 //////////////////
-	// public SLDocument[] getActivFiles(SLThesaurus th) throws IOException, URISyntaxException { // 911 //////////////////
 	ArrayList al = new ArrayList();
 	List docs = getActivFolder().getDocuments();
 	for (int i = 0; i < docs.size(); i++) {
@@ -1235,8 +1251,6 @@ public SLKeyword getActivFolder() {
  * @throws URISyntaxException 
  * @throws Exception */
 abstract public void onNewDoc(SLDocument doc) throws Exception;
-
-// abstract public void listenDocs();
 
 /**
 
@@ -1335,7 +1349,6 @@ public void removeAlias(SLKeyword kw, String[] aliasuris) {
  *  (appelé par addAlias). Attention, c'est addAlias qu'il faut appeler
  * pour avoir la maj de l'index */
 protected abstract void aliasIt(SLKeyword alias, SLKeyword kw);
-//public abstract void aliasIt(String aliasUri, String kwUri);
 
 /** attention, null si no alias */
 public List getAliasUriList(SLKeyword kw) {
@@ -1357,12 +1370,6 @@ public File goodDirToSaveAFile() {
 	return todayYearMonthDir(getDefaultFolder().getFile());
 }
 
-/*private File goodDirToSaveABookmark() {
-	SLDataFolder f = this.getBookmarkFolder();
-	if (f == null) f = getDefaultFolder();
-	return todayYearMonthDir(f.getFile());
-}*/
-
 /** Retourne la dir parentDir/yyyy/mm avec yyyy/mm d'aujourd'hui. */
 File todayYearMonthDir(File parentDir) {
 	return (new YearMonthDay()).yearMonthAsFolder(parentDir);	
@@ -1371,6 +1378,13 @@ File todayYearMonthDir(File parentDir) {
 public File dirToSaveANote() {
 	return todayYearMonthDir(getNotesFolder().getFile());
 }
+
+/** @since v0.6 */ // 2019-03 uris for bookmarks
+public File dirToSaveBookmarks() {
+	return todayYearMonthDir(getBookmarkFolder().getFile());
+}
+
+
 
 //
 //
@@ -1383,15 +1397,6 @@ public File dirToSaveANote() {
 /** Le thesaurus à utiliser avec un doc donné */
 public SLThesaurus getThesaurus(SLDocument doc) throws IOException, URISyntaxException {
 	SLDataFolder dataFolder = getSLDataFolder(doc.getURI()); // fichier de modèle pour doc
-	/*if (dataFolder == null) {
-		// dataFolder (fichier de modèle pour doc) n'est pas ouvert.
-		// Il faut rechercher le thesaurus à utiliser.
-			 // Une 1ere idée est de prendre celui du 1er ancêtre ouvert, s'il y en a (sinon, getDefaultThesaurus())
-			 // le pb, c'est qu'une éventuelle dir "ancêtre" peut bien exister dans le
-			 // fichier initial des fichiers à charger, mais ne pas avoir de fichier sl.rdf existant,
-			 // (et donc, no dataFolder ouvert) ce qui fait qu'il n'y a pas d'elt corrrespondant ds dataFolderList
-			// recherche ds dataFolderList
-	}*/
 	if (dataFolder != null) return dataFolder.getDefaultThesaurus();
 	return getDefaultThesaurus();
 }
@@ -1506,7 +1511,6 @@ public class DocMetadataFile {
 	private SLDataFolder dataFolder;
 	private File slDotRdfFile;
 	private String base;
-	private DocMetadataFile() {}
 	DocMetadataFile(SLDataFolder dataFolder, File slDotRdfFile, String base) {
 		this.dataFolder = dataFolder;
 		this.slDotRdfFile = slDotRdfFile;
@@ -1522,31 +1526,49 @@ public class DocMetadataFile {
 		if (docf != null) {
 			dataFolder = getDataFolderFromLoadingList(docf);
 			if (dataFolder == null) {
-				// dataFolder = getDefaultFolder(); // or throw Exception to forbid file outside an opened SLDataFolder ?
-				dataFolder = getBookmarkFolder(); // or throw Exception to forbid file outside an opened SLDataFolder ?
+				// 2019-04 uris for bookmark je (re-?)mets getDefaultFolder plutôt que getBookmarkFolder // TODO CHECK
+				dataFolder = getDefaultFolder(); // or throw Exception to forbid file outside an opened SLDataFolder ?
+				// dataFolder = getBookmarkFolder(); // or throw Exception to forbid file outside an opened SLDataFolder ?
 			} else {
 				if (!computeOnlyDataFolder) slDotRdfFile = getSlDotRdfFileFromDataFolder(docf, docUri, dataFolder);
 			}
 		} else { // ni file protocol url, ni servie par notre webserver
-			// Dans le cas d'une url genre www.apple.com,
+			// Dans le cas d'une url genre www.hypersolutions.fr,
 			// et bien on ne sait pas dans quel fichier l'écrire,
 			// sauf peut-etre si elle a déjà été écrite !
-			dataFolder = getBookmarkFolder();
+			
+			//
+			// 2019-04 uris for bookmarks
+			//
+			
+			// on avait
+			// dataFolder = getBookmarkFolder();
+			
+			// MAIS pb avec mes "anciens" bookmarks :
+			// conduit à les sauver dans bookmark folder,
+			// alors qu'ils sont dans ds defaultDataFolder
+			// (enfin : ds ancienne version, les 2 sont la même chose
+			// mais au moins ds une phase transitoire avant de tout convertir,
+			// on veut donc que les "anciens bkmrks -- les docs genre hypersolutions.fr restent
+			// dans defaultDataFolder (le site web / svg de mes fichiers), mais les nouveaux
+			// dans bookmarkFolder)
+			
+			// ASSUMANT que le cas de "nouveaux bookmarks" sont traités plus haut,
+			// cad qu'ils retournent qlq chose ds getFileIfLocal() (== servis par le webserver ?)
+			// on va ici (contre ce qui semblerait être logique) retourner defaultDataFolder
+			// pour les docuri genre hypersolutions.fr
+			
+			// [NORMALEMENT, après fin des travaux uris for bookmarks, le cas présent ne se produira plus (???)]
+			
+			dataFolder = getDefaultFolder();
 		}
 
 		if (computeOnlyDataFolder) return;
 
-		if (slDotRdfFile == null) { // on n'a pas trouvé avec dataFolderList, ou bien url genre apple.com
+		if (slDotRdfFile == null) { // on n'a pas trouvé avec dataFolderList, ou bien url genre www.hypersolutions.fr
 			slDotRdfFile = getSLDotRdfFileUsingCreationMonth(dataFolder, docUri);
 		}
 
-		/*// 2006-11
-		LoadingMode loadingMode = dataFolder.getLoadingMode();
-		if (loadingMode.isBaseRelativeToFile()) {
-			base = mod.getBase(slDotRdfFile, dataFolder.getBase(), dataFolder.getFile());
-		} else {
-			base = dataFolder.getBase();
-		}*/
 		base = dataFolder.getBase(slDotRdfFile);
 	}
 	
@@ -1558,7 +1580,8 @@ public class DocMetadataFile {
 
 /** Si docUri est de protocol File, ou si elle est servie par notre serveur, retourne le fichier correspondant, 
  *  sinon return null */
-private File getFileIfLocal(String docUri) throws IOException, URISyntaxException {
+// THE WS QUESTION
+File getFileIfLocal(String docUri) throws IOException, URISyntaxException { // HUM TODO ~identique File getFile(String)
 	URI docURI = new URI(docUri);
 	if ("file".equals(docURI.getScheme())) {
 		String filename = docURI.getPath(); // à ne pas oublier ! (cf les %20)
@@ -1572,6 +1595,7 @@ private File getFileIfLocal(String docUri) throws IOException, URISyntaxExceptio
 	return null;
 }
 
+
 /** 
  * Search in dataFolderList the SLDataFolder corresponding to f, if any. 
  * This search is based on f's filename only.
@@ -1579,7 +1603,7 @@ private File getFileIfLocal(String docUri) throws IOException, URISyntaxExceptio
  * One (positive) effect of using this method is that, by using the path to the file to retrieve the data folder,
  * (and not the creation date), information about a file such as "20004/01/x.htm" is stored in "2004/01", 
  * even if the file has been created at another date (or has no creation date) */
-private SLDataFolder getDataFolderFromLoadingList(File f) {
+SLDataFolder getDataFolderFromLoadingList(File f) {
 	// un petit doute la dessous pour le cas où f est une dir, égale au dataFolder
 	String fn = null;
 	if (f.isDirectory()) {
@@ -1612,16 +1636,8 @@ private SLDataFolder getDataFolderFromLoadingList(File f) {
  * Supposes that dataFolder is the SLDataFolder to be used for document docUri,
  * and that docUri corresponds to file docf
  */
-private File getSlDotRdfFileFromDataFolder(File docf, String docUri, SLDataFolder dataFolder) {
+File getSlDotRdfFileFromDataFolder(File docf, String docUri, SLDataFolder dataFolder) {
 	try {
-		/* n'arrive plus 
-		String xfn = dataFolder.getFilename();
-		// xfn correspond à un dossier, ou un fichier sl.rdf
-		// Si c'est un dossier, assurons-nous qu'il est / terminated
-		// T DO REVOIR
-		if (xfn.endsWith("sl.rdf")) {
-			xfn = (new File(xfn)).getParentFile().getAbsolutePath();
-		}*/
 		// on a trouvé un dossier de dataFolderList (dataFolder) qui est 
 		// égal au début du nom long du fichier docf
 		// selon le loadingMode, il faut éventuellement le compléter (sous-dossiers, voire
@@ -1801,5 +1817,81 @@ public void saveDocFile(String docUri, String docContent) throws IOException, UR
 	out.close();
 
 }
+
+//
+// uris for bookmarks // 2019-04
+//
+
+abstract public SLDocument convertOld2NewBookmark(String onlineUri) throws Exception;
+
+// DocMetadataFile doc2DocMetadataFile(String docUri)
+
+/**
+ * Pour calculer l'uri à utiliser pour un new bookmark
+ * ATTENTION, le bkm est créé ds default datafolder : suppose (en gros) que c'est pour une bkm externe
+ * (ne peut pas être utilisé pour un doc ldans une dir locale d'un des SLDataFolders qui ne serait pas ds default folder)
+  */
+public static class NewBookmarkCreationData {
+	private SLDocument bkm;
+	/** the dir to save the file if we save a copy */
+	private File saveAsDir;
+	private String shortFilename; // sans dot extension, par ex "titre_du_bkm_2" 
+	
+	// ATTENTION, le bkm est créé ds default datafolder : suppose que c'est pour une bkm externe
+	public NewBookmarkCreationData(SLModel mod, String title) throws MalformedURLException, URISyntaxException {
+		File bkmDir = mod.dirToSaveBookmarks();
+		// the dir to save the file if we save a copy
+		saveAsDir = mod.goodDirToSaveAFile();
+		if (title == null) throw new RuntimeException("No title");	  
+		String sfn = SLUtils.title2shortFilename(title); // ATTENTION, ne convertit pas tout, ex : "«"
+		String shortFilename = sfn; // sans dot extension, par ex "titre_du_bkm"
+		SLDocument bkm = null;
+//		File saveAs = null; // the file for the saveAs
+		int i = 0;
+		String bkmUri = null;
+		for(;;) {
+			bkmUri = mod.fileToUri(new File(bkmDir, shortFilename));
+			bkm = mod.getDocument(bkmUri);
+			if (!mod.existsAsSubject(bkm)) {
+				
+				// vérifier que le nom du fichier où on sauverait le download n'exsite pas déjà
+//				saveAs = new File(saveAsDir, ln + dotExtension);
+//				if (!saveAs.exists()) {
+//					break;
+//				}
+				// en fait on va faire plus : s'assurer que là où on sauverait le download
+				// il n'y a pas aucun fichier downloadshortname "." ext
+				String[] names = saveAsDir.list();
+				boolean ok = true;
+				if (names != null) {
+					for (String name : names) {
+						if (name.equals(shortFilename)) {
+							ok = false;
+							break;
+						}
+						if (name.startsWith(shortFilename + ".")) {
+							ok = false;
+							break;
+						}
+					}
+				}
+				if (ok) {
+					break;
+				}
+			}
+			i++;
+			shortFilename = sfn + "_" + i;												
+		}
+		this.bkm = bkm;
+		this.shortFilename = shortFilename;
+	}
+	
+	public SLDocument getSLDocument() { return this.bkm ; }
+	public File getSaveAsFile(String dotExtension) { 
+		return new File(saveAsDir, shortFilename + dotExtension);
+	}
+}
+
+
 
 } // class SLModel

@@ -33,6 +33,7 @@ public class Exporter {
 public static final String PUBLISH_PROP = SemanlinkConfig.PUBLISH_PROP;
 private SLModel slMod;
 private SLDataFolder dataFolder;
+private String contextURL;
 
 /**
  * @param slMod model to be exported
@@ -41,9 +42,10 @@ private SLDataFolder dataFolder;
  * BEWARE: remplace les éventuelles dir "tags" et "bookmarks" existant à l'intérieur vont être remplacées
  * @throws Exception
  */
-public Exporter(SLModel slMod, SLDataFolder dataFolder) throws Exception {
+public Exporter(SLModel slMod, SLDataFolder dataFolder, String contextURL) throws Exception {
 	this.slMod = slMod;
 	this.dataFolder = dataFolder;
+	this.contextURL = contextURL;
 	File dir = this.dataFolder.getFile();
 	if (dir.exists()) {
 		File tagsDir = new File(dir, "tags");
@@ -119,7 +121,7 @@ public void export(int nbOfDays) throws Exception {
 			// ne pas ajouter le statement si l'objet est non publiable
 			RDFNode val = sta.getObject();
 			if (val instanceof Resource) {
-				if (!publish((Resource) val, true)) continue;
+				if (!publish((Resource) val, true)) continue; // HUM
 			}
 
 			if (sta.getPredicate().getURI().equals(SLVocab.HAS_FRIEND_PROPERTY)) {
@@ -247,7 +249,18 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 			String docUri = res.getURI();
 			// this doesn't include docs such as http://127.0.0.1:8080/otherservlet or http://127.0.0.1/toto
 			// if (slMod.isLocalDocument(res.getURI())) continue;
-			if (isLocal(res.getURI())) {
+			
+			boolean local;
+			// uris for bookmarks
+			SLDocumentStuff stuff = new SLDocumentStuff(doc, slMod, contextURL);
+			String bookmarkOf = stuff.getBookmarkOf();
+			if (bookmarkOf != null) {
+				local = isLocal(bookmarkOf);
+			} else {
+				 local = isLocal(res.getURI());
+			}
+			
+			if (local) {
 				// document local.
 				// Par défaut on ne publie pas
 				// publié ssi son publish est true
@@ -256,7 +269,7 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 				} else {
 					// 2019-03: hack to avoid problem if the prop value contains a lang
 					// if (!("true".equals(publish.trim()))) {
-					if (!(publish.startsWith("true"))) {
+					if (!(publish.trim().startsWith("true"))) {
 						continue;
 					}
 					// cas des notes
@@ -272,7 +285,7 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 				if (publish != null) {
 					// 2019-03: hack to avoid problem if the prop value contains a lang
 					// if ("false".equals(publish.trim())) {
-					if (publish.startsWith("false")) {
+					if (publish.trim().startsWith("false")) {
 						continue;
 					}
 				}

@@ -69,63 +69,7 @@ private void bordelEncoding(Form_Bookmark bookmarkForm) throws UnsupportedEncodi
 		// a bit of formatting (cf unwanted spaces or returns coming from the html)
 		s = s.replaceAll("\t", " ");
 		s = s.replaceAll("  ", " ");
-		/*BufferedReader reader = new BufferedReader(new StringReader(s));
-		StringBuffer comment = new StringBuffer();
-		boolean dejaUneVide = false;
-		String line;
-		String eol = System.getProperty("line.separator");
-		boolean addABr = false;
-		try {
-			for (;;) {
-				line = reader.readLine();
-				if (line == null) break;
-				line = line.trim();
-				if ("".equals(line)) {
-					if (dejaUneVide) {
-						comment.append(eol);
-					} else {
-						dejaUneVide = true;
-					}
-					continue;
-				} else {
-					dejaUneVide = false;
-				}
-				if (addABr) {
-					addABr = false;
-					comment.append("<br/>" + eol);
-				}
-				if (line.endsWith(".")) {
-					addABr = true;
-				} else {
-					line += " ";
-				}
-				comment.append(line);
-			}
-			s = comment.toString();
-		} catch (Exception e) {e.printStackTrace();}*/
-		/*
-		BufferedReader reader = new BufferedReader(new StringReader(s));
-		StringBuffer comment = new StringBuffer();
-		String line;
-		String eol = System.getProperty("line.separator");
-		boolean nada = true;
-		try {
-			for (;;) {
-				line = reader.readLine();
-				if (line == null) break;
-				line = line.trim();
-				if ("".equals(line)) {
-					if (nada) continue;
-					comment.append(eol);
-					continue;
-				} else {
-					comment.append(line);
-					comment.append(eol);
-				}
-			}
-			s = comment.toString();
-		} catch (Exception e) {e.printStackTrace();}
-		*/
+
 		BufferedReader reader = new BufferedReader(new StringReader(s));
 		StringBuffer comment = new StringBuffer();
 		String line;
@@ -172,32 +116,82 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
     } else { // via la bookmarklet
         bordelEncoding(bookmarkForm);
         docuri = bookmarkForm.getDocuri(); // il faut car a été modifié par bordelEncoding
+        
+        // ben non, parce que sur un /document/, on reste où on est !!!
+//        if (docuri.startsWith(SLServlet.getServletUrl())) {
+//        	response.sendRedirect(response.encodeRedirectURL(docuri));
+//        	return null; // EXIT !!!        	
+//        }
+        
         bookmarkForm.setDownloadfromuri(docuri);
         docuri = SLUtils.laxistUri2Uri(docuri);
+        
+        // 2019-05 Take care of case when bookmarlet used on a local copy (cf /document/ -> /doc/)
+        String contextURL = Util.getContextURL(request);
+        String u = SLDocumentStuff.page2DocUri(docuri, contextURL);
+        if (u != null) docuri = u;
+        
          // SLDocument doc = mod.getDocument(docuri);
         // if docuri protocol is file, and this file is served by this.webServer, returns the http document.
         SLDocument doc = mod.smarterGetDocument(docuri);
 
         boolean alreadyExists = false;
+        
+ 
+        
+  			// 2019-03 : uris for bookmarks
+  			SLDocument bookmark2019 = mod.bookmarkUrl2Doc(doc.getURI());
+  			if (bookmark2019 != null) {
+  				
+        	response.sendRedirect(response.encodeRedirectURL(bookmark2019.getURI())); // TODO PAS SUR : voir + bas alreadyExists, HTML_Link.docLink
+        	return null; // EXIT !!!
+  			}
+        
+        
         if (mod.existsAsSubject(doc)) {
         		alreadyExists = true;
         } else {
         		// il peut s'agir de l'url source d'un doc local
         		// (x, source, doc.getUri()) 
-        		SLDocument localDoc = mod.source2LocalCopy(docuri);
+        		SLDocument localDoc = mod.source2LocalCopy(docuri); // TODO REVOIR
         		if (localDoc != null) {
         			alreadyExists = true;
         			doc = localDoc;
-        		}
+        		}       		
         }
         
-        if (alreadyExists) {
-      			// 2007-01 (POST REDIRECT)
-      			// getJsp_Document(doc, request); // documente l'attribut jsp de la request
-      			String redirectURL = Util.getContextURL(request) + HTML_Link.docLink(doc.getURI());
-          	response.sendRedirect(response.encodeRedirectURL(redirectURL));
-          	return null; // EXIT !!!
+        if (!alreadyExists) {
+	    		// il y a un autre cas, où le doc n'eiste pas, mais qu'on va traiter comme si il existait :
+	    		// quand on a affaire à un fichier ds un SLDataFolder (qui n'existe pas en tant que doc sl)
+	    		// (comme ça on va être nvoyé sur cette page et on pourra tjrs le créer la-bas)
+					if (doc.getURI().startsWith(SLServlet.getServletUrl() + CoolUriServlet.DOC_SERVLET_PATH)) {
+						alreadyExists = true;
+					}
+        }
 
+        
+        if (alreadyExists) {
+    			// 2007-01 (POST REDIRECT)
+    			// getJsp_Document(doc, request); // documente l'attribut jsp de la request
+
+        	// 2019-03 :
+        	// ce qu'il y avait, mais pb issu du changement ds HTML_Link.docLink
+        	// quand il s'agit d'un .../document/... ?
+
+        	// 2019-05
+        	// String redirectURL = Util.getContextURL(request) + HTML_Link.docLink(doc.getURI());
+        	SLDocumentStuff docStuff = new SLDocumentStuff(doc, mod, contextURL);
+        	String redirectURL = docStuff.getAboutHref();
+        	
+//        	String redirectURL = null;
+//         	if (SLServlet.getWebServer().owns(doc.getURI())) {
+//        		redirectURL = doc.getURI(); // ben non, on reste sur place !
+//        	} else {
+//        		redirectURL = Util.getContextURL(request) + HTML_Link.docLink(doc.getURI());
+//        	}
+        	response.sendRedirect(response.encodeRedirectURL(redirectURL));
+        	return null; // EXIT !!!
+          		
         } else {
         	
         	// can be the homepage or the sl:describedBy of a tag

@@ -16,6 +16,8 @@ SLDocument doc = (SLDocument) request.getAttribute("net.semanlink.servlet.jsp.cu
 
 boolean edit = (Boolean.TRUE.equals(session.getAttribute("net.semanlink.servlet.edit")));
 SLModel mod = SLServlet.getSLModel();
+SLDocumentStuff docStuff = new SLDocumentStuff(doc, mod, jsp.getContextURL()); // 2019-04
+
 // HTML_Link link = HTML_Link.linkToDocument(doc);
 
 // String linkToThisPage = jsp.getLinkToThis(); // ceci est mis en cache par jsp -- pas grave de l'appeler ds chaque docline.jsp de la liste
@@ -30,15 +32,17 @@ String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien
             //
             
             // pour le script du btn "image", cf image.jsp
-            SLDocument imageToBeDisplayed = mod.getDocument(uri); // 2019-03: Hum c'est pas doc? TODO check
+            // SLDocument imageToBeDisplayed = mod.getDocument(uri); // 2019-03: Hum c'est pas doc? TODO check
+            SLDocument imageToBeDisplayed = mod.getDocument(docStuff.getHref(false)); // 2019-03: Hum c'est pas doc? TODO check
+           
             Jsp_Document imageJsp_doc = Manager_Document.getDocumentFactory().newJsp_Document(imageToBeDisplayed, request);
             String imageLinkPage = imageJsp_doc.getLinkToThis();
-
+          
             String contextPath = request.getContextPath();
             %>
                 <%// span pour ne pas avoir le décalage vers gauche mis pour les triangles des kws cf css .graybox ul li img %>
                 <span style="margin-left:8px">
-                <img src="<%=contextPath%>/ims/image.gif" class="imageBtn" alt="" onclick="loadImage('<%=uri%>', '<%=contextPath+imageLinkPage%>')" />
+                <img src="<%=contextPath%>/ims/image.gif" class="imageBtn" alt="" onclick="loadImage('<%=docStuff.getHref(false)%>', '<%=contextPath+imageLinkPage%>')" />
                 </span>
             <%
         }  // if (Util.isImage(uri))
@@ -61,63 +65,44 @@ String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien
         
         // String docPageUrl = HTML_Link.htmlLinkPage(doc);
         String docPageUrl = null;
-        if ((edit) || 
-            ((uri.endsWith("/")) && ( (SLServlet.getWebServer().owns(uri)) || (uri.startsWith("file:"))))) { // cas dossier
-        	docPageUrl = HTML_Link.docLink(uri);
+        if (edit) {
+            docPageUrl = HTML_Link.docLink(uri);
             %><html:link page="<%=docPageUrl%>" styleClass="a1"><span property="rdfs:label"><%=docLabel%></span></html:link><% // 2013-08 RDFa
         
         } else { // !edit
             // 2017-09 similar stuff in comment.jsp @find doc2markdownHref
-            String mdHref = mod.doc2markdownHref(jsp.getContextUrl(), uri);
-            if (mdHref != null) { // TODO : 2019-03 uris for bookmarks
-              
-               %><a href="<%=mdHref%>"><span property="rdfs:label"><%=docLabel%></span></a><%
-               docPageUrl = HTML_Link.docLink(uri);
-               // 2018-01 LINK TO DOC PAGE ("about")
-               %> <i><html:link page="<%=docPageUrl%>"><%=jsp.i18l("doc.about")%></html:link></i><%
-            } else {
-              // 2019-03 uris for bookmarks
-              
-              String bookmarkOf = doc.bookmarkOf();
-              String u = null;
-              if (bookmarkOf != null) {
-                %><a href="<%=Util.handleAmpersandInHREF(bookmarkOf)%>"><span property="rdfs:label"><%=docLabel%></span></a><% // 2013-08 RDFa
-                // 2018-01 LINK TO DOC PAGE ("about")
-                %> <i><a href="<%=uri%>"><%=jsp.i18l("doc.about")%></a></i><%
-             } else {
-              	docPageUrl = HTML_Link.docLink(uri);
-                %><a href="<%=Util.handleAmpersandInHREF(uri)%>"><span property="rdfs:label"><%=docLabel%></span></a><% // 2013-08 RDFa
-                // 2018-01 LINK TO DOC PAGE ("about")
-                %> <i><html:link page="<%=docPageUrl%>"><%=jsp.i18l("doc.about")%></html:link></i><%
-             }
-              
-             
-              
-            }
+            // String mdHref = mod.doc2markdownHref(jsp.getContextUrl(), uri);
+            // 2019-03 uris for bookmarks
             
-            
-            
-        }
+            %><a href="<%=Util.handleAmpersandInHREF(docStuff.getHref(true))%>"><span property="rdfs:label"><%=docLabel%></span></a><% // 2013-08 RDFa
+            // 2018-01 LINK TO DOC PAGE ("about")
+            %> <i><a href="<%=docStuff.getAboutHref()%>"><%=jsp.i18l("doc.about")%></a></i><%
+         }
         
         //
-        // LINK TO LOCAL COPY
+        // LINK TO LOCAL COPY AND/OR TO SOURCE
         //
         
-        SLDocument localCopy = mod.source2LocalCopy(uri);
+        // 2019-03 uris for bookmarks
+        // SLDocument localCopy = mod.source2LocalCopy(uri);
+        // SLDocument localCopy = mod.getLocalCopy(doc);
+        SLDocument localCopy = docStuff.getLocalCopy();
         if (localCopy != null) {
- 
-        	
           // 2019-04 local use of local files
-          String href = SLServlet.hrefLocalUseOfLocalFile(localCopy.getURI(), Util.getContextURL(request));
+          // String href = SLServlet.hrefLocalUseOfLocalFile(localCopy.getURI(), Util.getContextURL(request));
+          String href = docStuff.getLocalCopyHref();
           
           %> <i>(<a href="<%=href%>"><%=jsp.i18l("doc.localCopy")%></a>)</i><%
             
-        } else if (SLServlet.getWebServer().owns(uri)) {
-            SLDocument source = mod.doc2Source(uri);
+        // } else if (SLServlet.getWebServer().owns(uri)) {
+        } else {
+            // SLDocument source = mod.doc2Source(uri);
+            SLDocument source = docStuff.getSource();
             if (source != null) {
                 %> <i>(<a href="<%=source.getURI()%>"><%=jsp.i18l("doc.source")%></a>)</i><%
             }
         }
+        
         
     %></span><%
     String comment = doc.getComment();
