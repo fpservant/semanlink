@@ -33,6 +33,8 @@ private boolean sourceComputed = false;
 private SLDocument localCopy; // use getter
 private boolean localCopyComputed = false;
 private String localCopyHref; // use getter
+private boolean localCopyLinkComputed = false;
+private HrefPossiblyOpeningInDestop localCopyLink; // use getter
 private boolean localCopyHrefComputed = false;
 private String rawMarkdownUrl; // use getter
 private boolean rawMarkdownUrlComputed = false;
@@ -183,21 +185,44 @@ public String getHref() throws IOException, URISyntaxException {
 	return href;
 }
 
+/**
+ * @deprecated use either getHref() for withOpenInDesktop false, getLink(true) otherwise 
+ */
 public String getHref(boolean withOpenInDesktop) throws IOException, URISyntaxException {
+//	withOpenInDesktop = withOpenInDesktop & SLServlet.canOpenLocalFileWithDesktop();
+//	String href = getHref();
+//	if (!withOpenInDesktop) return href;
+//	File f = getFile();
+//	if (file == null) return href;
+//	withOpenInDesktop = withOpenInDesktop & SLServlet.mayOpenLocalFileWithDesktop(f);
+//	
+//	// HUM TODO CHECK - doit falloir vérifier qu'on est bien ds cas /doc/ avec md ou ds cas /document/
+//	if (withOpenInDesktop) {
+//		if (href.startsWith(contextURL)) {
+//			href = hrefWithOpenInDesktop(href);
+//		}
+//	}
+//	return href;
+	HrefPossiblyOpeningInDestop x = getHrefPossiblyOpeningInDestop(withOpenInDesktop);
+	return x.href();
+}
+
+public HrefPossiblyOpeningInDestop getHrefPossiblyOpeningInDestop(boolean withOpenInDesktop) throws IOException, URISyntaxException {
 	withOpenInDesktop = withOpenInDesktop & SLServlet.canOpenLocalFileWithDesktop();
 	String href = getHref();
-	if (!withOpenInDesktop) return href;
+	if (!withOpenInDesktop) return new HrefPossiblyOpeningInDestop(href, false);
 	File f = getFile();
-	if (file == null) return href;
+	if (file == null) return new HrefPossiblyOpeningInDestop(href, false);
 	withOpenInDesktop = withOpenInDesktop & SLServlet.mayOpenLocalFileWithDesktop(f);
 	
 	// HUM TODO CHECK - doit falloir vérifier qu'on est bien ds cas /doc/ avec md ou ds cas /document/
 	if (withOpenInDesktop) {
 		if (href.startsWith(contextURL)) {
 			href = hrefWithOpenInDesktop(href);
+			return new HrefPossiblyOpeningInDestop(href, true);
 		}
 	}
-	return href;
+	return new HrefPossiblyOpeningInDestop(href, false);
 }
 
 private static String hrefWithOpenInDesktop(String href) {
@@ -295,16 +320,46 @@ public SLDocument getLocalCopy() throws Exception {
 	return null;
 }
 
-public String getLocalCopyHref() throws Exception {
-	if (localCopyHrefComputed) return localCopyHref;
-	localCopyHrefComputed = true;
+///**
+// * @deprecated use getLocalCopyLink
+// * @return
+// * @throws Exception
+// */
+//public String getLocalCopyHref() throws Exception {
+//	if (localCopyHrefComputed) return localCopyHref;
+//	localCopyHrefComputed = true;
+//	SLDocument localCopy = getLocalCopy();
+//	if (localCopy == null) {
+//		localCopyHref = null;
+//		return localCopyHref;
+//	}
+//	localCopyHref = (new SLDocumentStuff(localCopy, mod, contextURL)).getHref(true); // true : TODO
+//	return localCopyHref; 
+//}
+
+public HrefPossiblyOpeningInDestop getLocalCopyLink(boolean withOpenInDesktop) throws Exception {
+	if (localCopyLinkComputed) return localCopyLink;
+	localCopyLinkComputed = true;
 	SLDocument localCopy = getLocalCopy();
 	if (localCopy == null) {
-		localCopyHref = null;
-		return localCopyHref;
+		localCopyLink = null;
+		return localCopyLink;
 	}
-	localCopyHref = (new SLDocumentStuff(localCopy, mod, contextURL)).getHref(true); // true : TODO
-	return localCopyHref; 
+	localCopyLink = (new SLDocumentStuff(localCopy, mod, contextURL)).getHrefPossiblyOpeningInDestop(true); // true : TODO
+	return localCopyLink; 
+}
+
+// to store the href plus "is it an opening in desktop or not?"
+static public class HrefPossiblyOpeningInDestop {
+	private String href;
+	private boolean openingInDesktop;
+	// you must pass the right href at creation: the simple one when not opening in desktop, the modified one when yes
+	HrefPossiblyOpeningInDestop(String href, boolean openingInDesktop) {
+		this.href = href;
+		this.openingInDesktop = openingInDesktop;
+	}
+	public boolean openingInDesktop() { return this.openingInDesktop ; }
+	public String href() { return this.href ; }
 }
 
 // TODO CHECK
@@ -321,7 +376,7 @@ public String getRawMarkdownUrl() throws IOException, URISyntaxException {
 		return rawMarkdownUrl;
 	}
 	// HUM HACK PAS BON // TODO
-	rawMarkdownUrl = getHref(false);
+	rawMarkdownUrl = getHref();
 	File f = getFile();
 	if (f == null) {
 		rawMarkdownUrl = null;

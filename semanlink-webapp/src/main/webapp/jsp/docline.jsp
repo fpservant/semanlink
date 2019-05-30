@@ -33,7 +33,7 @@ String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien
             
             // pour le script du btn "image", cf image.jsp
             // SLDocument imageToBeDisplayed = mod.getDocument(uri); // 2019-03: Hum c'est pas doc? TODO check
-            SLDocument imageToBeDisplayed = mod.getDocument(docStuff.getHref(false)); // 2019-03: Hum c'est pas doc? TODO check
+            SLDocument imageToBeDisplayed = mod.getDocument(docStuff.getHref()); // 2019-03: Hum c'est pas doc? TODO check
            
             Jsp_Document imageJsp_doc = Manager_Document.getDocumentFactory().newJsp_Document(imageToBeDisplayed, request);
             String imageLinkPage = imageJsp_doc.getLinkToThis();
@@ -42,7 +42,7 @@ String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien
             %>
                 <%// span pour ne pas avoir le décalage vers gauche mis pour les triangles des kws cf css .graybox ul li img %>
                 <span style="margin-left:8px">
-                <img src="<%=contextPath%>/ims/image.gif" class="imageBtn" alt="" onclick="loadImage('<%=docStuff.getHref(false)%>', '<%=contextPath+imageLinkPage%>')" />
+                <img src="<%=contextPath%>/ims/image.gif" class="imageBtn" alt="" onclick="loadImage('<%=docStuff.getHref()%>', '<%=contextPath+imageLinkPage%>')" />
                 </span>
             <%
         }  // if (Util.isImage(uri))
@@ -72,28 +72,32 @@ String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien
         } else { // !edit
             // 2017-09 similar stuff in comment.jsp @find doc2markdownHref
             // String mdHref = mod.doc2markdownHref(jsp.getContextUrl(), uri);
-            // 2019-03 uris for bookmarks
-            
-            %><a href="<%=Util.handleAmpersandInHREF(docStuff.getHref(true))%>"><span property="rdfs:label"><%=docLabel%></span></a><% // 2013-08 RDFa
+
+            %><a href="<%=Util.handleAmpersandInHREF(docStuff.getHref(false))%>"><span property="rdfs:label"><%=docLabel%></span></a><% // 2013-08 RDFa
             // 2018-01 LINK TO DOC PAGE ("about")
             %> <i><a href="<%=docStuff.getAboutHref()%>"><%=jsp.i18l("doc.about")%></a></i><%
          }
-        
-        //
-        // LINK TO LOCAL COPY AND/OR TO SOURCE
-        //
-        
-        // 2019-03 uris for bookmarks
-        // SLDocument localCopy = mod.source2LocalCopy(uri);
-        // SLDocument localCopy = mod.getLocalCopy(doc);
-        SLDocument localCopy = docStuff.getLocalCopy();
-        if (localCopy != null) {
-          // 2019-04 local use of local files
-          // String href = SLServlet.hrefLocalUseOfLocalFile(localCopy.getURI(), Util.getContextURL(request));
-          String href = docStuff.getLocalCopyHref();
-          
-          %> <i>(<a href="<%=href%>"><%=jsp.i18l("doc.localCopy")%></a>)</i><%
-            
+         
+         //
+         // LINK TO LOCAL COPY AND/OR TO SOURCE
+         //
+         
+         // 2019-03 uris for bookmarks
+         // SLDocument localCopy = mod.source2LocalCopy(uri);
+         // SLDocument localCopy = mod.getLocalCopy(doc);
+         SLDocument localCopy = docStuff.getLocalCopy();
+         if (localCopy != null) {
+           // 2019-04 local use of local files
+           // String href = SLServlet.hrefLocalUseOfLocalFile(localCopy.getURI(), Util.getContextURL(request));
+           // String href = docStuff.getLocalCopyHref();
+           
+           SLDocumentStuff.HrefPossiblyOpeningInDestop localCopyLink = docStuff.getLocalCopyLink(true);
+           if (localCopyLink.openingInDesktop()) {
+            %> <i>(<a href="<%=localCopyLink.href()%>" onclick="desktop_open_hack('<%=localCopyLink.href()%>'); return false;"><%=jsp.i18l("doc.localCopy")%></a>)</i><%                 
+           } else {
+            %> <i>(<a href="<%=localCopyLink.href()%>"><%=jsp.i18l("doc.localCopy")%></a>)</i><%            
+           }
+           
         // } else if (SLServlet.getWebServer().owns(uri)) {
         } else {
             // SLDocument source = mod.doc2Source(uri);

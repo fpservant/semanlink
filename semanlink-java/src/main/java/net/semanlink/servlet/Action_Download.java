@@ -66,7 +66,7 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 		
 		// URIs for bookmarks: d'où est-ce qu'on downloade ?
 		SLDocumentStuff stuff = new SLDocumentStuff(doc, mod, contextURL);
-		String downloadFromUri = stuff.getHref(false);
+		String downloadFromUri = stuff.getHref();
 		
 		//
 		boolean overwrite = false;
