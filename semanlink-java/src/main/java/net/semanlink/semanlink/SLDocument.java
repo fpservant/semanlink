@@ -1,5 +1,7 @@
 package net.semanlink.semanlink;
 import java.util.*;
+
+import org.apache.jena.rdf.model.Resource;
 /**
  * Represente un document pour Semanlink.
  * Rien de plus en fait qu'un ressource au sens RDF.
@@ -21,4 +23,6 @@ default String bookmarkOf() { // 2019-03 uris for bookmarks -- quick'n dirty
 	if (pv == null) return null;
 	return pv.getFirstAsString();
 }
+
+public List<SLDocument> mainDocOf();
 }

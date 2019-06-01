@@ -308,4 +308,9 @@ public DocMetadataFile getDocMetadataFile() throws IOException, URISyntaxExcepti
 public SLDocumentStuff getSLDocumentStuff() {
 	return docStuff;
 }
+
+//
+// 2019-05 sl:mainDoc: docs main point to a "main doc"
+// On the page of the "Main Doc", we want to list such documents
+//
 }

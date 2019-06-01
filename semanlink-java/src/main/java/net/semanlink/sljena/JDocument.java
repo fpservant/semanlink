@@ -137,4 +137,9 @@ public HashMap getPropertiesAsStrings() {
 public HashMap getProperties() {
 	return JenaUtils.getProperties(this.res);
 }
+
+public List<SLDocument> mainDocOf() {
+	return this.jModel.mainDocOf(this.res);
+}
+
 }

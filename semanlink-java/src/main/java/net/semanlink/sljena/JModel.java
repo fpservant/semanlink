@@ -78,14 +78,15 @@ String safe(String s) {
 //
 // VOCABULAIRE (pour interface ?)
 //
-public Resource keywordClass;
-public Property hasKeywordProperty;
-public Property hasParentProperty;
-public Property hasFriendProperty;
-public Property commentProperty;
-public Property slCreationDateProperty;
-public Property sourceProperty;
-public Property hasAliasProperty;
+private Resource keywordClass;
+private Property hasKeywordProperty;
+private Property hasParentProperty;
+private Property hasFriendProperty;
+private Property commentProperty;
+private Property slCreationDateProperty;
+private Property sourceProperty;
+private Property hasAliasProperty;
+private Property mainDocProperty;
 
 // Resource noKeywordRes;
 // JKeyword noKeyword;
@@ -102,6 +103,7 @@ private void initStandardTerms() {
     // this.noKeywordRes = createKWRes(urlVocabulaire() + "nokeyword", "(No JKeyword)");
 	// this.noKeywordRes = JenaUtils.newKeyword(this.docsModel, urlVocabulaire() + "nokeyword", "(No Keyword)", null);
     // this.noKeyword = new JKeyword(this, noKeywordRes);
+    this.mainDocProperty = this.docsModel.getProperty(SL_MAIN_DOC_PROPERTY);
   } catch (Exception e) {throw new SLRuntimeException(e);}
 }
 
@@ -1747,6 +1749,18 @@ public SLDocument convertOld2NewBookmark(String onlineUri) throws Exception {
 	
 	
 	return null;
+}
+
+public List<SLDocument> mainDocOf(Resource mainDocRes) {
+  Model model = this.docsModel;
+  ResIterator ite = model.listSubjectsWithProperty(this.mainDocProperty, mainDocRes);
+  ArrayList<SLDocument> x = new ArrayList<>();
+  for (;ite.hasNext();) {
+  	x.add(new JDocument(this, ite.nextResource()));
+  }
+  ite.close();
+  return x;
+
 }
 
 } // class JModel
