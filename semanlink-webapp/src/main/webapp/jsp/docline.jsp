@@ -73,7 +73,24 @@ String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien
             // 2017-09 similar stuff in comment.jsp @find doc2markdownHref
             // String mdHref = mod.doc2markdownHref(jsp.getContextUrl(), uri);
 
-            %><a href="<%=Util.handleAmpersandInHREF(docStuff.getHref(false))%>"><span property="rdfs:label"><%=docLabel%></span></a><% // 2013-08 RDFa
+            // open in desktop? not if it's a dir
+            boolean doOpenInDesktop = false;
+            if (docStuff.getFile() != null) {
+            	if (!docStuff.isDir()) {
+            		doOpenInDesktop = true;
+            	}
+            }
+            if (!doOpenInDesktop) {
+                %><a href="<%=Util.handleAmpersandInHREF(docStuff.getHref())%>"><span property="rdfs:label"><%=docLabel%></span></a><% // 2013-08 RDFa
+            } else {
+            	
+              SLDocumentStuff.HrefPossiblyOpeningInDestop hr = docStuff.getHrefPossiblyOpeningInDestop(true);
+              if (hr.openingInDesktop()) {
+               %><a href="<%=hr.href()%>" onclick="desktop_open_hack('<%=hr.href()%>'); return false;"><%=docLabel%></a><%                 
+              } else {
+               %><a href="<%=hr.href()%>"><%=docLabel%></a>)<%            
+              }
+            }
             // 2018-01 LINK TO DOC PAGE ("about")
             %> <i><a href="<%=docStuff.getAboutHref()%>"><%=jsp.i18l("doc.about")%></a></i><%
          }

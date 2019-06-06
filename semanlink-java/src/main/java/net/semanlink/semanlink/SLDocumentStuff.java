@@ -186,7 +186,7 @@ public String getHref() throws IOException, URISyntaxException {
 }
 
 /**
- * @deprecated use either getHref() for withOpenInDesktop false, getLink(true) otherwise 
+ * @deprecated use either getHref() for withOpenInDesktop false, getHrefPossiblyOpeningInDestop(true) otherwise 
  */
 public String getHref(boolean withOpenInDesktop) throws IOException, URISyntaxException {
 //	withOpenInDesktop = withOpenInDesktop & SLServlet.canOpenLocalFileWithDesktop();
@@ -410,7 +410,7 @@ public String uriOfParentFolder(boolean withOpenInDesktop) throws IOException, U
 	return href;
 }
 
-boolean isDir() throws IOException, URISyntaxException {
+public boolean isDir() throws IOException, URISyntaxException {
 	File f = getFile();
 	if (f == null) return false;
 	return f.isDirectory();
