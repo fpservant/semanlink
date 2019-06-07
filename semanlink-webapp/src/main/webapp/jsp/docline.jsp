@@ -88,7 +88,7 @@ String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien
               if (hr.openingInDesktop()) {
                %><a href="<%=hr.href()%>" onclick="desktop_open_hack('<%=hr.href()%>'); return false;"><%=docLabel%></a><%                 
               } else {
-               %><a href="<%=hr.href()%>"><%=docLabel%></a>)<%            
+               %><a href="<%=hr.href()%>"><%=docLabel%></a><%            
               }
             }
             // 2018-01 LINK TO DOC PAGE ("about")
