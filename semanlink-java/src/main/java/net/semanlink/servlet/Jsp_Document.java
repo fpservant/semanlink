@@ -125,11 +125,6 @@ public String getFolderPage() throws UnsupportedEncodingException {
 	return HTML_Link.docLink(getFolderHREF());
 }
 
-/** @deprecated use isFile() */
-private boolean isLocal() throws IOException, URISyntaxException {
-	return (getFile() != null);
-}
-
 public File getFile() throws IOException, URISyntaxException {
 	return this.docStuff.getFile();
 }
@@ -140,7 +135,13 @@ public String getEditLinkPage() throws UnsupportedEncodingException {
 
 public String computelinkToThis() throws UnsupportedEncodingException {
 	// return HTML_Link.linkToDocument(this.slDoc).getPage(); // 2006-01
-	return HTML_Link.htmlLinkPage(this.slDoc);
+	// return HTML_Link.htmlLinkPage(this.slDoc); // 2019-06-07
+	
+	// ATTENTION adherence markdown-sl.js replaceLinkFct
+	// return CoolUriServlet.DOC_SERVLET_PATH + "/?uri=" + URLEncoder.encode(this.slDoc.getURI(), "UTF-8"); // /doc/?uri=...
+	
+	// zut, ceci ne doit pas retoruner le contexte
+	return this.docStuff.getAboutHref().substring(getContextURL().length());
 }
 
 

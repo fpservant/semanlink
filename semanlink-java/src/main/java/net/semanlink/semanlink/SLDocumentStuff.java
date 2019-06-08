@@ -32,10 +32,8 @@ private SLDocument source; // use getter
 private boolean sourceComputed = false;
 private SLDocument localCopy; // use getter
 private boolean localCopyComputed = false;
-private String localCopyHref; // use getter
 private boolean localCopyLinkComputed = false;
 private HrefPossiblyOpeningInDestop localCopyLink; // use getter
-private boolean localCopyHrefComputed = false;
 private String rawMarkdownUrl; // use getter
 private boolean rawMarkdownUrlComputed = false;
 

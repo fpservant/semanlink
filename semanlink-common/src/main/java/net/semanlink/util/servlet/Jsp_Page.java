@@ -151,8 +151,12 @@ public String getPathInfo() {
     return BasicServlet.getPathInfo_Patched(this.request);
 }
 
-public String getContextURL() throws MalformedURLException {
-	return BasicServlet.getContextURL(this.request);
+public String getContextURL() {
+	try {
+		return BasicServlet.getContextURL(this.request);
+	} catch (MalformedURLException e) {
+		throw new RuntimeException(e);
+	}
 }
 
 //
