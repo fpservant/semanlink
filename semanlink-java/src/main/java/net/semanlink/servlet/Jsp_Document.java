@@ -133,6 +133,7 @@ public String getEditLinkPage() throws UnsupportedEncodingException {
 	return "/editdocument.do?docuri=" + java.net.URLEncoder.encode(this.uri, "UTF-8");
 }
 
+// without the context
 public String computelinkToThis() throws UnsupportedEncodingException {
 	// return HTML_Link.linkToDocument(this.slDoc).getPage(); // 2006-01
 	// return HTML_Link.htmlLinkPage(this.slDoc); // 2019-06-07
@@ -140,7 +141,7 @@ public String computelinkToThis() throws UnsupportedEncodingException {
 	// ATTENTION adherence markdown-sl.js replaceLinkFct
 	// return CoolUriServlet.DOC_SERVLET_PATH + "/?uri=" + URLEncoder.encode(this.slDoc.getURI(), "UTF-8"); // /doc/?uri=...
 	
-	// zut, ceci ne doit pas retoruner le contexte
+	// zut, il faut virer le contexte
 	return this.docStuff.getAboutHref().substring(getContextURL().length());
 }
 

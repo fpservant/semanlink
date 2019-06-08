@@ -32,8 +32,13 @@ private SLDocument source; // use getter
 private boolean sourceComputed = false;
 private SLDocument localCopy; // use getter
 private boolean localCopyComputed = false;
-private boolean localCopyLinkComputed = false;
 private HrefPossiblyOpeningInDestop localCopyLink; // use getter
+private boolean localCopyLinkComputed = false;
+private String localCopyPage; // use getter
+private boolean localCopyPageComputed = false;
+private SLDocumentStuff localCopyStuff; // use getter
+private boolean localCopyStuffComputed = false;
+
 private String rawMarkdownUrl; // use getter
 private boolean rawMarkdownUrlComputed = false;
 
@@ -338,12 +343,12 @@ public SLDocument getLocalCopy() throws Exception {
 public HrefPossiblyOpeningInDestop getLocalCopyLink(boolean withOpenInDesktop) throws Exception {
 	if (localCopyLinkComputed) return localCopyLink;
 	localCopyLinkComputed = true;
-	SLDocument localCopy = getLocalCopy();
-	if (localCopy == null) {
+	SLDocumentStuff stuff = getLocalCopyStuff();
+	if (stuff == null) {
 		localCopyLink = null;
 		return localCopyLink;
 	}
-	localCopyLink = (new SLDocumentStuff(localCopy, mod, contextURL)).getHrefPossiblyOpeningInDestop(true); // true : TODO
+	localCopyLink = stuff.getHrefPossiblyOpeningInDestop(true); // true : TODO
 	return localCopyLink; 
 }
 
@@ -358,6 +363,31 @@ static public class HrefPossiblyOpeningInDestop {
 	}
 	public boolean openingInDesktop() { return this.openingInDesktop ; }
 	public String href() { return this.href ; }
+}
+
+// the page in sl giving info about the locl copy
+public String getLocalCopyPage() throws Exception {
+	if (localCopyPageComputed) return localCopyPage;
+	localCopyPageComputed = true;
+	SLDocumentStuff stuff = getLocalCopyStuff();
+	if (stuff == null) {
+		localCopyPage = null;
+		return localCopyPage;
+	}
+	localCopyPage = stuff.getAboutHref();
+	return localCopyPage;
+}
+
+private SLDocumentStuff getLocalCopyStuff() throws Exception {
+	if (localCopyStuffComputed) return localCopyStuff;
+	localCopyStuffComputed = true;
+	SLDocument localCopy = getLocalCopy();
+	if (localCopy == null) {
+		localCopyStuff = null;
+		return null;
+	}
+	localCopyStuff = new SLDocumentStuff(localCopy, mod, contextURL);
+	return localCopyStuff;
 }
 
 // TODO CHECK
