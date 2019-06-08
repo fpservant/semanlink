@@ -14,7 +14,7 @@
 Jsp_Page jsp = (Jsp_Page) request.getAttribute("net.semanlink.servlet.jsp");
 SLDocument doc = (SLDocument) request.getAttribute("net.semanlink.servlet.jsp.currentdoc");
 
-boolean edit = (Boolean.TRUE.equals(session.getAttribute("net.semanlink.servlet.edit")));
+// boolean edit = (Boolean.TRUE.equals(session.getAttribute("net.semanlink.servlet.edit"))); // TODO REMOVE
 SLModel mod = SLServlet.getSLModel();
 SLDocumentStuff docStuff = new SLDocumentStuff(doc, mod, jsp.getContextURL()); // 2019-04
 
@@ -63,46 +63,33 @@ String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien
         // LINK TO DOC
         //
         
-        // String docPageUrl = HTML_Link.htmlLinkPage(doc);
-        String docPageUrl = null;
-        if (edit) {
-        	if (false) { // 2019-06-07
-	            docPageUrl = HTML_Link.docLink(uri);
-	            %><html:link page="<%=docPageUrl%>" styleClass="a1"><span property="rdfs:label"><%=docLabel%></span></html:link><% // 2013-08 RDFa
+        // 2017-09 similar stuff in comment.jsp @find doc2markdownHref
+        // String mdHref = mod.doc2markdownHref(jsp.getContextUrl(), uri);
+
+        // open in desktop? not if it's a dir
+        boolean doOpenInDesktop = false;
+        if (docStuff.getFile() != null) {
+        	if (!docStuff.isDir()) {
+        		doOpenInDesktop = true;
         	}
+        }
+        if (!doOpenInDesktop) {
+        	String href = response.encodeURL(Util.handleAmpersandInHREF(docStuff.getHref()));
+        	%><a href="<%=href%>"><span property="rdfs:label"><%=docLabel%></span></a><%
+        } else {
         	
-            // 2018-01 LINK TO DOC PAGE ("about")
-            String href = response.encodeURL(docStuff.getAboutHref());
-            %><a href="<%=href%>"><%=docLabel%></a><%
+          SLDocumentStuff.HrefPossiblyOpeningInDestop hr = docStuff.getHrefPossiblyOpeningInDestop(true);
+          if (hr.openingInDesktop()) {
+           %><a href="<%=hr.href()%>" onclick="desktop_open_hack('<%=hr.href()%>'); return false;"><%=docLabel%></a><%                 
+          } else {
+           String href = response.encodeURL(hr.href());
+           %><a href="<%=href%>"><%=docLabel%></a><%            
+          }
+        }
+        // 2018-01 LINK TO DOC PAGE ("about")
+        String href = response.encodeURL(docStuff.getAboutHref());
+        %> <i><a href="<%=href%>"><%=jsp.i18l("doc.about")%></a></i><%
 
-        } else { // !edit
-            // 2017-09 similar stuff in comment.jsp @find doc2markdownHref
-            // String mdHref = mod.doc2markdownHref(jsp.getContextUrl(), uri);
-
-            // open in desktop? not if it's a dir
-            boolean doOpenInDesktop = false;
-            if (docStuff.getFile() != null) {
-            	if (!docStuff.isDir()) {
-            		doOpenInDesktop = true;
-            	}
-            }
-            if (!doOpenInDesktop) {
-            	String href = response.encodeURL(Util.handleAmpersandInHREF(docStuff.getHref()));
-            	%><a href="<%=href%>"><span property="rdfs:label"><%=docLabel%></span></a><%
-            } else {
-            	
-              SLDocumentStuff.HrefPossiblyOpeningInDestop hr = docStuff.getHrefPossiblyOpeningInDestop(true);
-              if (hr.openingInDesktop()) {
-               %><a href="<%=hr.href()%>" onclick="desktop_open_hack('<%=hr.href()%>'); return false;"><%=docLabel%></a><%                 
-              } else {
-               String href = response.encodeURL(hr.href());
-               %><a href="<%=href%>"><%=docLabel%></a><%            
-              }
-            }
-            // 2018-01 LINK TO DOC PAGE ("about")
-            String href = response.encodeURL(docStuff.getAboutHref());
-            %> <i><a href="<%=href%>"><%=jsp.i18l("doc.about")%></a></i><%
-         }
          
          //
          // LINK TO LOCAL COPY AND/OR TO SOURCE
@@ -121,7 +108,7 @@ String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien
            if (localCopyLink.openingInDesktop()) {
             %> <i>(<a href="<%=localCopyLink.href()%>" onclick="desktop_open_hack('<%=localCopyLink.href()%>'); return false;"><%=jsp.i18l("doc.localCopy")%></a>)</i><%                 
            } else {
-          	 String href = response.encodeURL(localCopyLink.href());
+          	 href = response.encodeURL(localCopyLink.href());
             %> <i>(<a href="<%=href%>"><%=jsp.i18l("doc.localCopy")%></a>)</i><%            
            }
            
