@@ -104,7 +104,7 @@ String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien
            // String href = SLServlet.hrefLocalUseOfLocalFile(localCopy.getURI(), Util.getContextURL(request));
            // String href = docStuff.getLocalCopyHref();
            
-           SLDocumentStuff.HrefPossiblyOpeningInDestop localCopyLink = docStuff.getLocalCopyLink(true);
+           SLDocumentStuff.HrefPossiblyOpeningInDestop localCopyLink = docStuff.getLocalCopyLink();
            if (localCopyLink.openingInDesktop()) {
             %> <i>(<a href="<%=localCopyLink.href()%>" onclick="desktop_open_hack('<%=localCopyLink.href()%>'); return false;"><%=jsp.i18l("doc.localCopy")%></a>)</i><%                 
            } else {

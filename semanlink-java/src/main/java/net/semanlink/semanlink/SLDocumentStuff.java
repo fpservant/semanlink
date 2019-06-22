@@ -340,7 +340,7 @@ public SLDocument getLocalCopy() throws Exception {
 //	return localCopyHref; 
 //}
 
-public HrefPossiblyOpeningInDestop getLocalCopyLink(boolean withOpenInDesktop) throws Exception {
+public HrefPossiblyOpeningInDestop getLocalCopyLink() throws Exception {
 	if (localCopyLinkComputed) return localCopyLink;
 	localCopyLinkComputed = true;
 	SLDocumentStuff stuff = getLocalCopyStuff();
