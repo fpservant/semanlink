@@ -456,6 +456,7 @@ public SLDocumentStuff parentOfRdfStuff() throws IOException, URISyntaxException
   SLModel.DocMetadataFile metadataFile = SLServlet.getSLModel().doc2DocMetadataFile(this.doc.getURI());
   File folder = metadataFile.getFile().getParentFile();
   String uriOfParentOfRdfFile = mod.fileToUri(folder);
+  if (!uriOfParentOfRdfFile.endsWith("/")) uriOfParentOfRdfFile += "/";
   return new SLDocumentStuff(mod.getDocument(uriOfParentOfRdfFile), mod, contextURL);
 }
 }
