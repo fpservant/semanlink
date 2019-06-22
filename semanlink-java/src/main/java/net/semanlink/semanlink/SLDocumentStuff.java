@@ -422,6 +422,7 @@ public static boolean isMarkdown(String uri) {
 
 //2019-04 local use of local files
 // uniquement s'il s'agit d'un doc local
+// voir parentOfRdfStuff
 public String uriOfParentFolder() throws IOException, URISyntaxException {
 	File f = getFile();
 	if (f == null) return null;
@@ -444,4 +445,17 @@ public boolean isDir() throws IOException, URISyntaxException {
 	return f.isDirectory();
 }
 
+//
+//
+//
+
+// to create a link to folder containing sl.rdf file
+// Hum voir uriOfParentFolder
+public SLDocumentStuff parentOfRdfStuff() throws IOException, URISyntaxException {
+  // SLModel.DocMetadataFile metadataFile = jsp.getDocMetadataFile();
+  SLModel.DocMetadataFile metadataFile = SLServlet.getSLModel().doc2DocMetadataFile(this.doc.getURI());
+  File folder = metadataFile.getFile().getParentFile();
+  String uriOfParentOfRdfFile = mod.fileToUri(folder);
+  return new SLDocumentStuff(mod.getDocument(uriOfParentOfRdfFile), mod, contextURL);
+}
 }
