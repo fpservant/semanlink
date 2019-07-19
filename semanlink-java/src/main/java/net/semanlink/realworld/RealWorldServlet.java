@@ -63,7 +63,6 @@ public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOExce
   		redirectURL = uri;
   	}
   	res.setStatus(303);
-		System.out.println("RealWorldServlet REDIRECT TO "  + redirectURL);
   	res.setHeader("Location", res.encodeRedirectURL(redirectURL));
   	return;
 

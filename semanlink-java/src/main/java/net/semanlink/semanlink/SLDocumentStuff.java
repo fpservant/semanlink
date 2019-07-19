@@ -246,9 +246,48 @@ public String getAboutHref() throws UnsupportedEncodingException {
 	aboutHrefComputed = true;
 	String bookmarkOf = getBookmarkOf();
 	if (bookmarkOf != null) {
+		aboutHref = doc.getURI();		
+	} else {
+		// not a (new kind of) bookmark
+		aboutHref = oldAboutHref(doc.getURI());
+	}
+	return aboutHref;
+}
+
+/**
+ * the link to the "about" page == the page in semanlink about the doc 
+ * FOR DOCUMENTS BEFORE the "uri for bookmarks" change
+ * @param uri : doc.getURI() of such an old doc -- typically, the url of the bookmark
+ * (for a new doc, would be the bookmarkOf)
+ */
+private String oldAboutHref(String uri) throws UnsupportedEncodingException {
+	String x = null;
+	if (uri.startsWith(contextURL + CoolUriServlet.DOC_SERVLET_PATH + "/")) {
+		x = uri;
+	
+	} else { // (at least in particular) a bookmark to the outside world (eg "www.hypersolutions.fr")
+		
+		// handle the case of a page such as .../document/... (happens when we click the bookmarklet on a local copy)
+		x = page2DocUri(uri, contextURL); // not null if .../document/...
+		
+		if (x == null) { 
+			// (probably) a bookmark to the outside world (eg "www.hypersolutions.fr")
+			// cf HTML_Link.docLink
+			x = contextURL + CoolUriServlet.DOC_SERVLET_PATH + "/?uri=" + URLEncoder.encode(uri, "UTF-8"); // /doc/?uri=...
+		}
+	}
+	return x;
+}
+
+private String getAboutHref_SVG() throws UnsupportedEncodingException {
+	if (aboutHrefComputed) return aboutHref;
+	aboutHrefComputed = true;
+	String bookmarkOf = getBookmarkOf();
+	if (bookmarkOf != null) {
 		aboutHref = doc.getURI();
 		return aboutHref;
 	}
+	
 	// not a (new kind of) bookmark
 	
 	String uri = doc.getURI();
@@ -268,6 +307,7 @@ public String getAboutHref() throws UnsupportedEncodingException {
 	}
 	return aboutHref;
 }
+
 
 public SLDocument getSource() throws Exception {
 	if (sourceComputed) return source;
@@ -459,4 +499,26 @@ public SLDocumentStuff parentOfRdfStuff() throws IOException, URISyntaxException
   if (!uriOfParentOfRdfFile.endsWith("/")) uriOfParentOfRdfFile += "/";
   return new SLDocumentStuff(mod.getDocument(uriOfParentOfRdfFile), mod, contextURL);
 }
+
+//
+//
+//
+
+/** pour vérifier que des anciens liens (/doc/?uri=...) fonctionnent encore si on
+ * a des docs de nlle forme, avec le bookmarkOf documenté)
+ * En effet, si je me mets à transformer les anciens docs en nouveaux, va se poser le pb des
+ * liens au sein de comments : il faudrait qu'ils marchent encore)
+ * @throws UnsupportedEncodingException 
+ * 
+ * Pas pour être utilisé véritablement
+ */
+public String oldAboutHref() throws UnsupportedEncodingException {
+	String bookmark = getBookmarkOf();
+	if (bookmark != null) {
+		return oldAboutHref(bookmark);
+	} else {
+		return oldAboutHref(doc.getURI());
+	}
+}
+
 }

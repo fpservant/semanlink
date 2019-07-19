@@ -1679,7 +1679,7 @@ public Iterator rdfTypes4Tags() {
 
 
 //
-// uris for bookmarks
+// uris for bookmarks TODO
 //
 
 @Override
