@@ -35,6 +35,10 @@ private SLModel slMod;
 private SLDataFolder dataFolder;
 private String contextURL;
 
+private static final String DOCS_SUB_FOLDER = "documents";
+private static final String BOOKMARKS_SUB_FOLDER = "bookmarks";
+private static final String DOC_SUB_PATH = "doc";
+
 /**
  * @param slMod model to be exported
  * @param dataFolder the dir that will contain the exported files (a dir tags and a dir bookmarks will be created inside)
@@ -50,11 +54,11 @@ public Exporter(SLModel slMod, SLDataFolder dataFolder, String contextURL) throw
 	if (dir.exists()) {
 		File tagsDir = new File(dir, "tags");
 		if (tagsDir.exists()) Util.deleteDir(tagsDir);
-		File bookmarksDir = new File(dir, "bookmarks");
+		File bookmarksDir = new File(dir, BOOKMARKS_SUB_FOLDER);
 		if (bookmarksDir.exists()) Util.deleteDir(bookmarksDir);
 		File notesDir = new File(dir, "notes");
 		if (notesDir.exists()) Util.deleteDir(notesDir);
-		File docsDir = new File(dir, "documents");
+		File docsDir = new File(dir, DOCS_SUB_FOLDER);
 		if (docsDir.exists()) Util.deleteDir(docsDir);
 	}
 }
@@ -202,12 +206,27 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 		if (dateString.compareTo(dateLimite) < 0) break; // 2013-09
 		List docsOfDayList = this.slMod.getDocumentsList(SLVocab.SL_CREATION_DATE_PROPERTY, dateString, null);
 		
+
+//		if ("2019-07-19".equals(dateString)) {
+//			System.out.println("AAAAAAAAAAAAAAAAAAAAAAAa " + i);
+//			for (int k = 0 ; k < docsOfDayList.size() ; k++) {
+//				System.out.println("/t"+docsOfDayList.get(k));
+//			}
+//			System.out.println("AAAAAAAAAAAAAAAAAAAAAAAa FIN");
+//		}		
+		
+		
 		JFileModel bookmarksJFileModel = null;
 		Model bookmarksMod = null; // les bookmarks pour ce jour		
 		{
-			File slDotRdfFile = getSLDotRdfFileUsingCreationMonth(this.dataFolder, "bookmarks", dateString);
+			File slDotRdfFile = getSLDotRdfFileUsingCreationMonth(this.dataFolder, BOOKMARKS_SUB_FOLDER, dateString);
 			String base = this.dataFolder.getBase(slDotRdfFile);
+			// 2019-07 parce que les statements sont en /doc/, pas /bookmarks/
+			// (pour les docs, on réécrit les statements, ce qui fait que ça va,
+			// mais pas ici)
+			base = base.replace("/" + BOOKMARKS_SUB_FOLDER + "/", "/" + DOC_SUB_PATH + "/");
 			bookmarksJFileModel = new JFileModel(slDotRdfFile.getPath(), base);
+			// System.out.println("Exporter base bookmarksJFileModel:" + base);
 			bookmarksMod = bookmarksJFileModel.getModel(); // les docs pour ce jour
 		}
 		
@@ -217,6 +236,7 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 			File slDotRdfFile = getSLDotRdfFileUsingCreationMonth(this.dataFolder, "notes", dateString);
 			String base = this.dataFolder.getBase(slDotRdfFile);
 			notesJFileModel = new JFileModel(slDotRdfFile.getPath(), base);
+			// System.out.println("Exporter base notesJFileModel:" + base);
 			notesMod = notesJFileModel.getModel(); // les docs pour ce jour
 		}
 		
@@ -225,10 +245,11 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 		File destDir4Docs = null;
 		String base4docs = null;
 		{
-			File slDotRdfFile = getSLDotRdfFileUsingCreationMonth(this.dataFolder, "documents", dateString);
+			File slDotRdfFile = getSLDotRdfFileUsingCreationMonth(this.dataFolder, DOCS_SUB_FOLDER, dateString);
 			destDir4Docs = slDotRdfFile.getParentFile();
 			base4docs = this.dataFolder.getBase(slDotRdfFile);
 			docsJFileModel = new JFileModel(slDotRdfFile.getPath(), base4docs);
+			// System.out.println("Exporter base docsJFileModel:" + base4docs);
 			docsMod = docsJFileModel.getModel(); // les docs pour ce jour
 		}
 		
@@ -243,6 +264,7 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 			PropertyValues vals = doc.getProperty(PUBLISH_PROP);
 			if (vals != null) publish = vals.getFirstAsString().trim().toLowerCase();
 			Resource res = doc.getRes();
+//			System.out.println("Exporter res: " + res + " dateString: " + dateString);
 			boolean addToBookmarks = false;
 			boolean addToNotes = false;
 			boolean addToDocs = false;
@@ -354,7 +376,8 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 						// ATTENTION ne suporte pas la publication de dirs
 						File destFile = CopyFiles.copyFile2Dir(source, destDir4Docs, false); // ATTENTION SI ON CHANGE QLQ CHOSE, VOIR ATTENTION PLUS BAS
 						// String newDocUri = slMod.fileToUri(destFile); NON donne une uri file
-						String newDocUri = base4docs + destFile.getName(); // ATTENTION suppose que le nouveau fichier n'est pas ds un osus-dossier de destDir4Docs
+					  // ATTENTION : seulement si base4docs est bien un truc relatif !:
+						String newDocUri = base4docs + destFile.getName(); // ATTENTION suppose que le nouveau fichier n'est pas ds un sous-dossier de destDir4Docs 
 						Resource newDocRes = docsMod.getResource(newDocUri);
 						for (;ite.hasNext();) {
 							Statement sta = ite.nextStatement();

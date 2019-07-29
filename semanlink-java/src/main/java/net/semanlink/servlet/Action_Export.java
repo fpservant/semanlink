@@ -34,7 +34,9 @@ public class Action_Export extends BaseAction {
 				// String base = slMod.getDefaultThesaurus().getURI();
 				String base = Util.getContextURL(request);
 				if (!base.endsWith("/")) base += "/";
-				SLDataFolder dataFolder = new SLDataFolder(exportDir, base, slMod.getDefaultThesaurus(), new LoadingMode("yearMonth absoluteBase"));
+				// SLDataFolder dataFolder = new SLDataFolder(exportDir, base, slMod.getDefaultThesaurus(), new LoadingMode("yearMonth absoluteBase"));
+				// 2019-07 
+				SLDataFolder dataFolder = new SLDataFolder(exportDir, base, slMod.getDefaultThesaurus(), new LoadingMode("yearMonth"));
 				Exporter exporter = new Exporter(slMod, dataFolder, Util.getContextURL(request));
 				
 				int nbOfDays = -1;

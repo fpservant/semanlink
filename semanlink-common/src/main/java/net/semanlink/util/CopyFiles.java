@@ -83,7 +83,7 @@ public static File copyFile2Dir(File source, File destDir, boolean overwrite) th
 				woExtension = Util.getWithoutExtension(sn);
 			}
 			for(int i = 2;;i++) {
-				x = new File(destDir, woExtension + "-" + Integer.toString(i) + dotExtension);
+				x = new File(destDir, woExtension + "-" + Integer.toString(i) + "." + dotExtension);
 				if (!(x.exists())) break;
 			}
 		}

@@ -172,7 +172,7 @@ public String getHref() throws IOException, URISyntaxException {
 		return href;
 	}
 	
-	boolean b = f.isDirectory(); // TODO REMOVE
+	// boolean b = f.isDirectory();
 	// System.out.println("File: " + file + " isDir: " + f.isDirectory());
 	// LOCAL FILE
 	// f not null, but does it exist? Should we check?
@@ -355,11 +355,11 @@ public SLDocument getLocalCopy() throws Exception {
 	// if (getFile() != null) return null; // si doc local, pas de local copy // ATTENTION, ce test retourne qlq chose si servi par webserver - donc pas à mettre plu shat
 
 	localCopy = mod.source2LocalCopy(doc.getURI()); // recherche basée sur inv(dc:source)
-	// System.out.println("getLocalCopy 3 " + slDoc.getURI()); // TODO REMOVE
+	// System.out.println("getLocalCopy 3 " + slDoc.getURI());
 	if (localCopy != null) {
 		return localCopy;
 	}
-	// System.out.println("getLocalCopy NOT FOUND"); // TODO REMOVE
+	// System.out.println("getLocalCopy NOT FOUND");
 	return null;
 }
 
