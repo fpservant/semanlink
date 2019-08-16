@@ -22,20 +22,8 @@ SLDocumentStuff docStuff = new SLDocumentStuff(doc, mod, jsp.getContextURL()); /
 
 // String linkToThisPage = jsp.getLinkToThis(); // ceci est mis en cache par jsp -- pas grave de l'appeler ds chaque docline.jsp de la liste
 String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien l'url servi par le ws
-
-//2019-08 up until now, we used ul list.
-//this param to say: no, we are in the new way of doing
-boolean asUL_List = Boolean.TRUE.equals(request.getAttribute("net.semanlink.servlet.Bean_DocList_asUL_List"));
-
 // 2013-08 RDFa
-
-if (asUL_List) {
 %><li class="docline" about="<%=uri%>"><%
-} else {
-%><div class="docline_indiv" about="<%=uri%>"><%    
-}
-
-
     %><span><% // ajouté pour tree - était avant au niveau LI
         if (Util.isImage(uri)) {
 
@@ -135,20 +123,12 @@ if (asUL_List) {
         
         
     %></span><%
-    boolean addbr = true;
     String comment = doc.getComment();
     if (comment != null) {
         comment = Util.toHTMLOutput(comment);
-        if (asUL_List) {
         %><br/><span class="docline_comment" property="rdfs:comment"><%=comment %></span><% // 2013-08 RDFa
-        } else {
-        	addbr = false;
-          %><div class="docline_comment" property="rdfs:comment"><%=comment %></div><% // 2013-08 RDFa
-        }
     }
-    if (addbr) {
     %><br/><%
-    }
     
     //
     // AFFICHAGE DE LA VALEUR DE LA SORTPROPERTY
@@ -193,6 +173,4 @@ if (asUL_List) {
     // KWS DU DOC
     //
     %><jsp:include page="/jsp/kwsofdoc.jsp"/><%
-if (asUL_List) {%></li><%
-} else {%></div><%}%>
-<!--/docline.jsp-->
+%></li><!--/docline.jsp-->
