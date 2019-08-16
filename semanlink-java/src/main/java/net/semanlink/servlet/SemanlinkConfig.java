@@ -33,6 +33,7 @@ import net.semanlink.sljena.modelcorrections.TagLabel2PrefLabelCorrection;
 import net.semanlink.sljena.modelcorrections.ThesaurusUriCorrection;
 import net.semanlink.sljena.modelcorrections.KeywordUriCorrection;
 import net.semanlink.util.Util;
+import net.semanlink.util.jena.JenaUtils;
 
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.shared.JenaException;
@@ -86,6 +87,8 @@ public static final String SL_LOADING_MODE_PROP = SEMANLINK_CONFIG_SCHEMA + "loa
 public static final String SL_METADATA_EXTRACTION_BLACKLISTED = SEMANLINK_CONFIG_SCHEMA + "metadataExtractionBlackListed";
 public static final String SL_MAIN_FRAME = SEMANLINK_CONFIG_SCHEMA + "mainFrame";
 public static final String PUBLISH_PROP = SEMANLINK_CONFIG_SCHEMA + "publish";
+
+public static final String SL_BASE_PROP = SEMANLINK_CONFIG_SCHEMA + "base";
 
 public static final String SLC_USE_PROPERTY_PROP = SEMANLINK_CONFIG_SCHEMA + "useProperty";
 
@@ -384,7 +387,9 @@ private SLThesaurus loadThesaurus(SLModel slMod, Resource thesaurusRes, ModelCor
 
 /** Retourne fichier chargé. */
 private SLDataFolder loadSLFile(SLModel slMod, Resource dataFolderRes, SLThesaurus defaultThesaurus) throws IOException, URISyntaxException {
-	return loadSLFile(slMod, dataFolderRes, defaultThesaurus, dataFolderRes.getURI(),false);
+	Resource base = (Resource) JenaUtils.firstObjectOfProperty(dataFolderRes, model.createProperty(SL_BASE_PROP)); // 2019-07
+	if (base == null) base = dataFolderRes;
+	return loadSLFile(slMod, dataFolderRes, defaultThesaurus, base.getURI(), false);
 }
 
 // 2007/02 isBookmarkDataFolder
