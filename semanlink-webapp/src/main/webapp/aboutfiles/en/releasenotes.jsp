@@ -5,6 +5,11 @@
 <h1>Release notes</h1>
 <div class="graybox">
 
+<h2>0.6.1 2019-xx-xx</h2>
+<ul>
+<li>Various small things and bug corrections related to the changes introduced with 0.6</li>
+</ul>
+
 <h2>0.6.0 2019-05-20</h2>
 <ul>
 <li>Statements about bookmarks now have a proper URI served by the servlet (semanlink/doc/...) 

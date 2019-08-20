@@ -57,10 +57,11 @@ static public HashMap getDomain2Documents(List docs) throws Exception {
 		HashMap x = new HashMap();
 		for (int i = 0; i < docs.size(); i++) {
 			SLDocument doc = (SLDocument) docs.get(i);
-			
 			String uri = doc.bookmarkOf();
-			if (uri == null) uri = doc.getURI();
-			if (slMod.getFile(uri) != null) continue; // local TODO : if source documented
+			if (uri == null) {
+				uri = doc.getURI();
+				if (slMod.getFile(uri) != null) continue; // local TODO : if source documented
+			}
 			
 			String domain = domain(uri);
 			ArrayList data = (ArrayList) x.get(domain);
