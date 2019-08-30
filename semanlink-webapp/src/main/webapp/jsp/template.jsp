@@ -294,21 +294,21 @@ if (jsp instanceof Jsp_Keyword) { // 2013-08 RDFa added typeof
 		<% /////////////////////////////////////////// CONTENT %>
 		<%
 		String content = jsp.getContent();
-		if (content != null) {
-			try {
-				%><jsp:include page="<%=content%>" flush="true" /><%
-			} catch (Throwable e) {
-				// probablement qu'on essaye d'inclure quelque chose qui est en fait un appel à CoolUriServlet, et non une page jsp ou html
-				// (par ex, include "/about/..." -- about étant dans les servlet-mapping de CoolUriServlet, cf web.xml)
-				%>Impossible to include content: <%=content%>:<%
-				PrintWriter pw = new PrintWriter(out);
-				%>
-				<pre><%e.printStackTrace(pw);%></pre>
-				<%
-				// throw new RuntimeException(e);
-			}
-		} else {
-			%>What do you think you'll get if you don't say what you want?<%
+		if (content == null) {
+			// prudence est mère des vertus // 2019-08 sicg 
+			content = "/jsp/welcome.jsp";
+		}
+		try {
+			%><jsp:include page="<%=content%>" flush="true" /><%
+		} catch (Throwable e) {
+			// probablement qu'on essaye d'inclure quelque chose qui est en fait un appel à CoolUriServlet, et non une page jsp ou html
+			// (par ex, include "/about/..." -- about étant dans les servlet-mapping de CoolUriServlet, cf web.xml)
+			%>Impossible to include content: <%=content%>:<%
+			PrintWriter pw = new PrintWriter(out);
+			%>
+			<pre><%e.printStackTrace(pw);%></pre>
+			<%
+			// throw new RuntimeException(e);
 		}
 	} // error or not
 %>
