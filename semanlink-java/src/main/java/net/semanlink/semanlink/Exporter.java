@@ -13,12 +13,14 @@ import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 
 import net.semanlink.graph.Graph;
 import net.semanlink.graph.GraphTraversal;
+import net.semanlink.servlet.SLServlet;
 import net.semanlink.servlet.SemanlinkConfig;
 import net.semanlink.sljena.JDocument;
 import net.semanlink.sljena.JFileModel;
@@ -181,13 +183,28 @@ private boolean isLocal(String docUri) {
 		if (docUri.startsWith("file:/")) return true;
 		if (docUri.startsWith("http://127.0.0.1")) return true;
 		if (docUri.startsWith("http://localhost")) return true;
-		if (docUri.contains("renault")) {
-			if (docUri.contains("rplug.renault.com")) {
-				return false;
+		if (!isSicg()) {
+			if (docUri.contains("renault")) {
+				if (docUri.contains("rplug.renault.com")) {
+					return false;
+				}
+				return true;
 			}
-			return true;
+//		} else { // ne pas exporter les cr de rdd
+//			if (docUri.contains("/cr/")) {
+//				return true;
+//			} else if (docUri.contains("sicg.tpz.renault.fr/journal")){
+//				return true;
+//			} else {
+//				return false;
+//			}
 		}
 		return false;
+}
+
+// TODO REMOVE
+private boolean isSicg() {
+	return SLServlet.getServletUrl().contains("sicg.tpz.renault.fr");
 }
 
 /**
@@ -195,9 +212,19 @@ private boolean isLocal(String docUri) {
  * @param nbOfDays if < 0, all things after 2000-00-00
  */
 private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
+	
+	if (isSicg()) {
+		purgeDates();
+	}
+	
+	
+	
 	// pourrait être optimisé : ici, on ajoute jour par jour
 	// les docs au fichier du mois (30 lectures écriture du fichier, là où il pourrait
 	// n'y en avoir qu'une.
+
+	
+	
 	
 	String dateLimite = "2000-00-00"; // 2013-09
 	if (nbOfDays < 0) nbOfDays = 100000; // 2013-09
@@ -207,15 +234,6 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 		List docsOfDayList = this.slMod.getDocumentsList(SLVocab.SL_CREATION_DATE_PROPERTY, dateString, null);
 		
 
-//		if ("2019-07-19".equals(dateString)) {
-//			System.out.println("AAAAAAAAAAAAAAAAAAAAAAAa " + i);
-//			for (int k = 0 ; k < docsOfDayList.size() ; k++) {
-//				System.out.println("/t"+docsOfDayList.get(k));
-//			}
-//			System.out.println("AAAAAAAAAAAAAAAAAAAAAAAa FIN");
-//		}		
-		
-		
 		JFileModel bookmarksJFileModel = null;
 		Model bookmarksMod = null; // les bookmarks pour ce jour		
 		{
@@ -444,6 +462,77 @@ private File getSLDotRdfFileUsingCreationMonth(SLDataFolder dataFolder, String s
 	x = new File(x,yyyy);
 	x = new File(x,mm);		
 	return new File(x,"sl.rdf");
+}
+
+//
+// Pour export lors du changement semanlink-sicg 2019-08
+// Les fichiers (articles, en particuliers) n'ont pas tous une sl:creationDate (amis souvent une dc:date)
+// On aimerait que (pour les articles), ils se retrouvent ds un dossier correspondant à la date de la rdd
+// Par ailleurs, certains ont plusieurs sl:creationDate
+
+private void purgeDates() {
+	System.out.println("**************** purgeDates *****************");
+	
+	JModel m = (JModel) slMod;
+	Model docsModel = m.getDocsModel();
+	
+	Property dcDateProp = docsModel.getProperty(SLVocab.DATE_PARUTION_PROPERTY);
+	Property slCreationDateProp = docsModel.getProperty(SLVocab.SL_CREATION_DATE_PROPERTY);
+	Property slCreationTimeProp = docsModel.getProperty(SLVocab.SL_CREATION_TIME_PROPERTY);
+
+	// il y a des docs avec 2 sl:creationDate.
+	// Réglons ça
+	ResIterator ite = docsModel.listSubjectsWithProperty(slCreationDateProp);
+	List<Resource> docs = ite.toList();
+	for (Resource doc : docs) {
+		StmtIterator sit = doc.listProperties(slCreationDateProp);
+		// faudrait ne garder que la 1ere, mais c pénible
+//		List<Statement> dates = sit.toList();
+//		if (dates.size() > 1) {
+//		}
+		// faudrait aussi s'occuper des sl:creationTime. pfff
+		
+		if (sit.hasNext()) sit.next(); // on passe la 1ere
+		// on vire les suivantes
+		if (sit.hasNext()) {
+			docsModel.remove(sit);
+		}
+	}
+	
+	
+	
+	// l'idée était de lister les docs avec ça
+	// MAIS les cr rdd n'ont pas de tags
+	// Par ailleurs, plus lojn on ne prend que ceux qui ont un dc:title
+	// Autant prendre ici tou ce qui a un dc:title
+	
+	// ResIterator ite = docsModel.listSubjectsWithProperty(docsModel.getProperty(SLVocab.HAS_KEYWORD_PROPERTY));
+	ite = docsModel.listSubjectsWithProperty(dcDateProp);
+	docs = ite.toList();
+	for (Resource doc : docs) {
+		
+		// SEULEMENT POUR LES CR RDD
+		System.out.println(doc.getURI());
+		
+		if (!doc.getURI().contains("sicg.tpz.renault.fr/journal")) {
+			continue;
+		}
+		
+		
+		Literal dcDate = JenaUtils.firstLiteralOfProperty(doc, dcDateProp);
+		if (dcDate == null) continue; // peut pas arriver, vu que plus haut, on n'a pris que les docs qui ont une dc:date
+		
+		// ATTENTION, IL FAUT dcDate non null (et correct)
+
+		// virer les formes pre-existantes de slCreationDate et time
+		StmtIterator sit = doc.listProperties(slCreationDateProp);
+		docsModel.remove(sit);
+		sit = doc.listProperties(slCreationTimeProp);
+		docsModel.remove(sit);
+		
+		// Mettre une date de creation à la date de publication
+		docsModel.addLiteral(doc, slCreationDateProp, dcDate);
+	}
 }
 
 }
