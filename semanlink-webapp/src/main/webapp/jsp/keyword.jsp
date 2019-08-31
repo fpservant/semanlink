@@ -32,7 +32,7 @@ if (!(jsp.isDisplaySnipOnly())) {
 	
 	<% /////////////////// COMMENT		 %>							 
 	<jsp:include page="comment.jsp"/>
-
+	<% /////////////////// COMMENT       %>	<%if (false) { %>                        	    <jsp:include page="markdownof.jsp"/>	<%}%>
 <%}//  if (!(jsp.isDisplaySnipOnly())) %><%	Bean_KwList truc = new Bean_KwList();	truc.setUri(kw.getURI());	request.setAttribute("net.semanlink.servlet.Bean_KwList", truc);
 %>
 
