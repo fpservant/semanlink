@@ -9,7 +9,7 @@ public interface SLResource {
 	public String getURI();
 	public String getComment();
 	public String getDate();
-	public String getMarkdownUri(String lang);
+	public String getMarkdownUri(String lang); // not used actually. Culd be set again find DISPLAY_MARKDOWN_OF_PROPERTY
 	/** Retourne une HashMap de cle les Property, et de data une PropertyValues */
 	public HashMap getProperties();
 	public HashMap getPropertiesAsStrings();
