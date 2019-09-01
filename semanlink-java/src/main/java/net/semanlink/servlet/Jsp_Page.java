@@ -27,24 +27,7 @@ import javax.servlet.http.*;
 import org.apache.jena.rdf.model.Model;
 
 /** Modélise une page à afficher. */
-// public class Jsp_Page implements SLVocab {
 public class Jsp_Page extends net.semanlink.util.servlet.Jsp_Page implements SLVocab {
-/*public static String SHOW_CHILDREN_ONLY = "0"; // children as list, short list of docs
-public static String SHOW_ALL_DOCUMENTS = "1"; // children as list, long list of docs
-public static String SHOW_TREE = "2"; // tree, docs nada
-public static String SHOW_TREE_LONG_LIST_OF_DOCS = "21"; // tree, long list of docs
-public static String SHOW_EXPANDED_TREE = "3"; // expanded tree, docs nada or long list
-public static String SHOW_EXPANDED_TREE_LONG_LIST_OF_DOCS = "31"; // expanded tree, long list of docs
-public static String SHOW_DEFAULT_MODE = SHOW_TREE;*/
-
-
-
-
-
-
-// protected HttpServletRequest request;
-/** use getter */
-// private String title; // @find old Jsp_Page extending new Jsp_Page
 /** list of SLDocuments.
  * Achtung, must be accessed through its getter as it's computed only when needed.
  * Must be reset to null if state of this changes
@@ -80,10 +63,7 @@ public Jsp_Page(HttpServletRequest request) {
 }
 public Jsp_Page(HttpServletRequest request, HttpServletResponse response) {
 	super(request, response);
-	// this.request = request;
 	this.isIE = Util.isIE(request);
-	// 2017-06 docs not sorted in tree
-	// setSortProperty((String) request.getSession().getAttribute("net.semanlink.servlet.SortProperty"));
 	setSortProperty(getSortProperty());
 	
 	this.beanKwList = new Bean_KwList();
@@ -97,7 +77,6 @@ public Jsp_Page(HttpServletRequest request, HttpServletResponse response) {
 	// 2010-06 was in template.jsp : <body onload="liveSearchInit(); setFocus();"> // Must be AFTER downloadJS
 	// this.addOnLoadEvents("liveSearchInit"); // 2013-08: found a way to avoid having to do that on load
 	this.addOnLoadEvents("setFocus");
-	// System.out.println("NEW Jsp_Page " + getUri());
 	// 2017-07 sl:comment as markdown
 	this.addOnLoadEvents("displayCommentAsMarkdown");
 }
@@ -124,11 +103,6 @@ public String getContextUrl() throws MalformedURLException {
 	return this.contextUrl;
 }
 
-/*public Object getDescendantsMode() {
-	if (displayMode == null) computeDisplayMode();
-	return displayMode.;
-}*/
-
 public DisplayMode getDisplayMode() {
 	if (displayMode == null) computeDisplayMode();
 	return displayMode;
@@ -153,23 +127,6 @@ protected void computeDisplayMode() {
 	}
 }
 
-
-/*
-protected void computeDescendantsMode() {
-	this.mode = request.getParameter("mode");
-	HttpSession session = this.request.getSession();
-	if (mode != null) {
-		Form_Base fb = Form_Base.get(session);
-		fb.setMode(mode);
-	} else {
-		mode = (String) session.getAttribute("net.semanlink.servlet.mode");
-		if (mode == null) {
-			mode = SHOW_DEFAULT_MODE;
-			session.setAttribute("net.semanlink.servlet.mode", mode);
-		}
-	}
-}
-*/
 
 public String getTitle() { return this.title; }
 public void setTitle(String title) { this.title = title; }
@@ -322,10 +279,7 @@ public void setShowKeywordsInDocList(boolean b) { this.showKeywordsInDocList = b
 public void setSortProperty(String sortProperty) { this.sortProperty = sortProperty; }
 public String getSortProperty() { 
 	if (this.sortProperty == null) {
-		//this.sortProperty = (String) request.getSession().getAttribute("net.semanlink.servlet.SortProperty");
-		//if (this.sortProperty == null) {
 			this.sortProperty = SLServlet.getJspParams().getDefaultSortProperty();
-		//}
 	}
 	return this.sortProperty;
 }
@@ -542,14 +496,6 @@ public String linkToRDFRelativToSL() throws Exception {
 	return null;
 }
 
-// ça marche pour jsp-keyword, et jsp-thismonth, // seulement ? N'est-ce pas plutôt que le traitement n'est pas fait ds la sevrlet ?
-// sauf si http://.../semanlink // faux maintenant (?)
-// 2013-08 removed
-//public String linkToRDF() throws Exception {
-//	return linkToRDF("rdf");
-//}
-
-
 //voir addDoc ds RDFOutput (question d'homogénéité de la forme des uri des kws !!!
 // 2013-08: replaces public String linkToRDF(boolean includeDotRDFInUri)
 /**
@@ -603,51 +549,6 @@ public String linkToRDF(String extension) throws Exception {
 	}
 	return sb.toString();
 }
-
-//// voir addDoc ds RDFOutput (question d'homogénéité de la forme des uri des kws !!!
-///** @deprecated replaced by linkToRDF(String) */
-//public String linkToRDF(boolean includeDotRDFInUri) throws Exception {
-//	// prendre getRequestURL ne va pas pour le cas http://.../semanlink, qui redirige vers semanlink/sl/new :
-//	// il faut reconstituer le path à partir de ses composants
-//	// StringBuffer sb = this.request.getRequestURL(); // ET POURQUOI PAS ???
-//	StringBuffer sb = new StringBuffer(getContextUrl());
-//	sb.append(request.getServletPath());
-//	sb.append(request.getPathInfo());
-//	String s = sb.toString();
-//	if (s.endsWith(".html")) sb = new StringBuffer(s.substring(0,s.length()-5));
-//	if (includeDotRDFInUri) {
-//		if (! ( (s.endsWith(".rdf")) || (s.endsWith(".n3")))) sb.append(".rdf");
-//	}
-//	// can't we change all this for request.getQueryString() ?
-//	// No: we would have "&" instead of "&amp;"
-//	Enumeration e = this.request.getParameterNames();
-//	if (e.hasMoreElements()) {
-//		sb.append("?");
-//		String param = (String) e.nextElement() ;
-//		String[] vals = this.request.getParameterValues(param);
-//		sb.append(param);
-//		sb.append("=");
-//		sb.append(vals[0]);
-//		for (int i = 1; i < vals.length; i++) {
-//			sb.append("&amp;");
-//			sb.append(param);
-//			sb.append("=");
-//			sb.append(URLUTF8Encoder.encode(vals[i]));
-//		}
-//		for (;e.hasMoreElements();) {
-//			param = (String) e.nextElement() ;
-//			vals = this.request.getParameterValues(param);
-//			for (int i = 0; i < vals.length; i++) {
-//				sb.append("&amp;");
-//				sb.append(param);
-//				sb.append("=");
-//				sb.append(URLUTF8Encoder.encode(vals[i]));
-//			}
-//		}
-//	}
-//	return sb.toString();
-//}
-
 
 // @find rdfparser
 public String linkToRdfJs() throws UnsupportedEncodingException, Exception {
@@ -708,18 +609,6 @@ public Model getRDF(String extension) throws Exception {
 	return rdfOutput.getModel();
 }
 
-/*
-	public Resource getKeywordClass(Model mod) { return mod.createResource(getKeywordClassURI()); }
-	public Property getHasKeywordProperty(Model mod) { return mod.createProperty(getHasKeywordPropertyURI()); }
-	public Property getHasParentProperty(Model mod) { return mod.createProperty(getHasParentPropertyURI()); }
-	public Property getHasFriendProperty(Model mod) { return mod.createProperty(getHasFriendPropertyURI()); }
-	public Property getHasAliasProperty(Model mod) { return mod.createProperty(getHasAliasPropertyURI()); }
-	public Property getCommentProperty(Model mod) { return mod.createProperty(getCommentPropertyURI()); }
-	public Property getCreationProperty(Model mod) { return mod.createProperty(getCreationPropertyURI()); }
-	public Property getCreationTimeProperty(Model mod) { return mod.createProperty(getCreationTimePropertyURI()); }
-	public Property getReplacedByProperty(Model mod) { return mod.createProperty(getReplacedByPropertyURI()); }
- */
-
 //
 //
 //
@@ -734,16 +623,4 @@ public I18l getI18l() {
 	}
 	return this.i18l;
 }
-
-//
-// 2010-06
-//
-/* pourrait être utilisé pour traiter le body tag comme ds template.jsp de load
-@Override
-public String getBodyTag() {
-	return "<body onload=\"liveSearchInit(); setFocus();\">";
-}
-
-*/
-
 }

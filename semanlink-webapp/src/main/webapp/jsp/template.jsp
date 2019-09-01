@@ -47,7 +47,6 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 	<link rel="stylesheet" href="<%=contextPath%>/css/sidemenu.css" type="text/css" />
 	<link rel="stylesheet" href="<%=contextPath%>/css/slstyles.css" type="text/css" />
 	
-	<!-- https://github.com/evilstreak/markdown-js -->
     <script src="<%=contextPath%>/scripts/markdown-it.min.js"></script>   
 	<script src="<%=contextPath%>/scripts/markdown-it-replace-link.min.js"></script>   
 	<script src="<%=contextPath%>/scripts/markdown-sl.js"></script>   
@@ -319,7 +318,7 @@ if (jsp instanceof Jsp_Keyword) { // 2013-08 RDFa added typeof
 </div> <!-- middle -->
 </body>
 
-<% // put at the end, in order to allow included .jsp to add events  to jsp(it is the case of document.jsp, for the markdown) %>
+<% // put at the end, in order to allow included .jsp to add events to jsp (it is the case of document.jsp, for the markdown) %>
 <script type="text/JavaScript">
     Tools = {
         'addEvent': function(obj, evType, fn) { 
