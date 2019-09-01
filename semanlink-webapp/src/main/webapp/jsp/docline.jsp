@@ -76,7 +76,7 @@ String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien
         if (!doOpenInDesktop) {
         	String href = response.encodeURL(Util.handleAmpersandInHREF(docStuff.getHref()));
         	%><a href="<%=href%>"><span property="rdfs:label"><%=docLabel%></span></a><%
-        } else {
+        } else { // doOpenInDesktop
         	
           SLDocumentStuff.HrefPossiblyOpeningInDestop hr = docStuff.getHrefPossiblyOpeningInDestop(true);
           if (hr.openingInDesktop()) {
@@ -86,6 +86,8 @@ String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien
            %><a href="<%=href%>"><%=docLabel%></a><%            
           }
         }
+        
+        
         // 2018-01 LINK TO DOC PAGE ("about")
         String href = response.encodeURL(docStuff.getAboutHref());
         %> <i><a href="<%=href%>"><%=jsp.i18l("doc.about")%></a></i><%

@@ -153,6 +153,10 @@ public String getHref() throws IOException, URISyntaxException {
 	bookmarkOf = getBookmarkOf();
 	if (bookmarkOf != null) {
 		href = bookmarkOf;
+		// 2019-08 to support the display of external .md file
+		if (this.isMarkdown(href)) {
+			href = doc.getURI();
+		}
 		return href;
 	}
 	
@@ -189,23 +193,9 @@ public String getHref() throws IOException, URISyntaxException {
 }
 
 /**
- * @deprecated use either getHref() for withOpenInDesktop false, getHrefPossiblyOpeningInDestop(true) otherwise 
+ * @deprecated use either getHref() for withOpenInDesktop false, getHrefPossiblyOpeningInDestop(true).href() otherwise 
  */
 public String getHref(boolean withOpenInDesktop) throws IOException, URISyntaxException {
-//	withOpenInDesktop = withOpenInDesktop & SLServlet.canOpenLocalFileWithDesktop();
-//	String href = getHref();
-//	if (!withOpenInDesktop) return href;
-//	File f = getFile();
-//	if (file == null) return href;
-//	withOpenInDesktop = withOpenInDesktop & SLServlet.mayOpenLocalFileWithDesktop(f);
-//	
-//	// HUM TODO CHECK - doit falloir vérifier qu'on est bien ds cas /doc/ avec md ou ds cas /document/
-//	if (withOpenInDesktop) {
-//		if (href.startsWith(contextURL)) {
-//			href = hrefWithOpenInDesktop(href);
-//		}
-//	}
-//	return href;
 	HrefPossiblyOpeningInDestop x = getHrefPossiblyOpeningInDestop(withOpenInDesktop);
 	return x.href();
 }
@@ -279,36 +269,6 @@ private String oldAboutHref(String uri) throws UnsupportedEncodingException {
 	return x;
 }
 
-private String getAboutHref_SVG() throws UnsupportedEncodingException {
-	if (aboutHrefComputed) return aboutHref;
-	aboutHrefComputed = true;
-	String bookmarkOf = getBookmarkOf();
-	if (bookmarkOf != null) {
-		aboutHref = doc.getURI();
-		return aboutHref;
-	}
-	
-	// not a (new kind of) bookmark
-	
-	String uri = doc.getURI();
-	if (uri.startsWith(contextURL + CoolUriServlet.DOC_SERVLET_PATH + "/")) {
-		aboutHref = uri;
-	
-	} else { // (at least in particular) a bookmark to the outside world (eg "www.hypersolutions.fr")
-		
-		// handle the case of a page such as .../document/... (happens when we click the bookmarklet on a local copy)
-		aboutHref = page2DocUri(uri, contextURL); // not null if .../document/...
-		
-		if (aboutHref == null) { 
-			// (probably) a bookmark to the outside world (eg "www.hypersolutions.fr")
-			// cf HTML_Link.docLink
-			aboutHref = contextURL + CoolUriServlet.DOC_SERVLET_PATH + "/?uri=" + URLEncoder.encode(doc.getURI(), "UTF-8"); // /doc/?uri=...
-		}
-	}
-	return aboutHref;
-}
-
-
 public SLDocument getSource() throws Exception {
 	if (sourceComputed) return source;
 	sourceComputed = true;
@@ -362,23 +322,6 @@ public SLDocument getLocalCopy() throws Exception {
 	// System.out.println("getLocalCopy NOT FOUND");
 	return null;
 }
-
-///**
-// * @deprecated use getLocalCopyLink
-// * @return
-// * @throws Exception
-// */
-//public String getLocalCopyHref() throws Exception {
-//	if (localCopyHrefComputed) return localCopyHref;
-//	localCopyHrefComputed = true;
-//	SLDocument localCopy = getLocalCopy();
-//	if (localCopy == null) {
-//		localCopyHref = null;
-//		return localCopyHref;
-//	}
-//	localCopyHref = (new SLDocumentStuff(localCopy, mod, contextURL)).getHref(true); // true : TODO
-//	return localCopyHref; 
-//}
 
 public HrefPossiblyOpeningInDestop getLocalCopyLink() throws Exception {
 	if (localCopyLinkComputed) return localCopyLink;
@@ -439,18 +382,37 @@ private SLDocumentStuff getLocalCopyStuff() throws Exception {
 public String getRawMarkdownUrl() throws IOException, URISyntaxException {
 	if (rawMarkdownUrlComputed) return rawMarkdownUrl;
 	rawMarkdownUrlComputed = true;
-	if (!isMarkdown(doc.getURI())) {
+	
+  // 2019-08 to support the display of external .md file
+	String bookmarkOf = getBookmarkOf();
+	if (bookmarkOf != null) {
+		if (isMarkdown(bookmarkOf)) { // assuming bookmarks are external
+			rawMarkdownUrl = bookmarkOf;
+		} else {
+			rawMarkdownUrl = null;
+		}
+		return rawMarkdownUrl;
+	}
+
+	// HUM HACK PAS BON // TODO
+	
+	rawMarkdownUrl = getHref();
+	
+	if (!isMarkdown(href)) {
 		rawMarkdownUrl = null;
 		return rawMarkdownUrl;
 	}
-	// HUM HACK PAS BON // TODO
-	rawMarkdownUrl = getHref();
+
 	File f = getFile();
 	if (f == null) {
-		rawMarkdownUrl = null;
-		return rawMarkdownUrl;
+		// 2019-08 : if it is a md from the outside, we want to be able to display it
+		// and this prevent it:
+		// rawMarkdownUrl = null;
+		return rawMarkdownUrl;		
 	}
-	// String uri = mod.fileToUri(f);
+	
+	// a local markdown file
+	
 	String uri = doc.getURI();
 	rawMarkdownUrl = docUri2DownloadUrl(uri, contextURL);
 	return rawMarkdownUrl;
@@ -460,7 +422,7 @@ public static boolean isMarkdown(String uri) {
 	return uri.endsWith(".md");
 }
 
-//2019-04 local use of local files
+// 2019-04 local use of local files
 // uniquement s'il s'agit d'un doc local
 // voir parentOfRdfStuff
 public String uriOfParentFolder() throws IOException, URISyntaxException {
