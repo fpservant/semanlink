@@ -32,26 +32,11 @@
 			<param-value>semanlink-config.xml</param-value>
 		</init-param>
 
-		<init-param>
-			<param-name>application</param-name>
-			<param-value>net.semanlink.servlet.ApplicationResources</param-value>
-		</init-param>
-		<init-param>
-			<param-name>config</param-name>
-			<param-value>/WEB-INF/struts-config.xml</param-value>
-		</init-param>
-		<init-param>
-			<param-name>debug</param-name>
-			<param-value>0</param-value>
-		</init-param>
-		<init-param>
-			<param-name>detail</param-name>
-			<param-value>4</param-value>
-		</init-param>
-		<init-param>
-			<param-name>validate</param-name>
-			<param-value>true</param-value>
-		</init-param>
+        <init-param><param-name>application</param-name><param-value>net.semanlink.servlet.ApplicationResources</param-value></init-param>
+        <init-param><param-name>config</param-name><param-value>/WEB-INF/struts-config.xml</param-value></init-param>
+        <init-param><param-name>debug</param-name><param-value>0</param-value></init-param>
+        <init-param><param-name>detail</param-name><param-value>4</param-value></init-param>
+        <init-param><param-name>validate</param-name><param-value>true</param-value></init-param>
 
 		<load-on-startup>1</load-on-startup>
 	</servlet>
@@ -126,11 +111,6 @@
 		<servlet-name>CoolUriServlet</servlet-name>
 		<url-pattern>/doc/*</url-pattern>
 	</servlet-mapping>
-
-	<!-- <servlet-mapping> -->
-	<!-- <servlet-name>CoolUriServlet</servlet-name> -->
-	<!-- <url-pattern>/md/*</url-pattern> -->
-	<!-- </servlet-mapping> -->
 
 	<servlet-mapping>
 		<servlet-name>CoolUriServlet</servlet-name>

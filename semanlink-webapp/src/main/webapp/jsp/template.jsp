@@ -47,9 +47,9 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 	<link rel="stylesheet" href="<%=contextPath%>/css/sidemenu.css" type="text/css" />
 	<link rel="stylesheet" href="<%=contextPath%>/css/slstyles.css" type="text/css" />
 	
-    <script src="<%=contextPath%>/scripts/markdown-it.min.js"></script>   
+    <script src="<%=contextPath%>/scripts/markdown-it.min.910.js"></script>   
 	<script src="<%=contextPath%>/scripts/markdown-it-replace-link.min.js"></script>   
-	<script src="<%=contextPath%>/scripts/markdown-sl.js"></script>   
+    <script src="<%=contextPath%>/scripts/markdown-sl.js"></script>   
 	
 	<%    
 	if ((jsp instanceof Jsp_Keyword) || (jsp instanceof Jsp_ThisMonth)) { // 2007-03 remplace 2007-01

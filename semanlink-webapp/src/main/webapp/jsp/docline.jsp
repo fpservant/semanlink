@@ -128,6 +128,10 @@ String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien
     String comment = doc.getComment();
     if (comment != null) {
         comment = Util.toHTMLOutput(comment);
+        // because of markdown that may contain <http://www.a.com>
+        comment = jsp.comment4div(comment);
+        comment = comment.replaceAll("<","&lt;"); // HUM BUG s'il y a des &lt; dans comment TODO 
+ 
         %><br/><span class="docline_comment" property="rdfs:comment"><%=comment %></span><% // 2013-08 RDFa
     }
     %><br/><%

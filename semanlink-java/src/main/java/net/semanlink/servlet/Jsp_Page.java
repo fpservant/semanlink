@@ -78,7 +78,8 @@ public Jsp_Page(HttpServletRequest request, HttpServletResponse response) {
 	// this.addOnLoadEvents("liveSearchInit"); // 2013-08: found a way to avoid having to do that on load
 	this.addOnLoadEvents("setFocus");
 	// 2017-07 sl:comment as markdown
-	this.addOnLoadEvents("displayCommentAsMarkdown");
+	// 2019-09: to be used only when !edit the comment (=> don't name "slcomment" the dev when editing)
+	// this.addOnLoadEvents("displayCommentAsMarkdown");
 }
 
 public SLModel getSLModel() {
@@ -189,6 +190,7 @@ public String getNextImagePage(boolean prevInsteadOfNext) throws UnsupportedEnco
 // LINK TO THIS
 //
 
+//attention, genre /sl/bla
 public String getLinkToThis() throws UnsupportedEncodingException {
 	if (this.linkToThis == null) {
 		this.linkToThis = computelinkToThis();
@@ -204,6 +206,7 @@ public String getLinkToThis() throws UnsupportedEncodingException {
  * TODO : REPRENDRE TOUT CA
  */
 // protected String computelinkToThis() throws UnsupportedEncodingException { return this.request.getRequestURL().toString(); }
+// attention, genre /sl/bla
 protected String computelinkToThis() throws UnsupportedEncodingException {
 	String x = this.request.getServletPath();
 	String s = this.request.getPathInfo();
@@ -232,26 +235,49 @@ public String getLinkToThisWithParams(String params) throws UnsupportedEncodingE
  * @throws UnsupportedEncodingException
  */
 public String logonPage() throws MalformedURLException, UnsupportedEncodingException {
-	String logonPage = SLServlet.getLogonPage(); // absolu ou relatif à la servlet
-	if (logonPage != null) {
-		// on place ds la session là d'où on vient pour pouvoir revenir après le go sur la page qui
-		// sert à contrôler l'accès (ex page protégée arca)
-		// Ce qui est un peu ennuyeux,c'est que s'il y a echec du logon, 
-		// on reste avec cette chose dans la session // TODO - d'ailleurs, tout ceci est juste pour sicg
-		// virer ça d'ici ?
-		this.request.getSession().setAttribute("net.semanlink.servlet.goBackTo", this);
-		return (new URL(new URL(getContextUrl()), logonPage)).toString();
+	
+	
+	boolean useLogonPage = SLServlet.useLogonPage();
+	if (useLogonPage) {
+		String c = getContextUrl();
+		// on place ds la session là d'où on vient pour pouvoir y revenir après
+		this.request.getSession().setAttribute("net.semanlink.servlet.goBackToPage", c + getLinkToThis());
+		return c + "/sl/about/LOGON.htm";
 	} else {
 		if (SLServlet.isEditorByDefault()) {
 			// ceci ne devrait pas arriver (le cas isEditorByDefault devrait être
 			// traité par l'ihm qui n'appelle pas cette fct dans ce cas.
-			// Par sécurité, on reste où on est ens ettant l'editor et edit à true
+			// Par sécurité, on reste où on est en settant l'editor et edit à true
 			return getLinkToThisWithParams("editor=true&amp;edit=true");
 		} else {
 			return null;
 		}
 	}
 }
+
+// OLD STUFF
+//public String logonPage() throws MalformedURLException, UnsupportedEncodingException {
+//	String logonPage = SLServlet.getLogonPage(); // absolu ou relatif à la servlet
+//	if (logonPage != null) {
+//		// on place ds la session là d'où on vient pour pouvoir revenir après le go sur la page qui
+//		// sert à contrôler l'accès (ex page protégée arca)
+//		// Ce qui est un peu ennuyeux,c'est que s'il y a echec du logon, 
+//		// on reste avec cette chose dans la session // TODO - d'ailleurs, tout ceci est juste pour sicg
+//		// virer ça d'ici ?
+//		this.request.getSession().setAttribute("net.semanlink.servlet.goBackTo", this);
+//		return (new URL(new URL(getContextUrl()), logonPage)).toString();
+//	} else {
+//		if (SLServlet.isEditorByDefault()) {
+//			// ceci ne devrait pas arriver (le cas isEditorByDefault devrait être
+//			// traité par l'ihm qui n'appelle pas cette fct dans ce cas.
+//			// Par sécurité, on reste où on est ens ettant l'editor et edit à true
+//			return getLinkToThisWithParams("editor=true&amp;edit=true");
+//		} else {
+//			return null;
+//		}
+//	}
+//}
+
 
 //
 // DOC LIST
@@ -296,7 +322,7 @@ protected void sort(List docList) {
 
 public boolean showBtnEdit() {
 	if (SLServlet.isEditorByDefault()) return true;
-	if (SLServlet.getLogonPage() != null) return true;
+	if (SLServlet.useLogonPage()) return true;
 	return false;
 }
 
@@ -308,11 +334,18 @@ public boolean isEditor() {
 		if (x) {
 			b = Boolean.TRUE;
 		} else {
-			String logonPage = SLServlet.getLogonPage();
-			if (logonPage == null) {
-				b = Boolean.FALSE;
-			} else {
+			// 2019-09
+//			String logonPage = SLServlet.getLogonPage();
+//			if (logonPage == null) {
+//				b = Boolean.FALSE;
+//			} else {
+//				b = Boolean.TRUE;
+//			}
+			boolean useLogonPage = SLServlet.useLogonPage();
+			if (useLogonPage) {
 				b = Boolean.TRUE;
+			} else {
+				b = Boolean.FALSE;
 			}
 		}
 		b = new Boolean(x);
@@ -623,4 +656,31 @@ public I18l getI18l() {
 	}
 	return this.i18l;
 }
+
+//
+//2019-09 markdown
+//
+
+public String comment4div(String comment) {
+if (isHtmlComment(comment)) {
+	// old stuff, when I was using html in comments
+	// Leave unchanged
+} else {
+	comment = comment.replaceAll("<","&lt;"); // HUM BUG s'il y a des &lt; dans comment // TODO (but what?)
+ // the md is formatted once the page is loaded
+ addOnLoadEvents("displayCommentAsMarkdown");
+}
+return comment;
+}
+
+static private boolean isHtmlComment(String comment) {
+if (!comment.contains("<")) return false;
+return (comment != null) && (
+   (comment.contains("<br/>"))
+   || (comment.contains("<br>"))
+   || (comment.contains("<a href=\""))
+   || (comment.contains("</object>"))
+   );
+}
+
 }

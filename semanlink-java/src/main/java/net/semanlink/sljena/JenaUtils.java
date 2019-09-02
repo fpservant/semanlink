@@ -236,20 +236,25 @@ static public String getComment(Resource res) {
 	Model model = res.getModel();
 	NodeIterator ite = model.listObjectsOfProperty(res, model.getProperty(SLVocab.COMMENT_PROPERTY));
 	String x = null;
+	int k = 0;
 	if (ite.hasNext()) {
 		StringBuffer sb = new StringBuffer();
 		for (;ite.hasNext();) {
 			RDFNode node = ite.nextNode();
+			if (k > 0) {
+				sb.append("\r\n");
+			}
+			k++;
 			if (node instanceof Literal) {
 				sb.append(((Literal) node).getString()); // toString de RDFNode met ~lang
 			} else {
 				sb.append(node.toString());
 			}
-			sb.append("\r\n"); // @todo change
 		}
 		x = sb.toString();
 	}
 	ite.close();
+	System.out.println("JenaUtils.getComment " + x);
 	return x;
 }
 

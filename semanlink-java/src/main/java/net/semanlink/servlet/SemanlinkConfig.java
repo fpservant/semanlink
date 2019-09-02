@@ -588,7 +588,9 @@ public class ApplicationParams {
 	private String defaultSortProperty;
 	private String defaultDateProperty;
 	private boolean editorByDefault;
-	private String logonPage;
+	// 2019-09
+	// private String logonPage;
+	private boolean useLogonPage;
 	private boolean trace;
 	private boolean isSemanlinkWebSite;
 	private String[] metadataExtractionBlackList;
@@ -611,11 +613,24 @@ public class ApplicationParams {
 		} else {
 			this.editorByDefault = Boolean.parseBoolean(s);
 		}
+		// 2019-09
+//		if (!editorByDefault) {
+//			this.logonPage = prop2Uri(model, res, SEMANLINK_CONFIG_SCHEMA + "logonPage");
+//			// si pas de logonPage, alors pas de bouton edit. Sinon oui
+//			// if (this.logonPage == null) throw new LoadException("No value found for " + logonPage);
+//			if ((this.logonPage == null) || ("".equals(this.logonPage))) this.logonPage = null;
+//		}
+		// on n'utilise plus un logonPage, on veut juste savoir s'il faut mettre ou pas un bouton edit
+		// Par paresse, je fait de quoi ne rien avoir à changer sur semanlink.net
 		if (!editorByDefault) {
-			this.logonPage = prop2Uri(model, res, SEMANLINK_CONFIG_SCHEMA + "logonPage");
-			// si pas de logonPage, alors pas de bouton edit. Sinon oui
-			// if (this.logonPage == null) throw new LoadException("No value found for " + logonPage);
-			if ((this.logonPage == null) || ("".equals(this.logonPage))) this.logonPage = null;
+			s = prop2StringValue(model, res, SEMANLINK_CONFIG_SCHEMA + "logonPage");
+			if ((s == null) || ("".equals(s))) {
+				useLogonPage = false;
+			} else {
+				useLogonPage = true;
+			}
+		} else {
+			useLogonPage = false;
 		}
 		s = prop2StringValue(model, res, SEMANLINK_CONFIG_SCHEMA + "trace");
 		if (s == null) {
@@ -689,10 +704,13 @@ public class ApplicationParams {
 	public boolean isEditorByDefault() {
 		return editorByDefault;
 	}
-	/** if null, (and !editorByDefault()) no btn edit displayed in GUI */
-	public String getLogonPage() {
-		return logonPage;
-	}
+	
+	// 2019-09
+//	/** if null, (and !editorByDefault()) no btn edit displayed in GUI */
+//	public String getLogonPage() {
+//		return logonPage;
+//	}
+	public boolean useLogonPage() { return useLogonPage; }
 	public boolean isTrace() { return trace; }
 	public boolean isSemanlinkWebSite() { return isSemanlinkWebSite; }
 	public String[] getMetadataExtractionBlackList() { return this.metadataExtractionBlackList; }
