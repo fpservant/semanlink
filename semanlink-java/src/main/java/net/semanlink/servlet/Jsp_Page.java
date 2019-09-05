@@ -79,7 +79,19 @@ public Jsp_Page(HttpServletRequest request, HttpServletResponse response) {
 	this.addOnLoadEvents("setFocus");
 	// 2017-07 sl:comment as markdown
 	// 2019-09: to be used only when !edit the comment (=> don't name "slcomment" the dev when editing)
-	// this.addOnLoadEvents("displayCommentAsMarkdown");
+	if (!edit(request)) {
+		this.addOnLoadEvents("displayCommentAsMarkdown");
+	}
+}
+
+//2019-09
+public static boolean edit(HttpServletRequest request) {
+	HttpSession session = request.getSession();
+	if (session == null) {
+	   System.out.println("Jsp_Resource.edit : session null);");
+	   return false;
+	}
+	return (Boolean.TRUE.equals(session.getAttribute("net.semanlink.servlet.edit")));
 }
 
 public SLModel getSLModel() {
@@ -675,14 +687,15 @@ public I18l getI18l() {
 //	return comment;
 // }
 
-static public boolean isHtmlComment(String comment) {
-if (!comment.contains("<")) return false;
-return (comment != null) && (
-   (comment.contains("<br/>"))
-   || (comment.contains("<br>"))
-   || (comment.contains("<a href=\""))
-   || (comment.contains("</object>"))
-   );
-}
+//static public boolean isHtmlComment(String comment) {
+//	if (!comment.contains("<")) return false;
+//	return (comment != null) && (
+//	   (comment.contains("<br/>"))
+//	   || (comment.contains("<ul>"))
+//	   || (comment.contains("<br>"))
+//	   || (comment.contains("<a href=\""))
+//	   || (comment.contains("</object>"))
+//	   );
+//}
 
 }

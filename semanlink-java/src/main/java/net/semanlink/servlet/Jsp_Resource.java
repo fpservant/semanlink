@@ -38,12 +38,7 @@ public boolean edit() {
         System.out.println("Jsp_Resource.edit : request null);" + getClass().getName());
         return false;
     }
-    HttpSession session = this.request.getSession();
-    if (session == null) {
-        System.out.println("Jsp_Resource.edit : session null);" + getClass().getName());
-        return false;
-    }
-    return (Boolean.TRUE.equals(session.getAttribute("net.semanlink.servlet.edit")));
+    return edit(this.request);
 }
 
 public SLLabeledResource getSLResource() {
