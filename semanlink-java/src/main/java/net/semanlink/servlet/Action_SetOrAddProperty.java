@@ -129,6 +129,14 @@ protected void setOrAddProp(String propertyUri, String propertyValue, HttpServle
 		if (lang == null) lang = "fr"; // todo
 	}*/
 	
+	// 2019-09
+	if (lang != null) {
+		// if a date, don't set lang
+		if (SLVocab.DATE_PARUTION_PROPERTY.equals(propertyUri)) {
+			lang = null;
+		}
+	}
+	
 	if (isKwNotDoc) {
 		// kw
 		SLKeyword kw = mod.getKeyword(uri);

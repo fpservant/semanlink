@@ -661,19 +661,21 @@ public I18l getI18l() {
 //2019-09 markdown
 //
 
-public String comment4div(String comment) {
-if (isHtmlComment(comment)) {
-	// old stuff, when I was using html in comments
-	// Leave unchanged
-} else {
-	comment = comment.replaceAll("<","&lt;"); // HUM BUG s'il y a des &lt; dans comment // TODO (but what?)
- // the md is formatted once the page is loaded
- addOnLoadEvents("displayCommentAsMarkdown");
-}
-return comment;
-}
+//public String comment4div(String comment) {
+//	if (isHtmlComment(comment)) {
+//		// old stuff, when I was using html in comments
+//		// Leave unchanged
+//	} else {
+//		// ya besoin d'un truc comme ça si on met le texte en innerhtml
+//		// Mais maintenant, on le met dans une textarea
+//		// comment = comment.replaceAll("<","&lt;"); // HUM BUG s'il y a des &lt; dans comment // TODO (but what?)
+//		// the md is formatted once the page is loaded
+//	  addOnLoadEvents("displayCommentAsMarkdown");
+//	}
+//	return comment;
+// }
 
-static private boolean isHtmlComment(String comment) {
+static public boolean isHtmlComment(String comment) {
 if (!comment.contains("<")) return false;
 return (comment != null) && (
    (comment.contains("<br/>"))

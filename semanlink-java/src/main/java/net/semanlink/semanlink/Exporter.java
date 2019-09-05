@@ -54,14 +54,27 @@ public Exporter(SLModel slMod, SLDataFolder dataFolder, String contextURL) throw
 	this.contextURL = contextURL;
 	File dir = this.dataFolder.getFile();
 	if (dir.exists()) {
+		boolean ok;
 		File tagsDir = new File(dir, "tags");
-		if (tagsDir.exists()) Util.deleteDir(tagsDir);
+		if (tagsDir.exists()) {
+			ok = Util.deleteDir(tagsDir);
+			if (!ok) throw new RuntimeException("Impossible to delete " + tagsDir);
+		}
 		File bookmarksDir = new File(dir, BOOKMARKS_SUB_FOLDER);
-		if (bookmarksDir.exists()) Util.deleteDir(bookmarksDir);
+		if (bookmarksDir.exists()) {
+			ok = Util.deleteDir(bookmarksDir);
+			if (!ok) throw new RuntimeException("Impossible to delete " + bookmarksDir);
+		}
 		File notesDir = new File(dir, "notes");
-		if (notesDir.exists()) Util.deleteDir(notesDir);
+		if (notesDir.exists()) {
+			ok = Util.deleteDir(notesDir);
+			if (!ok) throw new RuntimeException("Impossible to delete " + notesDir);
+		}
 		File docsDir = new File(dir, DOCS_SUB_FOLDER);
-		if (docsDir.exists()) Util.deleteDir(docsDir);
+		if (docsDir.exists()) {
+			ok = Util.deleteDir(docsDir);
+			if (!ok) throw new RuntimeException("Impossible to delete " + docsDir);
+		}
 	}
 }
 
@@ -486,7 +499,7 @@ private void purgeDates() {
 	List<Resource> docs = ite.toList();
 	for (Resource doc : docs) {
 		StmtIterator sit = doc.listProperties(slCreationDateProp);
-		// faudrait ne garder que la 1ere, mais c pénible
+		// faudrait ne garder que la 1ere, mais c pénible : on garde une au hasard
 //		List<Statement> dates = sit.toList();
 //		if (dates.size() > 1) {
 //		}
@@ -514,13 +527,22 @@ private void purgeDates() {
 		// SEULEMENT POUR LES CR RDD
 		System.out.println(doc.getURI());
 		
-		if (!doc.getURI().contains("sicg.tpz.renault.fr/journal")) {
+		boolean doit = (doc.getURI().contains("/journal")) 
+				|| (doc.getURI().contains("/cr/"))
+				|| (doc.getURI().contains("/article"));
+
+		System.out.println("doit " + doit + " : " + doc.getURI() + " doit");
+
+		if (!doit) {
 			continue;
 		}
 		
 		
 		Literal dcDate = JenaUtils.firstLiteralOfProperty(doc, dcDateProp);
-		if (dcDate == null) continue; // peut pas arriver, vu que plus haut, on n'a pris que les docs qui ont une dc:date
+		if (dcDate == null) {
+			// continue; // peut pas arriver, vu que plus haut, on n'a pris que les docs qui ont une dc:date
+			throw new RuntimeException("WTF???");
+		}
 		
 		// ATTENTION, IL FAUT dcDate non null (et correct)
 

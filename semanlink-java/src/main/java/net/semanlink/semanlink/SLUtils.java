@@ -58,6 +58,8 @@ public static void sortByProperty(List slResList, String propUri) {
 		Collections.sort(slResList, COMP_CREATION_TIME);
 	} else if  (propUri.equals(SLVocab.SL_CREATION_DATE_PROPERTY)) {
 			Collections.sort(slResList, COMP_CREATION_TIME);
+	} else if  (propUri.equals(SLVocab.DATE_PARUTION_PROPERTY)) {
+		Collections.sort(slResList, COMP_PUBLICATION_TIME);
 	} else if ( (propUri.indexOf("date") > -1) || (propUri.indexOf("Date") > -1) ) {
 		Collections.sort(slResList, new CompPropertyReverseOrder(propUri));
 	} else {
@@ -120,6 +122,34 @@ static class CompCreationTime implements Comparator {
 		return x;
 	}	
 }
+
+// 2019-09 (if sort prop is dc:date, but not documented: take creation time
+static CompPublicationTime COMP_PUBLICATION_TIME = new CompPublicationTime();
+static class CompPublicationTime implements Comparator {
+	public int compare(Object arg0, Object arg1) {
+		return getProp((SLDocument) arg1).compareTo( getProp((SLDocument) arg0) );
+	}
+	public String getProp(SLResource res) {
+		String x = null;
+		PropertyValues pv = res.getProperty(SLVocab.DATE_PARUTION_PROPERTY);
+		if (pv != null) {
+			x = pv.getFirstAsString();
+		} else {
+			pv = res.getProperty(SLVocab.SL_CREATION_TIME_PROPERTY);
+			if (pv != null) {
+				x = pv.getFirstAsString();
+			} else {
+				pv = res.getProperty(SLVocab.SL_CREATION_DATE_PROPERTY);
+				if (pv != null) {
+					x = pv.getFirstAsString();
+				}
+			}		}
+		if (x == null) x = "";
+		return x;
+	}	
+}
+
+
 
 /** Permet de trier des docs par kws. 
  *  Rq : ça doit être un peu lent. Peut s'optimiser, mais pas très facilement

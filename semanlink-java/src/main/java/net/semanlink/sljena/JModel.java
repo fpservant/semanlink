@@ -1,6 +1,7 @@
 package net.semanlink.sljena;
 import net.semanlink.semanlink.*;
 import net.semanlink.semanlink.SLModel.NewBookmarkCreationData;
+import net.semanlink.servlet.SLServlet;
 import net.semanlink.skos.SKOS;
 import net.semanlink.sljena.modelcorrections.*;
 import net.semanlink.util.Util;
@@ -496,20 +497,25 @@ private JFileBiModel getJFileBiModel4DocsHandlingNewDocEvent(SLDocument doc, Str
 // autres trucs à faire au on new doc (à part la sl creation date). 
 private void moreOnDocCreation(String docUri, JFileBiModel bi) throws IOException, URISyntaxException {
 	bi.add(docUri, SL_CREATION_TIME_PROPERTY,(new YearMonthDay()).getTimeString(), null);
-	//
-	File file = getFile(docUri);
-	YearMonthDay modifDay = null;
-	if (file != null) {
-		if (file.exists()) {
-			long lastModified = file.lastModified();
-			// peut s'optimiser en testant sur la date plutôt que sa représentation en string
-			modifDay = new YearMonthDay(new Date(lastModified));
-			String modifVal = modifDay.getYearMonthDay("-");
-			// if (modifVal.compareTo("2005-11-01") > 0) {
-			    bi.add(docUri, DATE_PARUTION_PROPERTY, modifVal, null);
-			// }
+	if (SLVocab.DATE_PARUTION_PROPERTY.equals(SLServlet.getDefaultSortProperty())) { // 2019-09 for sicg
+		String today = (new YearMonthDay()).getYearMonthDay("-");
+    bi.add(docUri, DATE_PARUTION_PROPERTY, today, null);		
+	} else {
+		//
+		File file = getFile(docUri);
+		YearMonthDay modifDay = null;
+		if (file != null) {
+			if (file.exists()) {
+				long lastModified = file.lastModified();
+				// peut s'optimiser en testant sur la date plutôt que sa représentation en string
+				modifDay = new YearMonthDay(new Date(lastModified));
+				String modifVal = modifDay.getYearMonthDay("-");
+				// if (modifVal.compareTo("2005-11-01") > 0) {
+				    bi.add(docUri, DATE_PARUTION_PROPERTY, modifVal, null);
+				// }
+			}
 		}
-	}	
+	}
 }
 
 /*

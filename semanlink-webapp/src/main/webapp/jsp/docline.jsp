@@ -129,10 +129,9 @@ String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien
     if (comment != null) {
         comment = Util.toHTMLOutput(comment);
         // because of markdown that may contain <http://www.a.com>
-        comment = jsp.comment4div(comment);
-        comment = comment.replaceAll("<","&lt;"); // HUM BUG s'il y a des &lt; dans comment TODO 
+        // comment = comment.replaceAll("<","&lt;"); // HUM BUG s'il y a des &lt; dans comment TODO 
  
-        %><br/><span class="docline_comment" property="rdfs:comment"><%=comment %></span><% // 2013-08 RDFa
+        %><br/><span class="docline_comment" property="rdfs:comment"><textarea><%=comment %></textarea></span><% // 2013-08 RDFa
     }
     %><br/><%
     
@@ -167,6 +166,13 @@ String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien
                 java.util.List al = (java.util.List) hm.get(prop);
                 if (al != null) {
                     propVal = al.get(0).toString();
+                } else {
+                	if (prop.equals(SLVocab.DATE_PARUTION_PROPERTY)) { // if not set, take creation date instead
+                		al = (java.util.List) hm.get(SLVocab.SL_CREATION_DATE_PROPERTY);
+                		if (al != null) {
+                		   propVal = al.get(0).toString();
+                		}
+                	}
                 }
             }
             if (propVal != null) {
