@@ -78,10 +78,10 @@ public Jsp_Page(HttpServletRequest request, HttpServletResponse response) {
 	// this.addOnLoadEvents("liveSearchInit"); // 2013-08: found a way to avoid having to do that on load
 	this.addOnLoadEvents("setFocus");
 	// 2017-07 sl:comment as markdown
-	// 2019-09: to be used only when !edit the comment (=> don't name "slcomment" the dev when editing)
-	if (!edit(request)) {
-		this.addOnLoadEvents("displayCommentAsMarkdown");
-	}
+	// 2019-09: to be used only when !edit the comment (=> don't name "slcomment" the div when editing)
+	// if (!edit(request)) {
+	this.addOnLoadEvents("displayCommentAsMarkdown");
+	// }
 }
 
 //2019-09
@@ -668,34 +668,4 @@ public I18l getI18l() {
 	}
 	return this.i18l;
 }
-
-//
-//2019-09 markdown
-//
-
-//public String comment4div(String comment) {
-//	if (isHtmlComment(comment)) {
-//		// old stuff, when I was using html in comments
-//		// Leave unchanged
-//	} else {
-//		// ya besoin d'un truc comme ça si on met le texte en innerhtml
-//		// Mais maintenant, on le met dans une textarea
-//		// comment = comment.replaceAll("<","&lt;"); // HUM BUG s'il y a des &lt; dans comment // TODO (but what?)
-//		// the md is formatted once the page is loaded
-//	  addOnLoadEvents("displayCommentAsMarkdown");
-//	}
-//	return comment;
-// }
-
-//static public boolean isHtmlComment(String comment) {
-//	if (!comment.contains("<")) return false;
-//	return (comment != null) && (
-//	   (comment.contains("<br/>"))
-//	   || (comment.contains("<ul>"))
-//	   || (comment.contains("<br>"))
-//	   || (comment.contains("<a href=\""))
-//	   || (comment.contains("</object>"))
-//	   );
-//}
-
 }
