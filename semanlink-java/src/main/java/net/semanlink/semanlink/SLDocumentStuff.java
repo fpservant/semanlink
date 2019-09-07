@@ -38,7 +38,8 @@ private String localCopyPage; // use getter
 private boolean localCopyPageComputed = false;
 private SLDocumentStuff localCopyStuff; // use getter
 private boolean localCopyStuffComputed = false;
-
+private boolean isNoteComputed = false;
+private boolean isNote; // use getter
 private String rawMarkdownUrl; // use getter
 private boolean rawMarkdownUrlComputed = false;
 
@@ -123,7 +124,7 @@ public String getBookmarkOf() {
 }
 
 // copié de Jsp_Document
-// doesn't check that it exists
+// doesn't check that it exists -- ET ATTENTION, SUPPOSE QU'ON N4A PAS AFFAIRE A UNE NOTE
 public File getFile() throws IOException, URISyntaxException {
 	if (fileComputed) return file;
 	fileComputed = true;
@@ -134,8 +135,21 @@ public File getFile() throws IOException, URISyntaxException {
 		file = null;
 		return null;
 	}
+	
+	if (isNote()) {
+		file = null;
+		return null;
+	}
+
 	file = mod.getFile(doc.getURI());
 	return file;
+}
+
+public boolean isNote() {
+	if (isNoteComputed) return isNote;
+	isNoteComputed = true;
+	isNote = Note.isNote(doc.getURI());
+	return isNote;
 }
 
 /**
