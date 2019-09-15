@@ -40,6 +40,10 @@ private Stack treePosition;
 public WalkListener(HttpServletRequest request, HttpServletResponse response, JspWriter out, String divIdRoot, Stack treePosition) {
 	this.request = request;
 	this.contextPath = request.getContextPath();
+	String snip = request.getParameter("snip");
+	if (snip != null) { // to have complete absolute urls
+	    contextPath = SLServlet.getServletUrl();    
+	}
 	this.response = response;
 	this.out = out;
 	this.divIdRoot = divIdRoot;
