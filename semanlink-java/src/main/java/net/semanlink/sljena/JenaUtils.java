@@ -254,7 +254,6 @@ static public String getComment(Resource res) {
 		x = sb.toString();
 	}
 	ite.close();
-	System.out.println("JenaUtils.getComment " + x);
 	return x;
 }
 
