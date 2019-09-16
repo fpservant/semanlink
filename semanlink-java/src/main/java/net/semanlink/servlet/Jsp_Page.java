@@ -339,7 +339,12 @@ public boolean showBtnEdit() {
 }
 
 public boolean isEditor() {
-	Boolean b = (Boolean) this.request.getSession().getAttribute("net.semanlink.servlet.editor");
+	return isEditor(request);
+}
+
+// 2019-09
+public static boolean isEditor(HttpServletRequest request) {
+	Boolean b = (Boolean) request.getSession().getAttribute("net.semanlink.servlet.editor");
 	boolean x;
 	if (b == null) {
 		x = SLServlet.isEditorByDefault();
@@ -361,13 +366,16 @@ public boolean isEditor() {
 			}
 		}
 		b = new Boolean(x);
-		this.request.getSession().setAttribute("net.semanlink.servlet.editor", b);
+		request.getSession().setAttribute("net.semanlink.servlet.editor", b);
 	} else {
 		x = b.booleanValue();
 	}
 	return x;
-	
 }
+
+
+
+
 
 /** en principe, au moment de l'appel, request a déjà été augmentée des attributs liés au traitement des actions. */
 public String getTemplate() throws Exception {

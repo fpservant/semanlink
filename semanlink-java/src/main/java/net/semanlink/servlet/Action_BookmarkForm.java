@@ -6,6 +6,7 @@ import java.net.URLDecoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.semanlink.semanlink.*;
 import net.semanlink.util.Util;
@@ -222,9 +223,7 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 		    		request.setAttribute("net.semanlink.servlet.jsp", jsp);
 		        // shall we display the form with only "New Document" button, or with "Bookmark", "Local Copy", etc... ?
 	        	oneBtnOnly = mod.isLocalDocument(docuri);
-        }
-        
-        
+        }    
   }
     
 
@@ -237,7 +236,23 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
   
   // shall we display the form with only "New Document" button, or with "Bookmark", "Local Copy", etc... ?
   request.setAttribute("oneBtnOnly", new Boolean(oneBtnOnly));
+  
+  if (!Jsp_Page.isEditor(request)) {
+  	// user must be authorized
+  	// we'll send back to the page the person attempted to bookmark
+  	request.getSession().setAttribute("net.semanlink.servlet.goBackToPage", docuri);
+  	response.sendRedirect(response.encodeRedirectURL(Util.getContextURL(request)+"/sl/about/LOGON.htm"));
+  	return null;
+  }
+  
 	x = mapping.findForward("continue");
+	
+	
+	
+	
+	
+	
+	
   
   } catch (Exception e) {
     return error(mapping, request, e );

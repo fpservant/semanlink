@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.Response;
 
 import net.semanlink.semanlink.SLDocument;
@@ -64,22 +65,49 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 
 
 
-
-	String redirectURL = null;
-	SLModel mod = SLServlet.getSLModel();
-	// passons en mode "edit"
-	setEdit(request, true);
-
-	Form_Bookmark bookmarkForm = (Form_Bookmark) form;
-	String title = bookmarkForm.getTitle().trim();
-	if ("".equals(title)) title = null;
-	String lang = bookmarkForm.getLang();
-	if (lang != null) lang = lang.trim();
-	if ("".equals(lang)) lang = null;
-	String comment = bookmarkForm.getComment().trim();
-	if ("".equals(comment)) comment = null;
-
 	try {
+		String redirectURL = null;
+		SLModel mod = SLServlet.getSLModel();
+		
+		
+		
+		
+		
+		
+		
+		// passons en mode "edit"
+		
+		// pour forcer à s'être d'abord identifier, si besoin est
+		// Pas terrible : on revient ici, (comment ?), mais on a perdu
+		// ce qu'on a pu saisir
+		// normally done in Action_Bookmark (search /sl/about/LOGON.htm)
+		// Ceinture et bretelle
+		// Ou alors, on pourrait ici jeter si !edit
+	  if (!Jsp_Page.isEditor(request)) {
+	  	response.sendRedirect(response.encodeRedirectURL(Util.getContextURL(request)+"/sl/about/LOGON.htm"));
+	  	return null;
+	  }
+	
+		setEdit(request, true);
+		
+		
+		
+		
+		
+		
+		
+		
+	
+		Form_Bookmark bookmarkForm = (Form_Bookmark) form;
+		String title = bookmarkForm.getTitle().trim();
+		if ("".equals(title)) title = null;
+		String lang = bookmarkForm.getLang();
+		if (lang != null) lang = lang.trim();
+		if ("".equals(lang)) lang = null;
+		String comment = bookmarkForm.getComment().trim();
+		if ("".equals(comment)) comment = null;
+
+
 
 
 
