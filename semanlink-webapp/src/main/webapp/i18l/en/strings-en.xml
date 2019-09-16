@@ -32,7 +32,7 @@
 <entry key="sidemenu.tagCloud">Tag Cloud</entry>
 <entry key="topmenu.home">Home</entry>
 <entry key="topmenu.help">Help</entry>
-<entry key="topmenu.newEntries">New Entries</entry>
+<entry key="topmenu.newEntries">New</entry>
 <entry key="topmenu.favorites">Favorites</entry>
 <entry key="topmenu.activFolder">Activ Folder</entry>
 <entry key="sidemenu.descendants-display">Descendants</entry>
@@ -142,5 +142,4 @@
 <entry key="markdown.raw">Raw Markdown</entry>
 <!-- 2018/01 -->
 <entry key="doc.about">(About)</entry>
-
 </properties>
