@@ -8,6 +8,7 @@
 <h2>0.6.1 2019-xx-xx</h2>
 <ul>
 <li>Various small things and bug corrections related to the changes introduced with 0.6</li>
+<li>Table of content in markdown files using markdown-it-toc-done-right</li>
 </ul>
 
 <h2>0.6.0 2019-05-20</h2>
