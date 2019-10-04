@@ -215,12 +215,12 @@ public String getHref(boolean withOpenInDesktop) throws IOException, URISyntaxEx
 }
 
 public HrefPossiblyOpeningInDestop getHrefPossiblyOpeningInDestop(boolean withOpenInDesktop) throws IOException, URISyntaxException {
-	withOpenInDesktop = withOpenInDesktop & SLServlet.canOpenLocalFileWithDesktop();
+	withOpenInDesktop = withOpenInDesktop && SLServlet.canOpenLocalFileWithDesktop();
 	String href = getHref();
 	if (!withOpenInDesktop) return new HrefPossiblyOpeningInDestop(href, false);
 	File f = getFile();
 	if (file == null) return new HrefPossiblyOpeningInDestop(href, false);
-	withOpenInDesktop = withOpenInDesktop & SLServlet.mayOpenLocalFileWithDesktop(f);
+	withOpenInDesktop = withOpenInDesktop && SLServlet.mayOpenLocalFileWithDesktop(f);
 	
 	// HUM TODO CHECK - doit falloir vérifier qu'on est bien ds cas /doc/ avec md ou ds cas /document/
 	if (withOpenInDesktop) {
@@ -448,7 +448,7 @@ public String uriOfParentFolder() throws IOException, URISyntaxException {
 public String uriOfParentFolder(boolean withOpenInDesktop) throws IOException, URISyntaxException {
 	String href = uriOfParentFolder();
 	if (href == null) return null;
-	withOpenInDesktop = withOpenInDesktop & SLServlet.canOpenLocalFileWithDesktop();
+	withOpenInDesktop = withOpenInDesktop && SLServlet.canOpenLocalFileWithDesktop();
 	if (withOpenInDesktop) {
 		href = hrefWithOpenInDesktop(href);
 	}
