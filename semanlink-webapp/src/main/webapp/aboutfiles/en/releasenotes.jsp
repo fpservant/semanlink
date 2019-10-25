@@ -5,7 +5,7 @@
 <h1>Release notes</h1>
 <div class="graybox">
 
-<h2>0.6.1 2019-xx-xx</h2>
+<h2>0.6.1 2019-10-26</h2>
 <ul>
 <li>Various small things and bug corrections related to the changes introduced with 0.6</li>
 <li>Table of content in markdown files using markdown-it-toc-done-right</li>
