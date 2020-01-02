@@ -68,7 +68,7 @@ public SLDocumentStuff(SLDocument doc, SLModel mod, String contextURL) {
  * Basically transforms .../doc/... to .../document/... - except in the .md file case
  * @param contextURL eg. http://127.0.0.1:8080/semanlink or http://www.semanlink.net cf. Util.getContextURL(HttpServletRequest)
  * @return null if uri not of a "modern" document
- * @throws URISyntaxException 
+ * @throws URISyntaxException
  * @throws IOException 
  */
 private String docUri2Page() throws IOException, URISyntaxException {
@@ -123,24 +123,29 @@ public String getBookmarkOf() {
 	return bookmarkOf;
 }
 
-// copié de Jsp_Document
-// doesn't check that it exists -- ET ATTENTION, SUPPOSE QU'ON N4A PAS AFFAIRE A UNE NOTE
+// doesn't check that it exists -- ET ATTENTION, SUPPOSE QU'ON N'A PAS AFFAIRE A UNE NOTE
+// 2020-01 localFilesOutOfDatafolders : now handles the case of bookmarks on files outside datafolder
 public File getFile() throws IOException, URISyntaxException {
 	if (fileComputed) return file;
 	fileComputed = true;
-	if (getBookmarkOf() != null) {
+	String bookmarkOf = getBookmarkOf();
+	if (bookmarkOf != null) {
 		
-		// TODO ceci n'est OK pour si les bookmarks sont utilisés pour les pages externes
-		
-		file = null;
-		return null;
+		// 2020-01 localFilesOutOfDatafolders
+//    // TODO ceci n'est OK que si les bookmarks sont seulement utilisés pour les pages externes
+//  	file = null;
+//	  return null;
+		if (bookmarkOf.startsWith("file:")) {
+			file = mod.getFile(bookmarkOf);
+			return file;			
+		}	
 	}
 	
 	if (isNote()) {
 		file = null;
 		return null;
 	}
-
+	
 	file = mod.getFile(doc.getURI());
 	return file;
 }
@@ -221,6 +226,17 @@ public HrefPossiblyOpeningInDestop getHrefPossiblyOpeningInDestop(boolean withOp
 	File f = getFile();
 	if (file == null) return new HrefPossiblyOpeningInDestop(href, false);
 	withOpenInDesktop = withOpenInDesktop && SLServlet.mayOpenLocalFileWithDesktop(f);
+	
+	// 2020-01 localFilesOutOfDatafolders
+	String bookmarkOf = getBookmarkOf();
+	if (bookmarkOf != null) {
+		if (bookmarkOf.startsWith("file:")) {
+			withOpenInDesktop = true;
+			href = doc.getURI();
+			// return new HrefPossiblyOpeningInDestop(doc.getURI(), true);
+		}
+	}
+
 	
 	// HUM TODO CHECK - doit falloir vérifier qu'on est bien ds cas /doc/ avec md ou ds cas /document/
 	if (withOpenInDesktop) {

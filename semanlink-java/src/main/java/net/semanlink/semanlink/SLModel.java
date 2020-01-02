@@ -571,6 +571,11 @@ YYYYMM doc2YYYYMM(SLDocument doc) {
 // THE WS QUESTION
 /** Returns the file corresponding to a URI (or null in case of failure to do so). 
  *  @param uri either a file-protocol uri, or the uri of a file served by this.getWebServer. */
+// 2020-01 localFilesOutOfDatafolders NOTE:
+// This is a brute, crude result (uri -> file)
+// that doesn't take into account the case of bookmarks pointing to a file out of the datafolder
+// for this, see SLDOcumentStuff.getFile(), and
+// find "2020-01 localFilesOutOfDatafolders" in CoolUriServlet for an example
 public File getFile(String uri) throws IOException, URISyntaxException { // HUM TODO identique à getFileIfLocal(String docUri)
 	// System.out.println("SLModel.getFile: " + uri);
 	if (uri.startsWith("file:")) {

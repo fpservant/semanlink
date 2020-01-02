@@ -5,6 +5,11 @@
 <h1>Release notes</h1>
 <div class="graybox">
 
+<h2>0.6.2 2020-01-01</h2>
+<ul>
+<li>Better handling of bookmarks on local files outside semanlink's datafolders</li>
+</ul>
+
 <h2>0.6.1 2019-10-26</h2>
 <ul>
 <li>Various small things and bug corrections related to the changes introduced with 0.6</li>

@@ -6,9 +6,19 @@ Quelques éléments pour aider
 cd /Users/fps/Semanlink/semanlink-git-repos/semanlink-parent
 mvn versions:set
 ```
+ATTENTION 
 
- - penser aux release notes
- - le N° de version sur la home page est mis automatiquement
+- Ne pas oublier de faire refresh, et aussi semanlink-sicg à changer
+- FAIRE 
+
+```
+mvn clean
+```
+
+
+
+- penser aux release notes
+- le N° de version sur la home page est mis automatiquement
 
 
 
