@@ -10,6 +10,8 @@ import net.semanlink.util.servlet.BasicServlet;
 
 // VOIR Action_EditTagList : pourquoi les 2 ??????
 
+// ATTENTION MAL NOMME : ds livesearch, appelé en mode edit
+
 /**
  * Action demandant d'afficher un kw donné par une simple String (son label)
  * OU BIEN from livesearchform
@@ -128,6 +130,7 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 			// request.setCharacterEncoding("UTF-8"); // TODO
 			String kwLabel = request.getParameter("kw"); // old "go" form
 			if (kwLabel == null) kwLabel = request.getParameter("q"); // live search form
+			if (kwLabel == null) kwLabel = ""; // to avoid an exception - but when does it happen? It does // 2020-01
 			
 			// optim possible
 	  	if (!edit) { // cf "googlebot bug" (we were not paying attention not to create kw when not in edit mode)
