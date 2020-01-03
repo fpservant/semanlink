@@ -1,0 +1,42 @@
+<!DOCTYPE rdf:RDF [
+  <!ENTITY sl 'http://www.semanlink.net/2001/00/semanlink-schema#'>
+  <!ENTITY slc 'http://www.semanlink.net/2006/09/semanlink-config-schema#'>
+  <!ENTITY dc 'http://purl.org/dc/elements/1.1/'>
+  <!ENTITY rdfs 'http://www.w3.org/2000/01/rdf-schema#'>
+  <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+  <!ENTITY foaf 'http://xmlns.com/foaf/0.1/'>
+  <!ENTITY owl 'http://www.w3.org/2002/07/owl#'>
+  <!ENTITY skos 'http://www.w3.org/2004/02/skos/core#'>
+]>
+
+<rdf:RDF
+    xmlns:sl="&sl;"
+    xmlns:slc="&slc;"
+    xmlns:dc="&dc;"
+    xmlns:rdf="&rdf;"
+    xmlns:rdfs="&rdfs;"
+    xmlns:foaf="&foaf;"
+    xmlns:owl="&owl;"
+    xmlns:skos="&skos;"
+>
+  <rdf:Description rdf:about="">
+    <slc:useProperty rdf:resource="&skos;prefLabel"/>
+    <slc:useProperty rdf:resource="&skos;altLabel"/>
+    <slc:useProperty rdf:resource="&sl;mainDoc"/>
+    <slc:useProperty rdf:resource="&sl;replacedBy"/>
+    <slc:useProperty rdf:resource="&sl;comment"/>
+    <slc:useProperty rdf:resource="&sl;creationDate"/>
+    <slc:useProperty rdf:resource="&sl;describedBy"/>
+    <slc:useProperty rdf:resource="&sl;sameAs"/>
+    <slc:useProperty rdf:resource="&rdfs;seeAlso"/>
+    <slc:useProperty rdf:resource="&dc;date"/>
+    <slc:useProperty rdf:resource="&dc;source"/>
+    <slc:useProperty rdf:resource="&dc;creator"/>
+    <slc:useProperty rdf:resource="&dc;subject"/>
+    <slc:useProperty rdf:resource="&dc;title"/>
+    <slc:useProperty rdf:resource="&slc;publish"/>
+    <slc:useProperty rdf:resource="&owl;sameAs"/>
+    <slc:useProperty rdf:resource="&foaf;homepage"/>
+    <slc:useProperty rdf:resource="&foaf;weblog"/>
+  </rdf:Description>
+</rdf:RDF>

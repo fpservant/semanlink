@@ -39,8 +39,9 @@ public SemanlinkConfigProps(File configFile, String servletUrl) throws JenaExcep
 	this.usePropertyProp = this.model.createProperty(SemanlinkConfig.SLC_USE_PROPERTY_PROP);
 	
 	if (! (configFile.exists()) ) {
-		Logger.getLogger(getClass()).info("Creation of props config file: " + configFile);
-		init();	
+		// 2020-01: use props.rdf in WEB-INF as default
+//		Logger.getLogger(getClass()).info("Creation of props config file: " + configFile);
+//		init();	
 	}
 
 	// corrects bug found by Jeriel Perlman:
@@ -99,16 +100,17 @@ public void save() throws JenaException, IOException, URISyntaxException {
 	} finally {		}
 }
 
-private void init() throws JenaException, IOException, URISyntaxException {
-	SLVocab.EasyProperty[] easyProps = SLVocab.COMMON_PROPERTIES;
-	Resource top = this.model.createResource(this.servletUrl);
-	for (int i = 0; i < easyProps.length; i++) {
-		Resource obj = this.model.createProperty(easyProps[i].getUri());
-		Statement sta = this.model.createStatement(top, this.usePropertyProp, obj);
-		this.model.add(sta);
-	}
-	save();
-}
+// 2020-01 use props.rdf in WEB-INF as default
+//private void init() throws JenaException, IOException, URISyntaxException {
+//	SLVocab.EasyProperty[] easyProps = SLVocab.COMMON_PROPERTIES;
+//	Resource top = this.model.createResource(this.servletUrl);
+//	for (int i = 0; i < easyProps.length; i++) {
+//		Resource obj = this.model.createProperty(easyProps[i].getUri());
+//		Statement sta = this.model.createStatement(top, this.usePropertyProp, obj);
+//		this.model.add(sta);
+//	}
+//	save();
+//}
 
 public SLVocab.EasyProperty[] getEasyProps() {
 	SLVocab.EasyProperty[] x = null;

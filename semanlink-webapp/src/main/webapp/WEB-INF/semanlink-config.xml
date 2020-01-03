@@ -18,21 +18,19 @@
 		</slc:defaultThesaurus>
 		<!-- DATA FOLDERS -->
 		<slc:defaultDataFolder>
-			<sl:DataFolder rdf:about="document">
-				<slc:pathRelativeToDataDir>documents</slc:pathRelativeToDataDir>
+			<sl:DataFolder rdf:about="doc">
+				<slc:pathRelativeToDataDir>docs</slc:pathRelativeToDataDir>
 				<slc:loadingMode>yearMonth</slc:loadingMode>
 			</sl:DataFolder>
 		</slc:defaultDataFolder>
+		<!--
 		<slc:bookmarkFolder>
 			<sl:DataFolder>
 				<slc:pathRelativeToDataDir>bookmarks</slc:pathRelativeToDataDir>
-				<!-- 
-				having "absoluteBase" in loadingMode (meaning that base is thesaurusUri)
-				probably not needed anymore
- 				-->
 				<slc:loadingMode>yearMonth absoluteBase</slc:loadingMode>
 			</sl:DataFolder>
 		</slc:bookmarkFolder>
+		-->
 		<slc:notesFolder>
 			<sl:DataFolder>
 				<slc:pathRelativeToDataDir>notes</slc:pathRelativeToDataDir>
