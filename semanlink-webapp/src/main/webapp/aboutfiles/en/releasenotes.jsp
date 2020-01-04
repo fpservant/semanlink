@@ -5,6 +5,12 @@
 <h1>Release notes</h1>
 <div class="graybox">
 
+<h2>0.6.2 2020-°1-xx</h2>
+<ul>
+<li>Bug corrected regarding numbering in table of content in markdown files</li>
+<li>Bug corrected regarding delete key in live search</li>
+</ul>
+
 <h2>0.6.2 2020-01-01</h2>
 <ul>
 <li>Better handling of bookmarks on local files outside semanlink's datafolders</li>
