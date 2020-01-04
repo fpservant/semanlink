@@ -9,6 +9,7 @@
 <ul>
 <li>Bug corrected regarding numbering in table of content in markdown files</li>
 <li>Bug corrected regarding delete key in live search</li>
+<li>top bar: logo on the right</li>
 </ul>
 
 <h2>0.6.2 2020-01-01</h2>
