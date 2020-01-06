@@ -81,6 +81,8 @@ public Jsp_Page(HttpServletRequest request, HttpServletResponse response) {
 	// 2019-09: to be used only when !edit the comment (=> don't name "slcomment" the div when editing)
 	// if (!edit(request)) {
 	this.addOnLoadEvents("displayCommentAsMarkdown");
+	// 2020-01 right-bar
+	this.addOnLoadEvents("rightBar");
 	// }
 }
 

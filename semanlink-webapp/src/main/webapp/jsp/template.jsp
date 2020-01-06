@@ -95,6 +95,88 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 		if (x) x.q.focus();
 	}
 	
+	function rightBar() {
+		var rightBarString = sessionStorage.getItem("rightBar"); // 0 pour cacher, 1 pour montrer, 1 par défaut
+		if (!rightBarString) {
+			rightBarString = "1";
+		}
+		
+		// si queryparam, on écoute le qp
+		// et on change la var de session, au besoin
+		var queryString = location.search.substring(0); // includes the ? or &		
+		var k = queryString.indexOf("rightbar=");
+		if(k > 0) {
+			// alert(queryString.substring(k+9,k+10));
+			var rightBarString = queryString.substring(k+9,k+10); // 0 ou 1
+	        if (rightBarString == "0") {
+	            displayRightBar(false);
+	            setRightBar("0");
+	        } else {
+	        	displayRightBar(true);
+	        	setRightBar("1");
+	        }
+			
+		} else { // no query param
+			// si false, on cache s'il faut (assumant qu'on montre par défaut)
+	        if (rightBarString == "0") {
+	            displayRightBar(false)
+	        }
+			
+		}
+		
+	}
+	
+	function setRightBar(rightBarString) {
+		sessionStorage.setItem("rightBar", rightBarString);
+	}
+	
+	// set the right bar according to rightBarState (if true, show the right bar)
+	function displayRightBar(b) {
+		var disp = false;
+		if (!b) {
+			disp = "none";
+		} else {
+			disp = "block";
+		}
+	    var d = false;
+	    d = document.getElementById("right");
+	    if (d) {
+	        d.style.display = disp;
+	    }
+	    d = document.getElementById("navcontainer");
+	    if (d) {
+	        d.style.display = disp;
+	    }
+	    d = document.getElementById("logo");
+	    if (d) {
+	        // d.style.display = "none";
+	    }
+	    d = document.getElementById("file_info")
+	    if (d) {
+	        d.style.display = disp;
+	    }
+	    d = document.getElementById("aboutThisDoc")
+	    if (d) {
+	        d.style.display = disp;
+	    }
+	    d = document.getElementById("documenttags")
+	    if (d) {
+	        d.style.display = disp;
+	    }
+	    if (b) {
+            d = document.getElementById("middleprint")
+            if (d) {
+                d.id = "middle";
+            }           
+	    	
+	    } else {
+	        d = document.getElementById("middle")
+	        if (d) {
+	            d.id = "middleprint";
+	        }	    	
+	    }
+	}
+
 	<%
 	// 2013-08 
 	// to load scripts that can be loaded after the body
