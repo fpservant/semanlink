@@ -95,42 +95,65 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 		if (x) x.q.focus();
 	}
 	
+	// called onload
+	// by defautl, display the right bar - except when it is a .md file
+	// the md case is handled by doMarkdown(), in markdownfile.jsp
 	function rightBar() {
-		var rightBarString = sessionStorage.getItem("rightBar"); // 0 pour cacher, 1 pour montrer, 1 par défaut
-		if (!rightBarString) {
-			rightBarString = "1";
-		}
-		
 		// si queryparam, on écoute le qp
+		// 1: show and store the value, 0: hide and store the value, 
+		// "-1": show, "-0": hide, BUT don't store the value
 		// et on change la var de session, au besoin
-		var queryString = location.search.substring(0); // includes the ? or &		
-		var k = queryString.indexOf("rightbar=");
-		if(k > 0) {
-			// alert(queryString.substring(k+9,k+10));
-			var rightBarString = queryString.substring(k+9,k+10); // 0 ou 1
-	        if (rightBarString == "0") {
-	            displayRightBar(false);
-	            setRightBar("0");
-	        } else {
-	        	displayRightBar(true);
-	        	setRightBar("1");
-	        }
-			
-		} else { // no query param
-			// si false, on cache s'il faut (assumant qu'on montre par défaut)
-	        if (rightBarString == "0") {
-	            displayRightBar(false)
-	        }
-			
-		}
 		
+		const rightBarString = getRightBarString();
+		var b = false;
+        if (rightBarString == "-0") {
+            
+        } else if (rightBarString == "-1") {
+               b = true;
+
+        } else if (rightBarString == "0") {
+               storeRightBar("0");
+
+        } else if (rightBarString == "1") {
+        	b = true;
+        	storeRightBar("1");
+        	
+        } else if (!rightBarString){
+        	b = true;
+        	
+        } else {
+        	alert("error rightBarString: " + rightBarString);
+        	b = true;
+        }
+			
+		// si false, on cache s'il faut (assumant qu'on montre par défaut)
+        if (!b) {
+            displayRightBar(false)
+        }
 	}
 	
-	function setRightBar(rightBarString) {
-		sessionStorage.setItem("rightBar", rightBarString);
+	// 0, 1, -0, -1 ou false si rien de défini (auquel cas, faire ce qu'on veut comme défaut)
+    function getRightBarString() {
+//      var queryString = location.search.substring(0); // includes the ? or &      
+//      var k = queryString.indexOf("rightbar=");
+        const urlParams = new URLSearchParams(window.location.search);
+        var x = urlParams.get('rightbar');
+
+        if (!x) {
+            // no query param
+            x = sessionStorage.getItem("rightBar"); // 0 pour cacher, 1 pour montrer, 1 par défaut
+        }
+        return x;
+    }
+	
+	
+	function storeRightBar(rightBarString) {
+		if ((rightBarString == "0") || (rightBarString == "1")) { // sinon, on ne veut pas stocker
+			sessionStorage.setItem("rightBar", rightBarString);
+		}
 	}
 	
-	// set the right bar according to rightBarState (if true, show the right bar)
+	// set the right bar according to b (if true, show the right bar)
 	function displayRightBar(b) {
 		var disp = false;
 		if (!b) {
@@ -147,10 +170,10 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 	    if (d) {
 	        d.style.display = disp;
 	    }
-	    d = document.getElementById("logo");
-	    if (d) {
-	        // d.style.display = "none";
-	    }
+// 	    d = document.getElementById("logo");
+// 	    if (d) {
+// 	        // d.style.display = "none";
+// 	    }
 	    d = document.getElementById("file_info")
 	    if (d) {
 	        d.style.display = disp;
@@ -176,6 +199,11 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 	        }	    	
 	    }
 	}
+	
+	function toggleRightBar() {
+        var d = document.getElementById("right");
+        displayRightBar(d.style.display == 'none');
+	}
 
 	<%
 	// 2013-08 
@@ -187,7 +215,7 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 		 document.body.appendChild(element);
 		 
 		 element = document.createElement("script");
-		 element.src = "<%=contextPath%>/scripts/trees.js?v=0.6.2";
+		 element.src = "<%=contextPath%>/scripts/trees.js?v=0.6.2-1";
 		 document.body.appendChild(element);
 	}
 	</script>
