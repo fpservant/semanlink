@@ -7,8 +7,6 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.*;
 
-import org.apache.log4j.Logger;
-
 import net.semanlink.semanlink.SLVocab;
 import net.semanlink.sljena.ModelFileIOManager;
 

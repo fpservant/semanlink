@@ -23,7 +23,8 @@ import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.vocabulary.RDF;
 import org.apache.jena.vocabulary.RDFS;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+
 
 
 
