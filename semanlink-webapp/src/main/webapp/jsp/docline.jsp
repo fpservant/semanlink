@@ -36,7 +36,7 @@ if (asUL_List) {
 }
 
 
-    %><span><% // ajouté pour tree - était avant au niveau LI
+    %><span class="docline_title"><% // ajouté pour tree - était avant au niveau LI
         if (Util.isImage(uri)) {
 
             //
@@ -136,16 +136,6 @@ if (asUL_List) {
         
     %></span><%
     boolean addbr = true;
-    String comment = doc.getComment();
-    if (comment != null) {
-        comment = Util.toHTMLOutput(comment);
-        if (asUL_List) {
-        %><br/><span class="docline_comment" property="rdfs:comment"><%=comment %></span><% // 2013-08 RDFa
-        } else {
-        	addbr = false;
-          %><div class="docline_comment" property="rdfs:comment"><%=comment %></div><% // 2013-08 RDFa
-        }
-    }
     if (addbr) {
     %><br/><%
     }
@@ -193,6 +183,18 @@ if (asUL_List) {
     // KWS DU DOC
     //
     %><jsp:include page="/jsp/kwsofdoc.jsp"/><%
+    
+        String comment = doc.getComment();
+        if (comment != null) {
+            comment = Util.toHTMLOutput(comment);
+            if (asUL_List) {
+            %><br/><span class="docline_comment" property="rdfs:comment"><%=comment %></span><% // 2013-08 RDFa
+            } else {
+                addbr = false;
+              %><div class="docline_comment" property="rdfs:comment"><%=comment %></div><% // 2013-08 RDFa
+            }
+        }
+
 if (asUL_List) {%></li><%
 } else {%></div><%}%>
 <!--/docline.jsp-->

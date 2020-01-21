@@ -45,7 +45,7 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Semanlink - <%=jsp.getTitle()%></title>
 	<link rel="stylesheet" href="<%=contextPath%>/css/sidemenu.css" type="text/css" />
-	<link rel="stylesheet" href="<%=contextPath%>/css/slstyles.css" type="text/css" />
+	<link rel="stylesheet" href="<%=contextPath%>/css/slstyles.css?v=0.1" type="text/css" />
 	
 	<!-- https://github.com/evilstreak/markdown-js -->
     <script src="<%=contextPath%>/scripts/markdown-it.min.js"></script>   
