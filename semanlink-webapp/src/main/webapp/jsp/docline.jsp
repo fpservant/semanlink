@@ -24,7 +24,7 @@ SLDocumentStuff docStuff = new SLDocumentStuff(doc, mod, jsp.getContextURL()); /
 String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien l'url servi par le ws
 // 2013-08 RDFa
 %><li class="docline" about="<%=uri%>"><%
-    %><span><% // ajouté pour tree - était avant au niveau LI
+    %><span class="docline_title"><% // ajouté pour tree - était avant au niveau LI
         if (Util.isImage(uri)) {
 
             //
