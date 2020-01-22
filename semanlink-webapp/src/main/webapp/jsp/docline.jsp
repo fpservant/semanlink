@@ -142,49 +142,57 @@ if (asUL_List) {
     %><br/><%
     }
     
-    //
-    // AFFICHAGE DE LA VALEUR DE LA SORTPROPERTY
-    //
-    
-    if (jsp != null) { // on a le cas jsp null avec deliciousimport 2006/10/1
-        String prop = jsp.getSortProperty();
-        // prop = "http://www.semanlink.net/2001/00/semanlink-schema#creationTime";
-        // TODO  change
-        if (prop != null) {
-            String propVal = null;
-            // if (prop.equals(SLVocab.SL_CREATION_DATE_PROPERTY)) {
-            // } else if (!prop.equals(SLVocab.HAS_KEYWORD_PROPERTY)) {
-            if (!prop.equals(SLVocab.HAS_KEYWORD_PROPERTY)) {
-                // 2012-12: better to display the date than the time
-                /*
-                HashMap hm = doc.getPropertiesAsStrings();
-                java.util.List al = (java.util.List) hm.get(prop);
-                if (al != null) {
-                    propVal = al.get(0).toString();
-                } else { // times ago, we only had the DATE prop, not the TIME
-                    if (prop.equals(SLVocab.SL_CREATION_TIME_PROPERTY)) {
-                        al = (java.util.List) hm.get(SLVocab.SL_CREATION_DATE_PROPERTY);
-                        if (al != null) propVal = al.get(0).toString();
-                    }
-                }
-                */
-                HashMap hm = doc.getPropertiesAsStrings();
-                if (prop.equals(SLVocab.SL_CREATION_TIME_PROPERTY)) prop = SLVocab.SL_CREATION_DATE_PROPERTY;
-                java.util.List al = (java.util.List) hm.get(prop);
-                if (al != null) {
-                    propVal = al.get(0).toString();
-                }
-            }
-            if (propVal != null) {
-                %><span class="docline_prop"><%=propVal%></span> <%
-            }
-        }
-    }
 
     //
     // KWS DU DOC
     //
     %><jsp:include page="/jsp/kwsofdoc.jsp"/><%
+    
+    
+    //
+    // AFFICHAGE DE LA VALEUR DE LA SORTPROPERTY
+    //
+        
+        if (jsp != null) { // on a le cas jsp null avec deliciousimport 2006/10/1
+            String prop = jsp.getSortProperty();
+            // prop = "http://www.semanlink.net/2001/00/semanlink-schema#creationTime";
+            // TODO  change
+            if (prop != null) {
+                String propVal = null;
+                // if (prop.equals(SLVocab.SL_CREATION_DATE_PROPERTY)) {
+                // } else if (!prop.equals(SLVocab.HAS_KEYWORD_PROPERTY)) {
+                if (!prop.equals(SLVocab.HAS_KEYWORD_PROPERTY)) {
+                    // 2012-12: better to display the date than the time
+                    /*
+                    HashMap hm = doc.getPropertiesAsStrings();
+                    java.util.List al = (java.util.List) hm.get(prop);
+                    if (al != null) {
+                        propVal = al.get(0).toString();
+                    } else { // times ago, we only had the DATE prop, not the TIME
+                        if (prop.equals(SLVocab.SL_CREATION_TIME_PROPERTY)) {
+                            al = (java.util.List) hm.get(SLVocab.SL_CREATION_DATE_PROPERTY);
+                            if (al != null) propVal = al.get(0).toString();
+                        }
+                    }
+                    */
+                    HashMap hm = doc.getPropertiesAsStrings();
+                    if (prop.equals(SLVocab.SL_CREATION_TIME_PROPERTY)) prop = SLVocab.SL_CREATION_DATE_PROPERTY;
+                    java.util.List al = (java.util.List) hm.get(prop);
+                    if (al != null) {
+                        propVal = al.get(0).toString();
+                    }
+                }
+                if (propVal != null) {
+                    %><span class="docline_prop"><%=propVal%></span> <%
+                }
+            }
+        }
+  
+    
+    
+    //
+    // COMMENT
+    //
     
         String comment = doc.getComment();
         if (comment != null) {
