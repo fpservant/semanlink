@@ -81,15 +81,15 @@ if (asUL_List) {
         // open in desktop? not if it's a dir
         boolean doOpenInDesktop = false;
         if (docStuff.getFile() != null) {
-        	if (!docStuff.isDir()) {
-        		doOpenInDesktop = true;
-        	}
+            if (!docStuff.isDir()) {
+                doOpenInDesktop = true;
+            }
         }
         if (!doOpenInDesktop) {
-        	String href = response.encodeURL(Util.handleAmpersandInHREF(docStuff.getHref()));
-        	%><a href="<%=href%>"><span property="rdfs:label"><%=docLabel%></span></a><%
+            String href = response.encodeURL(Util.handleAmpersandInHREF(docStuff.getHref()));
+            %><a href="<%=href%>"><span property="rdfs:label"><%=docLabel%></span></a><%
         } else {
-        	
+            
           SLDocumentStuff.HrefPossiblyOpeningInDestop hr = docStuff.getHrefPossiblyOpeningInDestop(true);
           if (hr.openingInDesktop()) {
            %><a href="<%=hr.href()%>" onclick="desktop_open_hack('<%=hr.href()%>'); return false;"><%=docLabel%></a><%                 
@@ -98,9 +98,8 @@ if (asUL_List) {
            %><a href="<%=href%>"><%=docLabel%></a><%            
           }
         }
-        // 2018-01 LINK TO DOC PAGE ("about")
-        String href = response.encodeURL(docStuff.getAboutHref());
-        %> <i><a href="<%=href%>"><%=jsp.i18l("doc.about")%></a></i><%
+        %></span><span class="docline_title2"><%
+        
 
          
          //
@@ -118,10 +117,10 @@ if (asUL_List) {
            
            SLDocumentStuff.HrefPossiblyOpeningInDestop localCopyLink = docStuff.getLocalCopyLink();
            if (localCopyLink.openingInDesktop()) {
-            %> <i>(<a href="<%=localCopyLink.href()%>" onclick="desktop_open_hack('<%=localCopyLink.href()%>'); return false;"><%=jsp.i18l("doc.localCopy")%></a>)</i><%                 
+            %>(<a href="<%=localCopyLink.href()%>" onclick="desktop_open_hack('<%=localCopyLink.href()%>'; return false;"><%=jsp.i18l("doc.localCopy")%></a>)<%                 
            } else {
-          	 href = response.encodeURL(localCopyLink.href());
-            %> <i>(<a href="<%=href%>"><%=jsp.i18l("doc.localCopy")%></a>)</i><%            
+             String href = response.encodeURL(localCopyLink.href());
+            %>(<a href="<%=href%>"><%=jsp.i18l("doc.localCopy")%></a>)<%            
            }
            
         // } else if (SLServlet.getWebServer().owns(uri)) {
@@ -129,11 +128,14 @@ if (asUL_List) {
             // SLDocument source = mod.doc2Source(uri);
             SLDocument source = docStuff.getSource();
             if (source != null) {
-                %> <i>(<a href="<%=source.getURI()%>"><%=jsp.i18l("doc.source")%></a>)</i><%
+                %>(<a href="<%=source.getURI()%>"><%=jsp.i18l("doc.source")%></a>)<%
             }
         }
         
-        
+         // 2018-01 LINK TO DOC PAGE ("about")
+         String href = response.encodeURL(docStuff.getAboutHref());
+         %>(<a href="<%=href%>"><%=jsp.i18l("doc.about")%></a>)<%
+
     %></span><%
     boolean addbr = true;
     if (addbr) {
