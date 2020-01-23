@@ -138,7 +138,9 @@ public File getFile() throws IOException, URISyntaxException {
 		if (bookmarkOf.startsWith("file:")) {
 			file = mod.getFile(bookmarkOf);
 			return file;			
-		}	
+		}	else {
+			return null; // 2020-01 correct bug: missing "download a copy" in side menu
+		}
 	}
 	
 	if (isNote()) {
