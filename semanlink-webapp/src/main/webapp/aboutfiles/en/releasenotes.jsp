@@ -5,8 +5,9 @@
 <h1>Release notes</h1>
 <div class="graybox">
 
-<h2>0.6.2 2020-°1-xx</h2>
+<h2>0.7.0 2020-01-26</h2>
 <ul>
+<li>List of docs: no more a UL list -> better display</li>
 <li>Bug corrected regarding numbering in table of content in markdown files</li>
 <li>Bug corrected regarding delete key in live search</li>
 <li>top bar: logo on the right</li>
