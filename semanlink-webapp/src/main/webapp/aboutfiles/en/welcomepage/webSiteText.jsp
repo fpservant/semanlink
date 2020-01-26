@@ -16,7 +16,7 @@
         <h2>My bookmarks</h2>
             <p>
             As a demo, you'll find my bookarks on this site. 
-            Click the "New Entries" button at   the top of  this    page to see the latest bookmarks that I added, 
+            Click the "News" button at   the top of  this    page to see the latest bookmarks that I added, 
             in a page that looks a bit like the main page of a blog.    Each bookmark has a creation    date,   tags, 
             and often a short   description (generally  an  abstract or a   quote).
             </p>
