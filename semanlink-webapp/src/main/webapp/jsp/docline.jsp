@@ -22,8 +22,21 @@ SLDocumentStuff docStuff = new SLDocumentStuff(doc, mod, jsp.getContextURL()); /
 
 // String linkToThisPage = jsp.getLinkToThis(); // ceci est mis en cache par jsp -- pas grave de l'appeler ds chaque docline.jsp de la liste
 String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien l'url servi par le ws
+
+//2020-01 #DocList up until now, we used ul list.
+//this param to say: no, we are in the new way of doing
+boolean asUL_List = Boolean.TRUE.equals(request.getAttribute("net.semanlink.servlet.Bean_DocList_asUL_List"));
+
 // 2013-08 RDFa
+
+if (asUL_List) {
 %><li class="docline" about="<%=uri%>"><%
+    %><span class="docline_title"><% // ajouté pour tree - était avant au niveau LI
+} else {
+%><div class="docline_indiv" about="<%=uri%>"><%    
+}
+
+
     %><span class="docline_title"><% // ajouté pour tree - était avant au niveau LI
         if (Util.isImage(uri)) {
 
@@ -92,11 +105,10 @@ String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien
            %><a href="<%=href%>"><%=docLabel%></a><%            
           }
         }
+		%></span><span class="docline_title2"><%
         
-        
-        // 2018-01 LINK TO DOC PAGE ("about")
-        String href = response.encodeURL(docStuff.getAboutHref());
-        %> <i><a href="<%=href%>"><%=jsp.i18l("doc.about")%></a></i><%
+
+ 
 
          
          //
@@ -114,10 +126,10 @@ String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien
            
            SLDocumentStuff.HrefPossiblyOpeningInDestop localCopyLink = docStuff.getLocalCopyLink();
            if (localCopyLink.openingInDesktop()) {
-            %> <i>(<a href="<%=localCopyLink.href()%>" onclick="desktop_open_hack('<%=localCopyLink.href()%>'); return false;"><%=jsp.i18l("doc.localCopy")%></a>)</i><%                 
+            %>(<a href="<%=localCopyLink.href()%>" onclick="desktop_open_hack('<%=localCopyLink.href()%>'; return false;"><%=jsp.i18l("doc.localCopy")%></a>)<%                 
            } else {
-          	 href = response.encodeURL(localCopyLink.href());
-            %> <i>(<a href="<%=href%>"><%=jsp.i18l("doc.localCopy")%></a>)</i><%            
+             String href = response.encodeURL(localCopyLink.href());
+            %>(<a href="<%=href%>"><%=jsp.i18l("doc.localCopy")%></a>)<%            
            }
            
         // } else if (SLServlet.getWebServer().owns(uri)) {
@@ -125,21 +137,28 @@ String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien
             // SLDocument source = mod.doc2Source(uri);
             SLDocument source = docStuff.getSource();
             if (source != null) {
-                %> <i>(<a href="<%=source.getURI()%>"><%=jsp.i18l("doc.source")%></a>)</i><%
+                %>(<a href="<%=source.getURI()%>"><%=jsp.i18l("doc.source")%></a>)<%
             }
         }
         
-        
+         // 2018-01 LINK TO DOC PAGE ("about")
+         String href = response.encodeURL(docStuff.getAboutHref());
+         %>(<a href="<%=href%>"><%=jsp.i18l("doc.about")%></a>)<%
+
+
     %></span><%
-    String comment = doc.getComment();
-    if (comment != null) {
-        comment = Util.toHTMLOutput(comment);
-        // because of markdown that may contain <http://www.a.com>
-        // comment = comment.replaceAll("<","&lt;"); // HUM BUG s'il y a des &lt; dans comment TODO 
- 
-        %><br/><span class="docline_comment" property="rdfs:comment"><textarea><%=comment %></textarea></span><% // 2013-08 RDFa
-    }
+
+    boolean addbr = true;
+    if (addbr) {
     %><br/><%
+    }
+    
+
+    //
+    // KWS DU DOC
+    //
+    %><jsp:include page="/jsp/kwsofdoc.jsp"/><%
+    
     
     //
     // AFFICHAGE DE LA VALEUR DE LA SORTPROPERTY
@@ -188,7 +207,20 @@ String uri = doc.getURI(); // ds le cas d'un doc servi par le web server, c bien
     }
 
     //
-    // KWS DU DOC
+    // COMMENT
     //
-    %><jsp:include page="/jsp/kwsofdoc.jsp"/><%
-%></li><!--/docline.jsp-->
+    
+        String comment = doc.getComment();
+        if (comment != null) {
+            comment = Util.toHTMLOutput(comment);
+            if (asUL_List) {
+        	%><br/><span class="docline_comment" property="rdfs:comment"><textarea><%=comment %></textarea></span><% // 2013-08 RDFa
+            } else {
+                addbr = false;
+              %><div class="docline_comment" property="rdfs:comment"><textarea><%=comment %></textarea></div><% // 2013-08 RDFa
+            }
+        }
+
+if (asUL_List) {%></li><%
+} else {%></div><%}%>
+<!--/docline.jsp-->
