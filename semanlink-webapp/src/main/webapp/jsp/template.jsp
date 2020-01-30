@@ -45,7 +45,7 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Semanlink - <%=jsp.getTitle()%></title>
 	<link rel="stylesheet" href="<%=contextPath%>/css/sidemenu.css" type="text/css" />
-	<link rel="stylesheet" href="<%=contextPath%>/css/slstyles.css?v=062" type="text/css" />
+	<link rel="stylesheet" href="<%=contextPath%>/css/slstyles.css?v=070" type="text/css" />
 	
     <script src="<%=contextPath%>/scripts/markdown-it.min.910.js"></script>   
 	<script src="<%=contextPath%>/scripts/markdown-it-replace-link.min.js"></script>   
@@ -105,7 +105,7 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 		 document.body.appendChild(element);
 		 
 		 element = document.createElement("script");
-		 element.src = "<%=contextPath%>/scripts/trees.js?v=0.7.0";
+		 element.src = "<%=contextPath%>/scripts/trees.js?v=0.7.0-1";
 		 document.body.appendChild(element);
 	}
 	</script>

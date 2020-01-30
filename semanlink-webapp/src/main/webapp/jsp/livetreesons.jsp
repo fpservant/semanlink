@@ -57,17 +57,30 @@ String context = SLServlet.getServletUrl();
 		// si on est ds les résultats de la searchform, il faut mettre le onClick postTag pour faire ce qui est demandé par le popup (add parent, add child, etc)
 		// si non, (ex : keyword sous forme de tree, ou snip), il faut faire le href standard
 		onClick = " onClick=\"postTag('" + href + "');return false\"";
-	}    // 2017-01 DRAG TEST: <li  draggable="true" ondragstart="drag(event)" >	if (!canBeOpened) {		// ATTENTION A NE PAS INTRODUIRE DE TEXTE "VIDE" ENTRE LES DIFFERENTS ELEMENTS		// cas sans image : une image vide pour avoir le même nb de fils ds les 2 cas (cf highlight de livesearch) et		// avoir aussi le trigger:divid qui sert à se repérer ds le parcours de l'arbre.				// ci-dessous, mettre une id à li ne marche pas parce que pour le highlight, on met à LSHighlight,		// puis à null, l'id de la ligne sélectionnée		if (kw == null) {			%><%//PAS DE VIDE!!!%><li><img src="<%=context%>/ims/box_nada.gif" height="0px" width="8px" alt="" id="trigger:<%=sonDivId%>" /><a href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%		} else { // 2013-08 RDFa
-			%><%//PAS DE VIDE!!!%><li><img src="<%=context%>/ims/box_nada.gif" height="0px" width="8px" alt="" id="trigger:<%=sonDivId%>" /><a property="skos:narrower" href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%			
-		}
-	} else { // son has sons		if (kw == null) {
-			%><%//PAS DE VIDE!!!%><li><img src="<%=context%>/ims/box_closed.gif" id="trigger:<%=sonDivId%>" alt="" height="8px" width="8px" onclick="toggle2('<%=sonDivId%>', '<%=encodedSonUri%>', '<%=withDocs%>', '<%=postTagOnClick%>')" /><% // ne rien mettre entre les 2					 // ne rien mettre entre les 2%><a href="<%=href%>"<%=onClick%>><%=label%></a><%//PAS DE					// VIDE !!!%><ul id="block:<%=sonDivId%>" class="livetree"><li style="display:none"></li><%//ATTENTION A NE RIEN METTRE DS LE UL (cf script)%></ul><%// PAS DE				// VIDE!!!%></li><%//PAS DE VIDE!!!%><%
-		} else {
-			%><%//PAS DE VIDE!!!%><li><img src="<%=context%>/ims/box_closed.gif" id="trigger:<%=sonDivId%>" alt="" height="8px" width="8px" onclick="toggle2('<%=sonDivId%>', '<%=encodedSonUri%>', '<%=withDocs%>', '<%=postTagOnClick%>')" /><% // ne rien mettre entre les 2
-			 // ne rien mettre entre les 2%><a property="skos:narrower" href="<%=href%>"<%=onClick%>><%=label%></a><%//PAS DE
-			// VIDE !!!%><ul id="block:<%=sonDivId%>" class="livetree"><li style="display:none"></li><%//ATTENTION A NE RIEN METTRE DS LE UL (cf script)%></ul><%// PAS DE
-		// VIDE!!!%></li><%//PAS DE VIDE!!!%><%
-		}	} // if (son.hasChild())			} // for/* // CE COMMENATIRE EST-IL ENCORE PERTINENT ???
+	}    // 2017-01 DRAG TEST: <li  draggable="true" ondragstart="drag(event)" >
+	
+    if (!canBeOpened) {
+	      // ATTENTION A NE PAS INTRODUIRE DE TEXTE "VIDE" ENTRE LES DIFFERENTS ELEMENTS
+	      // cas sans image : une image vide pour avoir le même nb de fils ds les 2 cas (cf highlight de livesearch) et
+	      // avoir aussi le trigger:divid qui sert à se repérer ds le parcours de l'arbre.
+	      
+	      // ci-dessous, mettre une id à li ne marche pas parce que pour le highlight, on met à LSHighlight,
+	      // puis à null, l'id de la ligne sélectionnée
+	      if (kw == null) {
+	          %><%//PAS DE VIDE!!!%><li><img src="<%=context%>/ims/box_nada.gif" height="0px" width="8px" alt="" id="trigger:<%=sonDivId%>" /><a href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%
+	      } else { // 2013-08 RDFa
+	          %><%//PAS DE VIDE!!!%><li><img src="<%=context%>/ims/box_nada.gif" height="0px" width="8px" alt="" id="trigger:<%=sonDivId%>" /><a property="skos:narrower" href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%          
+	      }
+	} else { // son has sons
+	      if (kw == null) {
+	          %><%//PAS DE VIDE!!!%><li id="li:<%=sonDivId%>"><img src="<%=context%>/ims/box_closed.gif" id="trigger:<%=sonDivId%>" alt="" height="8px" width="8px" onclick="toggle2('<%=sonDivId%>', '<%=encodedSonUri%>', '<%=withDocs%>', '<%=postTagOnClick%>')" /><% // ne rien mettre entre les 2
+	                   // ne rien mettre entre les 2%><a href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%
+	      } else {
+	          %><%//PAS DE VIDE!!!%><li id="li:<%=sonDivId%>"><img src="<%=context%>/ims/box_closed.gif" id="trigger:<%=sonDivId%>" alt="" height="8px" width="8px" onclick="toggle2('<%=sonDivId%>', '<%=encodedSonUri%>', '<%=withDocs%>', '<%=postTagOnClick%>')" /><% // ne rien mettre entre les 2
+	           // ne rien mettre entre les 2%><a property="skos:narrower" href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%
+	      }
+	} // if (son.hasChild())
+			} // for/* // CE COMMENATIRE EST-IL ENCORE PERTINENT ???
 
 POUR AFFICHER AUSSI LES DOCUMENTSATTENTION : cette version ne supporte pas le "highlight"RESTE A FAIRE :- style des liens (comment ? pour le moment, tous ds style livetree cf slstyles.css)- le highlight : ne déclenche pas la bonne action (modifier liveSearchSubmit ds livesearch.js, et livesearchform.jsppour y mettre ds un autre attribut hidden le dochref (et non le kwhref)- lien : ouvre la page doc, pas le doc lui même (devrait dépendre du edit)- pas d'icône image pour afficher image - pourrait être à la place image vide du cas sans fils- affichage en plein pagePOUR AVOIR POTENTIELLEMENT PLUSIEURS ARBRES SUR UNE MEME PAGE :- modifier l'id de ligne : de 1_2 à [treeid]1_2 (cf sonid)- ds livesearch.js : modif du event handler// DUR DUR !!!*/// Bean_DocList beanDocList = (Bean_DocList) request.getAttribute("net.semanlink.servlet.Bean_DocList");
 //2007-08 Niamey intersection in andKws// if (withDocs) {
