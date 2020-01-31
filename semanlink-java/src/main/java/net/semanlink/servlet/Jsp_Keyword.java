@@ -74,7 +74,7 @@ protected Bean_DocList computeDocList()  throws Exception {
 }
 
 public Bean_DocList computeDocList(String sortProp, DisplayMode mode)  throws Exception {
-	List list = null;
+	List<SLDocument> list = null;
 	SLKeyword[] dontShow = null;
 	boolean showKwsOfDocs = true; // UNUSED cf setShowKwsOfDocs TODO
 	
@@ -141,11 +141,11 @@ public Bean_DocList computeDocList(String sortProp, Object mode)  throws Excepti
 */
 
 
-public void sort(List docList, SLKeyword[] dontShow) {
+public void sort(List<SLDocument> docList, SLKeyword[] dontShow) {
 	sort (docList, dontShow, this.getSortProperty());
 }
 
-public static void sort(List docList, SLKeyword[] dontShow, String sortProp) {
+public static void sort(List<SLDocument> docList, SLKeyword[] dontShow, String sortProp) {
 	if (SLVocab.HAS_KEYWORD_PROPERTY.equals(sortProp)) {
 		SLUtils.sortDocsByKws(docList, dontShow);
 	} else {
@@ -182,9 +182,9 @@ public String getComment() { return this.slKw.getComment(); }
 	return x;
 }*/
 
-public HashMap getLinkedKeywords2NbHashMap() throws Exception {
-	HashMap x=null;
-	DisplayMode mode = getDisplayMode();
+public HashMap<SLKeyword, Integer> getLinkedKeywords2NbHashMap() throws Exception {
+	HashMap<SLKeyword, Integer> x=null;
+	// DisplayMode mode = getDisplayMode();
 	// 2013-03
 	// the tag cloud was computed on the list of displayed documents
 	// But for the short list of docs, it's probably better to display the big cloud too
@@ -209,8 +209,8 @@ public static SLKeywordNb[] getLinkedKeywordsWithNb(SLKeyword kw) {
 /** Calcul des kws liés à un kw. 
  *  Un kw est lié à kw ssi il ont un document en commun.
  */
-public static HashMap getLinkedKeywords2NbHashMap(SLKeyword kw) {
-	HashMap kw2nb = SLUtils.getLinkedKeywords2NbHashMap(kw.getDocuments());
+public static HashMap<SLKeyword, Integer> getLinkedKeywords2NbHashMap(SLKeyword kw) {
+	HashMap<SLKeyword, Integer> kw2nb = SLUtils.getLinkedKeywords2NbHashMap(kw.getDocuments());
 	// retirer kw
 	kw2nb.remove(kw);
 	// et ses enfants
@@ -222,16 +222,16 @@ public static HashMap getLinkedKeywords2NbHashMap(SLKeyword kw) {
 }
 
 /** the method called by the jsp to display the tag cloud 
- *  Redefineition of method in Jsp_Page */
+ *  Redefinition of method in Jsp_Page */
 public SLKeywordNb[] getSmartLinkedKeywordsWithNb() throws Exception {
 	// les kws et leur nb d'occurence
-	HashMap directlyLinkedHM = getLinkedKeywords2NbHashMap();
+	HashMap<SLKeyword, Integer> directlyLinkedHM = getLinkedKeywords2NbHashMap();
 	// pour éviter, par ex, d'avoir un méga "Favoris" quand on cherche "Niger",
 	// on commence par éliminer les directlyLinkedHM qui sont ancetres de this
 	SLFastTree fastTree = new SLFastTree(this.slKw, SLVocab.HAS_PARENT_PROPERTY, getSLModel());		
-	HashSet kwsInTree = fastTree.getKwsSet();
-	for (Iterator ite = kwsInTree.iterator() ; ite.hasNext() ;) {
-		SLKeyword ancetre = (SLKeyword) ite.next();
+	HashSet<SLKeyword> kwsInTree = fastTree.getKwsSet();
+	for (Iterator<SLKeyword> ite = kwsInTree.iterator() ; ite.hasNext() ;) {
+		SLKeyword ancetre = ite.next();
 		// ancetre est il ds directlyLinked ?
 		directlyLinkedHM.remove(ancetre);
 	}

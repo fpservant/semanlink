@@ -7,7 +7,7 @@ public class SLFastTree implements SLVocab {
 private SLKeyword root;
 private String property;
 /** les kws de l'arbre (pas tous ceux liés aux docs !) */
-private HashSet hsKws;
+private HashSet<SLKeyword> hsKws;
 /** Comment on accède aux voisins d'un kw : les fils ou les pères ? avec les docs?... */
 private VoisinsGetter getter;
 
@@ -15,7 +15,7 @@ private VoisinsGetter getter;
 //RESULTS
 //
 
-public HashSet getKwsSet() throws Exception {
+public HashSet<SLKeyword> getKwsSet() throws Exception {
 	if (this.hsKws == null) walk();
 	return this.hsKws;
 }
@@ -42,15 +42,15 @@ public SLFastTree(SLKeyword root, String property, SLModel model) {
 //
 
 public void walk() throws Exception {
-	this.hsKws = new HashSet();
+	this.hsKws = new HashSet<SLKeyword>();
 	walk(root);
 }
 protected void walk(SLKeyword kw) throws Exception{
-	List kws = this.getter.getKeywords(kw);
+	List<SLKeyword> kws = this.getter.getKeywords(kw);
 	int nkws = kws.size();
 	this.hsKws.add(kw);
 	for (int i = 0; i < nkws; i++) {
-		SLKeyword voisin = (SLKeyword) kws.get(i);
+		SLKeyword voisin = kws.get(i);
 		if (!this.hsKws.contains(voisin)) {
 			walk(voisin);
 		} else {
@@ -66,20 +66,20 @@ protected void walk(SLKeyword kw) throws Exception{
 * etc.
 */
 interface VoisinsGetter {
-	List getKeywords(SLKeyword kw);
-	List getDocuments(SLKeyword kw);
+	List<SLKeyword> getKeywords(SLKeyword kw);
+	List<SLDocument> getDocuments(SLKeyword kw);
 }
 
 class ChildrenGetter implements VoisinsGetter {
-	public List getKeywords(SLKeyword kw) {
+	public List<SLKeyword> getKeywords(SLKeyword kw) {
 		return kw.getChildren();
 	}
-	public List getDocuments(SLKeyword kw) { return kw.getDocuments(); }
+	public List<SLDocument> getDocuments(SLKeyword kw) { return kw.getDocuments(); }
 }
 
 class ParentsGetter implements VoisinsGetter {
-	public List getKeywords(SLKeyword kw) { return kw.getParents(); }
-	public List getDocuments(SLKeyword kw) { return kw.getDocuments(); }
+	public List<SLKeyword> getKeywords(SLKeyword kw) { return kw.getParents(); }
+	public List<SLDocument> getDocuments(SLKeyword kw) { return kw.getDocuments(); }
 }
 
 //

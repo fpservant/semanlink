@@ -10,7 +10,7 @@ import net.semanlink.graph.WalkListenerImpl;
  * How to use: create an instance, create a SLTree.SLWalkListener (for instance extending SLTree.SLWalkListenerAdapter),
  * then call walk(SLWalkListener walkListener)
  */
-public class SLTree extends GraphTraversal<Object> implements SLVocab {
+public class SLTree extends GraphTraversal<SLKeyword> implements SLVocab {
 static Integer UN = new Integer(1);
 static Integer BONUS_POUR_PARENT = 2;
 static Integer BONUS_POUR_RELATED = 2;
@@ -19,7 +19,7 @@ private String property;
 /** null si pas de tri */
 String sortProperty;
 /** les docs de l'arbre. */
-private LinkedHashSet hsDocs;
+private LinkedHashSet<SLDocument> hsDocs;
 /** les kws de l'arbre (pas tous ceux liés aux docs !) 
  *  (un simple pointeur vers super.hs) */
 // private HashSet hsKws;
@@ -27,7 +27,7 @@ private LinkedHashSet hsDocs;
 // private HashSet hsKwsOfDocs; // ceci, pour version sans calcul du nb d'occurrences des linkedkws
 /** les kws liés aux docs de l'arbre. Clé kw lié au doc de l'arbre, data Integer nb d'occurences. 
  *  purgé des descendants de la racine une fois qu'on a appelé son getter. */
-private HashMap hmKwsOfDocs;
+HashMap<SLKeyword, Integer> hmKwsOfDocs;
 /** Comment on accède aux voisins d'un kw : les fils ou les pères ? avec les docs?... */
 VoisinsGetter getter;
 private SLWalkListener slWalkListener;
@@ -63,19 +63,19 @@ static private VoisinsGetter voisinsGetter(String property) {
 	return getter;
 }
 
-static class GraphImpl implements Graph {
+static class GraphImpl implements Graph<SLKeyword> {
 	private SLKeyword[] seeds;
 	VoisinsGetter voisinsGetter;
 	GraphImpl(SLKeyword[] seeds, VoisinsGetter voisinsGetter) {
 		this.seeds = seeds;
 		this.voisinsGetter = voisinsGetter;
 	}
-	public Iterator getNeighbors(Object node) throws Exception {
-		List list = this.voisinsGetter.getKeywords((SLKeyword) node);
+	public Iterator<SLKeyword> getNeighbors(SLKeyword node) throws Exception {
+		List<SLKeyword> list = this.voisinsGetter.getKeywords(node);
 		return list.iterator();
 	}
 	
-	public Object[] seeds() {
+	public SLKeyword[] seeds() {
 		return this.seeds;
 	}
 }
@@ -88,21 +88,21 @@ static class GraphImpl implements Graph {
  * etc.
  */
 static interface VoisinsGetter {
-	List getKeywords(SLKeyword kw);
-	List getDocuments(SLKeyword kw);
-	List getInvKeywords(SLKeyword kw);
+	List<SLKeyword> getKeywords(SLKeyword kw);
+	List<SLDocument> getDocuments(SLKeyword kw);
+	List<SLKeyword> getInvKeywords(SLKeyword kw);
 }
 
 static class ChildrenGetter implements VoisinsGetter {
-	public List getKeywords(SLKeyword kw) { return kw.getChildren(); }
-	public List getDocuments(SLKeyword kw) { return kw.getDocuments(); }
-	public List getInvKeywords(SLKeyword kw) { return kw.getParents(); }
+	public List<SLKeyword> getKeywords(SLKeyword kw) { return kw.getChildren(); }
+	public List<SLDocument> getDocuments(SLKeyword kw) { return kw.getDocuments(); }
+	public List<SLKeyword> getInvKeywords(SLKeyword kw) { return kw.getParents(); }
 }
 
 static class ParentsGetter implements VoisinsGetter {
-	public List getKeywords(SLKeyword kw) { return kw.getParents(); }
-	public List getDocuments(SLKeyword kw) { return kw.getDocuments(); }
-	public List getInvKeywords(SLKeyword kw) { return kw.getChildren(); }
+	public List<SLKeyword> getKeywords(SLKeyword kw) { return kw.getParents(); }
+	public List<SLDocument> getDocuments(SLKeyword kw) { return kw.getDocuments(); }
+	public List<SLKeyword> getInvKeywords(SLKeyword kw) { return kw.getChildren(); }
 }
 
 //
@@ -126,7 +126,7 @@ public interface SLWalkListener {
 	public void startDocList(SLKeyword kw) throws Exception;
 	/** emis si kw n'a pas de sous liste de docs (mais en a une de kws : pas émis si on a noList émis) */
 	public void noDocList(SLLabeledResource kw) throws Exception;
-	public void printDocument(SLDocument doc, SLKeyword currentKw, List kwsOfDoc) throws Exception;
+	public void printDocument(SLDocument doc, SLKeyword currentKw, List<SLKeyword> kwsOfDoc) throws Exception;
 	public void endDocList(SLKeyword kw) throws Exception;
 	public void endList(SLLabeledResource kw) throws Exception;
 	public void endSeed(SLKeyword kw) throws Exception;
@@ -147,7 +147,7 @@ public static class SLWalkListenerAdapter implements SLWalkListener {
 	public void startDocList(SLKeyword kw) throws Exception {}
 	/** emis si kw n'a pas de sous liste de docs (mais en a une de kws : pas émis si on a noList émis) */
 	public void noDocList(SLLabeledResource kw) throws Exception {}
-	public void printDocument(SLDocument doc, SLKeyword currentKw, List kwsOfDoc) throws Exception {}
+	public void printDocument(SLDocument doc, SLKeyword currentKw, List<SLKeyword> kwsOfDoc) throws Exception {}
 	public void endDocList(SLKeyword kw) throws Exception {}
 	public void endList(SLLabeledResource res) throws Exception {}
 	public void endSeed(SLKeyword kw) throws Exception {}
@@ -184,51 +184,49 @@ public void walk(SLWalkListener walkListener) throws Exception {
 
 
 public void walk(SLWalkListener slWalkListener) throws Exception {
-	walk(slWalkListener, new Stack());
+	walk(slWalkListener, new Stack<Integer>());
 }
-public void walk(SLWalkListener slWalkListener, Stack treePosition) throws Exception {
+public void walk(SLWalkListener slWalkListener, Stack<Integer> treePosition) throws Exception {
 	// this.hsKws = this.hs;
-	this.hsDocs = new LinkedHashSet();
+	this.hsDocs = new LinkedHashSet<>();
 	// this.hsKwsOfDocs = new HashSet();
-	this.hmKwsOfDocs = new HashMap();
+	this.hmKwsOfDocs = new HashMap<>();
 
   GraphWalkListener graphWalkListener = new GraphWalkListener(slWalkListener, treePosition);
   walk(graphWalkListener, null, treePosition);
 }
 
 
-class GraphWalkListener extends WalkListenerImpl {
-	private SLWalkListener slWalkListener;
-	private Stack treePosition;
+class GraphWalkListener extends WalkListenerImpl<SLKeyword> {
+	private SLWalkListener slWalkListener1;
+	private Stack<Integer> treePosition;
 
 	/** pour la gestion des docs ds le sous-arbre */
-	private Stack hsDocsStack;
+	// private Stack hsDocsStack;
 
-	GraphWalkListener(SLWalkListener slWalkListener, Stack treePosition) {
-		this.slWalkListener = slWalkListener;
+	GraphWalkListener(SLWalkListener slWalkListener, Stack<Integer> treePosition) {
+		this.slWalkListener1 = slWalkListener;
 		this.treePosition = treePosition;
 	}
-  public void startSeed(Object seed) throws Exception {
-  	SLKeyword seedKw = (SLKeyword) seed;
-  	slWalkListener.startSeed(seedKw);
-		// 2007-04
-		if (getter instanceof ChildrenGetter) {
-			// we add the related to the tag cloud
-			List list = seedKw.getFriends();
-			for (int ii = 0; ii < list.size(); ii++) {
-				add2count(BONUS_POUR_RELATED, list.get(ii));
-			}
-		}
+  public void startSeed(SLKeyword seed) throws Exception {
+  	slWalkListener1.startSeed(seed);
+  	// 2020-01 on ne le fait plus (déjà qu'on en a trop)
+//		// 2007-04
+//		if (getter instanceof ChildrenGetter) {
+//			// we add the related to the tag cloud
+//			List<SLKeyword> list = seed.getFriends();
+//			for (int ii = 0; ii < list.size(); ii++) {
+//				add2count(BONUS_POUR_RELATED, list.get(ii));
+//			}
+//		}
   }
-  public void startNeighborList(Object node) throws Exception {
-  	SLKeyword kw = (SLKeyword) node;
-   	slWalkListener.startList(kw);
-   	slWalkListener.startKwList(kw);
+  public void startNeighborList(SLKeyword kw) throws Exception {
+   	slWalkListener1.startList(kw);
+   	slWalkListener1.startKwList(kw);
   }
   
-  public void startNode(Object node) throws Exception {
-   	SLKeyword kw = (SLKeyword) node;
-  	slWalkListener.startKeyword(kw);
+  public void startNode(SLKeyword kw) throws Exception {
+  	slWalkListener1.startKeyword(kw);
 
   	/*
   	HashSet subHsDocs = new HashSet();
@@ -238,25 +236,26 @@ class GraphWalkListener extends WalkListenerImpl {
   	
   	/// CHANGER ICI LE BONUS_POUR_PARENT PAR NB DESCENDANTS
   	// We put in the tag cloud the parents of the kws of the tree
-		List list = getter.getInvKeywords(kw);
+		List<SLKeyword> list = getter.getInvKeywords(kw);
 		for (int ii = 0; ii < list.size(); ii++) {
 			add2count(BONUS_POUR_PARENT, list.get(ii));
 		}
 
-		// 2007-04
-		if (getter instanceof ChildrenGetter) {
-			// we add the related to the tag cloud
-			list = kw.getFriends();
-			for (int ii = 0; ii < list.size(); ii++) {
-				add2count(BONUS_POUR_RELATED, list.get(ii));
-			}
-		}
+  	// 2020-01 on ne le fait plus (déjà qu'on en a trop)
+//		// 2007-04
+//		if (getter instanceof ChildrenGetter) {
+//			// we add the related to the tag cloud
+//			list = kw.getFriends();
+//			for (int ii = 0; ii < list.size(); ii++) {
+//				add2count(BONUS_POUR_RELATED, list.get(ii));
+//			}
+//		}
   }
   
   /** add howmany to count for kw -- if kw not on this.hs */
-  private void add2count(int howmany, Object kw) {
+  private void add2count(int howmany, SLKeyword kw) {
 		if (hs.contains(kw)) return;
-		Integer nb = (Integer) hmKwsOfDocs.get(kw);
+		Integer nb = hmKwsOfDocs.get(kw);
 		if (nb == null) {
 			hmKwsOfDocs.put(kw, new Integer(howmany));
 		} else {
@@ -264,42 +263,40 @@ class GraphWalkListener extends WalkListenerImpl {
 		}
   }
   
-  public void endNode(Object node) throws Exception {
-  	slWalkListener.endKeyword((SLKeyword) node);
+  public void endNode(SLKeyword node) throws Exception {
+  	slWalkListener1.endKeyword(node);
   }
   
-  public void repeatNode(Object node) throws Exception {
-  	slWalkListener.repeatKeyword((SLKeyword) node);
+  public void repeatNode(SLKeyword node) throws Exception {
+  	slWalkListener1.repeatKeyword(node);
   }
-  public void noNeighborList(Object node) throws Exception {
-  	SLKeyword kw = (SLKeyword) node;
-  	List docs = getter.getDocuments(kw);
+  public void noNeighborList(SLKeyword kw) throws Exception {
+  	List<SLDocument> docs = getter.getDocuments(kw);
 		if (docs.size() < 1) {
-			slWalkListener.noList(kw);
+			slWalkListener1.noList(kw);
 		} else {
-			slWalkListener.startList(kw);
+			slWalkListener1.startList(kw);
 			handleDocList(kw,docs);
-			slWalkListener.endList(kw);
+			slWalkListener1.endList(kw);
 		}
   }
-  public void endNeighborList(Object node) throws Exception {
-  	SLKeyword kw = (SLKeyword) node;
-		slWalkListener.endKwList(kw);
-  	List docs = getter.getDocuments(kw);
+  public void endNeighborList(SLKeyword kw) throws Exception {
+		slWalkListener1.endKwList(kw);
+  	List<SLDocument> docs = getter.getDocuments(kw);
 		if (docs.size() < 1) {
-			slWalkListener.noDocList(kw);
+			slWalkListener1.noDocList(kw);
 		} else {
 			handleDocList(kw,docs);
 		}
-		slWalkListener.endList(kw);
+		slWalkListener1.endList(kw);
   }
   public void endWalk(Object seed) throws Exception {
-  	slWalkListener.endSeed((SLKeyword) seed);
+  	slWalkListener1.endSeed((SLKeyword) seed);
   }	
   
   /** docs supposé non vide */
-  private void handleDocList(SLKeyword kw, List docs) throws Exception {
-		slWalkListener.startDocList(kw);
+  private void handleDocList(SLKeyword kw, List<SLDocument> docs) throws Exception {
+		slWalkListener1.startDocList(kw);
   	
   	/*HashSet subHsDocs = new HashSet();
   	hsDocsStack.push(subHsDocs);
@@ -319,8 +316,8 @@ class GraphWalkListener extends WalkListenerImpl {
 		// for (int i = 0; i < ndocs; i++, index++) {
 		for (int i = 0; i < ndocs; i++) {
 			// treePosition.push(new Integer(index));
-			SLDocument doc = (SLDocument) docs.get(i);
-			List kwsOfDoc = doc.getKeywords();
+			SLDocument doc = docs.get(i);
+			List<SLKeyword> kwsOfDoc = doc.getKeywords();
 			// documenter l'ensemble de tous les docs
 			// Attention, on a déjà pu tomber sur ce doc :
 			// il ne faut pas, dans ce cas, augmenter le compteur des linked kws
@@ -329,8 +326,8 @@ class GraphWalkListener extends WalkListenerImpl {
 				// documenter les "LinkedKeywords"
 				for (int j = 0; j < kwsOfDoc.size(); j++) {
 					// this.hsKwsOfDocs.add(kwsOfDoc.get(j));
-					Object kwo = kwsOfDoc.get(j);
-					Integer nb = (Integer) hmKwsOfDocs.get(kwo);
+					SLKeyword kwo = kwsOfDoc.get(j);
+					Integer nb = hmKwsOfDocs.get(kwo);
 					if (nb == null) {
 						hmKwsOfDocs.put(kwo, UN);
 					} else {
@@ -340,11 +337,11 @@ class GraphWalkListener extends WalkListenerImpl {
 			}
 			// même s'il a déjà été affiché pour un autre kw, on réaffiche le doc
 			// slWalkListener.printDocument(doc, treePosition, kw, kwsOfDoc);
-			slWalkListener.printDocument(doc, kw, kwsOfDoc);
+			slWalkListener1.printDocument(doc, kw, kwsOfDoc);
 			// treePosition.pop();
 		}
 
-  	slWalkListener.endDocList(kw);
+  	slWalkListener1.endDocList(kw);
   }
 }
 
@@ -354,7 +351,7 @@ class GraphWalkListener extends WalkListenerImpl {
 //
 
 /** All docs linked to this tree */
-public HashSet getDocsSet() throws Exception {
+public HashSet<SLDocument> getDocsSet() throws Exception {
 	if (this.hsDocs == null) {
 		if (this.slWalkListener == null) {
 			this.slWalkListener = new SLWalkListenerAdapter();
@@ -367,14 +364,14 @@ public HashSet getDocsSet() throws Exception {
 /** All docs linked to this tree
  *  liste parallele au parcours - à ceci près que les éléments ne sont pas dupliqués. */
 public SLDocument[] getDocs() throws Exception {
-	return (SLDocument[]) getDocsSet().toArray(new SLDocument[0]);
+	return getDocsSet().toArray(new SLDocument[0]);
 }
 
 /** les kws de l'arbre (pas tous ceux liés aux docs !) 
  *  Si un parcours a déjà, été fait, identique à super.getNodes().
  *  Si pas encore fait, n'a pas le même résultat que (puisque l'appel ds super fait
  *  un super.simpleWalk) Donc si on n'a pas besoin des docs, faire super.getNodes()  */
-public HashSet getNodes() throws Exception {
+public HashSet<SLKeyword> getNodes() throws Exception {
 	if (this.hs == null) {
 		if (this.slWalkListener == null) {
 			this.slWalkListener = new SLWalkListenerAdapter();
@@ -395,15 +392,15 @@ public SLKeyword[] getKwsOfDocs() throws Exception {
 		}
 		walk(this.slWalkListener);
 	}
-	SLKeyword[] x = (SLKeyword[]) this.hmKwsOfDocs.keySet().toArray(new SLKeyword[0]);
+	SLKeyword[] x = this.hmKwsOfDocs.keySet().toArray(new SLKeyword[0]);
 	Arrays.sort(x);
 	return x;
 }
 
 /** Les descendants de la racine en sont purgés. List de SLKeyword */
-public List getLinkedKws() throws Exception {
+public List<SLKeyword> getLinkedKws() throws Exception {
 	SLKeyword[] allKws = getKwsOfDocs();
-	ArrayList x = new ArrayList(allKws.length);
+	ArrayList<SLKeyword> x = new ArrayList<>(allKws.length);
 	// purge des descendants de la racine
 	for (int i = 0; i < allKws.length; i++) {
 		SLKeyword kw = allKws[i];
@@ -415,7 +412,7 @@ public List getLinkedKws() throws Exception {
 
 /** Les descendants de la racine en sont purgés. */
 // public HashMap getLinkedKeywordsWithNb() throws Exception {
-public HashMap getLinkedKeywords2NbHashMap() throws Exception {
+public HashMap<SLKeyword, Integer> getLinkedKeywords2NbHashMap() throws Exception {
 	if (this.hmKwsOfDocs == null) {
 		if (this.slWalkListener == null) {
 			this.slWalkListener = new SLWalkListenerAdapter();
@@ -428,13 +425,13 @@ public HashMap getLinkedKeywords2NbHashMap() throws Exception {
 	int n_hsKws = this.hs.size() ;
 	int n_hmKwsOfDocs = this.hmKwsOfDocs.size();
 	if (n_hsKws < 3*n_hsKws) { // pourquoi * 3 ? parce qu'il y a plus d'opérations ds l'autre façon
-		Iterator it = this.hs.iterator() ;
+		Iterator<SLKeyword> it = this.hs.iterator() ;
 		for (int i = 0; i < n_hsKws; i++) {
 			Object kwo = it.next();
 			this.hmKwsOfDocs.remove(kwo);
 		}
 	} else {
-		SLKeyword[] linked = (SLKeyword[]) this.hmKwsOfDocs.keySet().toArray(new SLKeyword[n_hmKwsOfDocs]);
+		SLKeyword[] linked = this.hmKwsOfDocs.keySet().toArray(new SLKeyword[n_hmKwsOfDocs]);
 		for (int i = 0; i < n_hmKwsOfDocs; i++) {
 			Object kwo = linked[i];
 			if (this.hs.contains(kwo)) this.hmKwsOfDocs.remove(kwo);

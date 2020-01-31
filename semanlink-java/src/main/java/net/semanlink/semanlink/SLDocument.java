@@ -1,7 +1,5 @@
 package net.semanlink.semanlink;
-import java.util.*;
-
-import org.apache.jena.rdf.model.Resource;
+import java.util.List;
 /**
  * Represente un document pour Semanlink.
  * Rien de plus en fait qu'un ressource au sens RDF.
@@ -11,7 +9,7 @@ import org.apache.jena.rdf.model.Resource;
  */
 public interface SLDocument extends SLLabeledResource, SLVocab, Comparable {
 /** Retourne une List de SLKeyword. */
-public List getKeywords();
+public List<SLKeyword> getKeywords();
 
 
 /**

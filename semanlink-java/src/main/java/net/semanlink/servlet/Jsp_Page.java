@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -28,6 +29,10 @@ import org.apache.jena.rdf.model.Model;
 
 /** Modélise une page à afficher. */
 public class Jsp_Page extends net.semanlink.util.servlet.Jsp_Page implements SLVocab {
+public static int TAG_CLOUD_MAX_SIZE = 50;
+public static int TAG_CLOUD_REMOVE_LIMIT = 10;
+public static int TAG_CLOUD_MINIMAL_NB = 1;
+
 /** list of SLDocuments.
  * Achtung, must be accessed through its getter as it's computed only when needed.
  * Must be reset to null if state of this changes
@@ -322,7 +327,7 @@ public String getSortProperty() {
 	return this.sortProperty;
 }
 /** attention si on veut ne pas prendre en compte un kw ds le sortDocsByKws : pas fait ici */
-protected void sort(List docList) {
+protected void sort(List<SLDocument> docList) {
 	String sortProp = getSortProperty();
 	if (SLVocab.HAS_KEYWORD_PROPERTY.equals(sortProp)) {
 		SLUtils.sortDocsByKws(docList, null);
@@ -409,62 +414,114 @@ public SLKeywordNb[] getLinkedKeywordsWithNb() throws Exception {
 	return getSmartLinkedKeywordsWithNb();
 }
 /** key: a linked SLKeyword, data nb d'occurrences. */
-public HashMap getLinkedKeywords2NbHashMap() throws Exception { return null; }
+public HashMap<SLKeyword, Integer> getLinkedKeywords2NbHashMap() throws Exception { return null; }
 
-static SLKeywordNb[] getLinkedKeywordsWithNb(HashMap kw2nb) {
-	Set keys = kw2nb.keySet();
+//static SLKeywordNb[] getLinkedKeywordsWithNb(HashMap<SLKeyword, Integer> kw2nb) {
+//	Set<SLKeyword> keys = kw2nb.keySet();
+//	int n = keys.size();
+//	SLKeywordNb[] x = new SLKeywordNb[n];
+//	Iterator<SLKeyword> it = keys.iterator();
+//	for (int i = 0; i < n; i++) {
+//		SLKeyword linkedKw = it.next() ;
+//		Integer nb = kw2nb.get(linkedKw);
+//		x[i] = new SLKeywordNb(linkedKw, nb.intValue());
+//	}
+//	Arrays.sort(x);
+//	return x;
+//}
+
+static SLKeywordNb[] getLinkedKeywordsWithNb(HashMap<SLKeyword, Integer> kw2nb) {
+	Set<SLKeyword> keys = kw2nb.keySet();
 	int n = keys.size();
-	SLKeywordNb[] x = new SLKeywordNb[n];
-	Iterator it = keys.iterator();
-	for (int i = 0; i < n; i++) {
-		SLKeyword linkedKw = (SLKeyword) it.next() ;
-		Integer nb = (Integer) kw2nb.get(linkedKw);
-		x[i] = new SLKeywordNb(linkedKw, nb.intValue());
+	SLKeywordNb[] x = null;
+	if (n > TAG_CLOUD_MAX_SIZE) {
+		// 2020-01
+		// ne garder un kw dans le tag cloud que s'il apparait au moins 2 fois
+		ArrayList<SLKeywordNb> al = new ArrayList<>();
+		Iterator<SLKeyword> it = keys.iterator();
+		for (int i = 0; i < n; i++) {
+			SLKeyword linkedKw = it.next() ;
+			Integer nb = kw2nb.get(linkedKw);
+			if (nb.intValue() > TAG_CLOUD_MINIMAL_NB) {
+				al.add(new SLKeywordNb(linkedKw, nb.intValue()));
+			}
+			x = al.toArray(new SLKeywordNb[al.size()]);
+		}
+		
+	} else {
+		x = new SLKeywordNb[n];
+		Iterator<SLKeyword> it = keys.iterator();
+		for (int i = 0; i < n; i++) {
+			SLKeyword linkedKw = it.next() ;
+			Integer nb = kw2nb.get(linkedKw);
+			x[i] = new SLKeywordNb(linkedKw, nb.intValue());
+		}
 	}
 	Arrays.sort(x);
 	return x;
 }
 
+
 /** the method called by the jsp to display the tag cloud 
  *  Redefined in Jsp_Keyword */
 public SLKeywordNb[] getSmartLinkedKeywordsWithNb() throws Exception {
 	// les kws et leur nb d'occurence
-	HashMap directlyLinkedHM = getLinkedKeywords2NbHashMap();
+	HashMap<SLKeyword, Integer> directlyLinkedHM = getLinkedKeywords2NbHashMap();
 	// return getLinkedKeywordsWithNb(directlyLinkedHM);
 	return getSmartLinkedKeywordsWithNb(directlyLinkedHM);
 }
 
-public SLKeywordNb[] getSmartLinkedKeywordsWithNb (HashMap directlyLinkedHM) throws Exception {
+public SLKeywordNb[] getSmartLinkedKeywordsWithNb (HashMap<SLKeyword, Integer> directlyLinkedHM) throws Exception {
 	if (directlyLinkedHM == null) return null;
 	SLModel model = getSLModel();
 	// pour chaque kw directement lié, on regarde s'il a des ancetres qui sont aussi directement liés
-	// Ces anceêtres doivent voir leur nb d'occurrences augmenter, mais on ne peut le faire de suite,
+	// Ces ancêtres doivent voir leur nb d'occurrences augmenter, mais on ne peut le faire de suite,
 	// parce que si un pere et un grand-pere sont ds les directly, on augmenterait deux fois le nb d'occurences
 	// pour le grand-pere
-	// -> on dresse une map des ancetres de directly linked qui sont directly link, avec le nb dont ils doivent
-	// être augmentés
-	HashMap ancetre2augmentNb = new HashMap();
-	Set directlyLinkedSet = directlyLinkedHM.keySet();
-	for (Iterator directIte = directlyLinkedSet.iterator(); directIte.hasNext() ; ) {
-		SLKeyword directlyLinkedKw = (SLKeyword) directIte.next();
+	// -> une nlle hm pour remplacer directlyLinkedHM
+	HashMap<SLKeyword, Integer> directlyLinkedHM_Updated = new HashMap<>();
+	Set<SLKeyword> directlyLinkedSet = directlyLinkedHM.keySet();
+		
+	HashSet<SLKeyword> toBeRemoved = new HashSet<>(); // 2020-01: don't have CamemBERT in the tag cloud if you have BERT
+	
+	for (Iterator<SLKeyword> directIte = directlyLinkedSet.iterator(); directIte.hasNext() ; ) {
+		SLKeyword directlyLinkedKw = directIte.next();
+		
 		// ATTENTION : un mystère ici : si je ne recrée pas les SLKeyword ici, TRES PROBABLEMENT (pas revérifié)
 		// le SLFastTree est vide !!! (les SLKeyword dans directlyLinked ne semblent pas avoir de parents !!!)
 		// SLFastTree fastTree = new SLFastTree(directlyLinkedElt.getKw(), SLVocab.HAS_PARENT_PROPERTY, model);
-		directlyLinkedKw = model.getKeyword(directlyLinkedKw.getURI());
+		// directlyLinkedKw = model.getKeyword(directlyLinkedKw.getURI());
+		
 		SLFastTree fastTree = new SLFastTree(directlyLinkedKw, SLVocab.HAS_PARENT_PROPERTY, model);		
-		HashSet kwsInTree = fastTree.getKwsSet();
-		for (Iterator ite = kwsInTree.iterator() ; ite.hasNext() ;) {
-			SLKeyword ancetre = (SLKeyword) ite.next();
+		HashSet<SLKeyword> kwsInTree = fastTree.getKwsSet();
+		for (Iterator<SLKeyword> ite = kwsInTree.iterator() ; ite.hasNext() ;) {
+			SLKeyword ancetre = ite.next();
 			// ancetre est il ds directlyLinked ?
-			Integer nb = (Integer) directlyLinkedHM.get(ancetre);
+			
+			// notons qu'ancetre peut être directlyLinkedKw lui même
+			
+			Integer nb = directlyLinkedHM.get(ancetre);
 			if (nb != null) {
-				Integer augmentNb = (Integer) ancetre2augmentNb.get(ancetre);
-				if (augmentNb == null) {
-					augmentNb = new Integer(nb.intValue());
+				Integer updatedNb = directlyLinkedHM_Updated.get(ancetre);
+				if (updatedNb == null) {
+					updatedNb = new Integer(nb.intValue());
 				} else {
-					augmentNb = new Integer(augmentNb.intValue() + nb.intValue());
+					updatedNb = new Integer(updatedNb.intValue() + nb.intValue());
 				}
-				ancetre2augmentNb.put(ancetre, augmentNb);
+				directlyLinkedHM_Updated.put(ancetre, updatedNb);
+				// 2020-01: don't have CamemBERT in the tag cloud if you have BERT
+				if (!ancetre.equals(directlyLinkedKw)) {
+//					// virer ce kw s'il a un ancêtre (autre que lui-même) dans les directement liés -- Pb : ça vire NLP si IA présent
+//					// toBeRemoved.add(directlyLinkedKw);
+//					// ne le faire que si directlyLinkedKw n'a pas d'enfants
+//					List<SLKeyword> sons = directlyLinkedKw.getChildren();
+//					if ((sons == null) || (sons.size() == 0)) {
+//						toBeRemoved.add(directlyLinkedKw);
+//					}
+					// note it as to be removed -- but at removal time,
+					// we won't remove it if has a big nb
+					toBeRemoved.add(directlyLinkedKw);
+				}
 			}
 		} // boucle sur les ancetres de kw
 	}
@@ -480,7 +537,18 @@ public SLKeywordNb[] getSmartLinkedKeywordsWithNb (HashMap directlyLinkedHM) thr
 		}
 	}
 	return getLinkedKeywordsWithNb(directlyLinkedHM); */
-	return getLinkedKeywordsWithNb(ancetre2augmentNb);
+	
+	// 2020-01: don't have CamemBERT in the tag cloud if you have BERT 
+	for (SLKeyword kw : toBeRemoved) {
+		// don't remove if it has a big nb
+		// (this way for instance, NLP won't be removed because AI is present)
+		Integer nb = directlyLinkedHM_Updated.get(kw);
+		if (nb.intValue() < TAG_CLOUD_REMOVE_LIMIT) {
+			directlyLinkedHM_Updated.remove(kw);
+		}
+	}
+	
+	return getLinkedKeywordsWithNb(directlyLinkedHM_Updated);
 }
 
 /** dans cette version, on retient, en sus des tags directements liés,  tous les tags dont 2 descendants
@@ -500,9 +568,9 @@ public SLKeywordNb[] getSmartLinkedKeywordsWithNbV1 () throws Exception {
 	// Pour 1, on utilise :
 	// - une HashMap dans lequel on met les ancêtres de directlyLinked, avec la somme des nb d'occurences des directlyLinkedElts
 	// clé : SLKeyword, data : SLKeywordNb
-	HashMap ancetres = new HashMap();
+	HashMap<SLKeyword, SLKeywordNb> ancetres = new HashMap<>();
 	// - un HashSet dans lequel on met ceux dont on constate qu'il apparaîssent une seconde fois
-	HashSet xHs = new HashSet();
+	HashSet<SLKeywordNb> xHs = new HashSet<>();
 	SLModel model = getSLModel();
 	for (int i = 0 ; i < directlyLinked.length ; i++) {
 		SLKeywordNb directlyLinkedElt = directlyLinked[i];
@@ -515,10 +583,10 @@ public SLKeywordNb[] getSmartLinkedKeywordsWithNbV1 () throws Exception {
 		SLKeyword kw = model.getKeyword(uri);
 		SLFastTree fastTree = new SLFastTree(kw, SLVocab.HAS_PARENT_PROPERTY, model);
 		
-		HashSet kwsInTree = fastTree.getKwsSet();
-		for (Iterator ite = kwsInTree.iterator() ; ite.hasNext() ;) {
-			SLKeyword ancetre = (SLKeyword) ite.next();
-			SLKeywordNb ancetreWithNb = (SLKeywordNb) ancetres.get(ancetre);
+		HashSet<SLKeyword> kwsInTree = fastTree.getKwsSet();
+		for (Iterator<SLKeyword> ite = kwsInTree.iterator() ; ite.hasNext() ;) {
+			SLKeyword ancetre = ite.next();
+			SLKeywordNb ancetreWithNb = ancetres.get(ancetre);
 			if (ancetreWithNb == null) {
 				ancetreWithNb = new SLKeywordNb(ancetre, nbOccurrences);
 				ancetres.put(ancetre, ancetreWithNb);

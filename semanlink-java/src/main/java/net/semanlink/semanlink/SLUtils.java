@@ -44,11 +44,11 @@ public static void newEmptySLFile(String filename) throws IOException {
 //SORT
 //
 
-public static void sortDocsByKws(List docList) {
+public static void sortDocsByKws(List<SLDocument> docList) {
 	Collections.sort(docList, new CompKwsList());
 }
 
-public static void sortDocsByKws(List docList, SLKeyword[] dontUseToSort) {
+public static void sortDocsByKws(List<SLDocument> docList, SLKeyword[] dontUseToSort) {
 	Collections.sort(docList, new CompKwsList(dontUseToSort));
 }
 
@@ -67,7 +67,7 @@ public static void sortByProperty(List slResList, String propUri) {
 	}
 }
 
-public static void reverseSortByProperty(List slResList, String propUri) {
+public static void reverseSortByProperty(List<SLResource> slResList, String propUri) {
 	Collections.sort(slResList, new CompPropertyReverseOrder(propUri));
 }
 
@@ -156,7 +156,7 @@ static class CompPublicationTime implements Comparator {
  *  (pas besoin de calculer le toString (d'ailleurs complexe) complet à chaque fois :
  *  il suffit souvent du début pour pouvoir déterminer le + petit) TODO
  */
-static class CompKwsList implements Comparator {
+static class CompKwsList implements Comparator<SLDocument> {
 	private SLKeyword[] dontUseToSort;
 	CompKwsList() {};
 	CompKwsList(SLKeyword[] dontUseToSort) { this.dontUseToSort = dontUseToSort;};
@@ -166,11 +166,9 @@ static class CompKwsList implements Comparator {
 	}*/
 	/** returns a negative integer, zero, or a positive integer 
 	 *  as the first argument is less than, equal to, or greater than the second.*/
-	public int compare(Object arg0, Object arg1) {
-		SLDocument doc0 = (SLDocument) arg0;
-		SLDocument doc1 = (SLDocument) arg1;
-		List kws0 = doc0.getKeywords(); // ils sont triés
-		List kws1 = doc1.getKeywords(); // ils sont triés
+	public int compare(SLDocument doc0, SLDocument doc1) {
+		List<SLKeyword> kws0 = doc0.getKeywords(); // ils sont triés
+		List<SLKeyword> kws1 = doc1.getKeywords(); // ils sont triés
 		int n0 = kws0.size();
 		int n1 = kws1.size();
 		int i0=0, i1=0;
@@ -184,17 +182,17 @@ static class CompKwsList implements Comparator {
 			} else {
 				if (i1 >= n1) return 1;
 			}
-			Object kw0 = kws0.get(i0);
+			SLKeyword kw0 = kws0.get(i0);
 			if (dontUse(kw0)) {
 				i0++;
 				continue;
 			}
-			Object kw1 = kws1.get(i1);
+			SLKeyword kw1 = kws1.get(i1);
 			if (dontUse(kw1)) {
 				i1++;
 				continue;
 			}
-			int x = ((SLKeyword) kw0).compareTo(kw1);
+			int x = kw0.compareTo(kw1);
 			if (x != 0) return x;
 			i0++;
 			i1++;
@@ -213,7 +211,7 @@ static class CompKwsList implements Comparator {
 	}
 	
 	public String toString(SLDocument doc) {
-		List kws = doc.getKeywords(); // ils sont triés
+		List<SLKeyword> kws = doc.getKeywords(); // ils sont triés
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < kws.size(); i++) {
 			Object kw = kws.get(i);
@@ -238,7 +236,7 @@ static class CompKwsList implements Comparator {
  * // il y a une version avec les nb dans Jsp_Keyword
  */
 public static SLKeyword[] getLinkedKeywords(SLKeyword kw) {
-	HashSet hs = getKeywords(kw.getDocuments());
+	HashSet<SLKeyword> hs = getKeywords(kw.getDocuments());
 	// retirer kw
 	hs.remove(kw);
 	// et ses enfants
@@ -246,18 +244,18 @@ public static SLKeyword[] getLinkedKeywords(SLKeyword kw) {
 	for (int i = 0; i < children.size(); i++) {
 		hs.remove(children.get(i));
 	}*/
-	SLKeyword[] x = (SLKeyword[]) hs.toArray(new SLKeyword[0]);
+	SLKeyword[] x = hs.toArray(new SLKeyword[0]);
 	Arrays.sort(x);
 	return x;
 }
 
 
 
-public static HashSet getKeywords(List docs) {
-	HashSet hs = new HashSet();
+public static HashSet<SLKeyword> getKeywords(List<SLDocument> docs) {
+	HashSet<SLKeyword> hs = new HashSet<>();
 	for (int i = 0; i < docs.size(); i++) {
-		SLDocument doc = (SLDocument) docs.get(i);
-		List kws = doc.getKeywords();
+		SLDocument doc = docs.get(i);
+		List<SLKeyword> kws = doc.getKeywords();
 		for (int j = 0; j < kws.size(); j++) {
 			hs.add(kws.get(j));
 		}
@@ -267,15 +265,15 @@ public static HashSet getKeywords(List docs) {
 
 // TAG CLOUD
 /** retourne un HashMap de clé des SLKeyword et de data un Integer représentant le nb d'occurrences du kw. */
-public static HashMap getLinkedKeywords2NbHashMap(List docs) {
-	HashMap hm = new HashMap();
+public static HashMap<SLKeyword, Integer> getLinkedKeywords2NbHashMap(List<SLDocument> docs) {
+	HashMap<SLKeyword, Integer> hm = new HashMap<>();
 	Integer un = new Integer(1);
 	for (int i = 0; i < docs.size(); i++) {
-		SLDocument doc = (SLDocument) docs.get(i);
-		List kws = doc.getKeywords();
+		SLDocument doc = docs.get(i);
+		List<SLKeyword> kws = doc.getKeywords();
 		for (int j = 0; j < kws.size(); j++) {
-			SLKeyword kw = (SLKeyword) kws.get(j);
-			Integer nb = (Integer) hm.get(kw);
+			SLKeyword kw = kws.get(j);
+			Integer nb = hm.get(kw);
 			if (nb == null) {
 				hm.put(kw, un);
 			} else {
