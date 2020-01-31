@@ -5,6 +5,11 @@
 <h1>Release notes</h1>
 <div class="graybox">
 
+<h2>0.7.x 2020-01-31</h2>
+<ul>
+<li>Avoid too big tag clouds</li>
+</ul>
+
 <h2>0.7.0 2020-01-26</h2>
 <ul>
 <li>List of docs: no more a UL list -> better display</li>
