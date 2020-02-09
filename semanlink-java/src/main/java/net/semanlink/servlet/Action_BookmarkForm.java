@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.semanlink.semanlink.*;
+import net.semanlink.sljena.JenaUtils;
 import net.semanlink.util.Util;
 
 import org.apache.struts.action.ActionForm;
@@ -126,6 +127,11 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
         
         bookmarkForm.setDownloadfromuri(docuri);
         docuri = SLUtils.laxistUri2Uri(docuri);
+  			String errMess = JenaUtils.getUriViolations(docuri,false);
+  			if (errMess != null) {
+  				throw new RuntimeException(errMess);
+  			}
+
         
         // 2019-05 Take care of case when bookmarlet used on a local copy (cf /document/ -> /doc/)
         String contextURL = Util.getContextURL(request);

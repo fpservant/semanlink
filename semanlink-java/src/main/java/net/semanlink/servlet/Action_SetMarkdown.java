@@ -32,8 +32,10 @@ public class Action_SetMarkdown extends Action_SetOrAddProperty {
 //		} else {
 			uri = request.getParameter("markdown");
 //		}
-		if (JenaUtils.uriHasViolation(uri)) {
-			throw new RuntimeException("Invalid URI:" + uri);
+		
+		String errMess = JenaUtils.getUriViolations(uri, false);
+		if (errMess != null) {
+			throw new RuntimeException(errMess);
 		}
 		return uri;
 	}

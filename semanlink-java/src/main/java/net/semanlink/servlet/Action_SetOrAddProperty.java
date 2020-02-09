@@ -80,13 +80,12 @@ protected void setOrAddProp(String propertyUri, String propertyValue, HttpServle
 	
 	boolean isAddAction = (request.getParameter(ADD) != null);
 	
-	// is property>Uri correct ?
+	// is propertyUri correct ?
 	// (it can b entered by the user )
-	if (JenaUtils.uriHasViolation(propertyUri)) {
-		throw new Exception("Invalid property URI:" + propertyUri);
-	}
-	
-	
+	String errMess = JenaUtils.getUriViolations(propertyUri, false);
+	if (errMess != null) {
+		throw new RuntimeException(errMess);
+	}	
 	
 	// la value est-elle une url ?
 	String valUrlString = null;
@@ -114,8 +113,20 @@ protected void setOrAddProp(String propertyUri, String propertyValue, HttpServle
 		}
 		// 2007-04
 		if (valUrlString != null) {
-			if (JenaUtils.uriHasViolation(valUrlString)) {
-				throw new Exception("Invalid URI in value:" + valUrlString);
+			// 2020-02 hum, setting a dc:source
+			// we have something that has following url in the browser:
+			// http://127.0.0.1:7080/semanlink/doc/2020/02/enquete_sur_les_usines_d’antibi
+			// but whose actual URI in sl is:
+			// http://127.0.0.1:7080/semanlink/doc/2020/02/enquete_sur_les_usines_d%E2%80%99antibi
+			// (because we pass through laxistUri2Uri at creation time)
+			// So we must check here that we do the same
+			// or we won't be able to access the copy
+			// TODO see how to simplfy. NOTE that the '’' in the url is not a uriViolation
+			valUrlString = SLUtils.laxistUri2Uri(valUrlString); // 2020-02 added
+					
+			errMess = JenaUtils.getUriViolations(valUrlString,false);
+			if (errMess != null) {
+				throw new RuntimeException(errMess);
 			}
 		}
 	}

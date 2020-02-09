@@ -19,6 +19,7 @@ import net.semanlink.semanlink.WebServer;
 import net.semanlink.semanlink.SLModel.DocMetadataFile;
 import net.semanlink.semanlink.SLModel.NewBookmarkCreationData;
 import net.semanlink.sljena.JDocument;
+import net.semanlink.sljena.JenaUtils;
 import net.semanlink.util.Util;
 import net.semanlink.util.html.HTMLPageDownload;
 
@@ -129,6 +130,10 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 		// Pour remettre d'équerre ce qui viendrait du cas 1, et refuser les erreurs du cas 3,
 		// on fait la chose suivante (cf Test.testUriSmall)
 		docuri = SLUtils.laxistUri2Uri(docuri);
+		String errMess = JenaUtils.getUriViolations(docuri,false);
+		if (errMess != null) {
+			throw new RuntimeException(errMess);
+		}
 
 		SLDocument docOnline = mod.smarterGetDocument(docuri);
 
@@ -218,6 +223,10 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 						downloadFromUri = docuri;
 					} else {
 						downloadFromUri = SLUtils.laxistUri2Uri(downloadFromUri);	    	
+		  			errMess = JenaUtils.getUriViolations(downloadFromUri,false);
+		  			if (errMess != null) {
+		  				throw new RuntimeException(errMess);
+		  			}
 					}
 	
 					boolean downloadRequested = ((request.getParameter("bookmarkWithCopyBtn") != null)

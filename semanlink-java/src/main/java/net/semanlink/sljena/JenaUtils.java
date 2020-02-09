@@ -311,16 +311,30 @@ private static void removeStats(Model mod, StmtIterator staIte) {
  * (or, worse, get an exception when reading it later)
  * see http://www.semanlink.net/doc/?uri=http%3A%2F%2Ftech.groups.yahoo.com%2Fgroup%2Fjena-dev%2Fmessage%2F28785
  */
-private static IRIFactory iriFactory = IRIFactory.semanticWebImplementation();
-public static boolean uriHasViolation(String iriString) {
-	boolean includeWarnings = false;
+// private static IRIFactory iriFactory = IRIFactory.semanticWebImplementation(); // 2020-02 changed to:
+private static IRIFactory iriFactory = IRIFactory.iriImplementation();
+//public static boolean uriHasViolation(String iriString) {
+//	boolean includeWarnings = false;
+//	IRI iri = iriFactory.create(iriString); // always works
+//	return iri.hasViolation(includeWarnings);
+//}
+/**
+ * @return null if no violations
+ * @since 2010-02 */
+public static String getUriViolations(String iriString, boolean includeWarnings) {
 	IRI iri = iriFactory.create(iriString); // always works
-	return iri.hasViolation(includeWarnings);
-	// if (iri.hasViolation(includeWarnings)) {
-		// bad iri code
-		// we could list the errors (and warnings, depending on includeWarnings)
-		// using Iterator ite = iri.violations(boolean includeWarnings)
-		// //
+	boolean x = iri.hasViolation(includeWarnings);
+	if (x) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Invalid URI: " + iriString);
+		Iterator<Violation> it = iri.violations(includeWarnings);
+		for(;it.hasNext();) {
+			Violation v = it.next();
+			sb.append("\n\t" + v.getLongMessage());
+		}
+		return sb.toString();
+	}
+	return null;
 }
 
 }
