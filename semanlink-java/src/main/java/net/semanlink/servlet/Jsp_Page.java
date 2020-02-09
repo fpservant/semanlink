@@ -30,8 +30,8 @@ import org.apache.jena.rdf.model.Model;
 /** Modélise une page à afficher. */
 public class Jsp_Page extends net.semanlink.util.servlet.Jsp_Page implements SLVocab {
 public static int TAG_CLOUD_MAX_SIZE = 50;
-public static int TAG_CLOUD_REMOVE_LIMIT = 10;
-public static int TAG_CLOUD_MINIMAL_NB = 1;
+public static int TAG_CLOUD_REMOVE_LIMIT = 5; // 2020-01: don't have CamemBERT in the tag cloud if you have BERT - unles a lot of CamemBERT
+public static int TAG_CLOUD_MINIMAL_NB = 2; // if more tags than TAG_CLOUD_MAX_SIZE, then remove tags with low nb
 
 /** list of SLDocuments.
  * Achtung, must be accessed through its getter as it's computed only when needed.
@@ -402,7 +402,7 @@ public String getSideMenu() throws Exception {
 
 
 //
-// pour les box de linked keywords
+// pour les box de linked keywords // tagcloud
 //
 
 public HTML_Link linkToThisAndKw(SLKeyword kw) throws Exception { return null; }
@@ -436,13 +436,13 @@ static SLKeywordNb[] getLinkedKeywordsWithNb(HashMap<SLKeyword, Integer> kw2nb) 
 	SLKeywordNb[] x = null;
 	if (n > TAG_CLOUD_MAX_SIZE) {
 		// 2020-01
-		// ne garder un kw dans le tag cloud que s'il apparait au moins 2 fois
+		// ne garder un kw dans le tag cloud que s'il apparait au moins TAG_CLOUD_MINIMAL_NB fois
 		ArrayList<SLKeywordNb> al = new ArrayList<>();
 		Iterator<SLKeyword> it = keys.iterator();
 		for (int i = 0; i < n; i++) {
 			SLKeyword linkedKw = it.next() ;
 			Integer nb = kw2nb.get(linkedKw);
-			if (nb.intValue() > TAG_CLOUD_MINIMAL_NB) {
+			if (nb.intValue() >= TAG_CLOUD_MINIMAL_NB) {
 				al.add(new SLKeywordNb(linkedKw, nb.intValue()));
 			}
 			x = al.toArray(new SLKeywordNb[al.size()]);
