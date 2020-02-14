@@ -30,7 +30,7 @@ import org.apache.jena.rdf.model.Model;
 /** Modélise une page à afficher. */
 public class Jsp_Page extends net.semanlink.util.servlet.Jsp_Page implements SLVocab {
 public static int TAG_CLOUD_MAX_SIZE = 50;
-public static int TAG_CLOUD_REMOVE_LIMIT = 5; // 2020-01: don't have CamemBERT in the tag cloud if you have BERT - unles a lot of CamemBERT
+public static int TAG_CLOUD_REMOVE_LIMIT = 4; // 2020-01: don't have CamemBERT in the tag cloud if you have BERT - unless a lot of CamemBERT
 public static int TAG_CLOUD_MINIMAL_NB = 2; // if more tags than TAG_CLOUD_MAX_SIZE, then remove tags with low nb
 
 /** list of SLDocuments.
@@ -93,7 +93,6 @@ public Jsp_Page(HttpServletRequest request, HttpServletResponse response) {
 public static boolean edit(HttpServletRequest request) {
 	HttpSession session = request.getSession();
 	if (session == null) {
-	   System.out.println("Jsp_Resource.edit : session null);");
 	   return false;
 	}
 	return (Boolean.TRUE.equals(session.getAttribute("net.semanlink.servlet.edit")));
@@ -485,32 +484,31 @@ public SLKeywordNb[] getSmartLinkedKeywordsWithNb (HashMap<SLKeyword, Integer> d
 	HashSet<SLKeyword> toBeRemoved = new HashSet<>(); // 2020-01: don't have CamemBERT in the tag cloud if you have BERT
 	
 	for (Iterator<SLKeyword> directIte = directlyLinkedSet.iterator(); directIte.hasNext() ; ) {
-		SLKeyword directlyLinkedKw = directIte.next();
+		SLKeyword kw = directIte.next();
 		
 		// ATTENTION : un mystère ici : si je ne recrée pas les SLKeyword ici, TRES PROBABLEMENT (pas revérifié)
 		// le SLFastTree est vide !!! (les SLKeyword dans directlyLinked ne semblent pas avoir de parents !!!)
 		// SLFastTree fastTree = new SLFastTree(directlyLinkedElt.getKw(), SLVocab.HAS_PARENT_PROPERTY, model);
 		// directlyLinkedKw = model.getKeyword(directlyLinkedKw.getURI());
 		
-		SLFastTree fastTree = new SLFastTree(directlyLinkedKw, SLVocab.HAS_PARENT_PROPERTY, model);		
+		Integer nb = directlyLinkedHM.get(kw);
+		SLFastTree fastTree = new SLFastTree(kw, SLVocab.HAS_PARENT_PROPERTY, model);		
 		HashSet<SLKeyword> kwsInTree = fastTree.getKwsSet();
 		for (Iterator<SLKeyword> ite = kwsInTree.iterator() ; ite.hasNext() ;) {
 			SLKeyword ancetre = ite.next();
-			// ancetre est il ds directlyLinked ?
-			
+			// ancetre est il ds directlyLinked ?			
 			// notons qu'ancetre peut être directlyLinkedKw lui même
-			
-			Integer nb = directlyLinkedHM.get(ancetre);
-			if (nb != null) {
-				Integer updatedNb = directlyLinkedHM_Updated.get(ancetre);
-				if (updatedNb == null) {
-					updatedNb = new Integer(nb.intValue());
-				} else {
-					updatedNb = new Integer(updatedNb.intValue() + nb.intValue());
+			// if ancetre not in directlyLinkedHM, (that is, if nb_ancetre != null, forget it
+			Integer nb_ancetre = directlyLinkedHM.get(ancetre);
+			if (nb_ancetre != null) {
+				Integer updated_nb_ancetre = directlyLinkedHM_Updated.get(ancetre);
+				if (updated_nb_ancetre == null) {
+					updated_nb_ancetre = new Integer(0); // yes, 0. At one time, ancetre is kw, so it will be counted below
 				}
-				directlyLinkedHM_Updated.put(ancetre, updatedNb);
+				updated_nb_ancetre = new Integer(updated_nb_ancetre.intValue() + nb.intValue());
+				directlyLinkedHM_Updated.put(ancetre, updated_nb_ancetre);
 				// 2020-01: don't have CamemBERT in the tag cloud if you have BERT
-				if (!ancetre.equals(directlyLinkedKw)) {
+				if (!ancetre.equals(kw)) {
 //					// virer ce kw s'il a un ancêtre (autre que lui-même) dans les directement liés -- Pb : ça vire NLP si IA présent
 //					// toBeRemoved.add(directlyLinkedKw);
 //					// ne le faire que si directlyLinkedKw n'a pas d'enfants
@@ -520,7 +518,7 @@ public SLKeywordNb[] getSmartLinkedKeywordsWithNb (HashMap<SLKeyword, Integer> d
 //					}
 					// note it as to be removed -- but at removal time,
 					// we won't remove it if has a big nb
-					toBeRemoved.add(directlyLinkedKw);
+					toBeRemoved.add(kw);
 				}
 			}
 		} // boucle sur les ancetres de kw
