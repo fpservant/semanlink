@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import net.semanlink.semanlink.SLDocument;
@@ -31,7 +32,7 @@ import org.apache.jena.rdf.model.Model;
 public class Jsp_Page extends net.semanlink.util.servlet.Jsp_Page implements SLVocab {
 public static int TAG_CLOUD_MAX_SIZE = 50;
 public static int TAG_CLOUD_REMOVE_LIMIT = 4; // 2020-01: don't have CamemBERT in the tag cloud if you have BERT - unless a lot of CamemBERT
-public static int TAG_CLOUD_MINIMAL_NB = 2; // if more tags than TAG_CLOUD_MAX_SIZE, then remove tags with low nb
+public static int TAG_CLOUD_MINIMAL_NB = 5; // if more tags than TAG_CLOUD_MAX_SIZE, then remove tags with low nb. Keep at least that nb of tags
 
 /** list of SLDocuments.
  * Achtung, must be accessed through its getter as it's computed only when needed.
@@ -434,6 +435,38 @@ static SLKeywordNb[] getLinkedKeywordsWithNb(HashMap<SLKeyword, Integer> kw2nb) 
 	int n = keys.size();
 	SLKeywordNb[] x = null;
 	if (n > TAG_CLOUD_MAX_SIZE) {
+		// remove from the tag cloud tags with low nb
+		// We count the nb of tags for each value of nb
+		// minimal_n: will be the minimal nb got  tag to be kept
+		HashMap<Integer, Integer> nb2n = new HashMap<>();
+		for(Entry<SLKeyword, Integer> e : kw2nb.entrySet()) {
+			Integer nb = e.getValue();
+			Integer nn = nb2n.get(nb);
+			if (nn == null) {
+				nn = new Integer(1);
+			} else {
+				nn = new Integer(nn.intValue() + 1);
+			}
+			nb2n.put(nb,  nn);
+		}
+		int nn = keys.size();
+		int minimal_n = 0;
+		for (int i = 1 ; i < nb2n.size(); i++) {
+			int k = nb2n.get(new Integer(i));
+			nn = nn - k;
+			if (nn <= TAG_CLOUD_MAX_SIZE) {
+				if (nn < TAG_CLOUD_MINIMAL_NB) {
+					// don't reduce too much
+					minimal_n = i;
+				} else {
+					minimal_n = i+1;
+				}
+				break;
+			} else {
+				
+			}
+		}
+		
 		// 2020-01
 		// ne garder un kw dans le tag cloud que s'il apparait au moins TAG_CLOUD_MINIMAL_NB fois
 		ArrayList<SLKeywordNb> al = new ArrayList<>();
@@ -441,7 +474,7 @@ static SLKeywordNb[] getLinkedKeywordsWithNb(HashMap<SLKeyword, Integer> kw2nb) 
 		for (int i = 0; i < n; i++) {
 			SLKeyword linkedKw = it.next() ;
 			Integer nb = kw2nb.get(linkedKw);
-			if (nb.intValue() >= TAG_CLOUD_MINIMAL_NB) {
+			if (nb.intValue() >= minimal_n) {
 				al.add(new SLKeywordNb(linkedKw, nb.intValue()));
 			}
 			x = al.toArray(new SLKeywordNb[al.size()]);
