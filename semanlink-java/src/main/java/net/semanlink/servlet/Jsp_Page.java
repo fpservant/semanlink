@@ -452,8 +452,9 @@ static SLKeywordNb[] getLinkedKeywordsWithNb(HashMap<SLKeyword, Integer> kw2nb) 
 		int nn = keys.size();
 		int minimal_n = 0;
 		for (int i = 1 ; i < nb2n.size(); i++) {
-			int k = nb2n.get(new Integer(i));
-			nn = nn - k;
+			Integer k = nb2n.get(new Integer(i));
+			if (k == null) continue;
+			nn = nn - k.intValue();
 			if (nn <= TAG_CLOUD_MAX_SIZE) {
 				if (nn < TAG_CLOUD_MINIMAL_NB) {
 					// don't reduce too much
