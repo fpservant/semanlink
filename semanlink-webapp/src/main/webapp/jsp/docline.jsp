@@ -126,7 +126,7 @@ if (asUL_List) {
            
            SLDocumentStuff.HrefPossiblyOpeningInDestop localCopyLink = docStuff.getLocalCopyLink();
            if (localCopyLink.openingInDesktop()) {
-            %>(<a href="<%=localCopyLink.href()%>" onclick="desktop_open_hack('<%=localCopyLink.href()%>'; return false;"><%=jsp.i18l("doc.localCopy")%></a>)<%                 
+            %>(<a href="<%=localCopyLink.href()%>" onclick="desktop_open_hack('<%=localCopyLink.href()%>'); return false;"><%=jsp.i18l("doc.localCopy")%></a>)<%                 
            } else {
              String href = response.encodeURL(localCopyLink.href());
             %>(<a href="<%=href%>"><%=jsp.i18l("doc.localCopy")%></a>)<%            
