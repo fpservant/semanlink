@@ -182,7 +182,13 @@ public static HTML_Link linkToKeyword(String kwUri, String label, String action)
 	return new HTML_Link(page, label);
 }
 
+// 2020-02 (?)
 public static HTML_Link linkToAndKws(SLKeyword firstKw, SLKeyword[] otherKws, String label) throws UnsupportedEncodingException {
+	return linkToAndKws(firstKw, otherKws, label, "/andkws.do");
+}
+
+/** @since 2020-02 */ // j'ai juste duppliqué les versions, avec des uri strings plutôt que slkeywords
+public static HTML_Link linkToAndKws(String firstKw, String[] otherKws, String label) throws UnsupportedEncodingException {
 	return linkToAndKws(firstKw, otherKws, label, "/andkws.do");
 }
 
@@ -197,6 +203,19 @@ public static HTML_Link linkToAndKws(SLKeyword firstKw, SLKeyword[] otherKws, St
 	return new HTML_Link(page, label);
 }
 
+/** @since 2020-02 */
+public static HTML_Link linkToAndKws(String firstKw, String[] otherKws, String label, String action) throws UnsupportedEncodingException {
+	StringBuffer sb = new StringBuffer(128);
+	sb.append(action);
+	sb.append("?");
+	String[] kw0 = new String[1] ; kw0[0] = firstKw;
+	appendsKwsParams(kw0, sb);
+	appendsKwsParams(otherKws, sb);
+	String page = sb.toString();
+	return new HTML_Link(page, label);
+}
+
+
 /** sb étant un début de lien, modifie sb en ajoutant les kws. 
  * @throws UnsupportedEncodingException*/
 static void appendsKwsParams(SLKeyword[] kws, StringBuffer sb) throws UnsupportedEncodingException {
@@ -205,6 +224,17 @@ static void appendsKwsParams(SLKeyword[] kws, StringBuffer sb) throws Unsupporte
 		sb.append(URLEncoder.encode(kws[i].getURI(), "UTF-8"));
 	}
 }
+
+/** sb étant un début de lien, modifie sb en ajoutant les kws. 
+ * @throws UnsupportedEncodingException*/
+/** @since 2020-02 */
+static void appendsKwsParams(String[] kws, StringBuffer sb) throws UnsupportedEncodingException {
+	for (int i = 0; i < kws.length; i++) {
+		sb.append("&amp;kwuris=");
+		sb.append(URLEncoder.encode(kws[i], "UTF-8"));
+	}
+}
+
 /**
  * @see Action_ShowProp
  */

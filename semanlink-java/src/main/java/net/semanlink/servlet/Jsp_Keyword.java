@@ -242,6 +242,7 @@ public SLKeywordNb[] getSmartLinkedKeywordsWithNb() throws Exception {
 //
 //
 
+// 2020-02 (?)
 /** "lien vers un mot clé lié" cad vers un AND de this et du mot clé */
 public HTML_Link linkToThisAndKw(SLKeyword otherKw) throws IOException {
 	SLKeyword[] otherKws = new SLKeyword[1];

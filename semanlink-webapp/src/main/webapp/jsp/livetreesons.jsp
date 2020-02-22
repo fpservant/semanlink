@@ -50,8 +50,44 @@ if (edit) {
 // System.out.println("livetreesons.jsp " + context);
 String context = SLServlet.getServletUrl(); 
 
-for (int i = 0; i < children.size(); i++) {	// We check whether a son has children or not, (or eventually a doc) in order to display correctly the "open" image	// Calculating the complete grandChildren is a waste of time:	// enough to know whether there is one or not.	SLKeyword son = (SLKeyword) children.get(i);	String label = son.getLabel();	String sonUri = son.getURI();	String encodedSonUri = java.net.URLEncoder.encode(sonUri,"UTF-8");	String sonDivId = parentDivId + Integer.toString(i);									boolean canBeOpened = (son.hasChild());	if ((withDocs) && (!canBeOpened)) {		canBeOpened = son.hasDocument();	}		// attention : se pose un pb avec les alias qui ne sont pas résolus.	// On ne va tout de même pas les résoudre tous : il suffit de résoudre celui sur lequel on cliquera	// String href = HTML_Link.getTagHref(request.getContextPath(), sonUri, resolveAlias); // /semanlink/tag/... 	// 2013-09 RDFa
-	String href = HTML_Link.getTagURL(context, sonUri, resolveAlias, null); // RDFa I don't like it: we lose the direct link to the html (cf null arg) // TODO
+// 2020-02
+// COMMENT SAVOIR QU'ON EST SUR UNE PAGE KW ???
+// String displayedKW = (String) request.getAttribute("displayedKW");
+// SLKeyword displayedKW = (SLKeyword) request.getAttribute("displayedKW");
+String targetUri = (String) request.getParameter("targeturi");
+if (targetUri == null) {
+	targetUri = (String) request.getAttribute("targeturi");
+} else {
+	request.setAttribute("targeturi", targetUri);
+}
+
+for (int i = 0; i < children.size(); i++) {	// We check whether a son has children or not, (or eventually a doc) in order to display correctly the "open" image	// Calculating the complete grandChildren is a waste of time:	// enough to know whether there is one or not.	SLKeyword son = (SLKeyword) children.get(i);	String label = son.getLabel();	String sonUri = son.getURI();	String encodedSonUri = java.net.URLEncoder.encode(sonUri,"UTF-8");	String sonDivId = parentDivId + Integer.toString(i);									boolean canBeOpened = (son.hasChild());	if ((withDocs) && (!canBeOpened)) {		canBeOpened = son.hasDocument();	}	
+	// public static HTML_Link linkToAndKws(SLKeyword firstKw, SLKeyword[] otherKws, String label) throws UnsupportedEncodingException {
+	// attention : se pose un pb avec les alias qui ne sont pas résolus.	// On ne va tout de même pas les résoudre tous : il suffit de résoudre celui sur lequel on cliquera	// String href = HTML_Link.getTagHref(request.getContextPath(), sonUri, resolveAlias); // /semanlink/tag/... 	// 2013-09 RDFa
+	// 2020-02 (?)
+	
+	
+	// THIS IS OK NO AND
+	// String href = HTML_Link.getTagURL(context, sonUri, resolveAlias, null); // RDFa I don't like it: we lose the direct link to the html (cf null arg) // TODO
+	
+	String href = null;
+	boolean itsAnAndKW = false;
+	if (!edit) { // "and kws" in search
+		if (targetUri != null) {
+			if (targetUri.contains("/tag/")) {
+				itsAnAndKW = true;
+				// link to AND kws // ATTENTION ICI ON SUPPOSE QUE targetUri est un KW
+			    String[] otherKws = new String[1]; otherKws[0] = sonUri;
+			    HTML_Link link = HTML_Link.linkToAndKws(targetUri, otherKws, label);
+			    href = request.getContextPath() + link.getPage();
+			}
+		}
+	}
+	if (!itsAnAndKW) {
+        href = HTML_Link.getTagURL(context, sonUri, resolveAlias, null); // RDFa I don't like it: we lose the direct link to the html (cf null arg) // TODO		
+	}
+	
+	
 		// attention à l'éventuel URL rewriting !	href = response.encodeURL(href);	String onClick = "";
 	if (postTagOnClick) {
 		// si on est ds les résultats de la searchform, il faut mettre le onClick postTag pour faire ce qui est demandé par le popup (add parent, add child, etc)
@@ -73,10 +109,10 @@ String context = SLServlet.getServletUrl();
 	      }
 	} else { // son has sons
 	      if (kw == null) {
-	          %><%//PAS DE VIDE!!!%><li id="li:<%=sonDivId%>"><img src="<%=context%>/ims/box_closed.gif" id="trigger:<%=sonDivId%>" alt="" height="8px" width="8px" onclick="toggle2('<%=sonDivId%>', '<%=encodedSonUri%>', '<%=withDocs%>', '<%=postTagOnClick%>')" /><% // ne rien mettre entre les 2
+	          %><%//PAS DE VIDE!!!%><li id="li:<%=sonDivId%>"><img src="<%=context%>/ims/box_closed.gif" id="trigger:<%=sonDivId%>" alt="" height="8px" width="8px" onclick="toggle2('<%=sonDivId%>', '<%=encodedSonUri%>', '<%=withDocs%>', '<%=postTagOnClick%>', '<%=targetUri%>')" /><% // ne rien mettre entre les 2
 	                   // ne rien mettre entre les 2%><a href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%
 	      } else {
-	          %><%//PAS DE VIDE!!!%><li id="li:<%=sonDivId%>"><img src="<%=context%>/ims/box_closed.gif" id="trigger:<%=sonDivId%>" alt="" height="8px" width="8px" onclick="toggle2('<%=sonDivId%>', '<%=encodedSonUri%>', '<%=withDocs%>', '<%=postTagOnClick%>')" /><% // ne rien mettre entre les 2
+	          %><%//PAS DE VIDE!!!%><li id="li:<%=sonDivId%>"><img src="<%=context%>/ims/box_closed.gif" id="trigger:<%=sonDivId%>" alt="" height="8px" width="8px" onclick="toggle2('<%=sonDivId%>', '<%=encodedSonUri%>', '<%=withDocs%>', '<%=postTagOnClick%>', '<%=targetUri%>')" /><% // ne rien mettre entre les 2
 	           // ne rien mettre entre les 2%><a property="skos:narrower" href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%
 	      }
 	} // if (son.hasChild())

@@ -123,10 +123,14 @@ public void endSeed(SLKeyword kw) throws IOException {
 private void printHRefToKw(SLKeyword kw) throws IOException {
 	// attention � l'url rewriting !
 	// this.out.print("<a href=\"" + HTML_Link.getHREF(kw) + "\">");
+	// 2020-02 (?)
 	this.out.print("<a href=\"" + this.response.encodeURL(HTML_Link.getTagURL(this.contextPath, kw.getURI(), false, ".html")) + "\">");
-	this.out.print(kw.getLabel());
+	this.out.print("AA"+kw.getLabel());
 	this.out.print("</a>");
 }
+
+// public static HTML_Link linkToAndKws(SLKeyword firstKw, SLKeyword[] otherKws, String label) throws UnsupportedEncodingException {
+
 /* private void printHRefToKw1(SLKeyword kw) throws IOException {
 	this.out.println("<span class=\"kw\">");
 	printHRefToKw(kw);
