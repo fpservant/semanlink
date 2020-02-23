@@ -28,6 +28,12 @@ public Jsp_AndKws(String[] kwUris, HttpServletRequest request) throws Exception 
 	this(SLServlet.getSLModel().getKeyword(kwUris[0]), otherKwUris(kwUris), request);
 }
 
+/** @since 2020-02 tagAndTag */
+public SLKeyword getFirstKw() {
+	return this.firstKw;
+}
+
+
 private static String[] otherKwUris(String[] kwUris) {
 	int n = kwUris.length;
 	String[] x = new String[n-1];
@@ -104,20 +110,37 @@ public List getParents() {
 	return x;
 }
 
+// 2020-02 TODO (what ?)
 public String getLinkToThis(String action) throws UnsupportedEncodingException {
 	String x = HTML_Link.linkToAndKws(this.firstKw, this.kws, "and", action).getPage();
 	return x;
 }
 
 public String getLinkToThis() throws UnsupportedEncodingException {
-	String x = HTML_Link.linkToAndKws(this.firstKw, this.kws, "and").getPage();
+	// 2020-02 TagAndTag
+//	String x = HTML_Link.linkToAndKws(this.firstKw, this.kws, "and").getPage();
+//	return x;
+	boolean resolveAlias = false;
+	String x = HTML_Link.tagAndTagsHref("", firstKw, this.kws, resolveAlias); // 2020-02 ça craint
 	return x;
 }
 
 /** "lien vers un mot clé lié" cad vers un AND de this et du mot clé */
 public HTML_Link linkToThisAndKw(SLKeyword otherKw) throws IOException {
-	HTML_Link x = HTML_Link.linkToAndKws(this.firstKw, andOtherKw(otherKw), otherKw.getLabel());
-	return x;
+	// 2020-02 TagAndTag
+//	HTML_Link x = HTML_Link.linkToAndKws(this.firstKw, andOtherKw(otherKw), otherKw.getLabel());
+//	return x;
+	return new HTML_Link(getHref(), otherKw.getLabel());
+}
+
+public String getHref() throws UnsupportedEncodingException {
+//	String[] otherKws = new String[kws.length];
+//	for (int i = 0 ; i < kws.length ; i++) {
+//		otherKws[i] = kws[i].getURI();
+//	}
+//	return HTML_Link.tagAndTagsHref(SLServlet.getServletUrl(), this.firstKw.getURI(), otherKws, false);
+	boolean resolveAlias = false;
+	return HTML_Link.tagAndTagsHref(SLServlet.getServletUrl(), firstKw, this.kws, resolveAlias); // 2020-02 ça craint
 }
 
 public String getContent() throws Exception {
@@ -150,8 +173,16 @@ public SLKeyword toNewKeyword() throws Exception {
 }
 
 public String getLinkToNewKeyword() throws UnsupportedEncodingException {
-	String x = HTML_Link.linkToAndKws(this.firstKw, this.kws, "and").getPage() + "&amp;newkw=true";
-	return x;
+	// 2020-02 TagAndTag
+//	String x = HTML_Link.linkToAndKws(this.firstKw, this.kws, "and").getPage() + "&amp;newkw=true";
+//	return x;
+	
+	boolean resolveAlias = false;
+	
+	// PROBLEME ICI : UTILISE PAR andKws.jsp
+	// 2020-02 TagAndTag TODO
+	String x = HTML_Link.tagAndTagsHref("", this.firstKw, kws, resolveAlias); // 2020-02 ça craint
+	return x + "&amp;newkw=true";
 }
 
 //

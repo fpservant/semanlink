@@ -12,22 +12,6 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 	ActionForward x = null;
 	try {
 		Jsp_Page jsp = null;
-		/*jsp = handleKwUriParam(request);
-		if (jsp != null) {
-			x = mapping.findForward("keyword");
-		} else {
-			jsp = handleDocUriParam(request);
-			if (jsp != null) {
-				x = mapping.findForward("document");
-			} else {
-				jsp = handleKwUrisParam(request); // cf AndKws
-				if (jsp != null) {
-					x = mapping.findForward("andkws");
-				}
-			}
-		} 
-		if (x == null) throw new SLRuntimeException("Neither keyword nor document in request.");
-		*/
 		
 		// BOF BOF BOF si ca marche c'est vraiment du hasard
 		if ((jsp = handleKwUriParam(request)) != null) {

@@ -29,28 +29,10 @@ public SLKeyword getSLKeyword(int i) {
 
 /** Ne pas oublier l'url rewriting lors de l'appel */
 public String getHREF(String contextUrl, int i) throws UnsupportedEncodingException {
-	/*SLKeyword slkw = getSLKeyword(i);
-	String uri = slkw.getURI();
-	if (uri.startsWith(this.defaultThesaurusUriDash)) {
-		return "/semanlink/tag/" + uri.substring(this.defaultThesaurusUriDashLength);
-	} else {
-		return "/semanlink/tag/" + java.net.URLEncoder.encode(uri,"UTF-8");
-	}*/
-	// return HTML_Link.getTagHref(contextUrl, getSLKeyword(i).getURI(), false);
-	// 2013-08
-	// return HTML_Link.getTagURL(contextUrl, getSLKeyword(i).getURI(), false, ".html");
 	return getHREF(contextUrl, i, ".html");
 }
 // 2013-08 RDFa
 public String getHREF(String contextUrl, int i, String dotExtension) throws UnsupportedEncodingException {
-	/*SLKeyword slkw = getSLKeyword(i);
-	String uri = slkw.getURI();
-	if (uri.startsWith(this.defaultThesaurusUriDash)) {
-		return "/semanlink/tag/" + uri.substring(this.defaultThesaurusUriDashLength);
-	} else {
-		return "/semanlink/tag/" + java.net.URLEncoder.encode(uri,"UTF-8");
-	}*/
-	// return HTML_Link.getTagHref(contextUrl, getSLKeyword(i).getURI(), false);
 	return HTML_Link.getTagURL(contextUrl, getSLKeyword(i).getURI(), false, dotExtension);
 }
 

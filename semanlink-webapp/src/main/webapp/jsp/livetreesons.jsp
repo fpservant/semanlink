@@ -62,7 +62,7 @@ if (targetUri == null) {
 }
 
 for (int i = 0; i < children.size(); i++) {	// We check whether a son has children or not, (or eventually a doc) in order to display correctly the "open" image	// Calculating the complete grandChildren is a waste of time:	// enough to know whether there is one or not.	SLKeyword son = (SLKeyword) children.get(i);	String label = son.getLabel();	String sonUri = son.getURI();	String encodedSonUri = java.net.URLEncoder.encode(sonUri,"UTF-8");	String sonDivId = parentDivId + Integer.toString(i);									boolean canBeOpened = (son.hasChild());	if ((withDocs) && (!canBeOpened)) {		canBeOpened = son.hasDocument();	}	
-	// public static HTML_Link linkToAndKws(SLKeyword firstKw, SLKeyword[] otherKws, String label) throws UnsupportedEncodingException {
+	// public static HTML_Link linkToAndKws(SLKeyword firstKw, SLKeyword[] otherKws, String label) throws UnsupportedEncodingException 
 	// attention : se pose un pb avec les alias qui ne sont pas résolus.	// On ne va tout de même pas les résoudre tous : il suffit de résoudre celui sur lequel on cliquera	// String href = HTML_Link.getTagHref(request.getContextPath(), sonUri, resolveAlias); // /semanlink/tag/... 	// 2013-09 RDFa
 	// 2020-02 (?)
 	
@@ -72,14 +72,20 @@ if (targetUri == null) {
 	
 	String href = null;
 	boolean itsAnAndKW = false;
-	if (!edit) { // "and kws" in search
+	if (!edit) { // "and kws" in search // 2020-02 tagAndTag
 		if (targetUri != null) {
 			if (targetUri.contains("/tag/")) {
 				itsAnAndKW = true;
-				// link to AND kws // ATTENTION ICI ON SUPPOSE QUE targetUri est un KW
-			    String[] otherKws = new String[1]; otherKws[0] = sonUri;
-			    HTML_Link link = HTML_Link.linkToAndKws(targetUri, otherKws, label);
-			    href = request.getContextPath() + link.getPage();
+				
+				// link to AND kws // ATTENTION ICI ON SUPPOSE QUE targetUri est en tag/
+				
+// 			    String[] otherKws = new String[1]; otherKws[0] = sonUri;
+// 			    // this, using andkws?
+// 			    // HTML_Link link = HTML_Link.linkToAndKws(targetUri, otherKws, label);
+// 			    // href = request.getContextPath() + link.getPage();
+			    
+			    href = HTML_Link.tagsAndTagHref(targetUri, sonUri);
+			    System.out.println("livetresons.jsp targetUri:" + targetUri + " href " + href); // TODO REMOVE
 			}
 		}
 	}

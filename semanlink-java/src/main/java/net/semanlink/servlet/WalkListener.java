@@ -129,14 +129,6 @@ private void printHRefToKw(SLKeyword kw) throws IOException {
 	this.out.print("</a>");
 }
 
-// public static HTML_Link linkToAndKws(SLKeyword firstKw, SLKeyword[] otherKws, String label) throws UnsupportedEncodingException {
-
-/* private void printHRefToKw1(SLKeyword kw) throws IOException {
-	this.out.println("<span class=\"kw\">");
-	printHRefToKw(kw);
-	this.out.println("</span>");
-}*/
-
 /** @see livetreesons.jsp */
 private String treePosition2DivId(Stack treePosition) {
 	StringBuffer sb = new StringBuffer(this.divIdRoot);

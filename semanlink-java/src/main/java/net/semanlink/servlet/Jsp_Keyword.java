@@ -245,11 +245,16 @@ public SLKeywordNb[] getSmartLinkedKeywordsWithNb() throws Exception {
 // 2020-02 (?)
 /** "lien vers un mot clé lié" cad vers un AND de this et du mot clé */
 public HTML_Link linkToThisAndKw(SLKeyword otherKw) throws IOException {
-	SLKeyword[] otherKws = new SLKeyword[1];
-	otherKws[0] = otherKw;
-	HTML_Link x = HTML_Link.linkToAndKws(this.slKw, otherKws, otherKw.getLabel());
-	return x;
-	// Collection findDocs(List kws)
+//	SLKeyword[] otherKws = new SLKeyword[1];
+//	otherKws[0] = otherKw;
+//	HTML_Link x = HTML_Link.linkToAndKws(this.slKw, otherKws, otherKw.getLabel());
+//	return x;
+	
+	String[] otherKws = new String[1];
+	otherKws[0] = otherKw.getURI();
+	boolean resolveAlias = false;
+	String href = HTML_Link.tagAndTagsHref(SLServlet.getServletUrl(), this.slKw.getURI(), otherKws, resolveAlias); // 2020-02 ça craint
+	return new HTML_Link(href, otherKw.getLabel()) ;
 }
 
 //

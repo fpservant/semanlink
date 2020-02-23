@@ -15,8 +15,15 @@ public SLRuntimeException(String s) {
 	super(s);
 }
 
+public SLRuntimeException(String s, Throwable t) {
+	super(s, t);
+}
+
+
+
 public void printStackTrace() {
 	if (t != null) {
+		System.err.println(this.getMessage());
 	  t.printStackTrace();
 	} else {
 	  super.printStackTrace();

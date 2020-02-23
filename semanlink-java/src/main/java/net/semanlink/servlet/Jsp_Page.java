@@ -733,6 +733,10 @@ public SLKeyword getFavori() {
  * Not optimized;
  * @throws MalformedURLException */
 public String completePath() throws UnsupportedEncodingException, MalformedURLException {
+	// TODO REMOVE
+	System.out.println("Jsp_Page1 " + new URL(request.getRequestURL().toString()));	
+	System.out.println("Jsp_Page relToHostPath " + relToHostPath());
+	System.out.println("Jsp_Page2 " + new URL( new URL(request.getRequestURL().toString()), relToHostPath() ));
 	return (new URL( new URL(request.getRequestURL().toString()), relToHostPath() )).toString() ;
 }
 

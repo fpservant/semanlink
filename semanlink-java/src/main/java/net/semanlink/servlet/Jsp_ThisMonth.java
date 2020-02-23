@@ -128,29 +128,7 @@ public String aboutList(String what, int nb) throws Exception {
 }
 
 
-/*public String getLinkToThis() throws UnsupportedEncodingException {
-	return "/neworupdated.do?"; // le ? pour image
-}*/
-/* (non-Javadoc)
- * @see net.semanlink.servlet.Jsp_DocList#getLinkToThis(java.lang.String)
- */
-/*public String getLinkToThis(String action) throws UnsupportedEncodingException {
-	return action + "?action=neworupdated"; // bof bof // todo
-}*/
-/* (non-Javadoc)
- * @see net.semanlink.servlet.Jsp_DocList#linkToThisAndKw(net.semanlink.semanlink.SLKeyword)
- */
 public HTML_Link linkToThisAndKw(SLKeyword otherKw) throws IOException {
-	/*
-	// ceci donne new AND tag
-	SLKeyword[] andkws = andOtherKw(otherKw);
-	// return HTML_Link.linkToAndKws(andkws, otherKw.getLabel());
-	StringBuffer sb = new StringBuffer(128);
-	sb.append("/neworupdated.do?");
-	HTML_Link.appendsKwsParams(andkws, sb);
-	String page = sb.toString() ;
-	return new HTML_Link(page, otherKw.getLabel() );
-	*/
 	return HTML_Link.getHTML_Link(otherKw);
 }
 
