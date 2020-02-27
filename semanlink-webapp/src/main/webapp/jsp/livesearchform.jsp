@@ -7,13 +7,20 @@
  * liveSearchSubmit "cliquait" sur la ligne sélectionnée (ou la 1ere) : l'action n'était invoquée que
  * lorsque la recherche avait été infructueuse)
  */
-
+%>
+<%
     Jsp_Page jsp = (Jsp_Page) request.getAttribute("net.semanlink.servlet.jsp");
     Jsp_Resource jsp_r = null;
     if (jsp instanceof Jsp_Resource) jsp_r = (Jsp_Resource) jsp;
     Jsp_Document jsp_doc = null;
     Jsp_Keyword jsp_kw = null;
     String uri = null;
+    // this is used in the searchform to pass back the page we are on when the user will do a search
+    // (this is necessary, as the searchform runs in ajax, for instance to make the AND)
+    // for instance, we are on the page kw1 andTargetUri will contain kw1, and we want 
+    // to display results which link to kw1 AND search result
+    // Here, we put it in the form (as hidden)
+    // see livesearch.js liveSearchDoSearch() to see how it is used (in tree.js to)
     String andTargetUri = null; // 2020-02 tagAndTag
     if (jsp instanceof Jsp_Document)  {
         jsp_doc = (Jsp_Document) jsp;
@@ -48,7 +55,7 @@
         <input type="hidden" name="kwhref" value="" /><%//kwhref is documented with the href of the hghlighted line by liveSearchSubmitFunction%> 
         <%if (andTargetUri != null) { // 2020-02
             if (!edit) {%>
-                <input type="hidden" name="targeturi" value="<%=andTargetUri%>" /><%//uri of this page (doc or tag)%>
+                <input type="hidden" name="targeturi" value="<%=andTargetUri%>" />
         <%}} // if uri != null%>
         <%if (edit) {
             if (uri != null) {%>

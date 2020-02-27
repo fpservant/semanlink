@@ -70,6 +70,20 @@ if (targetUri == null) {
 	// THIS IS OK NO AND
 	// String href = HTML_Link.getTagURL(context, sonUri, resolveAlias, null); // RDFa I don't like it: we lose the direct link to the html (cf null arg) // TODO
 	
+	
+	// 2020-02 : switch TagAndTag ON/OFF
+	// Ca pourrait se faire ici simplement avec une variable passée en plus
+	
+	// (OU BIEN : là où on document targetUri)
+	
+	// MAIS ce serait un peu primaire : faudrait recharger tout pour passer de l'un à l'autre
+	// Alors qu'il devrait être possible de le faire via un lien sous forme de script
+	// (avec pour param le tag trouvé + un boolean onOrOff)
+	
+	// Ce script, il faut le mettre ICI : changer le HTML_Link.tagsAndTagHref(targetUri, sonUri)
+	// ET HTML_Link.getTagURL pour appel à ce script 
+	// POUR DOCUMENTATION DE onClick
+	
 	String href = null;
 	boolean itsAnAndKW = false;
 	if (!edit) { // "and kws" in search // 2020-02 tagAndTag
