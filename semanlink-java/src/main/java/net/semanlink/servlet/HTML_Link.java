@@ -505,11 +505,11 @@ public static String tagAndTagsHref(String contextUrl, SLKeyword firstKW, SLKeyw
 //contextUrl = SLServlet.getServletUrl(); 
 /**
 * @param andTagsUrl eg. http://127.0.0.1:7080/semanlink/tag/nlp?and=http%3A%2F%2Fwww.semanlink.net%2Ftag%2Fgoogle
-* @param oneMoreKw
+* @param oneMoreKwUri
 * @param resolveAlias
 * @since 2020-02 tagAndTag
 */
-public static String tagsAndTagHref(String andTagsUrl, String oneMoreKw) throws UnsupportedEncodingException {
+public static String tagsAndTagHref(String andTagsUrl, String oneMoreKwUri) throws UnsupportedEncodingException {
 // public static String tagsAndTagHref(String ContextUrl, String andTagsUrl, String oneMoreKw, boolean resolveAlias) throws UnsupportedEncodingException {
 	StringBuilder sb = new StringBuilder(andTagsUrl);
 	if (andTagsUrl.contains("?")) {
@@ -519,7 +519,7 @@ public static String tagsAndTagHref(String andTagsUrl, String oneMoreKw) throws 
 	}
 	sb.append("and=");
 	// oneMoreKw = getTagURL(ContextUrl, firstKW, resolveAlias, null);
-	sb.append(java.net.URLEncoder.encode(oneMoreKw,"UTF-8"));
+	sb.append(java.net.URLEncoder.encode(oneMoreKwUri,"UTF-8"));
 	return sb.toString();
 }
 

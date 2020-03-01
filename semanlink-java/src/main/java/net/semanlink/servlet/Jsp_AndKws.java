@@ -121,6 +121,7 @@ public String getLinkToThis() throws UnsupportedEncodingException {
 //	String x = HTML_Link.linkToAndKws(this.firstKw, this.kws, "and").getPage();
 //	return x;
 	boolean resolveAlias = false;
+	// TODO vérifier que getContextUrl() en 1er arg marcherait 2020-03
 	String x = HTML_Link.tagAndTagsHref("", firstKw, this.kws, resolveAlias); // 2020-02 ça craint
 	return x;
 }
@@ -130,7 +131,8 @@ public HTML_Link linkToThisAndKw(SLKeyword otherKw) throws IOException {
 	// 2020-02 TagAndTag
 //	HTML_Link x = HTML_Link.linkToAndKws(this.firstKw, andOtherKw(otherKw), otherKw.getLabel());
 //	return x;
-	return new HTML_Link(getHref(), otherKw.getLabel());
+	String href = HTML_Link.tagsAndTagHref(getHref(), otherKw.getURI());
+	return new HTML_Link(href, otherKw.getLabel());
 }
 
 public String getHref() throws UnsupportedEncodingException {
@@ -140,6 +142,7 @@ public String getHref() throws UnsupportedEncodingException {
 //	}
 //	return HTML_Link.tagAndTagsHref(SLServlet.getServletUrl(), this.firstKw.getURI(), otherKws, false);
 	boolean resolveAlias = false;
+	//TODO vérifier que getContextUrl() en 1er arg marcherait 2020-03
 	return HTML_Link.tagAndTagsHref(SLServlet.getServletUrl(), firstKw, this.kws, resolveAlias); // 2020-02 ça craint
 }
 

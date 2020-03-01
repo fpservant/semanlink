@@ -146,7 +146,7 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 		// At this point, kw not null (but maybe doesn't exist -- only in the case !edit)
 		
 		String whatToDo = request.getParameter("actionprop");
-		String targetUri = request.getParameter("targeturi");
+		String targetUri = request.getParameter("targeturi"); // HUM this is old stuff - not the 2020-02 TagAndTag
 		/*
 		// This was before 2007-01:
 		// everything OK, except that we get urls such as "..../gokeyword.do" in the browser nav box
