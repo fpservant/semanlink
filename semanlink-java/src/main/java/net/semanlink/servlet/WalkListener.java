@@ -125,7 +125,7 @@ private void printHRefToKw(SLKeyword kw) throws IOException {
 	// this.out.print("<a href=\"" + HTML_Link.getHREF(kw) + "\">");
 	// 2020-02 (?)
 	this.out.print("<a href=\"" + this.response.encodeURL(HTML_Link.getTagURL(this.contextPath, kw.getURI(), false, ".html")) + "\">");
-	this.out.print("AA"+kw.getLabel());
+	this.out.print(kw.getLabel());
 	this.out.print("</a>");
 }
 

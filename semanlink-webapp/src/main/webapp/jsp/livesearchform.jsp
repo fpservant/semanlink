@@ -51,7 +51,6 @@
         method = "get";
         liveSearchSubmitFunction = "liveSearchSubmit4Get";
     }
-    System.out.println("livesearchform.jsp AAA andTargetUri " + andTargetUri);
 %>
 
 <div class="browser">

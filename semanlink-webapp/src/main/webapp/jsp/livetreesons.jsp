@@ -106,7 +106,6 @@ if (targetUri == null) {
                 // targetUri : en gros, la page courante (+ précisément, ce dont on a besoin pour faire le AND kw:
                 // uri de kw si page kw, url de la page and si on est déjà sur une page and)
 			    href = HTML_Link.tagsAndTagHref(context, targetUri, sonUri);
-			    System.out.println("livetresons.jsp targetUri:" + targetUri + " href " + href); // TODO REMOVE
 			}
 		}
 	}

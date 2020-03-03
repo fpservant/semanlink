@@ -6,12 +6,12 @@
     <parent>
         <groupId>net.semanlink</groupId>
         <artifactId>semanlink-parent</artifactId>
-        <version>0.7.0</version>
+        <version>0.7.1</version>
         <relativePath>../semanlink-parent</relativePath>
     </parent>
 
     <artifactId>semanlink-lod-parent</artifactId>
-    <version>0.7.0</version>
+    <version>0.7.1</version>
     <packaging>pom</packaging>
     <name>Semanlink LOD parent</name>
     <description>Implement some common features of a web application that publishes RDF data (sparql endpoint GUI, displaying RDF data using Tabulator's javascript parser)</description>
