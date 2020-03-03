@@ -464,7 +464,7 @@ public static HTML_Link getHTML_Link(SLKeyword kw) throws UnsupportedEncodingExc
 }
 
 /**
- * 
+ * Here is defined the form of the URL for the and of tags page
  * @param contextUrl eg. /semanlink eg. SLServlet.getServletUrl()
  * @param firstKW
  * @param otherKws
@@ -474,6 +474,24 @@ public static HTML_Link getHTML_Link(SLKeyword kw) throws UnsupportedEncodingExc
  * @since 2020-02 tagAndTag
  */
 public static String tagAndTagsHref(String contextUrl, String firstKW, String[] otherKws, boolean resolveAlias) throws UnsupportedEncodingException {
+	StringBuilder sb = new StringBuilder(contextUrl);
+	sb.append(CoolUriServlet.TAG_SERVLET_PATH);
+	sb.append("/?");
+	sb.append(CoolUriServlet.AND_QUERY_PARAM);
+	sb.append("=");
+	// sb.append(getKwRelativHREF(firstKW, null, resolveAlias)); // POUR FAIRE APRES
+	sb.append(java.net.URLEncoder.encode(firstKW,"UTF-8"));
+	for (String otherKw : otherKws) {
+		sb.append("&");
+		sb.append(CoolUriServlet.AND_QUERY_PARAM);
+		sb.append("=");
+		sb.append(java.net.URLEncoder.encode(otherKw,"UTF-8"));
+	}
+	return sb.toString();
+}
+
+/* of the form tag?and=kw2&and=kw3... */
+public static String tagAndTagsHref_v2020_02(String contextUrl, String firstKW, String[] otherKws, boolean resolveAlias) throws UnsupportedEncodingException {
 	String href = getTagURL(contextUrl, firstKW, resolveAlias, null);
 	StringBuilder sb = new StringBuilder(href);
 	if (href.contains("?")) {
@@ -488,11 +506,19 @@ public static String tagAndTagsHref(String contextUrl, String firstKW, String[] 
 		} else {
 			sb.append("&");
 		}
-		sb.append("and=");
+		sb.append(CoolUriServlet.AND_QUERY_PARAM);
+		sb.append("=");
 		sb.append(java.net.URLEncoder.encode(otherKw,"UTF-8"));
 	}
 	return sb.toString();
 }
+
+/*
+public static String getTagURL(String contextUrl, String kwUri, boolean resolveAlias, String dotExtension) throws UnsupportedEncodingException {
+	return contextUrl + CoolUriServlet.TAG_SERVLET_PATH + "/" + getKwRelativHREF(kwUri, dotExtension, resolveAlias);
+}
+
+ */
 
 public static String tagAndTagsHref(String contextUrl, SLKeyword firstKW, SLKeyword[] otherKws, boolean resolveAlias) throws UnsupportedEncodingException {
 	String[] others = new String[otherKws.length];
@@ -504,23 +530,57 @@ public static String tagAndTagsHref(String contextUrl, SLKeyword firstKW, SLKeyw
 
 //contextUrl = SLServlet.getServletUrl(); 
 /**
-* @param andTagsUrl eg. http://127.0.0.1:7080/semanlink/tag/nlp?and=http%3A%2F%2Fwww.semanlink.net%2Ftag%2Fgoogle
+* @param tagOrTagsUrl two cases: a tag, or and and of tags
 * @param oneMoreKwUri
 * @param resolveAlias
 * @since 2020-02 tagAndTag
 */
-public static String tagsAndTagHref(String andTagsUrl, String oneMoreKwUri) throws UnsupportedEncodingException {
+public static String tagsAndTagHref(String contextUrl, String tagOrTagsUrl, String oneMoreKwUri) throws UnsupportedEncodingException {
 // public static String tagsAndTagHref(String ContextUrl, String andTagsUrl, String oneMoreKw, boolean resolveAlias) throws UnsupportedEncodingException {
+	// 2020-03
+	if (itsATagNotAnAndTagUrl(tagOrTagsUrl)) {
+//		int k = tagOrTagsUrl.indexOf(CoolUriServlet.TAG_SERVLET_PATH + "/");
+//		if (k < 0) {
+//			throw new RuntimeException("Not a tag " + tagOrTagsUrl);
+//		}
+		String firstKW = tagOrTagsUrl; // C'EST PAS BON : pas uri, url
+		String[] otherKws = {oneMoreKwUri};
+		boolean resolveAlias = false;
+		return tagAndTagsHref(contextUrl, firstKW, otherKws, resolveAlias);
+		
+	} else {
+		StringBuilder sb = new StringBuilder(tagOrTagsUrl);
+		sb.append("&");
+		sb.append(CoolUriServlet.AND_QUERY_PARAM);
+		sb.append("=");
+		// oneMoreKw = getTagURL(ContextUrl, firstKW, resolveAlias, null);
+		sb.append(java.net.URLEncoder.encode(oneMoreKwUri,"UTF-8"));
+		return sb.toString();
+		
+	}	
+}
+
+// 2020-03
+private static boolean itsATagNotAnAndTagUrl(String url) {
+	if (url.indexOf("&" + CoolUriServlet.AND_QUERY_PARAM + "=") > -1) {
+		return false;
+	}
+	return true;
+}
+
+// ca av bien
+public static String tagsAndTagHref_v2020_02(String andTagsUrl, String oneMoreKwUri) throws UnsupportedEncodingException {
+//public static String tagsAndTagHref(String ContextUrl, String andTagsUrl, String oneMoreKw, boolean resolveAlias) throws UnsupportedEncodingException {
 	StringBuilder sb = new StringBuilder(andTagsUrl);
 	if (andTagsUrl.contains("?")) {
 		sb.append("&");
 	} else {
 		sb.append("?");
 	}
-	sb.append("and=");
+	sb.append(CoolUriServlet.AND_QUERY_PARAM);
+	sb.append("=");
 	// oneMoreKw = getTagURL(ContextUrl, firstKW, resolveAlias, null);
 	sb.append(java.net.URLEncoder.encode(oneMoreKwUri,"UTF-8"));
 	return sb.toString();
 }
-
 }

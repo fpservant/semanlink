@@ -30,10 +30,16 @@
         uri = jsp_r.getUriFormValue();
         // hum pb uri de tags -> url de tag (cf en semanlink.net vs 127.0.0.1/semanlink)
         // andTargetUri = uri;
-        boolean resolveAlias = false;
-        andTargetUri = HTML_Link.getTagURL(SLServlet.getServletUrl(), uri, resolveAlias, null);
-    } else if (jsp instanceof Jsp_AndKws) { 
+        
+        // 2020-03 sauf que ce dont on a besoin pour faire le and ensuite, c'est le kw, pas son url
+        // andTargetUri = HTML_Link.getTagURL(SLServlet.getServletUrl(), uri, resolveAlias, null);
+        // OUI, CA CRAINT, C'EST VILAIN
+        
+        andTargetUri = jsp_kw.getSLKeyword().getURI();
+        
+    } else if (jsp instanceof Jsp_AndKws) { // TagAndTags   	
     	andTargetUri = ((Jsp_AndKws) jsp).getHref();
+    
     }
     if ((jsp_doc != null) || (jsp_kw != null)) uri = jsp_r.getUriFormValue();
     boolean edit = (Boolean.TRUE.equals(session.getAttribute("net.semanlink.servlet.edit")));
@@ -45,7 +51,7 @@
         method = "get";
         liveSearchSubmitFunction = "liveSearchSubmit4Get";
     }
-    System.out.println("livesearchform.jsp andTargetUri " + andTargetUri);
+    System.out.println("livesearchform.jsp AAA andTargetUri " + andTargetUri);
 %>
 
 <div class="browser">

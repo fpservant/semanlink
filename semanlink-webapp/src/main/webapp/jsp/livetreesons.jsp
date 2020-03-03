@@ -98,7 +98,14 @@ if (targetUri == null) {
 // 			    // HTML_Link link = HTML_Link.linkToAndKws(targetUri, otherKws, label);
 // 			    // href = request.getContextPath() + link.getPage();
 			    
-			    href = HTML_Link.tagsAndTagHref(targetUri, sonUri);
+
+
+				// 2020-03
+                // TagAndTag : c'est ici qu'on constitue le lien dans l'arbre résultat de recherche
+                // quand on est sur une page kw (ou and de kw)
+                // targetUri : en gros, la page courante (+ précisément, ce dont on a besoin pour faire le AND kw:
+                // uri de kw si page kw, url de la page and si on est déjà sur une page and)
+			    href = HTML_Link.tagsAndTagHref(context, targetUri, sonUri);
 			    System.out.println("livetresons.jsp targetUri:" + targetUri + " href " + href); // TODO REMOVE
 			}
 		}

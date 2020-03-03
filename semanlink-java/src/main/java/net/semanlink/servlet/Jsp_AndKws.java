@@ -131,7 +131,7 @@ public HTML_Link linkToThisAndKw(SLKeyword otherKw) throws IOException {
 	// 2020-02 TagAndTag
 //	HTML_Link x = HTML_Link.linkToAndKws(this.firstKw, andOtherKw(otherKw), otherKw.getLabel());
 //	return x;
-	String href = HTML_Link.tagsAndTagHref(getHref(), otherKw.getURI());
+	String href = HTML_Link.tagsAndTagHref(this.getContextURL(), getHref(), otherKw.getURI());
 	return new HTML_Link(href, otherKw.getLabel());
 }
 
