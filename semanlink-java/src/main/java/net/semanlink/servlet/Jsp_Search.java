@@ -35,12 +35,71 @@ public Jsp_Search(String searchString, HttpServletRequest request) {
 	
 	// System.out.println("Jsp_Search size "+ this.kws.size());
 	Collections.sort(this.kws);
+	
+	
+	
+	// 2020-03 exact or close matches first in search results
+	int n = nbOfWords(searchString);
+	SLKeyword exactMatch = null;
+	List<SLKeyword> closeMatchs = new ArrayList<>();
+	List<SLKeyword> endOfList = new ArrayList<>();
+	// TODO altLabels
+	for (SLKeyword kw : kws) {
+		String s = kw.getLabel();
+		if (searchString.equals(s)) {
+			exactMatch = kw;
+		} else {
+			if (s == null) {
+				endOfList.add(kw);
+				continue; // juste au cas où (devrait pa arriver)
+			}
+			int n2 = nbOfWords(s);
+			if (n == n2) {
+				closeMatchs.add(kw);
+			} else {
+				endOfList.add(kw);
+			}
+		}
+	}
+	
+	List<SLKeyword> x = null;
+	if (exactMatch != null) {
+		x = new ArrayList<>();
+		x.add(exactMatch);
+	}
+	if (closeMatchs.size() > 0) {
+		if (x != null) {
+			x.addAll(closeMatchs);
+		} else {
+			x = closeMatchs;
+		}
+	}
+	if (x == null) {
+		x = kws;
+	} else {
+		x.addAll(endOfList);
+	}
+	kws = x;
+	
+	
+	
+	
+	
+	
+	
 	this.beanKwList.setList(kws);
 	this.request.setAttribute("net.semanlink.servlet.Bean_KwList", this.beanKwList);
 }
+
+private int nbOfWords(String s) {
+	// use WordsInString? must requires a locale...
+	return s.split("[ -@]").length;
+}
+
 public String getContent() { return "/jsp/search.jsp"; } // not used by livesearch
 public String getTitle() { return "Search " + searchString; } // not used by livesearch
 public String getSearchString() { return this.searchString; } // not used by livesearch
+
 //
 //RDF
 //

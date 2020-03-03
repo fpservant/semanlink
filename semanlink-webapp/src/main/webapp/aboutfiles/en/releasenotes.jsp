@@ -5,9 +5,17 @@
 <h1>Release notes</h1>
 <div class="graybox">
 
-<h2>0.7.x 2020-01-31</h2>
+<h2>0.7.1 2020-03-03</h2>
 <ul>
+<li>Exact or close matches first in search results</li>
 <li>Avoid too big tag clouds</li>
+<li>Tag(s) and tag <ul>
+    <li>better URLs</li>
+    <li>Tag search results on a tag page now link to an AND of both tags.
+    (The and between tags was previously available only through the tag cloud.
+    Even before the shrinking of the size of the tag cloud introduced with this version,
+    this was not always enough, to search for the AND of two general tags (ex. NLP AND History).</li>
+    </ul></li>
 </ul>
 
 <h2>0.7.0 2020-01-26</h2>
