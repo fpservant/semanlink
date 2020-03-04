@@ -253,7 +253,7 @@ public HTML_Link linkToThisAndKw(SLKeyword otherKw) throws IOException {
 	String[] otherKws = new String[1];
 	otherKws[0] = otherKw.getURI();
 	boolean resolveAlias = false;
-	String href = HTML_Link.tagAndTagsHref(SLServlet.getServletUrl(), this.slKw.getURI(), otherKws, resolveAlias); // 2020-02 ça craint
+	String href = HTML_Link.andOfTagsHref(SLServlet.getServletUrl(), this.slKw.getURI(), otherKws, resolveAlias); // 2020-02 ça craint
 	return new HTML_Link(href, otherKw.getLabel()) ;
 }
 

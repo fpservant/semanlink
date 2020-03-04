@@ -122,7 +122,7 @@ public String getLinkToThis() throws UnsupportedEncodingException {
 //	return x;
 	boolean resolveAlias = false;
 	// TODO vérifier que getContextUrl() en 1er arg marcherait 2020-03
-	String x = HTML_Link.tagAndTagsHref("", firstKw, this.kws, resolveAlias); // 2020-02 ça craint
+	String x = HTML_Link.andOfTagsHref("", firstKw, this.kws, resolveAlias); // 2020-02 ça craint
 	return x;
 }
 
@@ -143,7 +143,7 @@ public String getHref() throws UnsupportedEncodingException {
 //	return HTML_Link.tagAndTagsHref(SLServlet.getServletUrl(), this.firstKw.getURI(), otherKws, false);
 	boolean resolveAlias = false;
 	//TODO vérifier que getContextUrl() en 1er arg marcherait 2020-03
-	return HTML_Link.tagAndTagsHref(SLServlet.getServletUrl(), firstKw, this.kws, resolveAlias); // 2020-02 ça craint
+	return HTML_Link.andOfTagsHref(SLServlet.getServletUrl(), firstKw, this.kws, resolveAlias); // 2020-02 ça craint
 }
 
 public String getContent() throws Exception {
@@ -184,7 +184,7 @@ public String getLinkToNewKeyword() throws UnsupportedEncodingException {
 	
 	// PROBLEME ICI : UTILISE PAR andKws.jsp
 	// 2020-02 TagAndTag TODO
-	String x = HTML_Link.tagAndTagsHref("", this.firstKw, kws, resolveAlias); // 2020-02 ça craint
+	String x = HTML_Link.andOfTagsHref("", this.firstKw, kws, resolveAlias); // 2020-02 ça craint
 	return x + "&amp;newkw=true";
 }
 
