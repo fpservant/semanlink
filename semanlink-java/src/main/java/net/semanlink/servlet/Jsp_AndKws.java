@@ -160,9 +160,10 @@ public SLKeyword toNewKeyword() throws Exception {
 	for (int i = 0; i < this.kws.length; i++) {
 		allKws[i+1] = this.kws[i];
 	}
+	List children = getIntersectKWsList(); // 2020-03
 	SLModel mod = SLServlet.getSLModel();
 	SLKeyword x = mod.kwLabel2NewKeyword(getTitle(), mod.getDefaultThesaurus().getURI(),null);
-	if (x == null) throw new RuntimeException("A keyword already exists with that label/uri: " + getTitle());
+	if (x == null) throw new RuntimeException("A keyword already exists with that label/uri: " + getTitle()); // TODO
 	List docs = getDocs();
 	for (int i = 0; i < docs.size(); i++) {
 		SLDocument doc = (SLDocument) docs.get(i);
@@ -171,6 +172,9 @@ public SLKeyword toNewKeyword() throws Exception {
 	}
 	for (int i = 0; i < allKws.length; i++) {
 		mod.addParent(x, allKws[i]);
+	}	
+	for (int i = 0; i < children.size() ; i++ ) { // 2020-03
+		mod.addChild(x, (SLKeyword) children.get(i));
 	}
 	return x;
 }
@@ -192,25 +196,33 @@ public String getLinkToNewKeyword() throws UnsupportedEncodingException {
 //
 //
 
+
+private List intersectKWsList; // use getter
+List getIntersectKWsList() throws Exception {
+	if (intersectKWsList == null) {
+		SLTree firstSLTree = new SLTree(this.firstKw, "children", this.sortProperty, getSLModel()) ;
+		Graph firstGraph = firstSLTree.getGraph();
+		HashSet hsx = (new GraphTraversal(firstGraph)).getNodes();
+		
+		for (int i = 0; i < this.kws.length; i++) {
+			SLTree slTree2 = new SLTree(this.kws[i], "children", this.sortProperty, getSLModel()) ;
+			Graph graph2 = slTree2.getGraph();
+			Intersection intersection = new Intersection(hsx, graph2);
+			if (i < this.kws.length - 1) {
+				hsx = intersection.getNodes(false);		
+			} else {
+				hsx = intersection.getNodes(true);		
+			}
+		}
+
+		intersectKWsList = Arrays.asList(hsx.toArray());		
+	}
+	return intersectKWsList;
+}
+
 // called by andkws.jsp to display the list of common descendants 
 public List  prepareIntersectKWsList() throws Exception {
-	SLTree firstSLTree = new SLTree(this.firstKw, "children", this.sortProperty, getSLModel()) ;
-	Graph firstGraph = firstSLTree.getGraph();
-	HashSet hsx = (new GraphTraversal(firstGraph)).getNodes();
-	
-	for (int i = 0; i < this.kws.length; i++) {
-		SLTree slTree2 = new SLTree(this.kws[i], "children", this.sortProperty, getSLModel()) ;
-		Graph graph2 = slTree2.getGraph();
-		Intersection intersection = new Intersection(hsx, graph2);
-		if (i < this.kws.length - 1) {
-			hsx = intersection.getNodes(false);		
-		} else {
-			hsx = intersection.getNodes(true);		
-		}
-	}
-
-	List x = Arrays.asList(hsx.toArray());
-
+	List x = getIntersectKWsList();
 	request.setAttribute("livetreelist", x);
 	request.setAttribute("divid", "intersectkws");
 	request.setAttribute("withdocs", Boolean.TRUE);
