@@ -472,7 +472,7 @@ public static String andOfTagsHref(String contextUrl, SLKeyword firstKW, SLKeywo
 	for (int i = 0; i < others.length; i++) {
 		others[i] = otherKws[i].getURI();
 	}
-	return andOfTagsHref(contextUrl, firstKW.getURI(), others, resolveAlias);
+	return andOfTagsHref(contextUrl, firstKW.getURI(), others);
 }
 
 
@@ -493,31 +493,30 @@ public static String andOfTagsHref(String contextUrl, SLKeyword firstKW, SLKeywo
  * @param contextUrl eg. /semanlink eg. SLServlet.getServletUrl()
  * @param firstKWUri
  * @param otherKwUris
- * @param resolveAlias
  * @return
  * @throws UnsupportedEncodingException
  * @since 2020-02 tagAndTag
  */
-public static String andOfTagsHref(String contextUrl, String firstKWUri, String[] otherKwUris, boolean resolveAlias) throws UnsupportedEncodingException {
+public static String andOfTagsHref(String contextUrl, String firstKWUri, String[] otherKwUris) throws UnsupportedEncodingException {
 	StringBuilder sb = new StringBuilder(contextUrl);
 	sb.append(CoolUriServlet.TAG_SERVLET_PATH);
 	sb.append("/?");
 	sb.append(CoolUriServlet.AND_QUERY_PARAM);
 	sb.append("=");
 	// sb.append(java.net.URLEncoder.encode(firstKWUri,"UTF-8"));
-	sb.append(getKwRelativHREF(firstKWUri, null, resolveAlias));
+	sb.append(encodeTag4AndOfTags(firstKWUri));
 	for (String otherKw : otherKwUris) {
 		sb.append("&");
 		sb.append(CoolUriServlet.AND_QUERY_PARAM);
 		sb.append("=");
 		// sb.append(java.net.URLEncoder.encode(otherKw,"UTF-8"));
-		sb.append(getKwRelativHREF(otherKw, null, resolveAlias));
+		sb.append(encodeTag4AndOfTags(otherKw));
 	}
 	return sb.toString();
 }
 
-private String encodeTag4AndOfTags(String kwUri) throws UnsupportedEncodingException {
-	return getKwRelativHREF(kwUri, null, false);
+private static String encodeTag4AndOfTags(String kwUri) throws UnsupportedEncodingException {
+	return getKwRelativHREF(kwUri, null);
 }
 
 /**
@@ -529,8 +528,7 @@ public static String tagsAndTagHref(String contextUrl, String tagOrTagsUrl, Stri
 	if (itsATagNotAnAndOfTagUrl(tagOrTagsUrl)) {
 		String firstKW = tagOrTagsUrl; // C'EST PAS BON : pas uri, url
 		String[] otherKws = {oneMoreKwUri};
-		boolean resolveAlias = false;
-		return andOfTagsHref(contextUrl, firstKW, otherKws, resolveAlias);
+		return andOfTagsHref(contextUrl, firstKW, otherKws);
 		
 	} else {
 		StringBuilder sb = new StringBuilder(tagOrTagsUrl);
@@ -538,7 +536,7 @@ public static String tagsAndTagHref(String contextUrl, String tagOrTagsUrl, Stri
 		sb.append(CoolUriServlet.AND_QUERY_PARAM);
 		sb.append("=");
 		// sb.append(java.net.URLEncoder.encode(oneMoreKwUri,"UTF-8"));
-		sb.append(getKwRelativHREF(oneMoreKwUri, null, false));
+		sb.append(getKwRelativHREF(oneMoreKwUri, null));
 		return sb.toString();
 		
 	}	
