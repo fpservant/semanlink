@@ -124,14 +124,6 @@ public static String removeContext(String href, String contextURL) {
 	return href;
 }
 
-
-
-/*marche pas : on perd les liens relatifs genre css, images, etc.
-public static String fileUriServedByServletLink(String fileUri) throws UnsupportedEncodingException {
-	return StaticFileServlet.PATH + "/?uri=" + URLEncoder.encode(fileUri, "UTF-8");
-}*/
-
-
 /**
  * @param action par ex "/showdocument.do"
  */
@@ -169,7 +161,6 @@ public static HTML_Link linkToKeyword(SLKeyword kw) throws UnsupportedEncodingEx
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
-	// return linkToKeyword(kw, "/showkeyword.do");
 	return getHTML_Link(kw);
 }
 
@@ -181,20 +172,6 @@ public static HTML_Link linkToKeyword(String kwUri, String label, String action)
 	String page = action + "?kwuri=" + URLEncoder.encode(kwUri, "UTF-8");
 	return new HTML_Link(page, label);
 }
-
-//// public static String tagAndTagsHref(String ContextUrl, String firstKW, String[] otherKws, boolean resolveAlias)
-//// 2020-02 (?)
-///** @deprecated use tagAndTagsHref instead */
-//public static HTML_Link linkToAndKws(SLKeyword firstKw, SLKeyword[] otherKws, String label) throws UnsupportedEncodingException {
-//	return linkToAndKws(firstKw, otherKws, label, "/andkws.do");
-//}
-//
-///** @since 2020-02 
-// * @deprecated use tagAndTagsHref instead
-// */ // j'ai juste dupliqué les versions, avec des uri strings plutôt que slkeywords
-//public static HTML_Link linkToAndKws(String firstKw, String[] otherKws, String label) throws UnsupportedEncodingException {
-//	return linkToAndKws(firstKw, otherKws, label, "/andkws.do");
-//}
 
 // n'utiliser que si autre chose que andkws
 public static HTML_Link linkToAndKws(SLKeyword firstKw, SLKeyword[] otherKws, String label, String action) throws UnsupportedEncodingException {
@@ -299,18 +276,11 @@ public static String propAndKwsPage(String action, String pptyuri, String propVa
 	}
 	if (andKws != null) {
 		appendsKwsParams(andKws, sb);
-		/*StringBuffer sb2 = new StringBuffer(label);
-		for (int i = 0; i < andKws.length; i++) {
-			sb2.append(" AND ");
-			sb2.append(andKws[i].getLabel());
-		}
-		label = sb2.toString();*/
 	}
 	return sb.toString();
 }
 
 public static HTML_Link linkToThesaurus(SLThesaurus th) throws UnsupportedEncodingException {
-	// String page = "/showthesaurus.do?uri=" + URLEncoder.encode(th.getURI(), "UTF-8");
 	String page = "/sl/thesaurus?uri=" + URLEncoder.encode(th.getURI(), "UTF-8");
 	return new HTML_Link(page, th.toString());
 }
@@ -319,34 +289,8 @@ public static HTML_Link linkToThesaurus(SLThesaurus th) throws UnsupportedEncodi
 // LIES A LA NOUVELLE FACON DE LIER ALA "tag"
 //
 
-// private static String DEFAULT_THESAURUS_URI_DASH = SLServlet.getSLModel().getDefaultThesaurus().getURI()+"#"; // #thing
 static String DEFAULT_THESAURUS_URI_SLASH = SLServlet.getSLModel().getDefaultThesaurus().getURI()+"/"; // #thing
-//private static int DEFAULT_THESAURUS_URI_DASH_LENGTH = DEFAULT_THESAURUS_URI_DASH.length();
 private static int DEFAULT_THESAURUS_URI_SLASH_LENGTH = DEFAULT_THESAURUS_URI_SLASH.length();
-/** Don't forget url rewriting when calling */
-/*public static String getHREF(SLKeyword slkw) throws UnsupportedEncodingException {
-	return getKwHREF(slkw.getURI());
-}*/
-
-// TODO changer : ne pas retourner /semanlink/
-/*private static String getKwHREF(String kwuri) throws UnsupportedEncodingException {
-	return "/semanlink/tag/" + getKwRelativHREF(kwuri);
-}*/
-
-/** Don't forget url rewriting when calling */
-/*public static String getTagHREF(String kwUri, boolean resolveAlias) throws UnsupportedEncodingException {
-	String x = getKwHREF(kwUri);
-	if (resolveAlias) {
-		if (x.indexOf("?") < 0) {
-			x += "?resolvealias=true";			
-		}
-		x += "&amp;resolvealias=true";
-	}
-	return x;
-}*/
-
-
-
 
 
 /** FAUX :
@@ -422,7 +366,6 @@ private static String getKwRelativHREF(String kwUri, String dotExtension, boolea
  * pas de résolution d'alias
  */
 public static String getTagHref(HttpServletResponse response, String contextUrl, String kwUri) throws UnsupportedEncodingException {
-	// return response.encodeURL(contextUrl + "/showdocument.do?docuri=" + URLUTF8Encoder.encode(docUri));
 	return response.encodeURL(getTagURL(contextUrl, kwUri, false, ".html"));
 }
 
@@ -475,19 +418,6 @@ public static String andOfTagsHref(String contextUrl, SLKeyword firstKW, SLKeywo
 	return andOfTagsHref(contextUrl, firstKW.getURI(), others);
 }
 
-
-
-// 2020_03 TODO dans les 2 méthodes + bas,
-// remplacer kwuri par la fin
-// Si on ne veut pas réfléchir,
-// regarder si le kwuri commence par défaut thesaurus 
-// OU par contextUrl + CoolUriServlet.TAG_SERVLET_PATH
-// et virer ce début
-// sinon encoder
-// (En vrai, ça doit toujours e^tre par defaut thesaurus)
-
-
-
 /**
  * Here is defined the form of the URL for the and of tags page
  * @param contextUrl eg. /semanlink eg. SLServlet.getServletUrl()
@@ -503,13 +433,11 @@ public static String andOfTagsHref(String contextUrl, String firstKWUri, String[
 	sb.append("/?");
 	sb.append(CoolUriServlet.AND_QUERY_PARAM);
 	sb.append("=");
-	// sb.append(java.net.URLEncoder.encode(firstKWUri,"UTF-8"));
 	sb.append(encodeTag4AndOfTags(firstKWUri));
 	for (String otherKw : otherKwUris) {
 		sb.append("&");
 		sb.append(CoolUriServlet.AND_QUERY_PARAM);
 		sb.append("=");
-		// sb.append(java.net.URLEncoder.encode(otherKw,"UTF-8"));
 		sb.append(encodeTag4AndOfTags(otherKw));
 	}
 	return sb.toString();
@@ -542,8 +470,7 @@ public static String tagsAndTagHref(String contextUrl, String tagOrTagsUrl, Stri
 	}	
 }
 
-// 2020-03
-private static boolean itsATagNotAnAndOfTagUrl(String url) {
+private static boolean itsATagNotAnAndOfTagUrl(String url) { // 2020-03
 	if (url.indexOf("&" + CoolUriServlet.AND_QUERY_PARAM + "=") > -1) {
 		return false;
 	}
