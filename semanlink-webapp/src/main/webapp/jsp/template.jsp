@@ -45,11 +45,11 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Semanlink - <%=jsp.getTitle()%></title>
 	<link rel="stylesheet" href="<%=contextPath%>/css/sidemenu.css" type="text/css" />
-	<link rel="stylesheet" href="<%=contextPath%>/css/slstyles.css?v=070-00" type="text/css" />
+	<link rel="stylesheet" href="<%=contextPath%>/css/slstyles.css?v=071" type="text/css" />
 	
     <script src="<%=contextPath%>/scripts/markdown-it.min.910.js"></script>   
 	<script src="<%=contextPath%>/scripts/markdown-it-replace-link.min.js"></script>   
-    <script src="<%=contextPath%>/scripts/markdown-sl.js?v=062"></script>   
+    <script src="<%=contextPath%>/scripts/markdown-sl.js?v=071"></script>   
 	
 	<%    
 	if ((jsp instanceof Jsp_Keyword) || (jsp instanceof Jsp_ThisMonth)) { // 2007-03 remplace 2007-01
@@ -95,6 +95,123 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 		if (x) x.q.focus();
 	}
 	
+	// called onload
+	// by defautl, display the right bar - except when it is a .md file
+	// the md case is handled by doMarkdown(), in markdownfile.jsp
+	function rightBar() {
+		// si queryparam, on écoute le qp
+		// 1: show and store the value, 0: hide and store the value, 
+		// "-1": show, "-0": hide, BUT don't store the value
+		// et on change la var de session, au besoin
+		
+		const rightBarString = getRightBarString();
+		var b = false;
+        if (rightBarString == "-0") {
+            
+        } else if (rightBarString == "-1") {
+               b = true;
+
+        } else if (rightBarString == "0") {
+               storeRightBar("0");
+
+        } else if (rightBarString == "1") {
+        	b = true;
+        	storeRightBar("1");
+        	
+        } else if (!rightBarString){
+        	b = true;
+        	
+        } else {
+        	alert("error rightBarString: " + rightBarString);
+        	b = true;
+        }
+			
+		// si false, on cache s'il faut (assumant qu'on montre par défaut)
+        if (!b) {
+            displayRightBar(false)
+        }
+	}
+	
+	// 0, 1, -0, -1 ou false si rien de défini (auquel cas, faire ce qu'on veut comme défaut)
+    function getRightBarString() {
+//      var queryString = location.search.substring(0); // includes the ? or &      
+//      var k = queryString.indexOf("rightbar=");
+        const urlParams = new URLSearchParams(window.location.search);
+        var x = urlParams.get('rightbar');
+
+        if (!x) {
+            // no query param
+            x = sessionStorage.getItem("rightbar"); // 0 pour cacher, 1 pour montrer, 1 par défaut
+        }
+        
+        return x;
+    }
+	
+	
+	function storeRightBar(rightBarString) {
+		if ((rightBarString == "0") || (rightBarString == "1")) { // sinon, on ne veut pas stocker
+			sessionStorage.setItem("rightbar", rightBarString);
+		}
+	}
+	
+	// set the right bar according to b (if true, show the right bar)
+	function displayRightBar(b) {
+		var disp = false;
+		if (!b) {
+			disp = "none";
+		} else {
+			disp = "block";
+		}
+	    var d = false;
+	    d = document.getElementById("right");
+	    if (d) {
+	        d.style.display = disp;
+	    }
+	    d = document.getElementById("navcontainer");
+	    if (d) {
+	        d.style.display = disp;
+	    }
+// 	    d = document.getElementById("logo");
+// 	    if (d) {
+// 	        // d.style.display = "none";
+// 	    }
+	    d = document.getElementById("file_info")
+	    if (d) {
+	        d.style.display = disp;
+	    }
+	    d = document.getElementById("aboutThisDoc")
+	    if (d) {
+	        d.style.display = disp;
+	    }
+	    d = document.getElementById("documenttags")
+	    if (d) {
+	        d.style.display = disp;
+	    }
+	    if (b) {
+            d = document.getElementById("middleprint")
+            if (d) {
+                d.id = "middle";
+            }           
+	    	
+	    } else {
+	        d = document.getElementById("middle")
+	        if (d) {
+	            d.id = "middleprint";
+	        }	    	
+	    }
+	}
+	
+	function toggleRightBar() {
+        var d = document.getElementById("right");
+        var b = (d.style.display == 'none')
+        if (b) {
+        	storeRightBar("1");
+        } else {
+        	storeRightBar("0");
+        }
+        displayRightBar(b);
+	}
+
 	<%
 	// 2013-08 
 	// to load scripts that can be loaded after the body
