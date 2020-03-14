@@ -19,16 +19,16 @@ function rdfTypeChanged() {
 <div class="graybox">
 <div class="what">rdf:type</div>
 
-<%Jsp_Keyword jsp = (Jsp_Keyword) request.getAttribute("net.semanlink.servlet.jsp");String docorkw;if (jsp instanceof net.semanlink.semanlink.SLDocument) {	docorkw = "doc";} else {	docorkw =  "kw";}%><p><html:form action="setoraddproperty">	<html:hidden property="uri" value="<%=jsp.getSLResource().getURI()%>" />
+<%Jsp_Keyword jsp = (Jsp_Keyword) request.getAttribute("net.semanlink.servlet.jsp");String docorkw;if (jsp instanceof net.semanlink.semanlink.SLDocument) {	docorkw = "doc";} else {	docorkw =  "kw";}%><p></p><html:form action="setoraddproperty">	<html:hidden property="uri" value="<%=jsp.getSLResource().getURI()%>" />
 	<html:hidden property="docorkw" value="<%=docorkw%>" />
 	<html:hidden property="property" value="rdf:type" />
-	<b>rdf:type </b><html:text styleId="rdfType" property="value" size="40" onchange="rdfTypeChanged()"/>	<html:select property="selectRdfType" styleId="selectRdfType" onchange="selectedRdfTypeChanged(this)">
+	<html:text styleId="rdfType" property="value" size="40" onchange="rdfTypeChanged()"/>	<html:select property="selectRdfType" styleId="selectRdfType" onchange="selectedRdfTypeChanged(this)">
 		<html:option value="-">-</html:option>
 		<%
 		Iterator it = jsp.rdfTypes4Tags();
 		for(;it.hasNext();) {
 			String typeValue = it.next().toString();
 			%>			<html:option value="<%=typeValue%>"><%=Jsp_Resource.displayUri(typeValue)%></html:option>		<%} // for %>	</html:select>
-	<br/>	<html:submit property="<%=Action_SetOrAddProperty.ADD%>"><%=jsp.i18l("properties.addValue")%></html:submit>	<html:submit property="<%=Action_SetOrAddProperty.SET%>"><%=jsp.i18l("properties.setValue")%></html:submit></html:form></p>
+	<html:submit property="<%=Action_SetOrAddProperty.ADD%>"><%=jsp.i18l("properties.addValue")%></html:submit>	<html:submit property="<%=Action_SetOrAddProperty.SET%>"><%=jsp.i18l("properties.setValue")%></html:submit></html:form>
 </div>
 <!--/rdfTypesForm.jsp-->

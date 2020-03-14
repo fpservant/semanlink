@@ -163,14 +163,16 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 			disp = "block";
 		}
 	    var d = false;
+	    // hide right bar
 	    d = document.getElementById("right");
 	    if (d) {
 	        d.style.display = disp;
 	    }
-	    d = document.getElementById("navcontainer");
-	    if (d) {
-	        d.style.display = disp;
-	    }
+// 	    d = document.getElementById("navcontainer");
+// 	    if (d) {
+// 	        d.style.display = disp;
+// 	    }
+	    // hide logo
 // 	    d = document.getElementById("logo");
 // 	    if (d) {
 // 	        // d.style.display = "none";
@@ -203,6 +205,7 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 	
 	function toggleRightBar() {
         var d = document.getElementById("right");
+        
         var b = (d.style.display == 'none')
         if (b) {
         	storeRightBar("1");
