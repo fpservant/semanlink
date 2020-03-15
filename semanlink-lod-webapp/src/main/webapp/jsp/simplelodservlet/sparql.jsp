@@ -105,7 +105,7 @@ LIMIT 20
 </form>
 </div> <% // hidden div containing the prepared examples %>
 
-<script type="text/javascript">
+<script>
 		<% // put the example into the textarea (where we enter a query). %>
 	function chooseSparqlExample(exampleId) {
 		document.getElementById('sparqlInputForm').q.value = document.getElementById("prefixesForm").prefixes.value 

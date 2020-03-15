@@ -17,6 +17,7 @@
     this was not always enough, to search for the AND of two general tags (ex. NLP AND History).</li>
     </ul></li>
 <li>Hide/Show right bar: click on logo. 0r with a param: ?rightbar=0 to hide, 1 to show</li>
+<li>Some changes in the display (less grey rectangles)</li>
 </ul>
 
 <h2>0.7.0 2020-01-26</h2>
