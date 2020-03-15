@@ -129,16 +129,16 @@ if (targetUri == null) {
 	      // ci-dessous, mettre une id à li ne marche pas parce que pour le highlight, on met à LSHighlight,
 	      // puis à null, l'id de la ligne sélectionnée
 	      if (kw == null) {
-	          %><%//PAS DE VIDE!!!%><li><img src="<%=context%>/ims/box_nada.gif" height="0px" width="8px" alt="" id="trigger:<%=sonDivId%>" /><a href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%
+	          %><%//PAS DE VIDE!!!%><li><img src="<%=context%>/ims/box_nada.gif" height="0" width="8" alt="" id="trigger:<%=sonDivId%>" /><a href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%
 	      } else { // 2013-08 RDFa
-	          %><%//PAS DE VIDE!!!%><li><img src="<%=context%>/ims/box_nada.gif" height="0px" width="8px" alt="" id="trigger:<%=sonDivId%>" /><a property="skos:narrower" href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%          
+	          %><%//PAS DE VIDE!!!%><li><img src="<%=context%>/ims/box_nada.gif" height="0" width="8" alt="" id="trigger:<%=sonDivId%>" /><a property="skos:narrower" href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%          
 	      }
 	} else { // son has sons
 	      if (kw == null) {
-	          %><%//PAS DE VIDE!!!%><li id="li:<%=sonDivId%>"><img src="<%=context%>/ims/box_closed.gif" id="trigger:<%=sonDivId%>" alt="" height="8px" width="8px" onclick="toggle2('<%=sonDivId%>', '<%=encodedSonUri%>', '<%=withDocs%>', '<%=postTagOnClick%>', '<%=targetUri%>')" /><% // ne rien mettre entre les 2
+	          %><%//PAS DE VIDE!!!%><li id="li:<%=sonDivId%>"><img src="<%=context%>/ims/box_closed.gif" id="trigger:<%=sonDivId%>" alt="" height="8" width="8" onclick="toggle2('<%=sonDivId%>', '<%=encodedSonUri%>', '<%=withDocs%>', '<%=postTagOnClick%>', '<%=targetUri%>')" /><% // ne rien mettre entre les 2
 	                   // ne rien mettre entre les 2%><a href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%
 	      } else {
-	          %><%//PAS DE VIDE!!!%><li id="li:<%=sonDivId%>"><img src="<%=context%>/ims/box_closed.gif" id="trigger:<%=sonDivId%>" alt="" height="8px" width="8px" onclick="toggle2('<%=sonDivId%>', '<%=encodedSonUri%>', '<%=withDocs%>', '<%=postTagOnClick%>', '<%=targetUri%>')" /><% // ne rien mettre entre les 2
+	          %><%//PAS DE VIDE!!!%><li id="li:<%=sonDivId%>"><img src="<%=context%>/ims/box_closed.gif" id="trigger:<%=sonDivId%>" alt="" height="8" width="8" onclick="toggle2('<%=sonDivId%>', '<%=encodedSonUri%>', '<%=withDocs%>', '<%=postTagOnClick%>', '<%=targetUri%>')" /><% // ne rien mettre entre les 2
 	           // ne rien mettre entre les 2%><a property="skos:narrower" href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%
 	      }
 	} // if (son.hasChild())
