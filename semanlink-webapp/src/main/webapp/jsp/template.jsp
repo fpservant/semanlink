@@ -41,7 +41,7 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 	xmlns:foaf="http://xmlns.com/foaf/0.1/"><head>
  -->
 <html
-	prefix="sl <%=SLSchema.NS%> foaf: http://xmlns.com/foaf/0.1/ skos: http://www.w3.org/2004/02/skos/core# rdfs: http://www.w3.org/2000/01/rdf-schema# schema: http://schema.org/"><head>
+	prefix="sl: <%=SLSchema.NS%> foaf: http://xmlns.com/foaf/0.1/ skos: http://www.w3.org/2004/02/skos/core# rdfs: http://www.w3.org/2000/01/rdf-schema# schema: http://schema.org/"><head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Semanlink - <%=jsp.getTitle()%></title>
 	<link rel="stylesheet" href="<%=contextPath%>/css/sidemenu.css" type="text/css" />
@@ -75,7 +75,7 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 	if (rss != null) {%>	<link rel="alternate" type="application/rss+xml" title="RSS" href="<%=contextPath%>/<%=rss%>" /> <%}%>
 
 	
-	<script type="text/JavaScript">
+	<script>
 	<%
 	// .../semanlink/loadsubtree.
 	// if faut tenir compte de l'éventuel url rewriting:
@@ -231,7 +231,7 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 	</script>
 	
 	<% // 2010-12 cf rdf_parsing.js  @find display of res in function of their rdf:type %>
-	<script type="text/JavaScript">	
+	<script>	
 	TYPE2METHOD = new Array();
 	displayTag = function(kb, res, container) {
 		displayTagInList(kb, res, container);
@@ -290,7 +290,7 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
 		// it is often useful to know in javascript the path to the web application 
 		// (Hmm, there's probably a direct way to get it in js // TODO)
 	%>
-	<script type="text/JavaScript">
+	<script>
 		<% // for instance /semanlink %>
 		function getContextPath() { return "<%=contextPath%>"; }
 		<% // for instance http://127.0.0.1:8080/semanlink or http://www.semanlink.net %>
@@ -438,7 +438,7 @@ if (jsp instanceof Jsp_Keyword) { // 2013-08 RDFa added typeof
 </div> <!-- middle -->
 </body>
 
-<% // put at the end, in order to allow included .jsp to add events to jsp (it is the case of document.jsp, for the markdown) %>
+<% // put at the end, in order to allow included .jsp to add events to jsp (it is the case of document.jsp, for the markdown) // ??? %>
 <script type="text/JavaScript">
     Tools = {
         'addEvent': function(obj, evType, fn) { 
