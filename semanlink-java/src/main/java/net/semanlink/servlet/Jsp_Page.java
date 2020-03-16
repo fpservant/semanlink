@@ -313,6 +313,22 @@ public void setDocList(Bean_DocList docList) {
 	this.docList = docList;
 }
 
+public String nbDocsMessage() throws Exception {
+	int nn = getDocList().getList().size();
+	
+	java.text.MessageFormat messageFormat;
+	if (nn > 1) {
+		messageFormat = new java.text.MessageFormat(i18l("x.documents"));
+	} else {
+		messageFormat = new java.text.MessageFormat(i18l("x.document"));
+	}
+	Object[] args = new Object[1];
+	args[0] = Integer.toString(nn);
+	return messageFormat.format(args);	
+}
+
+
+
 /** Retourne true ssi il faut montrer les keywords d'un doc de getDocList.*/
 public boolean getShowKeywordsInDocList() { return this.showKeywordsInDocList; }
 public void setShowKeywordsInDocList(boolean b) { this.showKeywordsInDocList = b; }

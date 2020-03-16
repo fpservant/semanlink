@@ -52,6 +52,7 @@
 <entry key="properties.setValue">Fixer la Valeur</entry>
 <entry key="properties.addValue">Ajouter une valeur</entry>
 <entry key="x.documents">{0} Documents</entry>
+<entry key="x.document">{0} Document</entry>
 <entry key="x.tags">{0} Mots-clés</entry>
 <entry key="x.add">Ajouter</entry>
 <entry key="x.cut">Couper</entry>
