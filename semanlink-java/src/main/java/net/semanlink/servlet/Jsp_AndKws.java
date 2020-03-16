@@ -214,8 +214,8 @@ List getIntersectKWsList() throws Exception {
 				hsx = intersection.getNodes(true);		
 			}
 		}
-
-		intersectKWsList = Arrays.asList(hsx.toArray());		
+		intersectKWsList = Arrays.asList(hsx.toArray());
+		Collections.sort(intersectKWsList);
 	}
 	return intersectKWsList;
 }
