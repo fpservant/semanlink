@@ -29,14 +29,14 @@ import org.apache.jena.util.iterator.ExtendedIterator;
 // TODO would be better to use MultiLabelIndex2, that returns both the found label and the kw
 // Would indeed allow to display the found label, not the pref label of the found KW
 // (would also optimize the returning of the "top matches" in search)
-public class ThesaurusIndex_SVG extends MultiLabelIndex<SLKeyword> {
+public class ThesaurusIndex_B4_2020_03 extends MultiLabelIndex<SLKeyword> {
 private SLModel mod;
 
 //
 // CONSTRUCTION AND UPDATES
 //
 
-ThesaurusIndex_SVG(SLModel mod, Locale locale) {
+ThesaurusIndex_B4_2020_03(SLModel mod, Locale locale) {
 	super();
 	this.mod = mod;
 	init(new KwLabelGetter(), new I18nFriendlyIndexEntries(new WordsInString(true, true), this.mod.converter), locale) ;
