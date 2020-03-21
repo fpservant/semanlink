@@ -33,8 +33,23 @@ private KwLabelGetter kwLabelGetter;
 // CONSTRUCTION AND UPDATES
 //
 
-ThesaurusIndex(SLModel mod, Locale locale) {
-	super(mod.getKWsInConceptsSpaceArrayList().iterator(), new KwLabelGetter(), locale);
+//ThesaurusIndex(SLModel mod, Locale locale) {
+//	super(mod.getKWsInConceptsSpaceArrayList().iterator(), new KwLabelGetter(), locale);
+//}
+
+static ThesaurusIndex newThesaurusIndex(SLModel mod, Locale locale) {
+	Iterator<SLKeyword> resToBeIndexedByLabel = mod.getKWsInConceptsSpaceArrayList().iterator();
+	KwLabelGetter kwLabelGetter = new KwLabelGetter();
+/*	WordsInString wordsInString = new WordsInString(true, true);
+	CharConverter ccon = new CharConverter(locale, "_");
+	IndexEntriesCalculator iec = new I18nFriendlyIndexEntries(wordsInString, ccon);
+*/	
+	return new ThesaurusIndex(resToBeIndexedByLabel, kwLabelGetter, locale);
+}
+
+private ThesaurusIndex(Iterator<SLKeyword> resToBeIndexedByLabel, KwLabelGetter kwLabelGetter, Locale locale) {
+	super(resToBeIndexedByLabel, kwLabelGetter, locale);
+	this.kwLabelGetter = kwLabelGetter;
 }
 
 // TODO (?) use Literal (=String + lang) ?
@@ -61,9 +76,6 @@ static class KwLabelGetter implements MultiLabelGetter<SLKeyword> {
  * // to be changed when we'll switch to using several labels
  * instead of alias */
 public void deleteKw(SLKeyword kw) {
-	if (kwLabelGetter == null) {
-		kwLabelGetter = new KwLabelGetter();
-	}
 	Iterator<String> labs = kwLabelGetter.getLabels(kw);
 	for (;labs.hasNext();) {
 		String lab = labs.next();
@@ -73,9 +85,6 @@ public void deleteKw(SLKeyword kw) {
 }
 
 public void addKw(SLKeyword kw) {
-	if (kwLabelGetter == null) {
-		kwLabelGetter = new KwLabelGetter();
-	}
 	Iterator<String> labs = kwLabelGetter.getLabels(kw);
 	for (;labs.hasNext();) {
 		String lab = labs.next();
@@ -100,8 +109,6 @@ public void addKw(SLKeyword kw, String label, Locale locale) {
  * d'un vocab pointant vers un autre vocab)
  */
 
-// 2020-03 : JUSTE FAIT POUR REIMPLEMENTER CE QUI EXISTE A FCT IDENTIQUE
-/** @deprecated */
 public Collection<SLKeyword> getKeywordsInText(String text, Locale locale, String thesaurusUri) {
 	// Set<SLKeyword> hs = getKeywordsInText(text);
 	Set<ObjectLabelPair<SLKeyword>> hs = getKeywordsInText(text);
@@ -142,5 +149,8 @@ public SLKeyword[] label2Keyword(String kwLabel, Locale locale) {
 	return x;
 }
 
-
+// 2020-03
+public int compareString(String s1, String s2) {
+	return this.collator.compare(s1, s2);
+}
 }

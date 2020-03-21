@@ -14,6 +14,7 @@ import org.apache.jena.rdf.model.Model;
 
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLModel;
+import net.semanlink.semanlink.ThesaurusIndex;
 import net.semanlink.util.URLUTF8Encoder;
 import net.semanlink.util.index.ObjectLabelPair;
 
@@ -33,8 +34,8 @@ public Jsp_Search(String searchString, HttpServletRequest request) {
 	// 2020-03-21 now that we use an index based on ObjectLabelPair,
 	// we could display the found label in search results,
 	// instead of just the skos:prefered label of the kw
-	
-	Set<ObjectLabelPair<SLKeyword>> set = mod.getThesaurusIndex().searchText(searchString);
+	ThesaurusIndex thind = mod.getThesaurusIndex();
+	Set<ObjectLabelPair<SLKeyword>> set = thind.searchText(searchString);
 	
 	ArrayList<ObjectLabelPair<SLKeyword>> pairs = new ArrayList<>(set.size());
 	pairs.addAll(set);
@@ -47,12 +48,9 @@ public Jsp_Search(String searchString, HttpServletRequest request) {
 
 	for (ObjectLabelPair<SLKeyword> pair : pairs) {
 		String s = pair.getLabel();
-		if (searchString.equals(s)) {
-			exactMatch = pair;
+		if ((exactMatch == null) && (thind.compareString(s, searchString) == 0)) {
+				exactMatch = pair;
 		} else {
-			if (s == null) { // shouldn't happen
-				continue; // juste au cas où (devrait pas arriver)
-			}
 			int n2 = nbOfWords(s);
 			if (n == n2) {
 				closeMatchs.add(pair);

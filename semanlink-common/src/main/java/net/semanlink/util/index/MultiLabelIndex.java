@@ -319,7 +319,7 @@ public Set<E> getKeywordsInText(String text) {
  * The list of ITEMs which have a label "matching exactly" a given label, that is, 
  * composed of exactly the same words (word in the meaning of IndexEntriesCalculator)
  * (but maybe not in the same order).
- * <p>Built for semanlink, to get the tag corresponding to a given label.</p>
+ * <p>to get the tag corresponding to a given label.</p>
  */
 public List<E> label2KeywordList(String kwLabel, Locale locale) {
 	List<String> indexEntriesInLabel = this.indexEntryCalculator.indexEntries(kwLabel , locale);

@@ -1279,7 +1279,7 @@ public ThesaurusIndex getThesaurusIndex() {
 }
 void computeThesaurusIndex() {
 	// this.thesaurusIndex = new ThesaurusIndex(this); // for ThesaurusIndexOK
-	this.thesaurusIndex = new ThesaurusIndex(this, Locale.getDefault());
+	this.thesaurusIndex = ThesaurusIndex.newThesaurusIndex(this, Locale.getDefault());
 }
 
 //
