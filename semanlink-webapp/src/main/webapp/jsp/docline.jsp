@@ -14,7 +14,6 @@
 Jsp_Page jsp = (Jsp_Page) request.getAttribute("net.semanlink.servlet.jsp");
 SLDocument doc = (SLDocument) request.getAttribute("net.semanlink.servlet.jsp.currentdoc");
 
-// boolean edit = (Boolean.TRUE.equals(session.getAttribute("net.semanlink.servlet.edit"))); // TODO REMOVE
 SLModel mod = SLServlet.getSLModel();
 SLDocumentStuff docStuff = new SLDocumentStuff(doc, mod, jsp.getContextURL()); // 2019-04
 

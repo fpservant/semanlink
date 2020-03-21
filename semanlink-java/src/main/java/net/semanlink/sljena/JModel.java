@@ -652,7 +652,7 @@ public void addKwProperty(String kwUri, String propertyUri, String propertyValue
 					locale = new Locale(lang);
 				}
 				// this.thesaurusIndex.addKw(kw, propertyValue, locale); // for ThesaurusIndexOK
-				this.thesaurusIndex.addItem(kw, propertyValue, locale);
+				this.thesaurusIndex.addKw(kw, propertyValue, locale);
 			}
 			JFileBiModel bi = getJFileBiModel4Kws(kwUri);
 			bi.add(kwUri, propertyUri, propertyValue, lang);
@@ -698,7 +698,7 @@ public void setKwProperty(String kwUri, String propertyUri, String propertyValue
 		bi.save();
 		if (isLabelProperty) {
 			// this.thesaurusIndex.addKw(kw); // for ThesaurusIndexOK
-			this.thesaurusIndex.addItem(kw);
+			this.thesaurusIndex.addKw(kw);
 		}
 	} catch (Exception e) { throw new SLRuntimeException(e); }
 }

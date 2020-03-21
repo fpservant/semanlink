@@ -29,6 +29,7 @@ import net.semanlink.semanlink.SLModel;
 import net.semanlink.semanlink.ThesaurusIndex;
 import net.semanlink.servlet.Jsp_Page;
 import net.semanlink.util.index.IndexInterface;
+import net.semanlink.util.index.ObjectLabelPair;
 import net.semanlink.util.index.jena.TextMatchMagicProp;
 
 public class SLSparqlServlet extends LODServlet {
@@ -168,12 +169,14 @@ private static class AdaptedIndex implements IndexInterface<Resource> {
 		this.thIndex = thIndex;
 	}
 	public Collection<Resource> searchText(String searchString) {
-		Set<SLKeyword> set = thIndex.searchText(searchString);
+		// 2020-03
+		// Set<SLKeyword> set = thIndex.searchText(searchString);
+		Set<ObjectLabelPair<SLKeyword>> set = thIndex.searchText(searchString);
 		ArrayList<Resource> x = new ArrayList<Resource>(set.size());
 		// Model model = ((JModel) SLServlet.getSLModel()).getKWsModel();
-		for (SLKeyword kw : set) {
+		for (ObjectLabelPair pair : set) {
 			// x.add(model.createResource(kw.getURI()));
-			x.add(((JKeyword) kw).getRes());
+			x.add(((JKeyword) pair.getObject()).getRes());
 		}
 		return x;
 	}

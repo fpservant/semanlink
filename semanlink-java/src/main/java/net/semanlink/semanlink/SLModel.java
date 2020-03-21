@@ -932,7 +932,7 @@ protected abstract void createKw(String uri, String label, Locale locale) throws
 public SLKeyword doCreateKeyword(String uri, String kwLabel, Locale locale) throws Exception {
 	createKw(uri,kwLabel,locale);
 	SLKeyword kw = getKeyword(uri);
-	this.getThesaurusIndex().addItem(kw, kwLabel, locale);
+	this.getThesaurusIndex().addKw(kw, kwLabel, locale);
 	return kw;
 }
 
@@ -1262,6 +1262,7 @@ abstract public void onNewDoc(SLDocument doc) throws Exception;
 // KEYWORD D'UN TEXTE / ThesaurusIndex
 //
 
+
 /** 
  * Les keywords d'un texte.
  * Si thesaurusUri est non null, ne prend que des kws ds ce thesaurus
@@ -1321,13 +1322,13 @@ public void addAlias(String aliasLabel, String lang, SLKeyword kw) {
 		
 		// removing the labels of the alias from the index
 		ThesaurusIndex th = getThesaurusIndex();
-		th.deleteItem(alias);
+		th.deleteKw(alias);
 		
 		// transfering the properties
 		aliasIt(alias, getKeyword(kwUri));
 		
 		// updating the thesaurus index
-		th.addItem(kw);
+		th.addKw(kw);
 		
 //		// addKwProperty(kw, SLVocab.HAS_ALIAS_PROPERTY, aliasUri); // 2012-12 @find SKOSIFY
 //		// label de l'alias : seulement si n'existe pas déjà

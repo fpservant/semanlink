@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.HashSet;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,6 +15,7 @@ import org.apache.jena.rdf.model.Model;
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLModel;
 import net.semanlink.util.URLUTF8Encoder;
+import net.semanlink.util.index.ObjectLabelPair;
 
 /**
  * Created by Action_LiveSearch, to document the result tree list, cf /jsp/livetreesons.js
@@ -27,65 +29,72 @@ public Jsp_Search(String searchString, HttpServletRequest request) {
 	super(request);
 	this.searchString = searchString;
 	SLModel mod = SLServlet.getSLModel();
-	Set<SLKeyword> kwSet = mod.getThesaurusIndex().searchText(searchString);
-	this.kws = new ArrayList<SLKeyword>(kwSet.size());
-  this.kws.addAll(kwSet);
+
+	// 2020-03-21 now that we use an index based on ObjectLabelPair,
+	// we could display the found label in search results,
+	// instead of just the skos:prefered label of the kw
 	
+	Set<ObjectLabelPair<SLKeyword>> set = mod.getThesaurusIndex().searchText(searchString);
 	
-	// System.out.println("Jsp_Search size "+ this.kws.size());
-	Collections.sort(this.kws);
-	
-	
-	
+	ArrayList<ObjectLabelPair<SLKeyword>> pairs = new ArrayList<>(set.size());
+	pairs.addAll(set);
+
 	// 2020-03 exact or close matches first in search results
 	int n = nbOfWords(searchString);
-	SLKeyword exactMatch = null;
-	List<SLKeyword> closeMatchs = new ArrayList<>();
-	List<SLKeyword> endOfList = new ArrayList<>();
-	// TODO altLabels
-	for (SLKeyword kw : kws) {
-		String s = kw.getLabel();
+	ObjectLabelPair<SLKeyword> exactMatch = null;
+	List<ObjectLabelPair<SLKeyword>> closeMatchs = new ArrayList<>();
+	List<ObjectLabelPair<SLKeyword>> otherMatchs = new ArrayList<>();
+
+	for (ObjectLabelPair<SLKeyword> pair : pairs) {
+		String s = pair.getLabel();
 		if (searchString.equals(s)) {
-			exactMatch = kw;
+			exactMatch = pair;
 		} else {
-			if (s == null) {
-				endOfList.add(kw);
-				continue; // juste au cas où (devrait pa arriver)
+			if (s == null) { // shouldn't happen
+				continue; // juste au cas où (devrait pas arriver)
 			}
 			int n2 = nbOfWords(s);
 			if (n == n2) {
-				closeMatchs.add(kw);
+				closeMatchs.add(pair);
 			} else {
-				endOfList.add(kw);
+				otherMatchs.add(pair);
 			}
 		}
 	}
 	
-	List<SLKeyword> x = null;
+	List<SLKeyword> x = new ArrayList<>();
+  // to avoid having twice the same kw 
+	// (as one kw has several labels, it can matche
+	// the search string several times)
+	Set<SLKeyword> allReadyIn = new HashSet<>();
 	if (exactMatch != null) {
-		x = new ArrayList<>();
-		x.add(exactMatch);
+		SLKeyword kw = exactMatch.getObject();
+		x.add(kw);
+		allReadyIn.add(kw);
 	}
 	if (closeMatchs.size() > 0) {
-		if (x != null) {
-			x.addAll(closeMatchs);
-		} else {
-			x = closeMatchs;
+		List<SLKeyword> kws = new ArrayList<>(closeMatchs.size());
+		for (ObjectLabelPair<SLKeyword> pair : closeMatchs) {
+			SLKeyword kw = pair.getObject();
+			boolean added = allReadyIn.add(kw);
+			if (added) kws.add(kw);
 		}
+		Collections.sort(kws);
+		x.addAll(kws);
 	}
-	if (x == null) {
-		x = kws;
-	} else {
-		x.addAll(endOfList);
+	if (otherMatchs.size() > 0) {
+		List<SLKeyword> kws = new ArrayList<>(otherMatchs.size());
+		for (ObjectLabelPair<SLKeyword> pair : otherMatchs) {
+			SLKeyword kw = pair.getObject();
+			boolean added = allReadyIn.add(kw);
+			if (added) kws.add(kw);
+		}
+		Collections.sort(kws);
+		x.addAll(kws);
 	}
+
 	kws = x;
-	
-	
-	
-	
-	
-	
-	
+
 	this.beanKwList.setList(kws);
 	this.request.setAttribute("net.semanlink.servlet.Bean_KwList", this.beanKwList);
 }
@@ -100,7 +109,7 @@ public String getTitle() { return "Search " + searchString; } // not used by liv
 public String getSearchString() { return this.searchString; } // not used by livesearch
 
 //
-//RDF
+// RDF
 //
 
 public Model getRDF(String extension) throws Exception {
