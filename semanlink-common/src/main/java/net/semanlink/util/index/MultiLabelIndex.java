@@ -323,24 +323,6 @@ public Set<E> getKeywordsInText(String text) {
  */
 public List<E> label2KeywordList(String kwLabel, Locale locale) {
 	List<String> indexEntriesInLabel = this.indexEntryCalculator.indexEntries(kwLabel , locale);
-	/*int n = indexEntriesInLabel.size();
-	if (n == 0) return new ArrayList<ITEM>(0);
-	String word = indexEntriesInLabel.get(0);
-	List<ITEM> kws = word2tagsHM.get(word);
-	if ((kws == null) || (kws.size() == 0)) return new ArrayList<ITEM>(0);
-	// we make a clone of kws (in order to not modify kws!)
-	ArrayList<ITEM> alx = new ArrayList<ITEM>(kws.size());
-	alx.addAll(kws);
-	for (int iword = 1; iword < n; iword++) {
-		word = indexEntriesInLabel.get(iword);
-		kws = word2tagsHM.get(word);
-		if (kws == null) return new ArrayList<ITEM>(0);
-		for (int i = alx.size() - 1; i > -1; i--) {
-			Object kw = alx.get(i);
-			if (!(kws.contains(kw))) alx.remove(i);
-		}
-		if (alx.size() == 0) return new ArrayList<ITEM>(0);
-	}*/
 	List<E> alx = andOfWords(indexEntriesInLabel);
 	if (alx.size() == 0) return alx;
 	
@@ -371,7 +353,6 @@ public List<E> label2KeywordList(String kwLabel, Locale locale) {
 	return alx;
 }
 
-// made public for euro 5 dialogys chapters -> elements
 /**
  * The list of ITEMs that are indexed by all the words in a given label.
  * <p>That is a search for the AND of all words in the label.
