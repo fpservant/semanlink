@@ -239,6 +239,7 @@ static private void save(Response res, File saveAsFile) throws IOException {
 	  if (o instanceof InputStream) {
 	  	in = (InputStream) o;
 	  } else {
+	  	out.close();
 	  	throw new RuntimeException("No content");
 	  }
   	CopyFiles.writeIn2Out(in, out, new byte[1024]);
