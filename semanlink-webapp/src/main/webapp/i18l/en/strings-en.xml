@@ -74,8 +74,8 @@
 	You'll be able to add tags on next screen.
 </entry>
 <entry key="bookmarkform.docuri">Document's URI</entry>
-<entry key="bookmarkform.docuri2">(may be a file protocol uri, such as file:///Users/fps/2003/11/):</entry>
-<entry key="bookmarkform.downloaduri">URI to download from</entry>
+<entry key="bookmarkform.docuri2">(Required. Eg. file:///Users/fps/2003/11/ for a local folder):</entry>
+<entry key="bookmarkform.downloaduri">URI to download from:</entry>
 <entry key="bookmarkform.downloaduri2">(in case it's different from previous. Used only when saving a copy):</entry>
 <entry key="bookmarkform.nir">URI of real world thing ("Non information resource"):</entry>
 <entry key="bookmarkform.bookmarkAndCopy">Bookmark and Save a Copy</entry>

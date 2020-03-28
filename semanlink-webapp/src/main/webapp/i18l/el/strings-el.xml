@@ -71,7 +71,7 @@
 </entry>
 <entry key="bookmarkform.docuri">Αρχείου URI</entry>
 <entry key="bookmarkform.docuri2">(ίσως είναι ένα αρχείο πρωτοκόλου uri, όπως το αρχείο:///Users/fps/2003/11/):</entry>
-<entry key="bookmarkform.downloaduri">τηλεφόρτωσε το URI από</entry>
+<entry key="bookmarkform.downloaduri">τηλεφόρτωσε το URI από:</entry>
 <entry key="bookmarkform.downloaduri2">(μόνο αν είναι διαφορετικό από το προηγούμενο. Χρησιμοποιείται μόνο κατά τη δημιουργία αντιγράφου):</entry>
 <entry key="bookmarkform.nir">URI of real world thing ("Non information resource"):</entry>
 <entry key="bookmarkform.bookmarkAndCopy">Καταχώρησε και δημιούργησε αντίγραφο</entry>

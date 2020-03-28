@@ -71,8 +71,8 @@
 	Les mots-clés seront choisis sur la prochaine page.
 </entry>
 <entry key="bookmarkform.docuri">URI du document</entry>
-<entry key="bookmarkform.docuri2">(peut-être une URI de fichier local, tel que ///Users/fps/2003/11/) :</entry>
-<entry key="bookmarkform.downloaduri">URI de téléchargement</entry>
+<entry key="bookmarkform.docuri2">(Requis. Par ex. ///Users/fps/2003/11/ pour un dossier local):</entry>
+<entry key="bookmarkform.downloaduri">URI de téléchargement:</entry>
 <entry key="bookmarkform.downloaduri2">(au cas où elle est différente de la précédente. Utilisée seulement en cas d'enregitrement de la page) :</entry>
 <entry key="bookmarkform.nir">URI d'une chose du monde réel ("Non information resource"):</entry>
 <entry key="bookmarkform.bookmarkAndCopy">Marquer, et Enregistrer la Page</entry>
