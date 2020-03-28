@@ -5,6 +5,11 @@
 <h1>Release notes</h1>
 <div class="graybox">
 
+<h2>0.7.2 2020-03-xx</h2>
+<ul>
+<li>Easier download of arxiv docs</li>
+</ul>
+
 <h2>0.7.1 2020-03-03</h2>
 <ul>
 <li>Exact or close matches first in search results</li>
