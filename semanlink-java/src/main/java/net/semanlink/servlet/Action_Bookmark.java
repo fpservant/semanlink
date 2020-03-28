@@ -356,16 +356,6 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 								// mod.addDocProperty(bkm, SLVocab.SOURCE_PROPERTY, docOnline.getURI());
 							}
 	
-						} else if (request.getParameter("localDocBtn") != null) {	
-							
-							// CREER OU PAS UN "BKM" ??? CONTINUONS A DIRE NON
-							doc = localDoc;
-							// doc = bkm;
-							
-							// mod.setDocProperty(bkm, SLVocab.SL_BOOKMARK_OF_PROPERTY, localDoc.getURI()); // DISONS NON
-							mod.setDocProperty(doc, SLVocab.TITLE_PROPERTY, title, lang);
-							if (comment != null) mod.setDocProperty(doc, SLVocab.COMMENT_PROPERTY, comment, lang);
-	
 						}
 					}
 	

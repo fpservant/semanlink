@@ -30,19 +30,7 @@ Boolean oneBtnOnlyB = (Boolean) request.getAttribute("oneBtnOnly");boolean oneB
 	<html:form action="bookmark" method="post">
 		<b><a onclick="godoc(valueByName('docuri')); return false;" onMouseOver="showgodoc(valueByName('docuri'));return true" href="#" ><%=jsp.i18l("bookmarkform.docuri")%></a></b> <%=jsp.i18l("bookmarkform.docuri2")%><br/>		<html:text property="docuri" size="70"/><br/>		<%if (!oneBtnOnly) {%>		<b><a href="#" onclick="godoc(valueByName('downloadfromuri')); return false;" onMouseOver="showgodoc(valueByName('downloadfromuri'));return true"><%=jsp.i18l("bookmarkform.downloaduri")%></a></b> <%=jsp.i18l("bookmarkform.downloaduri2")%><br/>		<html:text property="downloadfromuri" size="70"/><br/>		<%}%>
 		<b><%=jsp.i18l("x.title-colon")%></b><br/>		<html:text property="title" size="70"/><br/>		<b><%=jsp.i18l("x.comment-colon")%></b><br/>		<html:textarea property="comment" cols="70" rows="10"/><br/>		<!--<b>Lang:</b> <html:text property="lang" size="10"/> -->		<!--	<html:select property="lang">				<html:option value="-">-</html:option>				<html:option value="fr">fr</html:option>				<html:option value="en">en</html:option>				<html:option value="es">es</html:option>				<html:option value="pt">pt</html:option>			</html:select> -->
-		<br/>		<%		if (oneBtnOnly) {%>			<html:submit property="bookmarkBtn"><%=jsp.i18l("x.bookmark")%></html:submit>		    <%		} else {%>			<html:submit property="bookmarkBtn"><%=jsp.i18l("x.bookmark")%></html:submit>			<html:submit property="bookmarkWithCopyBtn"><%=jsp.i18l("bookmarkform.bookmarkAndCopy")%></html:submit>			<html:submit property="localDocBtn"><%=jsp.i18l("bookmarkform.copy")%></html:submit>			<html:submit property="copyWithBookmarkBtn"><%=jsp.i18l("bookmarkform.copyWithSource")%></html:submit>
-			<%				
-			// @find bookmark2tag
-			%>
-			<br/>
-			<html:submit property="bookmark2tagBtn"><%=jsp.i18l("bookmarkform.createTag")%></html:submit>
-			<%
-		}		%>	</html:form> 
-<%if (!oneBtnOnly) {%>
-	<div class="graybox">
-		<%=jsp.i18l("bookmarkform.2")%><br/>
-	</div>
-<%}%>
+		<br/>		<%		if (oneBtnOnly) {%>			<html:submit property="bookmarkBtn"><%=jsp.i18l("x.bookmark")%></html:submit>		    <%		} else {%>		<span>			<html:submit property="bookmarkBtn"><%=jsp.i18l("x.bookmark")%></html:submit>			<html:submit property="bookmarkWithCopyBtn"><%=jsp.i18l("bookmarkform.bookmarkAndCopy")%></html:submit>			<html:submit property="localDocBtn"><%=jsp.i18l("bookmarkform.copy")%></html:submit>		</span>            <span style="float: right">            <html:submit property="bookmark2tagBtn"><%=jsp.i18l("bookmarkform.createTag")%></html:submit>        </span>		<%}%>	</html:form> 
 
 
 </div>

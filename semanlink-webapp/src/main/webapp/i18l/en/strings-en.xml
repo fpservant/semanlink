@@ -80,14 +80,7 @@
 <entry key="bookmarkform.nir">URI of real world thing ("Non information resource"):</entry>
 <entry key="bookmarkform.bookmarkAndCopy">Bookmark and Save a Copy</entry>
 <entry key="bookmarkform.copy">Save a Copy</entry>
-<entry key="bookmarkform.copyWithSource">Save a Copy, keeping track of Source</entry>
 <entry key="bookmarkform.createTag">Create Tag</entry>
-<entry key="bookmarkform.2">
-	You can create a bookmark and/or save a copy to disk.
-	If you choose "Bookmark and Save a  Sopy",
-	the main resource (the one that gets listed in search results) is the online page,
-	while it is the file saved on disk if you choose "Save a Copy, keeping track of Source".
-</entry>
 <entry key="livesearchform.addToTags">Add to Tags</entry>
 <entry key="livesearchform.addToParents">Add to Parents</entry>
 <entry key="livesearchform.addToChildren">Add to Children</entry>

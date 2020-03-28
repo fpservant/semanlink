@@ -10,7 +10,8 @@ private String downloadfromuri;
 private String cancelBtn;
 private String bookmarkBtn;
 private String bookmarkWithCopyBtn;
-private String localDocBtn;
+//2020-03: bookmark form: remove "save a copy" (wo download a copy)
+// private String localDocBtn;
 private String nir;
 // private HTMLPageDownload download;
 private String title;
@@ -50,18 +51,13 @@ public String getDocuri() {
 public void setDocuri(String docuri) {
 	this.docuri = docuri;
 }
-public String getLocalDocBtn() {
-	return localDocBtn;
-}
-public void setLocalDocBtn(String localDocBtn) {
-	this.localDocBtn = localDocBtn;
-}
-/*public HTMLPageDownload getDownload() {
-	return download;
-}
-public void setDownload(HTMLPageDownload download) {
-	this.download = download;
-}*/
+//2020-03: bookmark form: remove "save a copy" (wo download a copy)
+//public String getLocalDocBtn() {
+//	return localDocBtn;
+//}
+//public void setLocalDocBtn(String localDocBtn) {
+//	this.localDocBtn = localDocBtn;
+//}
 public String getComment() {
 	return comment;
 }

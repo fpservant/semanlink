@@ -77,14 +77,7 @@
 <entry key="bookmarkform.nir">URI d'une chose du monde réel ("Non information resource"):</entry>
 <entry key="bookmarkform.bookmarkAndCopy">Marquer, et Enregistrer la Page</entry>
 <entry key="bookmarkform.copy">Enregistrer la page</entry>
-<entry key="bookmarkform.copyWithSource">Enregistrer la Page, en notant sa Source</entry>
 <entry key="bookmarkform.createTag">Créer un Mot-Clé</entry>
-<entry key="bookmarkform.2">
-	Vous pouvez marquer, et/ou enregistrer la page sur disque. 
-	Si vous choisissez "Marquer, et Enregistrer la Page", la resource principale (celle qui est listée dans
-	les résultats de recherche)	est la page en ligne, tandis que c'est la copie sur disque
-	si vous choisissez "Enregistrer la Page, en notant sa Source".
-</entry>
 <entry key="livesearchform.addToTags">Ajouter aux Mots-Clés</entry>
 <entry key="livesearchform.addToParents">Ajouter aux Parents</entry>
 <entry key="livesearchform.addToChildren">Ajouter aux Enfants</entry>

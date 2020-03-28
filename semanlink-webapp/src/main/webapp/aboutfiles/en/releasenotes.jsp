@@ -8,6 +8,7 @@
 <h2>0.7.2 2020-03-xx</h2>
 <ul>
 <li>Easier download of arxiv docs</li>
+<li>Bookmark form simplified</li>
 </ul>
 
 <h2>0.7.1 2020-03-03</h2>

@@ -76,15 +76,7 @@
 <entry key="bookmarkform.nir">URI of real world thing ("Non information resource"):</entry>
 <entry key="bookmarkform.bookmarkAndCopy">Καταχώρησε και δημιούργησε αντίγραφο</entry>
 <entry key="bookmarkform.copy">Αποθήκευσε ένα αντίγραφο</entry>
-<entry key="bookmarkform.copyWithSource">Αποθήκευσε ένα αντίγραφο, διατηρώντας τα ίχνη της πηγής</entry>
 <entry key="bookmarkform.createTag">Δημιούργησε ετικέτα</entry>
-<entry key="bookmarkform.2">
-	Μπορείτε να δημιουργήσετε μια καταχώρηση και/ή να αποθηκεύσετε ένα αντίγραφο στο δίσκο.
-	Αν επιλέξετε "Καταχώρησε και δημιούργησε αντίγραφο",
-	η βασική πηγή(αυτή που εμφανίζεται στα αποτελέσματα αναζήτησης) είναι η  σελίδα του διαδικτύου,
-	ενώ αν επιλέξετε «δημιούργησε αντίγραφο, διατηρώντας ίχνη της πηγής», η σελίδα που θα εμφανίζει ως αποτέλεσμα η μηχανή αναζήτησης,
-         θα είναι αυτή που αποθηκεύτηκε στον υπολογιστή σας. 
-</entry>
 <entry key="livesearchform.addToTags">+ στις ετικέτες</entry>
 <entry key="livesearchform.addToParents">+ στους γονείς</entry>
 <entry key="livesearchform.addToChildren">+ στα παιδιά</entry>
