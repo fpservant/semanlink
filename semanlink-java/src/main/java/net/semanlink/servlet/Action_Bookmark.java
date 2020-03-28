@@ -1,31 +1,23 @@
 package net.semanlink.servlet;
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.Response;
-
-import net.semanlink.semanlink.SLDocument;
-import net.semanlink.semanlink.SLKeyword;
-import net.semanlink.semanlink.SLModel;
-import net.semanlink.semanlink.SLSchema;
-import net.semanlink.semanlink.SLUtils;
-import net.semanlink.semanlink.SLVocab;
-import net.semanlink.semanlink.WebServer;
-import net.semanlink.semanlink.SLModel.DocMetadataFile;
-import net.semanlink.semanlink.SLModel.NewBookmarkCreationData;
-import net.semanlink.sljena.JDocument;
-import net.semanlink.sljena.JenaUtils;
-import net.semanlink.util.Util;
-import net.semanlink.util.html.HTMLPageDownload;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import net.semanlink.arxiv.Arxiv;
+import net.semanlink.semanlink.SLDocument;
+import net.semanlink.semanlink.SLKeyword;
+import net.semanlink.semanlink.SLModel;
+import net.semanlink.semanlink.SLUtils;
+import net.semanlink.semanlink.SLVocab;
+import net.semanlink.sljena.JenaUtils;
+import net.semanlink.util.Util;
 
 /*
  // YA 2 TRUCS NULS : 
@@ -219,8 +211,9 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 					// document qui n'existe pas (au sens sl), et qui n'est pas un fichier dans un sous-dossier d'un SLDataFolder
 
 					String downloadFromUri = request.getParameter("downloadfromuri"); // pas de decode : issu d'un champ de saisie, non code (?)
-					if ((downloadFromUri == null) || ("".equals(downloadFromUri))) {
+					if ((downloadFromUri == null) || ("".equals(downloadFromUri))) {						
 						downloadFromUri = docuri;
+						
 					} else {
 						downloadFromUri = SLUtils.laxistUri2Uri(downloadFromUri);	    	
 		  			errMess = JenaUtils.getUriViolations(downloadFromUri,false);
@@ -228,7 +221,13 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 		  				throw new RuntimeException(errMess);
 		  			}
 					}
-	
+
+					// 2020-03 arxiv
+					String arxivPdf = Arxiv.url2pdfUrl(downloadFromUri);
+					if (arxivPdf != null) {
+						downloadFromUri = arxivPdf;
+					}
+					
 					boolean downloadRequested = ((request.getParameter("bookmarkWithCopyBtn") != null)
 							|| (request.getParameter("copyWithBookmarkBtn") != null));
 					Response res = null;
@@ -237,7 +236,13 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 					if (downloadRequested) {
 						res = Action_Download.getResponse(downloadFromUri);		
 						isHTML = Action_Download.isHTML(downloadFromUri, res);
-						dotExtension = ".html"; // KWOI ???? TODO 
+						// 2020-03 changed wo any testing
+						// dotExtension = ".html"; // KWOI ???? TODO 
+						if (isHTML) {
+							dotExtension = ".html";
+						} else {
+							dotExtension = Util.getDotExtension(downloadFromUri);;
+						}
 					} else {
 						dotExtension = Util.getDotExtension(downloadFromUri);
 					}

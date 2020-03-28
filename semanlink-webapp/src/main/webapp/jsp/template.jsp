@@ -353,21 +353,26 @@ if (jsp instanceof Jsp_Keyword) { // 2013-08 RDFa added typeof
 	<%
 	Object error = request.getAttribute("net.semanlink.servlet.error");
 	if (error != null) {
-		if (error instanceof Throwable) {
+		if (error instanceof Error400Exception) {
+	      %>
+	      <div class="title">
+	      <%=error.toString()%>
+	      </div> <!-- class="title" -->
+	      <%      
+		} else if (error instanceof Throwable) {
 			Throwable e = (Throwable) error;
 			PrintWriter pw = new PrintWriter(out);
 			%>
 			<div class="title">
-			Une exception est survenue
+			An exception occured.
 			</div> <!-- class="title" -->
 			<pre><%e.printStackTrace(pw);%></pre>
 			<%
 		} else {
 			%>
 			<div class="title">
-			Une anomalie est survenue
+			<%=error.toString()%>
 			</div> <!-- class="title" -->
-			<pre><%=error.toString()%></pre>
 			<%		
 		}
 	} else if (jsp instanceof Jsp_SimplePage) {

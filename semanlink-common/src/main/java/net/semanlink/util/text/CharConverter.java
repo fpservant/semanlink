@@ -237,6 +237,9 @@ public String urlConvert(String s) {
 	}
 }
 
+public String replacementChar() {
+	return weirdCharSubstitution;
+}
 } // class CharConverter
 
 

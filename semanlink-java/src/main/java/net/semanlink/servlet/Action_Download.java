@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 
 import org.apache.struts.action.*;
 
+import net.semanlink.arxiv.Arxiv;
 import net.semanlink.semanlink.*;
 import net.semanlink.util.CopyFiles;
 import net.semanlink.util.Util;
@@ -67,6 +68,20 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 		// URIs for bookmarks: d'où est-ce qu'on downloade ?
 		SLDocumentStuff stuff = new SLDocumentStuff(doc, mod, contextURL);
 		String downloadFromUri = stuff.getHref();
+		
+		// 2020-03
+		if (stuff.getLocalCopy() != null) {
+			return error(mapping, request, "This doc already has a local copy. Delete this copy first if you want to download it again.");
+		}
+
+		// 2020-03 arxiv
+		String arxivPdf = Arxiv.url2pdfUrl(downloadFromUri);
+		if (arxivPdf != null) {
+			downloadFromUri = arxivPdf;
+		}		
+		
+		
+		
 		
 		//
 		boolean overwrite = false;
@@ -157,7 +172,7 @@ public static File downloadFile(String downloadFromUri, String title, boolean ov
 
 public static void download(String downloadFromUri, File saveAs, boolean overwrite, Response res, boolean isHTML) throws IOException {
 	if (saveAs.exists()) {
-		if (!overwrite) throw new RuntimeException ("A file " + saveAs.toString() + " already exists.");
+		if (!overwrite) throw new Error400Exception ("A file " + saveAs.toString() + " already exists.");
 	}
 
 	if (isHTML) {
@@ -183,7 +198,8 @@ public static Response getResponse(String downloadFromUri) {
 
 public static boolean isHTML(String downloadFromUri, Response res) {
 	boolean isHTML = false;
-  if ((res.getMediaType() != null) && (res.getMediaType().isCompatible(MediaType.TEXT_HTML_TYPE))) {
+	MediaType m = res.getMediaType();
+  if ((m != null) && (m.isCompatible(MediaType.TEXT_HTML_TYPE))) {
   	isHTML = true;
   } else {
 		if ((downloadFromUri.endsWith(".html"))||(downloadFromUri.endsWith(".htm"))) isHTML = true;

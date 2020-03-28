@@ -494,6 +494,10 @@ public static String shortFilenameFromString(String sfn) {
 	sfn = sfn.replaceAll("'",""); // cf pb en javascript
 	sfn = sfn.replaceAll("\"",""); // pb en javascript ?
 	sfn = sfn.replaceAll("\"",""); // cf pb en javascript
+	String replacementChar = SLModel.converter.replacementChar();
+	while (sfn.startsWith(replacementChar)) {
+		sfn = sfn.substring(replacementChar.length());
+	}
 	return sfn;
 }
 
