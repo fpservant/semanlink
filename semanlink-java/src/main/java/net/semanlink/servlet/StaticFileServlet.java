@@ -130,7 +130,11 @@ public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOExce
 //		}		
 		boolean openInApp = (req.getParameter("openInDesktop") != null);
 		if (openInApp) {
-			Desktop.getDesktop().open(f);
+			try {
+				Desktop.getDesktop().open(f);
+			} catch (Exception e) {
+				res.sendError(400, e.getMessage());
+			}
 		}
 		
 		if (f.isDirectory()) {
