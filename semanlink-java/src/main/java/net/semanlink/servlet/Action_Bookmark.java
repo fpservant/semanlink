@@ -312,17 +312,24 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 							if (comment != null) mod.setDocProperty(bkm, SLVocab.COMMENT_PROPERTY, comment, lang);
 							// source : l'affecter à la vraie source (doconline) ou bien au bkm doc ???
 							if (localDoc_SourceToBeAdded != null) {
-								// AH,MAIS ATTENTION !!!
-								// Supposons qu'on change le lien bookmarkOf
-								// La copie locale a un dc:source qui n'est plus lié au bkm
-								// et ne peut donc plus être retrouvée à partir de lui
 								
-								// essayons en mettant les 2
-								// ne doit pas gêner pour affichage du lien source sur docline bkm
-	
-								// 1) à la source : la vraie source online ? -> localFile dc:source onlineUrl // avantage : lien 1 pour 1 au cas où on aurait plusiuers saved docs attachés au bkm
-								mod.addDocProperty(localDoc_SourceToBeAdded, SLVocab.SOURCE_PROPERTY, docOnline.getURI());
-								// 2) ou bien le bkm ? -> localFile dc:source bkm // avantage : doit marcher sans modif du code pre2019
+								// 2020-03 Ne me parait pas une bonne idée de mettre le lien vers 2 sources
+								
+								// Par ailleurs, c'était une très mauvaise idée que d'utiliser dc:source (en réciproque) pour
+								// définir la prop "local copy"
+								// TODO CHANGE
+								
+//								// AH,MAIS ATTENTION !!!
+//								// Supposons qu'on change le lien bookmarkOf
+//								// La copie locale a un dc:source qui n'est plus lié au bkm
+//								// et ne peut donc plus être retrouvée à partir de lui
+//								
+//								// essayons en mettant les 2
+//								// ne doit pas gêner pour affichage du lien source sur docline bkm
+//	
+//								// 1) à la source : la vraie source online ? -> localFile dc:source onlineUrl // avantage : lien 1 pour 1 au cas où on aurait plusiuers saved docs attachés au bkm
+//								mod.addDocProperty(localDoc_SourceToBeAdded, SLVocab.SOURCE_PROPERTY, docOnline.getURI());
+//								// 2) ou bien le bkm ? -> localFile dc:source bkm // avantage : doit marcher sans modif du code pre2019
 								mod.addDocProperty(localDoc_SourceToBeAdded, SLVocab.SOURCE_PROPERTY, bkm.getURI());		
 															
 							}

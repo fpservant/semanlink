@@ -87,7 +87,6 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 		boolean overwrite = false;
 		File file = downloadFile(downloadFromUri, doc.getLabel(), overwrite, mod);
 		setSource(docUri, file, mod);
-		setSource(downloadFromUri, file, mod);
 		
 		//
 		// POST REDIRECT
