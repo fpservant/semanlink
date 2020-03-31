@@ -49,17 +49,15 @@ static private String sldoc2arxivNum(ExtractorData data) {
 	
 	try (SLDocUpdate du = mod.newSLDocUpdate(sldoc)) {
 		du.addDocProperty(RDF.type.getURI(), SLSchema.NS + "ArxivDoc");
-		// don't overwrite title if it has been set
-		if (sldoc.getPropertyAsStrings(SLModel.TITLE_PROPERTY) == null) {
-			du.setDocProperty(SLModel.TITLE_PROPERTY, arxiv.getTitle(), "en");
-		}
+				
 		du.setDocProperty(ARXIV_PROP_DEB + "num", num, "");
 		du.setDocProperty(ARXIV_PROP_DEB + "title", arxiv.getTitle(), "en");
 		du.setDocProperty(ARXIV_PROP_DEB + "summary", arxiv.getSummary(), "en");
 		du.setDocProperty(ARXIV_PROP_DEB + "published", arxiv.getPublished(), "");
 		du.setDocProperty(ARXIV_PROP_DEB + "updated", arxiv.getUpdated(), "");
 		List<String> authors = arxiv.getAuthors();
-		du.setDocProperty(ARXIV_PROP_DEB + "firstAuthor", authors.get(0), "");
+		String firstAuthor = authors.get(0);
+		du.setDocProperty(ARXIV_PROP_DEB + "firstAuthor", firstAuthor, "");
 		boolean first = true;
 		for (String author : authors) {
 			if (first) {
@@ -69,9 +67,25 @@ static private String sldoc2arxivNum(ExtractorData data) {
 				du.addDocProperty(ARXIV_PROP_DEB + "author", author, "");		
 			}	
 		}
+		
+		// Title
+		
+//		// don't overwrite title if it has been set
+//		if (sldoc.getPropertyAsStrings(SLModel.TITLE_PROPERTY) == null) {
+//			du.setDocProperty(SLModel.TITLE_PROPERTY, arxiv.getTitle(), "en");
+//		}
+		String year = arxiv.getPublished().substring(0, 4);
+		String title = "[" + lastWord(firstAuthor) + year + "] " + arxiv.getTitle() + " (Arxiv:" + num + ")";
+		du.setDocProperty(SLModel.TITLE_PROPERTY, title, "en");
+		
 		return true;
 	}
-	
+}
+
+private String lastWord(String firstAuthor) {
+	int k = firstAuthor.lastIndexOf(" ");
+	if (k > 0) return firstAuthor.substring(k+1);
+	return firstAuthor;
 }
 
 //
@@ -94,7 +108,7 @@ static private String sldoc2arxivNum(ExtractorData data) {
 	if (comment != null) {
 		sb.append("\n" + comment);
 	}
-	// too any tags with this
+	// too many tags with this
 //	vals = doc.getPropertyAsStrings(ARXIV_PROP_DEB + "summary");
 //	if ((vals != null) & (vals.size() > 0)) {
 //		String arxiv_summary = (String) vals.get(0);
