@@ -2,8 +2,6 @@ package net.semanlink.sljena;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import net.semanlink.semanlink.SLVocab;
-
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.shared.JenaException;
 /**
@@ -89,6 +87,7 @@ void changeObjects(String oldUri, String newUri) {
 
 void save() throws JenaException, IOException, URISyntaxException {
 	this.jFileModel.save();
+	System.out.println("JFileBiModel.save " + jFileModel.getFile());
 }
 
 public boolean equals(Object o) {

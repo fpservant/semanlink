@@ -1,20 +1,49 @@
 package net.semanlink.sljena;
-import net.semanlink.semanlink.*;
-import net.semanlink.semanlink.SLModel.NewBookmarkCreationData;
-import net.semanlink.servlet.SLServlet;
-import net.semanlink.skos.SKOS;
-import net.semanlink.sljena.modelcorrections.*;
-import net.semanlink.util.Util;
-import net.semanlink.util.YearMonthDay;
-import net.semanlink.metadataextraction.MetadataExtractorManager;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
 
 import org.apache.jena.rdf.listeners.StatementListener;
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.NodeIterator;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.shared.JenaException;
-import org.apache.jena.vocabulary.*;
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import org.apache.jena.vocabulary.RDF;
+
+import net.semanlink.metadataextraction.MetadataExtractorManager;
+import net.semanlink.semanlink.DocsFile;
+import net.semanlink.semanlink.SLDocument;
+import net.semanlink.semanlink.SLKeyword;
+import net.semanlink.semanlink.SLModel;
+import net.semanlink.semanlink.SLRuntimeException;
+import net.semanlink.semanlink.SLThesaurus;
+import net.semanlink.semanlink.SLUtils;
+import net.semanlink.semanlink.SLVocab;
+import net.semanlink.semanlink.SLDocUpdate;
+import net.semanlink.servlet.SLServlet;
+import net.semanlink.skos.SKOS;
+import net.semanlink.sljena.modelcorrections.AliasCorrection;
+import net.semanlink.sljena.modelcorrections.BadFileUrisCorrection;
+import net.semanlink.sljena.modelcorrections.KeywordUriCorrection;
+import net.semanlink.sljena.modelcorrections.ModelCorrector;
+import net.semanlink.util.Util;
+import net.semanlink.util.YearMonthDay;
 /*
  * TODO
  * setKwProperty et setDocProperty ne sont pas faits pareils. doc semble zarbi
@@ -344,6 +373,7 @@ private void updateDate(Model m, Resource kwRes, Property dateProp) {
 		m.add(kwRes,dateProp,oldest);
 	}
 }
+
 //
 // LOADING SL FILES
 //
@@ -518,103 +548,115 @@ private void moreOnDocCreation(String docUri, JFileBiModel bi) throws IOExceptio
 	}
 }
 
-/*
-JFileModel smallJFileModel = getJFileModel4Docs(docUri);
-return new JFileBiModel(this.docsModel, smallJFileModel);
-*/
+// 2020-03
 
-public void addDocProperty(SLDocument doc, String propertyUri, String propertyValue, String lang) {
-	propertyValue = safe(propertyValue);
-	lang = safe(lang);
-	String docUri = doc.getURI();
-	if ((propertyValue != null) && (!("".equals(propertyValue)))) {
-		try {			
-			if (SLVocab.SL_CREATION_DATE_PROPERTY.equals(propertyUri)) {
-				creationDateCase(doc, propertyValue);
-				return;
-			}
-			JFileBiModel bi = getJFileBiModel4DocsHandlingNewDocEvent(doc, propertyUri);
-			bi.add(docUri, propertyUri, propertyValue, lang);
-			bi.save();
-		} catch (Exception e) { throw new SLRuntimeException(e); }
-	}
-}
+//public void addDocProperty(SLDocument doc, String propertyUri, String propertyValue, String lang) {
+////	propertyValue = safe(propertyValue);
+////	lang = safe(lang);
+////	String docUri = doc.getURI();
+////	if ((propertyValue != null) && (!("".equals(propertyValue)))) {
+////		try {			
+////			if (SLVocab.SL_CREATION_DATE_PROPERTY.equals(propertyUri)) {
+////				creationDateCase(doc, propertyValue);
+////				return;
+////			}
+////			JFileBiModel bi = getJFileBiModel4DocsHandlingNewDocEvent(doc, propertyUri);
+////			bi.add(docUri, propertyUri, propertyValue, lang);
+////			bi.save();
+////		} catch (Exception e) { throw new SLRuntimeException(e); }
+////	}
+//	try (JDocUpdate du = new JDocUpdate(this, doc)) {
+//		du.addDocProperty(propertyUri, propertyValue, lang);
+//	} catch (Exception e) { throw new SLRuntimeException(e); }
+//}
 
-public void addDocProperty(SLDocument doc, String propertyUri, String objectUri) {
-	String docUri = doc.getURI();
-	if ((objectUri != null) && (!("".equals(objectUri)))) {
-		try {
-			if (SLVocab.SL_CREATION_DATE_PROPERTY.equals(propertyUri)) throw new IllegalArgumentException("Impossible way to modify " + SLVocab.SL_CREATION_DATE_PROPERTY);
-			JFileBiModel bi = getJFileBiModel4DocsHandlingNewDocEvent(doc, propertyUri);
-			bi.add(docUri, propertyUri, objectUri);
-			bi.save();
-		} catch (Exception e) { throw new SLRuntimeException(e); }
-	}
-}
+//public void addDocProperty(SLDocument doc, String propertyUri, String objectUri) {
+////	String docUri = doc.getURI();
+////	if ((objectUri != null) && (!("".equals(objectUri)))) {
+////		try {
+////			if (SLVocab.SL_CREATION_DATE_PROPERTY.equals(propertyUri)) throw new IllegalArgumentException("Impossible way to modify " + SLVocab.SL_CREATION_DATE_PROPERTY);
+////			JFileBiModel bi = getJFileBiModel4DocsHandlingNewDocEvent(doc, propertyUri);
+////			bi.add(docUri, propertyUri, objectUri);
+////			bi.save();
+////		} catch (Exception e) { throw new SLRuntimeException(e); }
+////	}
+//	try (JDocUpdate du = new JDocUpdate(this, doc)) {
+//		du.addDocProperty(propertyUri, objectUri);
+//	} catch (Exception e) { throw new SLRuntimeException(e); }
+//}
 
-public void addDocProperty(SLDocument doc, String propertyUri, String[] objectUris) {
-	String docUri = doc.getURI();
-	if (objectUris != null) {
-		try {
-			if (SLVocab.SL_CREATION_DATE_PROPERTY.equals(propertyUri)) throw new IllegalArgumentException("Impossible way to modify " + SLVocab.SL_CREATION_DATE_PROPERTY);
-			JFileBiModel bi = getJFileBiModel4DocsHandlingNewDocEvent(doc, propertyUri);
-			for (int i = 0; i < objectUris.length;i++) {
-				String objectUri = objectUris[i];
-				if ((objectUri != null) && (!("".equals(objectUri)))) {
-					bi.add(docUri, propertyUri, objectUri);
-				}
-			}
-			bi.save();
-		} catch (Exception e) { throw new SLRuntimeException(e); }
-	}
-}
+//public void addDocProperty(SLDocument doc, String propertyUri, String[] objectUris) {
+////	String docUri = doc.getURI();
+////	if (objectUris != null) {
+////		try {
+////			if (SLVocab.SL_CREATION_DATE_PROPERTY.equals(propertyUri)) throw new IllegalArgumentException("Impossible way to modify " + SLVocab.SL_CREATION_DATE_PROPERTY);
+////			JFileBiModel bi = getJFileBiModel4DocsHandlingNewDocEvent(doc, propertyUri);
+////			for (int i = 0; i < objectUris.length;i++) {
+////				String objectUri = objectUris[i];
+////				if ((objectUri != null) && (!("".equals(objectUri)))) {
+////					bi.add(docUri, propertyUri, objectUri);
+////				}
+////			}
+////			bi.save();
+////		} catch (Exception e) { throw new SLRuntimeException(e); }
+////	}
+//	try (JDocUpdate du = new JDocUpdate(this, doc)) {
+//		du.addDocProperty(propertyUri, objectUris);
+//	} catch (Exception e) { throw new SLRuntimeException(e); }
+//}
+//
+//public void setDocProperty(SLDocument doc, String propertyUri, String propertyValue, String lang) {
+////	propertyValue = safe(propertyValue);
+////	lang = safe(lang);
+////	String docUri = doc.getURI();
+////	try {
+////		if (SLVocab.SL_CREATION_DATE_PROPERTY.equals(propertyUri)) {
+////			creationDateCase(doc, propertyValue);
+////			return;
+////		}
+////		JFileBiModel bi = getJFileBiModel4DocsHandlingNewDocEvent(doc, propertyUri);
+////		bi.set(docUri, propertyUri, propertyValue, lang);
+////		bi.save();
+////	} catch (Exception e) { throw new SLRuntimeException(e); }
+//	try (JDocUpdate du = new JDocUpdate(this, doc)) {
+//		du.setDocProperty(propertyUri, propertyValue, lang);
+//	} catch (Exception e) { throw new SLRuntimeException(e); }
+//}
+//
+//public void setDocProperty(SLDocument doc, String propertyUri, String objectUri) {
+////	String docUri = doc.getURI();
+////	try {
+////		if (SLVocab.SL_CREATION_DATE_PROPERTY.equals(propertyUri)) throw new IllegalArgumentException("Impossible way to modify " + SLVocab.SL_CREATION_DATE_PROPERTY);
+////		JFileBiModel bi = getJFileBiModel4DocsHandlingNewDocEvent(doc, propertyUri);
+////		bi.set(docUri, propertyUri, objectUri);
+////		bi.save();
+////	} catch (Exception e) { throw new SLRuntimeException(e); }
+//	try (JDocUpdate du = new JDocUpdate(this, doc)) {
+//		du.setDocProperty(propertyUri, objectUri);
+//	} catch (Exception e) { throw new SLRuntimeException(e); }
+//}
 
-public void setDocProperty(SLDocument doc, String propertyUri, String propertyValue, String lang) {
-	propertyValue = safe(propertyValue);
-	lang = safe(lang);
-	String docUri = doc.getURI();
-	try {
-		if (SLVocab.SL_CREATION_DATE_PROPERTY.equals(propertyUri)) {
-			creationDateCase(doc, propertyValue);
-			return;
-		}
-		JFileBiModel bi = getJFileBiModel4DocsHandlingNewDocEvent(doc, propertyUri);
-		bi.set(docUri, propertyUri, propertyValue, lang);
-		bi.save();
-	} catch (Exception e) { throw new SLRuntimeException(e); }
-}
-
-public void setDocProperty(SLDocument doc, String propertyUri, String objectUri) {
-	String docUri = doc.getURI();
-	try {
-		if (SLVocab.SL_CREATION_DATE_PROPERTY.equals(propertyUri)) throw new IllegalArgumentException("Impossible way to modify " + SLVocab.SL_CREATION_DATE_PROPERTY);
-		JFileBiModel bi = getJFileBiModel4DocsHandlingNewDocEvent(doc, propertyUri);
-		bi.set(docUri, propertyUri, objectUri);
-		bi.save();
-	} catch (Exception e) { throw new SLRuntimeException(e); }
-}
-
-private void creationDateCase(SLDocument doc, String yyyy_mm_dd) throws JenaException, IOException, URISyntaxException {
-		if (existsAsSubject(doc)) {
-			// it's forbidden to change sl:creationDate
-			// -- except if its a local document ???
-			// (as we use its uri to locate it and its corresponding sl.rdf file) 
-			if (!this.isLocalDocument(doc.getURI())) throw new IllegalArgumentException("Impossible to modify " + SLVocab.SL_CREATION_DATE_PROPERTY);
-		}
-		String docUri = doc.getURI();
-		// we have to set the SL_CREATION_DATE first,
-		// in order to choose the right file to write new doc to
-		// (cf case where propertyUri is SL-CREATION_DATE: this happens with import from delicious:
-		// we want to set the creation date (which has to be the first prop to be set for the doc)
-		JenaUtils.add(this.docsModel, docUri, SL_CREATION_DATE_PROPERTY, yyyy_mm_dd, null);
-		// now it's ok to find the file where to save statement
-		JFileModel smallJFileModel = getJFileModel4Docs(docUri);
-		JenaUtils.add(smallJFileModel.getModel(), docUri, SL_CREATION_DATE_PROPERTY, yyyy_mm_dd, null);
-		// others things to do on newDocEvent:
-		JFileBiModel bi = new JFileBiModel(this.docsModel, smallJFileModel);
-		moreOnDocCreation(docUri, bi);
-		bi.save();
-}
+//private void creationDateCase(SLDocument doc, String yyyy_mm_dd) throws JenaException, IOException, URISyntaxException {
+//		if (existsAsSubject(doc)) {
+//			// it's forbidden to change sl:creationDate
+//			// -- except if its a local document ???
+//			// (as we use its uri to locate it and its corresponding sl.rdf file) 
+//			if (!this.isLocalDocument(doc.getURI())) throw new IllegalArgumentException("Impossible to modify " + SLVocab.SL_CREATION_DATE_PROPERTY);
+//		}
+//		String docUri = doc.getURI();
+//		// we have to set the SL_CREATION_DATE first,
+//		// in order to choose the right file to write new doc to
+//		// (cf case where propertyUri is SL-CREATION_DATE: this happens with import from delicious:
+//		// we want to set the creation date (which has to be the first prop to be set for the doc)
+//		JenaUtils.add(this.docsModel, docUri, SL_CREATION_DATE_PROPERTY, yyyy_mm_dd, null);
+//		// now it's ok to find the file where to save statement
+//		JFileModel smallJFileModel = getJFileModel4Docs(docUri);
+//		JenaUtils.add(smallJFileModel.getModel(), docUri, SL_CREATION_DATE_PROPERTY, yyyy_mm_dd, null);
+//		// others things to do on newDocEvent:
+//		JFileBiModel bi = new JFileBiModel(this.docsModel, smallJFileModel);
+//		moreOnDocCreation(docUri, bi);
+//		bi.save();
+//}
 
 //
 //
@@ -711,7 +753,7 @@ JFileModel getJFileModel4Docs(String docUri) throws JenaException, IOException, 
 }
 
 /** Retourne le JFileBiModel pertinent pour le document docUri. */
-private JFileBiModel getJFileBiModel4Docs(String docUri) throws JenaException, IOException, URISyntaxException {
+JFileBiModel getJFileBiModel4Docs(String docUri) throws JenaException, IOException, URISyntaxException {
 	JFileModel smallJFileModel = getJFileModel4Docs(docUri);
 	return new JFileBiModel(this.docsModel, smallJFileModel);
 }
@@ -1767,6 +1809,115 @@ public List<SLDocument> mainDocOf(Resource mainDocRes) {
   ite.close();
   return x;
 
+}
+
+//
+// 2020)03
+//
+
+// changing several props of a doc, saing only once
+
+@Override public SLDocUpdate newSLDocUpdate(SLDocument doc) {
+	return new JDocUpdate(this, doc);
+}
+
+
+class JDocUpdate extends SLDocUpdate {
+	JModel mod;
+	SLDocument doc;
+	JFileBiModel bi;
+	JDocUpdate(JModel mod, SLDocument doc) {
+		this.mod = mod;
+		this.doc = doc;
+		String docUri = doc.getURI();
+		try {
+			bi = mod.getJFileBiModel4Docs(docUri);
+		} catch (Exception e) { throw new RuntimeException(e) ; }
+	}
+
+	@Override
+	public void close() throws JenaException, IOException, URISyntaxException {
+		bi.save();
+	}
+	
+	@Override
+	public void addDocProperty(String propertyUri, String propertyValue, String lang) {
+		propertyValue = safe(propertyValue);
+		lang = safe(lang);
+		String docUri = doc.getURI();
+		if ((propertyValue != null) && (!("".equals(propertyValue)))) {
+			try {			
+				if (SLVocab.SL_CREATION_DATE_PROPERTY.equals(propertyUri)) {
+					creationDateCase(propertyValue);
+					return;
+				}
+				bi.add(docUri, propertyUri, propertyValue, lang);
+			} catch (Exception e) { throw new SLRuntimeException(e); }
+		}
+	}
+
+	@Override
+	public void addDocProperty(String propertyUri, String objectUri) {
+		String docUri = doc.getURI();
+		if ((objectUri != null) && (!("".equals(objectUri)))) {
+			if (SLVocab.SL_CREATION_DATE_PROPERTY.equals(propertyUri)) throw new IllegalArgumentException("Impossible way to modify " + SLVocab.SL_CREATION_DATE_PROPERTY);
+			bi.add(docUri, propertyUri, objectUri);
+		}
+	}
+
+	@Override
+	public void addDocProperty(String propertyUri, String[] objectUris) {
+		String docUri = doc.getURI();
+		if (objectUris != null) {
+			if (SLVocab.SL_CREATION_DATE_PROPERTY.equals(propertyUri)) throw new IllegalArgumentException("Impossible way to modify " + SLVocab.SL_CREATION_DATE_PROPERTY);
+			for (int i = 0; i < objectUris.length;i++) {
+				String objectUri = objectUris[i];
+				if ((objectUri != null) && (!("".equals(objectUri)))) {
+					bi.add(docUri, propertyUri, objectUri);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void setDocProperty(String propertyUri, String objectUri) {
+		if (SLVocab.SL_CREATION_DATE_PROPERTY.equals(propertyUri)) throw new IllegalArgumentException("Impossible way to modify " + SLVocab.SL_CREATION_DATE_PROPERTY);
+		bi.set(doc.getURI(), propertyUri, objectUri);
+	}
+	
+	@Override
+	public void setDocProperty(String propertyUri, String propertyValue, String lang) {
+		propertyValue = safe(propertyValue);
+		lang = safe(lang);
+		try {
+			if (SLVocab.SL_CREATION_DATE_PROPERTY.equals(propertyUri)) {
+				creationDateCase(propertyValue);
+				return;
+			}
+			bi.set(doc.getURI(), propertyUri, propertyValue, lang);
+		} catch (Exception e) { throw new SLRuntimeException(e); }
+	}
+
+	private void creationDateCase(String yyyy_mm_dd) throws JenaException, IOException, URISyntaxException {
+		if (existsAsSubject(doc)) {
+			// it's forbidden to change sl:creationDate
+			// -- except if its a local document ???
+			// (as we use its uri to locate it and its corresponding sl.rdf file) 
+			if (!isLocalDocument(doc.getURI())) throw new IllegalArgumentException("Impossible to modify " + SLVocab.SL_CREATION_DATE_PROPERTY);
+		}
+		String docUri = doc.getURI();
+		// we have to set the SL_CREATION_DATE first,
+		// in order to choose the right file to write new doc to
+		// (cf case where propertyUri is SL-CREATION_DATE: this happens with import from delicious:
+		// we want to set the creation date (which has to be the first prop to be set for the doc)
+		JenaUtils.add(mod.getDocsModel(), docUri, SL_CREATION_DATE_PROPERTY, yyyy_mm_dd, null);
+		// now it's ok to find the file where to save statement
+		JFileModel smallJFileModel = getJFileModel4Docs(docUri);
+		JenaUtils.add(smallJFileModel.getModel(), docUri, SL_CREATION_DATE_PROPERTY, yyyy_mm_dd, null);
+		// others things to do on newDocEvent:
+		bi = new JFileBiModel(mod.getDocsModel(), smallJFileModel);
+		moreOnDocCreation(docUri, bi);
+	}
 }
 
 } // class JModel

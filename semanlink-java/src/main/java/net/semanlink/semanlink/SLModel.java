@@ -699,11 +699,58 @@ public void addDocProperty(SLDocument doc, String propertyUri, String propertyVa
 }
 ou bien mettre ici la version avec uri au lieu de doc ? 
  */
+/*
 abstract public void addDocProperty(SLDocument doc, String propertyUri, String propertyValue, String lang);
 abstract public void addDocProperty(SLDocument doc, String propertyUri, String objectUri);
 abstract public void addDocProperty(SLDocument doc, String propertyUri, String[] objectUris);
 abstract public void setDocProperty(SLDocument doc, String propertyUri, String propertyValue, String lang);
 abstract public void setDocProperty(SLDocument doc, String propertyUri, String objectUri);
+*/
+
+public void addDocProperty(SLDocument doc, String propertyUri, String propertyValue, String lang) {
+	try (SLDocUpdate du = newSLDocUpdate(doc)) {
+		du.addDocProperty(propertyUri, propertyValue, lang);
+	} catch (Exception e) { throw new RuntimeException(e) ; }
+}
+
+public void addDocProperty(SLDocument doc, String propertyUri, String objectUri) {
+	try (SLDocUpdate du = newSLDocUpdate(doc)) {
+		du.addDocProperty(propertyUri, objectUri);
+	} catch (Exception e) { throw new RuntimeException(e) ; }
+}
+
+public void addDocProperty(SLDocument doc, String propertyUri, String[] objectUris) {
+	try (SLDocUpdate du = newSLDocUpdate(doc)) {
+		du.addDocProperty(propertyUri, objectUris);
+	} catch (Exception e) { throw new RuntimeException(e) ; }
+}
+
+public void setDocProperty(SLDocument doc, String propertyUri, String propertyValue, String lang) {
+	try (SLDocUpdate du = newSLDocUpdate(doc)) {
+		du.setDocProperty(propertyUri, propertyValue, lang);
+	} catch (Exception e) { throw new RuntimeException(e) ; }
+}
+
+public void setDocProperty(SLDocument doc, String propertyUri, String objectUri) {
+	try (SLDocUpdate du = newSLDocUpdate(doc)) {
+		du.setDocProperty(propertyUri, objectUri);
+	} catch (Exception e) { throw new RuntimeException(e) ; }
+}
+
+abstract public SLDocUpdate newSLDocUpdate(SLDocument doc); // 2020-03
+
+/** Supprimer l'affectation d'un kw a un doc. */
+abstract public void removeKeywords(SLDocument doc, SLKeyword[] kw);
+
+
+
+
+
+
+
+
+
+
 /** kw censé exister */
 public void addKwProperty(SLKeyword kw, String propertyUri, String objectUri) {
 	addKwProperty(kw.getURI(), propertyUri, objectUri);
@@ -753,26 +800,31 @@ public SLKeyword addKeyword(SLDocument doc, String kwLabel, Locale locale) throw
 	return kw;
 }
 
-
-
-
-//
-//
-//
-
+/** you may prefer to use SLDocUpdate.addKeyword */
 public void addKeyword(SLDocument doc, SLKeyword kw)  throws Exception {
-	addDocProperty(doc, HAS_KEYWORD_PROPERTY, kw.getURI());
-}
-public void addKeyword(SLDocument doc, SLKeyword[] kw)  throws Exception {
-	String[] uris = new String[kw.length];
-	for (int i = 0; i < uris.length; i++) {
-		uris[i] = kw[i].getURI();
-	}
-	addDocProperty(doc, HAS_KEYWORD_PROPERTY, uris);
+	// addDocProperty(doc, HAS_KEYWORD_PROPERTY, kw.getURI());
+	try (SLDocUpdate du = newSLDocUpdate(doc)) {
+		du.addKeyword(kw);
+	} catch (Exception e) { throw new RuntimeException(e) ; }
 }
 
-/** Supprimer l'affectation d'un kw a un doc. */
-abstract public void removeKeywords(SLDocument doc, SLKeyword[] kw);
+/** you may prefer to use SLDocUpdate.addKeyword */
+public void addKeyword(SLDocument doc, SLKeyword[] kw)  throws Exception {
+//	String[] uris = new String[kw.length];
+//	for (int i = 0; i < uris.length; i++) {
+//		uris[i] = kw[i].getURI();
+//	}
+//	addDocProperty(doc, HAS_KEYWORD_PROPERTY, uris);
+	try (SLDocUpdate du = newSLDocUpdate(doc)) {
+		du.addKeyword(kw);
+	} catch (Exception e) { throw new RuntimeException(e) ; }
+}
+
+
+
+//
+//
+//
 
 // EDITING KEYWORDS
 
@@ -1895,6 +1947,16 @@ public static class NewBookmarkCreationData {
 	public File getSaveAsFile(String dotExtension) { 
 		return new File(saveAsDir, shortFilename + dotExtension);
 	}
+}
+
+//
+// 2020-03
+//
+
+// to be able to set several props of a doc, saving only once
+
+class DocUpdate {
+	
 }
 
 

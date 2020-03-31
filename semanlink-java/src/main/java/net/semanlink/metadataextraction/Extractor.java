@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import net.semanlink.semanlink.SLDocument;
 import net.semanlink.semanlink.SLModel;
+import net.semanlink.semanlink.SLDocUpdate;
 import net.semanlink.semanlink.SLUtils;
 import net.semanlink.semanlink.SLVocab;
 
@@ -13,7 +14,7 @@ import net.semanlink.semanlink.SLVocab;
  *  Override dealWith to return true when doc is dealed with by this extractor
  *  Call doIt() to add properties to the model.
  *  Overrides the method like getSource(ExtractorData),... 
- *  To add a new prop to be analysed, define its getter here with default value,
+ *  To add a new prop to be analyzed, define its getter here with default value,
  *  and modify doIt() to add the prop to the model.
  *  (this, if you want the prop for any HTMLMetadataExtractor, 
  *  else : modify the model in the doIt of the sub class)
@@ -21,7 +22,7 @@ import net.semanlink.semanlink.SLVocab;
  *  have to do calculus that can be shared (this avoid to do these calculus several times)
  */
 public class Extractor implements SLVocab {
-/** Retourne true ssi cet extractor traite le document pass� en argument. */
+/** Retourne true ssi cet extractor traite le document passé en argument. */
 public boolean dealWith(ExtractorData data) {
 	return false;
 }
@@ -30,24 +31,26 @@ public boolean doIt(ExtractorData data) throws Exception {
 	ExtractionResult x = extract(data);
 	SLDocument doc = data.getSLDocument();
 	SLModel mod = data.getSLModel();
-	String s;
-	s = x.getSource();
-	boolean hasChanged = false;
-	if (s != null) {
-		hasChanged = true;
-		mod.addDocProperty(doc, SLVocab.SOURCE_PROPERTY, s, null); // add et pas set pour ne pas remplacer le lien vers url
+	try (SLDocUpdate du = mod.newSLDocUpdate(doc)) {
+		String s;
+		s = x.getSource();
+		boolean hasChanged = false;
+		if (s != null) {
+			hasChanged = true;
+			du.addDocProperty(SLVocab.SOURCE_PROPERTY, s, null); // add et pas set pour ne pas remplacer le lien vers url
+		}
+		s = x.getDateParution();
+		if (s != null) {
+			hasChanged = true;
+			du.setDocProperty(SLVocab.DATE_PARUTION_PROPERTY, s, null);		
+		}
+		s = x.getCreator();
+		if (s != null) {
+			hasChanged = true;
+			du.setDocProperty(SLVocab.CREATOR_PROPERTY, s, null);
+		}
+		return hasChanged;
 	}
-	s = x.getDateParution();
-	if (s != null) {
-		hasChanged = true;
-		mod.setDocProperty(doc, SLVocab.DATE_PARUTION_PROPERTY, s, null);		
-	}
-	s = x.getCreator();
-	if (s != null) {
-		hasChanged = true;
-		mod.setDocProperty(doc, SLVocab.CREATOR_PROPERTY, s, null);
-	}
-	return hasChanged;
 }
 
 public ExtractionResult extract(ExtractorData data) throws Exception {

@@ -6,7 +6,6 @@ import net.semanlink.util.Util;
 import net.semanlink.metadataextraction.*;
 /**
  * Action demandant de (re)faire l'extraction de metadata d'un document
- * @author fps
  */
 public class Action_DocAnalysis extends BaseAction {
 
@@ -32,7 +31,7 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 		
 		String redirectURL = null;
 		if (docuri.startsWith(SLServlet.getServletUrl())) {
-			redirectURL = docuri; // hum pb de session, non ?
+			redirectURL = docuri;
 		} else {
 			// pre uris for bookmarks
 			redirectURL = Util.getContextURL(request) + HTML_Link.docLink(docuri);
