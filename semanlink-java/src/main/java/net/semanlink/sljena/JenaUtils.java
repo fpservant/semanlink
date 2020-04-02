@@ -1,39 +1,31 @@
 /* Created on 16 sept. 03 */
 package net.semanlink.sljena;
-import java.util.*;
-import org.apache.jena.rdf.model.*;
-import org.apache.jena.vocabulary.RDF;
-import org.apache.jena.vocabulary.RDFS;
-import net.semanlink.semanlink.SLVocab;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+
 // 2012-08 jena at apache
 // import org.apache.jena.iri.*;
-import org.apache.jena.iri.*;
+import org.apache.jena.iri.IRI;
+import org.apache.jena.iri.IRIFactory;
+import org.apache.jena.iri.Violation;
+import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.NodeIterator;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.vocabulary.RDF;
+
+import net.semanlink.semanlink.SLVocab;
 
 /**
  * @author fps
  */
 public class JenaUtils {
 private JenaUtils() {}
-/** Retourne une HashMap de cle les property (en tant que Property), et de data 
- * une ArrayList des valeurs de property (en tant que RDFNode).
- * MARCHE PAS
- */
-/*public static HashMap getJProperties(Resource res) {
-	HashMap propH = new HashMap();
-	StmtIterator ite = res.listProperties ();
-	for (;ite.hasNext();) {
-		Statement sta = ite.nextStatement();
-		Property prop = sta.getPredicate();
-		ArrayList objs = (ArrayList) propH.get(prop);
-		if (objs == null) {
-			objs = new ArrayList();
-			propH.put(prop, objs);
-		}
-		objs.add(sta.getObject());
-	}
-	ite.close();
-	return propH;
-}*/
 
 /** Retourne une HashMap de cle les String uri de property, et de data une JPropertyValues */
 public static HashMap getProperties(Resource res) {
@@ -147,7 +139,7 @@ static void remove(Model model, String subjectUri, String propertyUri, RDFNode n
 }
 
 
-/** Creation d'un keyword --sense ne pas exister prealablement. 
+/** Creation d'un keyword -- censé ne pas exister prealablement. 
  *  Attention, ne traite pas la date de création, juste le RDF.type et le SLVocab.PREF_LABEL_PROPERTY. */
 static Resource newKeyword(Model model, String kwUri, String label, String lang) {
 	JThing trip = new JThing(model, kwUri, RDF.type.getURI(), JModel.KEYWORD_CLASS); // trip comme triple

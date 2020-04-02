@@ -87,13 +87,11 @@ void changeObjects(String oldUri, String newUri) {
 
 void save() throws JenaException, IOException, URISyntaxException {
 	this.jFileModel.save();
-	System.out.println("JFileBiModel.save " + jFileModel.getFile());
 }
 
 public boolean equals(Object o) {
 	if (o == null) return false;
 	return this.jFileModel.equals(((JFileBiModel) o).jFileModel);
 }
-
 
 } // class
