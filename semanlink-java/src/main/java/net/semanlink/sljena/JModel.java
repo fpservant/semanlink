@@ -1864,6 +1864,7 @@ class JDocUpdate extends SLDocUpdate {
 				if (nbSta > 1) {
 					break;
 				}
+				ite.next();
 			}
 			ite.close();
 			if (nbSta == 0) {
