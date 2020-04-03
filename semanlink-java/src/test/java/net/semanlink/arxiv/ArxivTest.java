@@ -17,7 +17,8 @@ import org.xml.sax.SAXException;
 
 public class ArxivTest {
 
-@Test public final void test() throws IOException, ParserConfigurationException, SAXException {
+// @Test // TODO REMETTRE ?
+public final void test() throws IOException, ParserConfigurationException, SAXException {
 	Client client = ClientBuilder.newClient();
   DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();  
 	
