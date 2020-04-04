@@ -41,7 +41,7 @@ if (oneBtnOnlyB != null) {
         <span>
             <html:submit property="bookmarkBtn"><%=jsp.i18l("x.bookmark")%></html:submit>
             <html:submit property="bookmarkWithCopyBtn"><%=jsp.i18l("bookmarkform.bookmarkAndCopy")%></html:submit>
-            <html:submit property="localDocBtn"><%=jsp.i18l("bookmarkform.copy")%></html:submit>
+            <html:submit property="copyBtn"><%=jsp.i18l("bookmarkform.copy")%></html:submit>
         </span>
             <span style="float: right">
             <html:submit property="bookmark2tagBtn"><%=jsp.i18l("bookmarkform.createTag")%></html:submit>

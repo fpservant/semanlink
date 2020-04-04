@@ -1,6 +1,4 @@
 package net.semanlink.servlet;
-import net.semanlink.util.html.HTMLPageDownload;
-
 import org.apache.struts.action.ActionForm;
 
 public class Form_Bookmark extends ActionForm {
@@ -10,10 +8,7 @@ private String downloadfromuri;
 private String cancelBtn;
 private String bookmarkBtn;
 private String bookmarkWithCopyBtn;
-//2020-03: bookmark form: remove "save a copy" (wo download a copy)
-// private String localDocBtn;
 private String nir;
-// private HTMLPageDownload download;
 private String title;
 private String lang;
 private String via;
@@ -51,13 +46,6 @@ public String getDocuri() {
 public void setDocuri(String docuri) {
 	this.docuri = docuri;
 }
-//2020-03: bookmark form: remove "save a copy" (wo download a copy)
-//public String getLocalDocBtn() {
-//	return localDocBtn;
-//}
-//public void setLocalDocBtn(String localDocBtn) {
-//	this.localDocBtn = localDocBtn;
-//}
 public String getComment() {
 	return comment;
 }

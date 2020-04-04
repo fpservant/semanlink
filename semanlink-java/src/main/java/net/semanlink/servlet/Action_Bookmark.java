@@ -229,7 +229,7 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 					}
 					
 					boolean downloadRequested = ((request.getParameter("bookmarkWithCopyBtn") != null)
-							|| (request.getParameter("copyWithBookmarkBtn") != null));
+							|| (request.getParameter("copyBtn") != null));
 					Response res = null;
 					boolean isHTML = false;
 					String dotExtension = null;
@@ -337,7 +337,7 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 							
 							
 							
-						} else if (request.getParameter("copyWithBookmarkBtn") != null) {
+						} else if (request.getParameter("copyBtn") != null) {
 							localDoc_SourceToBeAdded = localDoc;
 							// ne pas faire ça maintenant, sinon on perd les ajouts de metadata
 							// on new doc, becoz of un traitement spécial pour la prop source (voir listeenr
