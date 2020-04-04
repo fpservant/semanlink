@@ -1331,7 +1331,7 @@ public ThesaurusIndex getThesaurusIndex() {
 }
 void computeThesaurusIndex() {
 	// this.thesaurusIndex = new ThesaurusIndex(this); // for ThesaurusIndexOK
-	this.thesaurusIndex = ThesaurusIndex.newThesaurusIndex(this, Locale.getDefault());
+	this.thesaurusIndex = new ThesaurusIndex(this, Locale.getDefault());
 }
 
 //
@@ -1948,17 +1948,4 @@ public static class NewBookmarkCreationData {
 		return new File(saveAsDir, shortFilename + dotExtension);
 	}
 }
-
-//
-// 2020-03
-//
-
-// to be able to set several props of a doc, saving only once
-
-class DocUpdate {
-	
-}
-
-
-
 } // class SLModel

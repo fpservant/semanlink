@@ -33,9 +33,9 @@ static void keywordIteratorIntoCollection(ResIterator ite, Collection collection
     // resIteratorIntoCollection(ite, collection, "net.semanlink.semanlink.sljena.JKeyword");
     // on aurait pu faire plus simplement (voire plus efficacement) :
     for (;ite.hasNext();) {
-		Resource res = ite.nextResource(); // une resource de rdfs:Class JKeyword
-		JKeyword kw = new JKeyword(slModel, res);
-		collection.add(kw);
+			Resource res = ite.nextResource(); // une resource de rdfs:Class JKeyword
+			JKeyword kw = new JKeyword(slModel, res);
+			collection.add(kw);
     }
     ite.close();
 }

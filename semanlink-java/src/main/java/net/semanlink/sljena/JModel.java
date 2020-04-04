@@ -1256,8 +1256,7 @@ public void delete(SLDocument doc) {
 
 
 //
-// AUTOMATIC METADATA EXTRACTION : ben maintenant, il faut la demander explicitement
-// ECRITURE DES MODIFS
+// METADATA EXTRACTION
 //
 
 public void onNewDoc(SLDocument doc) throws IOException, URISyntaxException {
@@ -1288,6 +1287,10 @@ public void onNewDoc(SLDocument doc) throws IOException, URISyntaxException {
 	this.docListener = new DocListener(this);
 	this.docsModel.register(docListener);
 }*/
+
+//
+// TODO REMOVE - just check it is unused (!)
+//
 
 // ATTENTION si on change ca, voir getDocsFileNameUsingCreationMonth ds SLModel
 class DocListener extends StatementListener { // NO MORE USED

@@ -159,8 +159,8 @@ public ApplicationParams getApplicationParams() { return this.applicationParams;
 /** Retourne une liste de SLModel (aussi ajoutée au param, pour que la globale de slservlet soit documentée
  *  le plus vite possible, ce afin que slservlet.getSLMOdel ne se gauffre pas si on y fait référence. Je sais ça craint
  *  mais (cf update sicg), c'est parce que on a ref à slServlet.getSLModel dans ModelFileIOManager.writeModel */
-public ArrayList load(ArrayList slModelList) throws IOException, URISyntaxException {
-	ArrayList x = slModelList;
+public ArrayList<SLModel> load(ArrayList<SLModel> slModelList) throws IOException, URISyntaxException {
+	ArrayList<SLModel> x = slModelList;
 	ResIterator ite;
 	
 	// the application params

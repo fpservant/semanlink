@@ -236,7 +236,9 @@ private String relativeURIsProperty(String base) throws URISyntaxException {
 	}
 }
 
-void readModel(Model model, String longFilename, String base) throws JenaException, IOException {
+/** modifies model, reading into it the content of rdf file longFilename
+ * (that may use relative uris, using base as base)  */
+public static void readModel(Model model, String longFilename, String base) throws JenaException, IOException {
 	// SLServlet.trace("READING " + longFilename + " base : " + base);
 	if (! ((new File(longFilename)).exists()) ) return;
 	// Ceci permet de lire un fichier utilisant le default encoding (non specifie dans le fichier) :

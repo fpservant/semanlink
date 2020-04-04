@@ -27,7 +27,7 @@ import net.semanlink.util.index.ObjectLabelPair;
  */
 
 public class ThesaurusIndex extends MultiLabelIndex2<SLKeyword> {
-private KwLabelGetter kwLabelGetter;
+protected KwLabelGetter kwLabelGetter;
 
 //
 // CONSTRUCTION AND UPDATES
@@ -37,17 +37,11 @@ private KwLabelGetter kwLabelGetter;
 //	super(mod.getKWsInConceptsSpaceArrayList().iterator(), new KwLabelGetter(), locale);
 //}
 
-static ThesaurusIndex newThesaurusIndex(SLModel mod, Locale locale) {
-	Iterator<SLKeyword> resToBeIndexedByLabel = mod.getKWsInConceptsSpaceArrayList().iterator();
-	KwLabelGetter kwLabelGetter = new KwLabelGetter();
-/*	WordsInString wordsInString = new WordsInString(true, true);
-	CharConverter ccon = new CharConverter(locale, "_");
-	IndexEntriesCalculator iec = new I18nFriendlyIndexEntries(wordsInString, ccon);
-*/	
-	return new ThesaurusIndex(resToBeIndexedByLabel, kwLabelGetter, locale);
+ThesaurusIndex(SLModel mod, Locale locale) {
+	this(mod.getKWsInConceptsSpaceArrayList().iterator(), new KwLabelGetter(), locale);
 }
 
-private ThesaurusIndex(Iterator<SLKeyword> resToBeIndexedByLabel, KwLabelGetter kwLabelGetter, Locale locale) {
+ThesaurusIndex(Iterator<SLKeyword> resToBeIndexedByLabel, KwLabelGetter kwLabelGetter, Locale locale) {
 	super(resToBeIndexedByLabel, kwLabelGetter, locale);
 	this.kwLabelGetter = kwLabelGetter;
 }

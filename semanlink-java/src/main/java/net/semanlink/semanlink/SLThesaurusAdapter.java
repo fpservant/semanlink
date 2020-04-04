@@ -1,7 +1,5 @@
 package net.semanlink.semanlink;
 
-import java.io.File;
-
 /**
  * Un ensemble de Keywords, associé a une url
  * 
@@ -11,7 +9,6 @@ import java.io.File;
  * voir SLThesaurus loadThesaurus(String defaultThesaurusURI, File defaultThesaurusDir) ds SLModel
  */
 public class SLThesaurusAdapter extends SLResourceAdapter implements SLThesaurus {
-public static final long serialVersionUID = 1;
 /** Fichier kws utilisé par défaut. */
 private String defaultFile;
 public String getDefaultFile() { return this.defaultFile; }
