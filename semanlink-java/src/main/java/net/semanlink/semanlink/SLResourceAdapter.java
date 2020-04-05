@@ -5,15 +5,11 @@ import java.io.Serializable;
 import java.io.IOException;
 import java.text.*;
 
-
-/**
- * @author fps
- */
 public class SLResourceAdapter implements SLLabeledResource, SLVocab, Serializable {
 public static final long serialVersionUID = 1;
 static public Collator collator = initCollator();
 private static Collator initCollator() {
-	Collator collator = Collator.getInstance(Locale.FRANCE);
+	Collator collator = Collator.getInstance(Locale.FRANCE); // TODO
 	collator.setStrength(Collator.PRIMARY);
 	return collator;
 }
@@ -48,7 +44,7 @@ public List getPropertyAsStrings(String pptyUri) {
 	return (List) getPropertiesAsStrings().get(pptyUri);
 }
 
-//IMPLEMENTS Comparable
+// IMPLEMENTS Comparable
 
 public boolean equals(Object o) {
 	if (o instanceof SLResource) return this.uri.equals(((SLResource) o).getURI());

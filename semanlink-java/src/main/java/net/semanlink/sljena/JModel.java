@@ -171,7 +171,7 @@ public void setCorrector(ModelCorrector corrector) {
 }
 
 private JKwLabelGetter kwLabelGetter; // use getter
-@Override public MultiLabelGetter<SLKeyword> getKwLabelGetter() {
+@Override public MultiLabelGetter<SLKeyword> getKwLabelGetter() { // 2020-04
 	if (kwLabelGetter == null) {
 		kwLabelGetter = new JKwLabelGetter();
 	}

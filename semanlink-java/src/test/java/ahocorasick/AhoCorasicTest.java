@@ -3,9 +3,7 @@ package ahocorasick;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -15,18 +13,13 @@ import org.ahocorasick.trie.Emit;
 import org.ahocorasick.trie.PayloadEmit;
 import org.ahocorasick.trie.PayloadTrie;
 import org.ahocorasick.trie.PayloadTrie.PayloadTrieBuilder;
-import org.ahocorasick.trie.handler.EmitHandler;
-import org.ahocorasick.trie.handler.PayloadEmitHandler;
-import org.ahocorasick.trie.handler.StatefulPayloadEmitHandler;
 import org.ahocorasick.trie.Trie;
-import org.apache.jena.rdf.model.Literal;
+import org.ahocorasick.trie.handler.StatefulPayloadEmitHandler;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.shared.JenaException;
-import org.apache.jena.util.iterator.ExtendedIterator;
 import org.apache.jena.vocabulary.RDF;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -35,9 +28,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import net.semanlink.semanlink.SLSchema;
-import net.semanlink.skos.SKOS;
+import net.semanlink.sljena.JKwLabelGetter;
 import net.semanlink.sljena.ModelFileIOManager;
-import net.semanlink.util.index.MultiLabelGetter;
 import net.semanlink.util.text.CharConverter;
 
 // /semanlink/tag/aho_corasick_algorithm.html
@@ -116,7 +108,7 @@ public final void test2() {
 		trieBuilder.addKeyword(kw, new KWord(kw));
 	}
 
-	PayloadTrie trie = trieBuilder.build();
+	PayloadTrie<KWord> trie = trieBuilder.build();
 	Collection<PayloadEmit<KWord>> emits = trie.parseText(text);
 	for (PayloadEmit<KWord> emit : emits) {
 		System.out.println(emit.getKeyword() + " : " + emit.getPayload());
@@ -147,54 +139,66 @@ Model getKWsModel() {
 	return kwsModel;
 }
 
-
 //PayloadTrie requires aho-corasick more than 0.4.0. ok with 0.6.0
-@Test public final void testWithRealKwsModel() {
+class Aho_Corasick_Tag_Extractor {
+//	private Model kwsModel;
+//	private JKwLabelGetter labelGetter;
+	private CharConverter converter;
+	private PayloadTrie<Resource> trie;
 	
-	// we do not use ignoreCase, because we also want to handle diacritics.
-	// So we store normalized (lowercase wo diacritics) labels in the Trie,
-	// and we also normalize the text we want to scan.
-	
-	PayloadTrieBuilder<Resource> trieBuilder = PayloadTrie.builder();
-	trieBuilder.ignoreOverlaps()
-			// .ignoreCase()
-			.onlyWholeWords();
-			// .onlyWholeWordsWhiteSpaceSeparated();
-	
-	Model kwsModel = getKWsModel();
-	KwResLabelGetter labelGetter = new KwResLabelGetter();
-	CharConverter converter = new CharConverter(Locale.FRENCH);
-	ResIterator kws = kwsModel.listSubjectsWithProperty(RDF.type, kwsModel.getResource(SLSchema.Tag.getURI()));
-	
-	int klab = 0, kkw = 0;
-	for(;kws.hasNext();) {
-		Resource kw = kws.next();
-		kkw++;
-		Iterator<String> labs = labelGetter.getLabels(kw);
-		for (;labs.hasNext();) {
-			String lab = labs.next();
-			// convert the labels to a normalized form
-			lab = converter.convert(lab);
-			klab++;
-			trieBuilder.addKeyword(lab, kw);
-		}
-	}
-	
-	System.out.println("Nb labels: " + klab + " nb kws: " + kkw);
+	Aho_Corasick_Tag_Extractor(Model kwsModel, JKwLabelGetter labelGetter, CharConverter converter) {
+//		this.kwsModel = kwsModel;
+//		this.labelGetter = labelGetter;
+		this.converter = converter;
+		
+		// we do not use ignoreCase, because we also want to handle diacritics.
+		// So we store normalized (lowercase wo diacritics) labels in the Trie,
+		// and we also normalize the text we want to scan.
 
-	PayloadTrie<Resource> trie = trieBuilder.build();
-	
- // convert the text to the normalized form
-	text = converter.convert(text);
-	Collection<PayloadEmit<Resource>> emits = trie.parseText(text);
-	HashSet<Resource> tags = new HashSet<>();
-	for (PayloadEmit<Resource> emit : emits) {
-		System.out.println(emit.getKeyword() + " : " + emit.getPayload() + " pos: " + emit.getStart() + "/" + emit.getEnd());
-		tags.add(emit.getPayload());
+		PayloadTrieBuilder<Resource> trieBuilder = PayloadTrie.builder();
+		trieBuilder.ignoreOverlaps()
+				// .ignoreCase()
+				.onlyWholeWords();
+				// .onlyWholeWordsWhiteSpaceSeparated();
+		
+		ResIterator kws = kwsModel.listSubjectsWithProperty(RDF.type, kwsModel.getResource(SLSchema.Tag.getURI()));	
+		for(;kws.hasNext();) {
+			Resource kw = kws.next();
+			Iterator<String> labs = labelGetter.getLabels(kw);
+			for (;labs.hasNext();) {
+				String lab = labs.next();
+				// convert the labels to a normalized form
+				lab = converter.convert(lab);
+				trieBuilder.addKeyword(lab, kw);
+			}
+		}
+		trie = trieBuilder.build();
 	}
-	ArrayList<Resource> tagsList = new ArrayList<>();
-	tagsList.addAll(tags);
-	for (Resource tag : tagsList) {
+	
+	public ArrayList<Resource> tagList(String text) {
+		 // convert the text to the normalized form
+		text = converter.convert(text);
+		Collection<PayloadEmit<Resource>> emits = trie.parseText(text);
+		HashSet<Resource> tags = new HashSet<>();
+		for (PayloadEmit<Resource> emit : emits) {
+			// System.out.println(emit.getKeyword() + " : " + emit.getPayload() + " pos: " + emit.getStart() + "/" + emit.getEnd());
+			tags.add(emit.getPayload());
+		}
+		ArrayList<Resource> x = new ArrayList<>();
+		x.addAll(tags);
+		return x;
+	}
+}
+
+// PayloadTrie requires aho-corasick more than 0.4.0. ok with 0.6.0
+@Test public final void testWithRealKwsModel() {
+	Model kwsModel = getKWsModel();
+	JKwLabelGetter labelGetter = new JKwLabelGetter();
+	CharConverter converter = new CharConverter(Locale.FRENCH);
+	Aho_Corasick_Tag_Extractor aho = new Aho_Corasick_Tag_Extractor(kwsModel, labelGetter, converter);
+	
+	ArrayList<Resource> tagList = aho.tagList(text);
+	for (Resource tag : tagList) {
 		System.out.println(tag);
 	}
 	
@@ -222,7 +226,7 @@ Model getKWsModel() {
 			// .onlyWholeWordsWhiteSpaceSeparated();
 	
 	Model kwsModel = getKWsModel();
-	KwResLabelGetter labelGetter = new KwResLabelGetter();
+	JKwLabelGetter labelGetter = new JKwLabelGetter();
 	CharConverter converter = new CharConverter(Locale.FRENCH);
 	ResIterator kws = kwsModel.listSubjectsWithProperty(RDF.type, kwsModel.getResource(SLSchema.Tag.getURI()));
 	
@@ -284,23 +288,4 @@ Model loadKwsModel() throws JenaException, IOException {
 	ModelFileIOManager.readModel(kwsModel, longFilename, base);
 	return kwsModel;
 }
-
-static class KwResLabelGetter implements MultiLabelGetter<Resource> {
-	public Iterator<String> getLabels(Resource kwres) {
-		Model m = kwres.getModel();
-		ExtendedIterator<RDFNode> x;
-		x = m.listObjectsOfProperty(kwres, SKOS.prefLabel);
-		x = x.andThen(m.listObjectsOfProperty(kwres, SKOS.altLabel));
-		ArrayList<String> al = new ArrayList<String>();
-		for(;x.hasNext();) {
-			RDFNode n = x.next();
-			if (n instanceof Literal) { // shouldn't be otherwise, but better to be sure
-				al.add(((Literal) n).getString());
-			}
-		}
-		return al.iterator();
-	}
-}
-
-
 }

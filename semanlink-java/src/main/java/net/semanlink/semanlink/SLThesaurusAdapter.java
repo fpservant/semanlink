@@ -1,5 +1,7 @@
 package net.semanlink.semanlink;
 
+import net.semanlink.util.index.MultiLabelGetter;
+
 /**
  * Un ensemble de Keywords, associé a une url
  * 
@@ -11,15 +13,18 @@ package net.semanlink.semanlink;
 public class SLThesaurusAdapter extends SLResourceAdapter implements SLThesaurus {
 /** Fichier kws utilisé par défaut. */
 private String defaultFile;
+private MultiLabelGetter<SLKeyword> kwLabelGetter;
+
 public String getDefaultFile() { return this.defaultFile; }
 public void setDefaultFile(String defaultFile) { this.defaultFile = defaultFile; }
 
 public SLThesaurusAdapter(String uri) {
 	super(noSlashAtEnd(uri));
 }
-public SLThesaurusAdapter(String uri, String defaultFile) {
+public SLThesaurusAdapter(String uri, String defaultFile, MultiLabelGetter<SLKeyword> kwLabelGetter) {
 	super(noSlashAtEnd(uri));
 	this.defaultFile = defaultFile;
+	this.kwLabelGetter = kwLabelGetter;
 }
 
 static private String noSlashAtEnd(String uri) {
@@ -27,20 +32,12 @@ static private String noSlashAtEnd(String uri) {
 	return uri;
 }
 
-/** avec # ou / à la fin */ // #thing
-public String getBase() {
-	/*if (withSharpTagUrls) return this.uri + "#";
-	else return this.uri + "/";*/
-	return this.uri + "/";
-}
-
-/** serait à améliorer TODO */
-public boolean equals(Object o) {
-	return this.uri.equals(((SLThesaurus) o).getURI());
-}
-
-public String toString() {
+@Override public String toString() {
 	return this.uri; // + " default file:" + this.defaultFile;
+}
+
+@Override public MultiLabelGetter<SLKeyword> getKwLabelGetter() {
+	return kwLabelGetter;
 }
 
 } // class

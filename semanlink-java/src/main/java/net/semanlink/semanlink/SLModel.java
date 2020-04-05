@@ -159,8 +159,11 @@ public void setNotesFolder(SLDataFolder f) {
 public void setWebServer(WebServer webServer) { this.webServer = webServer; }
 private WebServer getWebServer() { return this.webServer; }
 
-// 2020-04
-abstract public MultiLabelGetter<SLKeyword> getKwLabelGetter();
+// abstract public SLThesaurus newSLThesaurus(String thUri, File thDir); // 2020-04
+public SLThesaurus newSLThesaurus(String thUri, String thFilename) { // 2020-04
+	return new SLThesaurusAdapter(thUri, thFilename, getKwLabelGetter());
+}
+abstract public MultiLabelGetter<SLKeyword> getKwLabelGetter(); // 2020-04
 
 //
 // URI TO DOC OU KW
@@ -1259,21 +1262,27 @@ public SLThesaurus kwUri2Thesaurus(String kwUri) {
  * Ne fait rien si le thesaurus est déjà ouvert (attention,
  * ne modifie pas le defaut file même si celui indiqué est différent)
  * @return le thesaurus (attention, y compris si déjà ouvert avant)
- * @param defaultThesaurusDir supposé être une dir
+ * @param thDir supposé être une dir
  */
- public SLThesaurus loadThesaurus(String defaultThesaurusURI, File defaultThesaurusDir) throws Exception {
- 	// System.out.println("SLModel.loadThesaurus: " + defaultThesaurusURI + " ; " + defaultThesaurusFile);
-	if (!defaultThesaurusDir.isDirectory()) throw new IllegalArgumentException(defaultThesaurusDir + " is not a dir");
- 	SLThesaurus thesaurus = this.getThesaurus(defaultThesaurusURI);
+public SLThesaurus loadThesaurus(String thUri, File thDir) throws Exception {
+ 	// System.out.println("SLModel.loadThesaurus: " + thUri + " ; " + thDir);
+	if (!thDir.isDirectory()) throw new IllegalArgumentException(thDir + " is not a dir");
+ 	SLThesaurus thesaurus = this.getThesaurus(thUri);
 	if (thesaurus == null) { // pas ouvert
-		File defaultThesaurusFile = new File(defaultThesaurusDir,"slkws.rdf");
-		String defaultThesaurusFilename = defaultThesaurusFile.getPath();
-		thesaurus = new SLThesaurusAdapter(defaultThesaurusURI, defaultThesaurusFilename);
+		File thFile = new File(thDir,"slkws.rdf");
+		String thFilename = thFile.getPath();
+		thesaurus = newSLThesaurus(noSlashAtEnd(thUri), thFilename);
 		this.thesauri.add(thesaurus);
-		loadKWsModelFromFile(defaultThesaurusFilename,thesaurus);
+		loadKWsModelFromFile(thFilename,thesaurus);
 	}
 	return thesaurus;
 }
+
+static private String noSlashAtEnd(String uri) {
+	if (uri.endsWith("/")) return uri.substring(0, uri.length() - 1);
+	return uri;
+}
+
 
 /**
  * Retourne le thesaurus correspondant à uri s'il est ouvert, sinon retourne null.

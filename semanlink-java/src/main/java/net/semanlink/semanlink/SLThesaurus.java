@@ -1,12 +1,31 @@
 package net.semanlink.semanlink;
+
+import net.semanlink.util.index.MultiLabelGetter;
+
 /**
  * Un ensemble de Keywords.
  *  * CECI DOIT ETRE CHANGE VOIR SLThesaurusAdapter
  */
 public interface SLThesaurus extends SLResource {
-	/**Fichier dans lequel, par défaut, on écrit les statements définissants les termes (SLKeywords) du thésaurus.*/
+	
+	//
+	// WHAT WE HAD B4 2020-04
+	//
+	
+	// stupid -- strictly related to the saving in files
+	
+	/**Fichier dans lequel, par défaut, on écrit les statements définissant les termes (SLKeywords) du thésaurus.*/
 	public String getDefaultFile();
 	public void setDefaultFile(String defaultFile);
-	/** avec / : en fait, this.uri+"/"*/ // #thing todo
-	public String getBase();
+	default public String getBase() {
+		String uri = getURI();
+		if (!uri.endsWith("/")) uri += "/";
+		return uri;
+	}
+	
+	//
+	//
+	//
+	
+	public MultiLabelGetter<SLKeyword> getKwLabelGetter();
 }
