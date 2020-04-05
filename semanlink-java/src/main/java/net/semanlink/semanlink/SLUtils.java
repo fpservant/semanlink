@@ -1,12 +1,20 @@
 /* Created on 7 oct. 03 */
 package net.semanlink.semanlink;
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
-import java.util.*;
-
-import org.apache.jena.rdf.model.Property;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 
 import net.semanlink.servlet.SLServlet;
 import net.semanlink.util.FileUriFormat;

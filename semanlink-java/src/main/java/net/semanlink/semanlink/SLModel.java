@@ -69,6 +69,7 @@ import net.semanlink.sljena.modelcorrections.ModelCorrector;
 import net.semanlink.util.CopyFiles;
 import net.semanlink.util.FileUriFormat;
 import net.semanlink.util.YearMonthDay;
+import net.semanlink.util.index.MultiLabelGetter;
 import net.semanlink.util.text.CharConverter;
 import net.semanlink.util.text.WordsInString;
 
@@ -157,6 +158,9 @@ public void setNotesFolder(SLDataFolder f) {
 
 public void setWebServer(WebServer webServer) { this.webServer = webServer; }
 private WebServer getWebServer() { return this.webServer; }
+
+// 2020-04
+abstract public MultiLabelGetter<SLKeyword> getKwLabelGetter();
 
 //
 // URI TO DOC OU KW

@@ -71,7 +71,7 @@ public static EasyProperty[] COMMON_PROPERTIES = {
 };
 
 /** Associe un "petit nom", genre "dc:title" a une uri. */
-public class EasyProperty implements Comparable {
+public class EasyProperty implements Comparable<EasyProperty> {
 	private String name;
 	private String uri;
 	public EasyProperty(String name, String uri) {
@@ -80,8 +80,8 @@ public class EasyProperty implements Comparable {
 	}
 	public String getName() { return this.name; }
 	public String getUri() { return this.uri; }
-	public int compareTo(Object arg0) {
-		return uri.compareTo(((EasyProperty) arg0).uri);
+	public int compareTo(EasyProperty arg0) {
+		return uri.compareTo(arg0.uri);
 	}
 }
 

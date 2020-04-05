@@ -8,14 +8,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import org.apache.jena.rdf.model.Literal;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.util.iterator.ExtendedIterator;
-
-import net.semanlink.skos.SKOS;
-import net.semanlink.sljena.JKeyword;
 import net.semanlink.util.index.MultiLabelGetter;
 import net.semanlink.util.index.MultiLabelIndex2;
 import net.semanlink.util.index.ObjectLabelPair;
@@ -27,7 +19,7 @@ import net.semanlink.util.index.ObjectLabelPair;
  */
 
 public class ThesaurusIndex extends MultiLabelIndex2<SLKeyword> {
-protected KwLabelGetter kwLabelGetter;
+protected MultiLabelGetter<SLKeyword> kwLabelGetter;
 
 //
 // CONSTRUCTION AND UPDATES
@@ -38,32 +30,12 @@ protected KwLabelGetter kwLabelGetter;
 //}
 
 ThesaurusIndex(SLModel mod, Locale locale) {
-	this(mod.getKWsInConceptsSpaceArrayList().iterator(), new KwLabelGetter(), locale);
+	this(mod.getKWsInConceptsSpaceArrayList().iterator(), mod.getKwLabelGetter(), locale);
 }
 
-ThesaurusIndex(Iterator<SLKeyword> resToBeIndexedByLabel, KwLabelGetter kwLabelGetter, Locale locale) {
+ThesaurusIndex(Iterator<SLKeyword> resToBeIndexedByLabel, MultiLabelGetter<SLKeyword> kwLabelGetter, Locale locale) {
 	super(resToBeIndexedByLabel, kwLabelGetter, locale);
 	this.kwLabelGetter = kwLabelGetter;
-}
-
-// TODO (?) use Literal (=String + lang) ?
-static class KwLabelGetter implements MultiLabelGetter<SLKeyword> {
-	public Iterator<String> getLabels(SLKeyword o) {
-		JKeyword kw = (JKeyword) o;
-		Resource res = kw.getRes();
-		Model m = res.getModel();
-		ExtendedIterator<RDFNode> x;
-		x = m.listObjectsOfProperty(res, SKOS.prefLabel);
-		x = x.andThen(m.listObjectsOfProperty(res, SKOS.altLabel));
-		ArrayList<String> al = new ArrayList<String>();
-		for(;x.hasNext();) {
-			RDFNode n = x.next();
-			if (n instanceof Literal) { // shouldn't be otherwise, but better to be sure
-				al.add(((Literal) n).getString());
-			}
-		}
-		return al.iterator();
-	}
 }
 
 /** BEWARE: only looks for the main label, doesn't take care of alias 
@@ -88,9 +60,6 @@ public void addKw(SLKeyword kw) {
 }
 
 public void addKw(SLKeyword kw, String label, Locale locale) {
-	if (kwLabelGetter == null) {
-		kwLabelGetter = new KwLabelGetter();
-	}
 	ObjectLabelPair<SLKeyword> pair = new ObjectLabelPair<>(kw, label);
 	addItem(pair, true);
 }
