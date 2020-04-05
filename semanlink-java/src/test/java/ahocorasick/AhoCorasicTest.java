@@ -65,6 +65,7 @@ private String text = "Quel écosysteme ?"
 		+ " est-ce qu'on trouve BERT.hml ?"
 		+ " et BERT?"
 		+ " et l'astronomie ?"
+		+ " et NLPTOTO?"
 		+ "Knowledge graphs, are important resources for many artificial intelligence "
 		+ "tasks but often suffer from incompleteness. In this work, we propose to use pre-trained language models for knowledge graph completion. "
 		+ "We treat triples in knowledge graphs as textual sequences and propose a novel framework "
@@ -158,6 +159,7 @@ Model getKWsModel() {
 	trieBuilder.ignoreOverlaps()
 			// .ignoreCase()
 			.onlyWholeWords();
+			// .onlyWholeWordsWhiteSpaceSeparated();
 	
 	Model kwsModel = getKWsModel();
 	KwResLabelGetter labelGetter = new KwResLabelGetter();
@@ -187,7 +189,7 @@ Model getKWsModel() {
 	Collection<PayloadEmit<Resource>> emits = trie.parseText(text);
 	HashSet<Resource> tags = new HashSet<>();
 	for (PayloadEmit<Resource> emit : emits) {
-		// System.out.println(emit.getKeyword() + " : " + emit.getPayload() + " pos: " + emit.getStart() + "/" + emit.getEnd());
+		System.out.println(emit.getKeyword() + " : " + emit.getPayload() + " pos: " + emit.getStart() + "/" + emit.getEnd());
 		tags.add(emit.getPayload());
 	}
 	ArrayList<Resource> tagsList = new ArrayList<>();
@@ -207,67 +209,69 @@ Model getKWsModel() {
 
 //// DOES4NT WORK AS EXPECTED: ne prend pas en compte le ignoreOverlaps
 //// et le onlyWholeWords
-//@Test public final void testExtractKWsFromText() {
-//	
-//	// we do not use ignoreCase, because we also want to handle diacritics.
-//	// So we store normalized (lowercase wo diacritics) labels in the Trie,
-//	// and we also normalize the text we want to scan.
-//	
-//	PayloadTrieBuilder<Resource> trieBuilder = PayloadTrie.builder();
-//	trieBuilder.ignoreOverlaps()
-//			// .ignoreCase()
-//			.onlyWholeWords();
-//	
-//	Model kwsModel = getKWsModel();
-//	KwResLabelGetter labelGetter = new KwResLabelGetter();
-//	CharConverter converter = new CharConverter(Locale.FRENCH);
-//	ResIterator kws = kwsModel.listSubjectsWithProperty(RDF.type, kwsModel.getResource(SLSchema.Tag.getURI()));
-//	
-//	int klab = 0, kkw = 0;
-//	for(;kws.hasNext();) {
-//		Resource kw = kws.next();
-//		kkw++;
-//		Iterator<String> labs = labelGetter.getLabels(kw);
-//		for (;labs.hasNext();) {
-//			String lab = labs.next();
-//			// convert the labels to a normalized form
-//			lab = converter.convert(lab);
-//			klab++;
-//			trieBuilder.addKeyword(lab, kw);
-//		}
-//	}
-//	
-//	System.out.println("Nb labels: " + klab + " nb kws: " + kkw);
-//
-//	PayloadTrie<Resource> trie = trieBuilder.build();
-//	
-// // convert the text to the normalized form
-//	text = converter.convert(text);
-//	
-//	HashSet<Resource> tags = new HashSet<>();
-//	
-//	StatefulPayloadEmitHandler<Resource> emitHandler  = new StatefulPayloadEmitHandler<Resource>() {
-//    @Override
-//    public boolean emit(PayloadEmit<Resource> emit) {
-//    	tags.add(emit.getPayload());
-//    	return true;
-//    }
-//
-//		@Override
-//		public List<PayloadEmit<Resource>> getEmits() {
-//			// TODO Auto-generated method stub
-//			return null;
-//		}
-//	};
-//
-//	Collection<PayloadEmit<Resource>> emits = trie.parseText(text, emitHandler);
-//	trie.parseText(text, emitHandler);
-//
-//	for (Resource res : tags) {
-//		System.out.println(res);
-//	}
-//}
-//
+@Test public final void testExtractKWsFromText() {
+	
+	// we do not use ignoreCase, because we also want to handle diacritics.
+	// So we store normalized (lowercase wo diacritics) labels in the Trie,
+	// and we also normalize the text we want to scan.
+	
+	PayloadTrieBuilder<Resource> trieBuilder = PayloadTrie.builder();
+	trieBuilder.ignoreOverlaps()
+			// .ignoreCase()
+			.onlyWholeWords();
+			// .onlyWholeWordsWhiteSpaceSeparated();
+	
+	Model kwsModel = getKWsModel();
+	KwResLabelGetter labelGetter = new KwResLabelGetter();
+	CharConverter converter = new CharConverter(Locale.FRENCH);
+	ResIterator kws = kwsModel.listSubjectsWithProperty(RDF.type, kwsModel.getResource(SLSchema.Tag.getURI()));
+	
+	int klab = 0, kkw = 0;
+	for(;kws.hasNext();) {
+		Resource kw = kws.next();
+		kkw++;
+		Iterator<String> labs = labelGetter.getLabels(kw);
+		for (;labs.hasNext();) {
+			String lab = labs.next();
+			// convert the labels to a normalized form
+			lab = converter.convert(lab);
+			klab++;
+			trieBuilder.addKeyword(lab, kw);
+		}
+	}
+	
+	System.out.println("Nb labels: " + klab + " nb kws: " + kkw);
+
+	PayloadTrie<Resource> trie = trieBuilder.build();
+	
+ // convert the text to the normalized form
+	text = converter.convert(text);
+	
+	HashSet<Resource> tags = new HashSet<>();
+	
+	StatefulPayloadEmitHandler<Resource> emitHandler  = new StatefulPayloadEmitHandler<Resource>() {
+		List<PayloadEmit<Resource>> emits = new ArrayList<PayloadEmit<Resource>>();
+    @Override
+    public boolean emit(PayloadEmit<Resource> emit) {
+    	tags.add(emit.getPayload());
+    	return true;
+    }
+
+		@Override
+		public List<PayloadEmit<Resource>> getEmits() {
+			// TODO Auto-generated method stub
+			return emits;
+		}
+	};
+
+	Collection<PayloadEmit<Resource>> emits = trie.parseText(text, emitHandler);
+	trie.parseText(text, emitHandler);
+
+	for (Resource res : tags) {
+		System.out.println(res);
+	}
+}
+
 
 //
 //
