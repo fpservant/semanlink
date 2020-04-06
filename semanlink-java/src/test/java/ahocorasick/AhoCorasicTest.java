@@ -140,13 +140,13 @@ Model getKWsModel() {
 }
 
 //PayloadTrie requires aho-corasick more than 0.4.0. ok with 0.6.0
-class Aho_Corasick_Tag_Extractor {
+class AhoCorasickTagExtractor {
 //	private Model kwsModel;
 //	private JKwLabelGetter labelGetter;
 	private CharConverter converter;
 	private PayloadTrie<Resource> trie;
 	
-	Aho_Corasick_Tag_Extractor(Model kwsModel, JKwLabelGetter labelGetter, CharConverter converter) {
+	AhoCorasickTagExtractor(Model kwsModel, JKwLabelGetter labelGetter, CharConverter converter) {
 //		this.kwsModel = kwsModel;
 //		this.labelGetter = labelGetter;
 		this.converter = converter;
@@ -195,7 +195,7 @@ class Aho_Corasick_Tag_Extractor {
 	Model kwsModel = getKWsModel();
 	JKwLabelGetter labelGetter = new JKwLabelGetter();
 	CharConverter converter = new CharConverter(Locale.FRENCH);
-	Aho_Corasick_Tag_Extractor aho = new Aho_Corasick_Tag_Extractor(kwsModel, labelGetter, converter);
+	AhoCorasickTagExtractor aho = new AhoCorasickTagExtractor(kwsModel, labelGetter, converter);
 	
 	ArrayList<Resource> tagList = aho.tagList(text);
 	for (Resource tag : tagList) {

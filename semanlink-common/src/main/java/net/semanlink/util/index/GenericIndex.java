@@ -30,6 +30,7 @@ public GenericIndex(HashMap<String, List<E>> word2tagsHM) {
 /** You must call setHashmap after that */
 GenericIndex() {}
 
+// this includes the update (sorting) of this.words
 final void setHashMap(HashMap<String, List<E>> word2tagsHM) {
 	this.word2tagsHM = word2tagsHM;
 	this.words = new ArrayList<String>(this.word2tagsHM.keySet());
@@ -41,6 +42,8 @@ final void setHashMap(HashMap<String, List<E>> word2tagsHM) {
 //
 
 protected HashMap<String, List<E>> getHashMap() { return this.word2tagsHM; }
+// for tests
+public String[] getWords() { return this.words.toArray(new String[0]); }
 
 //
 //

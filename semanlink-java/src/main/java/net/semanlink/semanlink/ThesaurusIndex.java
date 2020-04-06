@@ -15,7 +15,10 @@ import net.semanlink.util.index.ObjectLabelPair;
 /**
  * Index a thesaurus by text of words included in tags. 
  * 
- * Used in particular by the livesearch, and to extract tags from a text. 
+ * Used by the livesearch.
+ * 
+ * (Before 2020-04, was also used to extract tags from a text. 
+ * Now replaced by the use of Aho-Corasick algorithm)
  */
 
 public class ThesaurusIndex extends MultiLabelIndex2<SLKeyword> {
@@ -24,10 +27,6 @@ protected MultiLabelGetter<SLKeyword> kwLabelGetter;
 //
 // CONSTRUCTION AND UPDATES
 //
-
-//ThesaurusIndex(SLModel mod, Locale locale) {
-//	super(mod.getKWsInConceptsSpaceArrayList().iterator(), new KwLabelGetter(), locale);
-//}
 
 ThesaurusIndex(SLModel mod, Locale locale) {
 	this(mod.getKWsInConceptsSpaceArrayList().iterator(), mod.getKwLabelGetter(), locale);
@@ -38,9 +37,6 @@ ThesaurusIndex(Iterator<SLKeyword> resToBeIndexedByLabel, MultiLabelGetter<SLKey
 	this.kwLabelGetter = kwLabelGetter;
 }
 
-/** BEWARE: only looks for the main label, doesn't take care of alias 
- * // to be changed when we'll switch to using several labels
- * instead of alias */
 public void deleteKw(SLKeyword kw) {
 	Iterator<String> labs = kwLabelGetter.getLabels(kw);
 	for (;labs.hasNext();) {
@@ -63,6 +59,12 @@ public void addKw(SLKeyword kw, String label, Locale locale) {
 	ObjectLabelPair<SLKeyword> pair = new ObjectLabelPair<>(kw, label);
 	addItem(pair, true);
 }
+
+//
+// SEARCHING TAGS IN A TEXT
+//
+
+// 2020-04: better to use Aho-Corasick algo !
 
 // TODO PROBLEME DE LOCALE
 /** 
@@ -100,7 +102,7 @@ public Collection<SLKeyword> getKeywordsInText(String text, Locale locale, Strin
 //
 //
 
-//2020-03 : JUSTE FAIT POUR REIMPLEMENTER CE QUI EXISTE A FCT IDENTIQUE
+// 2020-03 : JUSTE FAIT POUR REIMPLEMENTER CE QUI EXISTE A FCT IDENTIQUE
 /** @deprecated */
 public SLKeyword[] label2Keyword(String kwLabel, Locale locale) {
 	List<ObjectLabelPair<SLKeyword>> alx = label2KeywordList(kwLabel, locale);

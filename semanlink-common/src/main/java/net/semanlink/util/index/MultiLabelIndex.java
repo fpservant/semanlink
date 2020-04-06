@@ -89,7 +89,7 @@ private void computeHashMap(Iterator<E> kws) {
 	for (;kws.hasNext();) {
 		addItem(kws.next(), false);
 	}
-	setHashMap(this.word2tagsHM); // ok, pas terrible: forcer à recalculer la liste des mots
+	setHashMap(this.word2tagsHM); // this includes the update of this.words (including its sorting)
 }
 
 public void addItem(E kw) {
