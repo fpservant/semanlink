@@ -15,6 +15,7 @@ public static final String KEYWORD_CLASS = SLSchema.Tag.getURI();
 // @find SKOSIFY 
 // public static final String PREF_LABEL_PROPERTY = RDFS.label.getURI(); // SLSchema.prefLabel.getURI();
 public static final String PREF_LABEL_PROPERTY = SKOS.prefLabel.getURI(); // SLSchema.prefLabel.getURI();
+public static final String ALT_LABEL_PROPERTY = SKOS.altLabel.getURI();
 
 public static final String HAS_KEYWORD_PROPERTY = SLSchema.tag.getURI();
 // @find SKOSIFY

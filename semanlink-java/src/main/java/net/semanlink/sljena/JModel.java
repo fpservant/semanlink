@@ -737,6 +737,8 @@ public void setKwProperty(String kwUri, String propertyUri, String propertyValue
 	SLKeyword kw = null; // mis à non null si isLabelProperty
 	try {
 		if (isLabelProperty) {
+			// we remove all the current labels for kws in index
+			// (and add the new ones later below)
 			kw = getKeyword(kwUri);
 			this.thesaurusIndex.deleteKw(kw);
 			/*Locale locale = null;

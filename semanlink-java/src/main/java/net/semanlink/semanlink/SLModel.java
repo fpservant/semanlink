@@ -780,7 +780,9 @@ abstract public void setKwProperty(String kwUri, String propertyUri, String prop
 
 /** true iff values must be indexed by ThesaurusIndex */
 public boolean isLabelProperty(String propertyUri) {
-	return SLVocab.PREF_LABEL_PROPERTY.equals(propertyUri);
+	if (SLVocab.PREF_LABEL_PROPERTY.equals(propertyUri)) return true;
+	if (SLVocab.ALT_LABEL_PROPERTY.equals(propertyUri)) return true; // 2020-04
+	return false;
 }
 
 /**
