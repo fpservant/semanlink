@@ -5,11 +5,13 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import net.semanlink.util.index.jena.ModelIndexedByLabel;
+import net.semanlink.util.index_B4_2020_04.ObjectLabelPair;
+import net.semanlink.util.index_B4_2020_04.jena.ModelIndexedByLabel2;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -22,12 +24,12 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.RDFS;
 
-public class IndexTest {
+public class IndexTest2_B4_2020_04 {
 
 private static Model m;
 private static String NS = "http://wwww.semanlink.net/tag/";
 private static Resource tag1,tag2,tag3,tag4,tag5;
-private static ModelIndexedByLabel index;
+private static ModelIndexedByLabel2 index;
 
 @BeforeClass
 public static void setUpBeforeClass() throws Exception {
@@ -58,7 +60,7 @@ private static void init() {
 	
 	m.add(tag2,RDFS.label,"semantics","en");
 	
-	index = new ModelIndexedByLabel(m.listSubjects(), m, Locale.FRANCE, true); // true to index labels in any lang
+	index = new ModelIndexedByLabel2(m.listSubjects(), m, Locale.FRANCE, true); // true to index labels in any lang
 }
 
 private static Resource newTag(String localName, String label) {
@@ -67,18 +69,23 @@ private static Resource newTag(String localName, String label) {
 	return tag;
 }
 
+private static ObjectLabelPair<Resource> newOLP(String localName, String label) {
+	Resource tag = newTag(localName, label);
+	return new ObjectLabelPair<Resource>(tag, label);
+}
+
 @Test
 public void wordsAreSortedTest() {
 	checkWordsAreSorted();
 	// add tags and check words are still sorted
-	Resource tag = newTag("SEMANLINK2", "SEMANLINK2");
-	Resource tag2 = newTag("aaa", "aaa");
-	Resource tag3 = newTag("zzzbbb", "zzz bbb");
-	ArrayList<Resource> moreTags = new ArrayList<>();
-	moreTags.add(tag);
-	moreTags.add(tag2);
-	moreTags.add(tag3);
-	index.addIterator(moreTags.iterator());
+	ObjectLabelPair<Resource> olp = newOLP("aaa", "aaa");
+	ObjectLabelPair<Resource> olp2 = newOLP("zzzbbb", "zzz bbb");
+	ObjectLabelPair<Resource> olp3 = newOLP("SEMANLINK2", "SEMANLINK2");
+	ArrayList<ObjectLabelPair<Resource>> olps = new ArrayList<>();
+	olps.add(olp);
+	olps.add(olp2);
+	olps.add(olp3);
+	index.addIterator(olps.iterator());
 	checkWordsAreSorted();
 	
 	String[] words = index.getWords();
@@ -102,23 +109,21 @@ private void checkWordsAreSorted() {
 		assertTrue(words2[i] == words[i]);
 	}
 }
+
 @Test
 public void exactMatch() {	
-	List<Resource> l;
+	List<ObjectLabelPair<Resource>> l;
 	l = index.label2KeywordList("semantique", Locale.FRANCE);
 	assertTrue(l.size() == 1);
-	assertTrue(l.get(0).equals(tag2));
+	assertTrue(l.get(0).getObject().equals(tag2));
 			
 	l = index.label2KeywordList("semantics", Locale.US);
-	for (Resource r : l) {
-		System.out.println(r);
-	}
 	assertTrue(l.size() == 1);
-	assertTrue(l.get(0).equals(tag2));
+	assertTrue(l.get(0).getObject().equals(tag2));
 			
 	l = index.label2KeywordList("web semantic", Locale.FRANCE);
 	assertTrue(l.size() == 1);
-	assertTrue(l.get(0).equals(tag3));
+	assertTrue(l.get(0).getObject().equals(tag3));
 
 	l = index.label2KeywordList("seman", Locale.FRANCE);
 	assertTrue(l.size() == 0);
@@ -126,19 +131,26 @@ public void exactMatch() {
 
 @Test
 public void partialSearch() {
-	Set<Resource> x;
+	Set<ObjectLabelPair<Resource>> x;
+	Set<Resource> xr;
 	
-	x = index.searchText("SEM");
-	assertTrue(x.size() == 4);
+	// tag2 is returned in 2 different ObjectLabelPairs when searching for, say, "semant"
 	
-	x = index.searchText("sèm");
+	x = index.searchText("SEMant");
 	assertTrue(x.size() == 4);
+	xr = new HashSet<Resource>();
+	for (ObjectLabelPair<Resource> olp : x) {
+		xr.add(olp.getObject());
+	}
+	assertTrue(xr.size() == 3);
 
-	x = index.searchText("SEMANTIC");
+	x = index.searchText("semantic");
 	assertTrue(x.size() == 3);
-
-	x = index.searchText("web");
-	assertTrue(x.size() == 2);
+	xr = new HashSet<Resource>();
+	for (ObjectLabelPair<Resource> olp : x) {
+		xr.add(olp.getObject());
+	}
+	assertTrue(xr.size() == 3);
 }
 
 }

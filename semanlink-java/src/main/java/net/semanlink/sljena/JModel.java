@@ -1701,7 +1701,7 @@ public List<SLDocument> mainDocOf(Resource mainDocRes) {
 }
 
 //
-// 2020)03
+// 2020-03 JDocUpdate
 //
 
 // changing several props of a doc, saving only once

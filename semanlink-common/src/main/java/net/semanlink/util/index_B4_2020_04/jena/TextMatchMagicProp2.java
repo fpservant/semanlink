@@ -1,11 +1,11 @@
-package net.semanlink.util.index.jena;
+package net.semanlink.util.index_B4_2020_04.jena;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.function.Function;
 
-import net.semanlink.util.index.MultiLabelIndex;
-import net.semanlink.util.index.ObjectLabelPair;
+import net.semanlink.util.index_B4_2020_04.MultiLabelIndex;
+import net.semanlink.util.index_B4_2020_04.ObjectLabelPair;
 
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.NodeFactory;
@@ -42,9 +42,9 @@ import org.apache.jena.util.iterator.Map1Iterator;
 
 public class TextMatchMagicProp2 extends PropertyFunctionEval
 {
-		private static MultiLabelIndex<Resource> index;
+		private static MultiLabelIndex<ObjectLabelPair<Resource>> index;
 		/** MUST be called */
-		public static void setIndex(MultiLabelIndex<Resource> textIndex) { index = textIndex; }
+		public static void setIndex(MultiLabelIndex<ObjectLabelPair<Resource>> textIndex) { index = textIndex; }
 		
 		public TextMatchMagicProp2() // must be public or Class org.apache.jena.sparql.pfunction.PropertyFunctionFactoryAuto can not access a member of class package net.semanlink.util.jena.TextMatchMagicProp2 with modifiers "protected"
     {
@@ -162,7 +162,7 @@ public class TextMatchMagicProp2 extends PropertyFunctionEval
                                     Var textMatchVar,
                                     String searchString,
                                     String lang,
-                                    MultiLabelIndex<Resource> index,
+                                    MultiLabelIndex<ObjectLabelPair<Resource>> index,
                                     ExecutionContext execCxt)
     {
       	// Iterator<HitLARQ> iter = getIndex(execCxt).search(searchString) ;
@@ -234,7 +234,7 @@ public class TextMatchMagicProp2 extends PropertyFunctionEval
     public QueryIterator boundSubject(Binding binding, 
                                       Node match,
                                       String searchString,
-                                      MultiLabelIndex<Resource> index,
+                                      MultiLabelIndex<ObjectLabelPair<Resource>> index,
                                       ExecutionContext execCxt)
     {
         // HitLARQ hit = getIndex(execCxt).contains(match, searchString) ;

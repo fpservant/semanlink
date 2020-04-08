@@ -9,9 +9,8 @@ import java.util.Locale;
 import java.util.Set;
 
 import net.semanlink.util.index.MultiLabelGetter;
-import net.semanlink.util.index.MultiLabelIndex;
-import net.semanlink.util.index.ObjectLabelPair;
-import net.semanlink.util.index.MultiLabelIndex.Update;
+import net.semanlink.util.index_B4_2020_04.MultiLabelIndex2;
+import net.semanlink.util.index_B4_2020_04.ObjectLabelPair;
 
 /**
  * Index a thesaurus by text of words included in tags. 
@@ -22,40 +21,48 @@ import net.semanlink.util.index.MultiLabelIndex.Update;
  * Now replaced by the use of Aho-Corasick algorithm)
  */
 
-public class ThesaurusIndex extends MultiLabelIndex<SLKeyword> {
+public class ThesaurusIndex_B4_2020_04 extends MultiLabelIndex2<SLKeyword> {
 protected MultiLabelGetter<SLKeyword> kwLabelGetter;
 
 //
 // CONSTRUCTION AND UPDATES
 //
 
-ThesaurusIndex(SLModel mod, Locale locale) throws Exception {
+ThesaurusIndex_B4_2020_04(SLModel mod, Locale locale) {
 	this(mod.getKWsInConceptsSpaceArrayList().iterator(), mod.getKwLabelGetter(), locale);
 }
 
-ThesaurusIndex(Iterator<SLKeyword> resToBeIndexedByLabel, MultiLabelGetter<SLKeyword> kwLabelGetter, Locale locale) throws Exception {
-	super(resToBeIndexedByLabel, kwLabelGetter, MultiLabelIndex.newI18nFriendlyIndexEntries(locale), locale);
+//ThesaurusIndex_B4_2020_04(SLModel mod, Locale locale) {
+//	this(mod.getKWsInConceptsSpaceArrayList().iterator(), mod.getKwLabelGetter(), locale);
+//}
+
+ThesaurusIndex_B4_2020_04(Iterator<SLKeyword> resToBeIndexedByLabel, MultiLabelGetter<SLKeyword> kwLabelGetter, Locale locale) {
+	super(resToBeIndexedByLabel, kwLabelGetter, locale);
 	this.kwLabelGetter = kwLabelGetter;
 }
 
-public void deleteKw(SLKeyword kw) throws Exception {
-	try (Update<SLKeyword> up = new Update<>(this)) {
-		up.deleteItem(kw);
+public void deleteKw(SLKeyword kw) {
+	Iterator<String> labs = kwLabelGetter.getLabels(kw);
+	for (;labs.hasNext();) {
+		String lab = labs.next();
+		ObjectLabelPair<SLKeyword> pair = new ObjectLabelPair<>(kw, lab);
+		deleteItem(pair);
 	}
 }
 
 public void addKw(SLKeyword kw) {
-	try (Update<SLKeyword> up = new Update<>(this)) {
-		up.addItem(kw);
-	} catch (Exception e) { throw new RuntimeException(e) ; }
+	Iterator<String> labs = kwLabelGetter.getLabels(kw);
+	for (;labs.hasNext();) {
+		String lab = labs.next();
+		ObjectLabelPair<SLKeyword> pair = new ObjectLabelPair<>(kw, lab);
+		addItem(pair, true);
+	}
 }
 
 public void addKw(SLKeyword kw, String label, Locale locale) {
-	try (Update<SLKeyword> up = new Update<>(this)) {
-		up.addLabel(kw, label, locale, true);
-	} catch (Exception e) { throw new RuntimeException(e) ; }
+	ObjectLabelPair<SLKeyword> pair = new ObjectLabelPair<>(kw, label);
+	addItem(pair, true);
 }
-
 
 //
 // SEARCHING TAGS IN A TEXT

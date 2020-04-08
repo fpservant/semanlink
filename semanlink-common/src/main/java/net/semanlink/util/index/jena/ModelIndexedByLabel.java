@@ -1,49 +1,55 @@
 /* Created on 18 mars 2010 */
 package net.semanlink.util.index.jena;
 
-import java.util.*;
-
-import org.apache.jena.rdf.model.*;
+import java.util.Locale;
 
 import net.semanlink.util.index.I18nFriendlyIndexEntries;
 import net.semanlink.util.index.IndexEntriesCalculator;
-import net.semanlink.util.index.MultiLabelIndex;
 import net.semanlink.util.index.MultiLabelGetter;
+import net.semanlink.util.index.MultiLabelIndex;
+import net.semanlink.util.index.MultiLabelIndex.Update;
 import net.semanlink.util.text.CharConverter;
 import net.semanlink.util.text.WordsInString;
 
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+
 /**
- * Index of resources (indexed by label)
- * see  ModelIndexedByLabel2 which indexes (resource, label) pairs
+ * Indexing (Resource, label) pairs.
+ * <p>When compared to ModelIndexedByLabel (which indexes Resources, by several labels),
+ * this allows to return the found label.
  * @author fps
  */
 public class ModelIndexedByLabel extends MultiLabelIndex<Resource> {
 protected Model model;
 
-/** Default: uses RDFS.label. Beware, only index the labels in the language given by the Locale*/
-public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, Model model, Locale locale) {
+/** Default: uses RDFS.label. Beware, only index the labels in the language given by the Locale
+ * @throws Exception */
+public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, Model model, Locale locale) throws Exception {
 	this(resToBeIndexedByLabel, new RDFSLabelGetter(locale.getLanguage()), model, locale);
 }
 
-/** Default: uses RDFS.label.*/
-public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, Model model, Locale locale, boolean indexLabelInAnyLang) {
+/** Default: uses RDFS.label.
+ * @throws Exception */
+public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, Model model, Locale locale, boolean indexLabelInAnyLang) throws Exception {
 	this(resToBeIndexedByLabel, new RDFSLabelGetter(indexLabelInAnyLang ? null : locale.getLanguage()), model, locale);
 }
 
-public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, MultiLabelGetter<Resource> labelGetter, Model model, Locale locale) {
-	this(resToBeIndexedByLabel, labelGetter, new I18nFriendlyIndexEntries(new WordsInString(true, true), new CharConverter(locale, "_")), model, locale);
+public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, MultiLabelGetter<Resource> multiLabelGetter, Model model, Locale locale) throws Exception {
+	this(resToBeIndexedByLabel, multiLabelGetter, new I18nFriendlyIndexEntries(new WordsInString(true, true), new CharConverter(locale, "_")), model, locale);
 }
 
-public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, MultiLabelGetter<Resource> labelGetter, IndexEntriesCalculator iec, Model model, Locale locale) {
-	this(labelGetter, iec, model, locale);
-	addIterator(resToBeIndexedByLabel);
+public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, MultiLabelGetter<Resource> multiLabelGetter, IndexEntriesCalculator iec, Model model, Locale locale) throws Exception {
+	this(multiLabelGetter, iec, model, locale);
+	try (Update<Resource> up = new Update<>(this)) {
+		up.addIterator(resToBeIndexedByLabel);
+	}
 }
 
 /** addIterator or addCollection must be called after that */
 protected ModelIndexedByLabel(MultiLabelGetter<Resource> labelGetter, IndexEntriesCalculator iec, Model model, Locale locale) {
-	super();
+	super(labelGetter, iec,locale);
 	this.model = model;
-	this.locale = locale;
-	init(labelGetter, iec, locale) ;
 }
 }

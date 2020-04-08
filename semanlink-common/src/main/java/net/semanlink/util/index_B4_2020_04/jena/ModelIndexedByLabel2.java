@@ -1,12 +1,12 @@
 /* Created on 18 mars 2010 */
-package net.semanlink.util.index.jena;
+package net.semanlink.util.index_B4_2020_04.jena;
 
 import java.util.Locale;
 
-import net.semanlink.util.index.I18nFriendlyIndexEntries;
-import net.semanlink.util.index.IndexEntriesCalculator;
+import net.semanlink.util.index_B4_2020_04.I18nFriendlyIndexEntries;
+import net.semanlink.util.index_B4_2020_04.IndexEntriesCalculator;
 import net.semanlink.util.index.MultiLabelGetter;
-import net.semanlink.util.index.MultiLabelIndex2;
+import net.semanlink.util.index_B4_2020_04.MultiLabelIndex2;
 import net.semanlink.util.text.CharConverter;
 import net.semanlink.util.text.WordsInString;
 

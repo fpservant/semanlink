@@ -1,5 +1,5 @@
 /* Created on 16 mai 2005 */
-package net.semanlink.util.index;
+package net.semanlink.util.index_B4_2020_04;
 
 import java.util.*;
 
@@ -38,62 +38,6 @@ final void setHashMap(HashMap<String, List<E>> word2tagsHM) {
 }
 
 //
-// UPDATING THE INDEX
-//
-
-/**
- * BEWARE if returns true, YOU MUST then call Collections.sort(this.words)
- * 
- *  add word entry with data tag to this.word2tagsHM. 
- *  if updateWords, modifies this.words if needed but, beware, without sorting it
- *  Returns true iff this.words has been modified (and therefore needs to be sorted) (This can only happen when updateWords)
- */
-protected boolean addWordEntry(String wordEntry, E tag, boolean updateWords) {
-	boolean needToSortWords = false;
-	List<E> list = this.word2tagsHM.get(wordEntry);
-	if (list == null) { // new word (entry)
-		list = new ArrayList<E>(1);
-		this.word2tagsHM.put(wordEntry, list);
-		list.add(tag);
-		if (updateWords) {
-			this.words.add(wordEntry); // adding this new word to words
-			needToSortWords = true;
-		}
-	} else {
-		if (!list.contains(tag)) {
-			list.add(tag);
-		}
-	}
-	return needToSortWords;
-}
-
-/**
- * Allow to remove one kw's label
- * @param kw 
- * @param wordEntries the word entries in kw's label that are to be removed
- */
-protected void removeEntries(E kw, List<String> wordEntries) {
-	for (String wordEntry : wordEntries) {
-		int k = Collections.binarySearch(this.words, wordEntry);
-		if (k >= 0) { // word found
-			List<E> kws = this.word2tagsHM.get(wordEntry);
-			for (int j = 0; j < kws.size(); j++) {
-				if (kws.get(j).equals(kw)) {
-					kws.remove(j);
-					break;
-				}
-			}
-			if (kws.isEmpty()) {
-				this.word2tagsHM.remove(wordEntry);
-				this.words.remove(k);
-			}
-		}
-	}	
-}
-
-
-
-//
 // GETS
 //
 
@@ -102,7 +46,7 @@ protected HashMap<String, List<E>> getHashMap() { return this.word2tagsHM; }
 public String[] getWords() { return this.words.toArray(new String[0]); }
 
 //
-// SEARCHING
+//
 //
 
 /**
@@ -183,7 +127,7 @@ public void searchWordStart(String word, Collection<E> result, int limit) {
 	int k = Collections.binarySearch(this.words, word);
 	if (k >= 0) { // word found
 		List<E> kws = word2tagsHM.get(word);
-		limitReached = addFoundItems(kws, result, resultSizeLimit);
+		limitReached = addItems(kws, result, resultSizeLimit);
 		if (limitReached) return;
 		k++;
 	} else { // not found
@@ -195,7 +139,7 @@ public void searchWordStart(String word, Collection<E> result, int limit) {
 		String nextWord = this.words.get(k);
 		if (nextWord.startsWith(word)) {
 			List<E> kws = word2tagsHM.get(nextWord);
-			limitReached = addFoundItems(kws, result, resultSizeLimit);
+			limitReached = addItems(kws, result, resultSizeLimit);
 			if (limitReached) return;
 			k++;
 		} else {
@@ -208,7 +152,7 @@ public void searchWordStart(String word, Collection<E> result, int limit) {
  * Adds the items to result until resultSizeLimit be reached
  * @return true if finished (limit reached)
  */
-private boolean addFoundItems(List<E> items, Collection<E> result, int resultSizeLimit) {
+private boolean addItems(List<E> items, Collection<E> result, int resultSizeLimit) {
 	int size = result.size();
 	if (size >= resultSizeLimit) return true;
 	Iterator<E> it = items.iterator();

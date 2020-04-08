@@ -1,10 +1,10 @@
-package net.semanlink.util.index.jena;
+package net.semanlink.util.index_B4_2020_04.jena;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.function.Function;
 
-import net.semanlink.util.index.IndexInterface;
+import net.semanlink.util.index_B4_2020_04.IndexInterface;
 
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.Node_Literal;
@@ -22,6 +22,7 @@ import org.apache.jena.sparql.pfunction.PropFuncArg;
 import org.apache.jena.sparql.pfunction.PropFuncArgType;
 import org.apache.jena.sparql.pfunction.PropertyFunctionEval;
 import org.apache.jena.sparql.util.IterLib;
+import org.apache.jena.util.iterator.Map1;
 import org.apache.jena.util.iterator.Map1Iterator;
 // import org.openjena.atlas.logging.Log;
 // import org.apache.jena.atlas.logging.Log;

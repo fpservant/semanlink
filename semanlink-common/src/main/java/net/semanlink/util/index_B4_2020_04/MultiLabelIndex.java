@@ -1,12 +1,9 @@
 /* Created on 16 mai 2005 */
-package net.semanlink.util.index;
+package net.semanlink.util.index_B4_2020_04;
 
-import java.text.Collator;
 import java.util.*;
 
-import net.semanlink.util.index.I18nFriendlyIndexEntries;
-import net.semanlink.util.text.CharConverter;
-import net.semanlink.util.text.WordsInString;
+import net.semanlink.util.index.MultiLabelGetter;
 
 /**
  * Index a thesaurus by the words included in its terms. 
@@ -28,11 +25,10 @@ import net.semanlink.util.text.WordsInString;
  * <p>Originally built for www.semanlink.net, some methods or parameters still have a name based
  * on the fact that this was developed to index keywords (or tags)</p>
  */
-public class MultiLabelIndex<E> extends GenericIndex<ObjectLabelPair<E>> implements IndexInterface<ObjectLabelPair<E>> {
+public class MultiLabelIndex<E> extends GenericIndex<E> implements MultiLabelGetter<E>, IndexInterface<E> {
 protected MultiLabelGetter<E> labelGetter;
 protected IndexEntriesCalculator indexEntryCalculator;
 protected Locale locale;
-protected Collator collator;
 
 //
 // CONSTRUCTION AND UPDATES
@@ -44,23 +40,27 @@ protected Collator collator;
  * @param labelGetter tells how to get the label of an item
  * @param indexEntriesCalculator tells how to extract index entries from a label. Index entries should typically be
  * words in a normalized form.
- * @throws Exception 
  */
-public MultiLabelIndex(Iterator<E> items, MultiLabelGetter<E> labelGetter, IndexEntriesCalculator indexEntriesCalculator, Locale locale) throws Exception {
-	this(labelGetter, indexEntriesCalculator, locale);
-	try (Update<E> up = new Update<>(this)) {
-		up.addIterator(items);
-	}
+public MultiLabelIndex(Collection<E> items, MultiLabelGetter<E> labelGetter, IndexEntriesCalculator indexEntriesCalculator, Locale locale) {
+	init(labelGetter, indexEntriesCalculator, locale);
+	addIterator(items.iterator());
 }
 
-public MultiLabelIndex(MultiLabelGetter<E> labelGetter, IndexEntriesCalculator indexEntryCalculator, Locale locale) {
-	super();
-	init(labelGetter, indexEntryCalculator, locale);
+public MultiLabelIndex(Collection<E> items, final LabelGetter<E> labelGetter, IndexEntriesCalculator indexEntriesCalculator, Locale locale) {
+	this(items, 
+			new MultiLabelGetter<E>() {
+				@Override
+				public Iterator<String> getLabels(E o) {
+					return Collections.singleton(labelGetter.getLabel(o)).iterator();
+				}
+			}, 
+			indexEntriesCalculator, locale);
 }
 
-public static I18nFriendlyIndexEntries newI18nFriendlyIndexEntries(Locale locale) {
-	return new I18nFriendlyIndexEntries(new WordsInString(true, true), new CharConverter(locale, "_"));
-}
+/**
+ * Once created, you'll have to call init and then addCollection or addIterator
+ */
+public MultiLabelIndex() {}
 
 /**
  * sets the parameters of the indexing.
@@ -69,103 +69,137 @@ public static I18nFriendlyIndexEntries newI18nFriendlyIndexEntries(Locale locale
  * @param indexEntryCalculator tells how to extract words from a label
  * @param locale
  */
-private void init(MultiLabelGetter<E> labelGetter, IndexEntriesCalculator indexEntryCalculator, Locale locale) {
+public void init(MultiLabelGetter<E> labelGetter, IndexEntriesCalculator indexEntryCalculator, Locale locale) {
 	this.labelGetter = labelGetter;
 	this.indexEntryCalculator = indexEntryCalculator; 
 	this.locale = locale;
-	this.collator = Collator.getInstance(this.locale);
-	collator.setStrength(Collator.PRIMARY);
+}
+
+/** normally called once, or a few times 
+ * @deprecated use addIterator(Iterator<E>) instead */
+public void addCollection(Collection<E> items) {
+	computeHashMap(items.iterator());
+}
+
+/** normally called once, or a few times */
+public void addIterator(Iterator<E> items) {
+	computeHashMap(items);
+}
+
+private void computeHashMap(Iterator<E> kws) {
+	if (this.word2tagsHM == null) this.word2tagsHM = new HashMap<String, List<E>>();
+	for (;kws.hasNext();) {
+		addItem(kws.next(), false);
+	}
+	setHashMap(this.word2tagsHM); // this includes the update of this.words (including its sorting)
+}
+
+public void addItem(E kw) {
+	addItem(kw, true);
+}
+
+/**
+ * @param kw
+ * @param updateWords if true, this.words is updated, else not. False is used during construction, in order to avoid
+ * sorting each time a kw is added to the hashmap: words are sorted only once, at the end.
+ */
+protected void addItem(E kw, boolean updateWords) {
+	Iterator<String> labels = labelGetter.getLabels(kw);	
+	boolean needToSortWords = addLabels(kw, labels, locale, updateWords);
+	if (needToSortWords) Collections.sort(this.words);
+}
+
+/** Add a label to kw */ // TODO should be renamed
+public void addItem(E kw, String label, Locale locale) {
+	boolean needToSortWords = addLabel(kw, label, locale, true);
+	if (needToSortWords) Collections.sort(this.words);
+}
+
+/**
+ * modifies this.hm
+ * if updateWords, modifies also this.words if needed but, beware, without sorting it
+ * Returns true iff this.words has been modified (and therefore needs to be sorted) */
+protected boolean addLabels(E kw, Iterator<String> labels, Locale locale, boolean updateWords) {
+	boolean needToSortWords = false;
+	for(;labels.hasNext();) {
+		boolean b = addLabel(kw, labels.next(), locale, updateWords);
+		if (b) needToSortWords = true;
+	}
+	return needToSortWords;
+}
+
+/**
+ * modifies this.hm
+ * if updateWords, modifies also this.words if needed but, beware, without sorting it
+ * Returns true iff this.words has been modified (and therefore needs to be sorted) */
+protected boolean addLabel(E kw, String label, Locale locale, boolean updateWords) {
+	List<String> wordsInLabel = this.indexEntryCalculator.indexEntries(label, locale);
+	boolean needToSortWords = false;
+	for (int i = 0; i < wordsInLabel.size(); i++) {
+		String word = wordsInLabel.get(i);
+		boolean b = addWordEntry(word, kw, updateWords);
+		if (b) needToSortWords = true;
+	}
+	return needToSortWords;
+}
+
+/** 
+ *  add the key word with data kw to this.hm. 
+ *  if updateWords, modifies this.words if needed but, beware, without sorting it
+ *  Returns true iff this.words has been modified (and therefore needs to be sorted) (This can only happen when updateWords)*/
+private boolean addWordEntry(String wordEntry, E kw, boolean updateWords) {
+	boolean needToSortWords = false;
+	List<E> list = this.word2tagsHM.get(wordEntry);
+	if (list == null) { // new word
+		list = new ArrayList<E>(1);
+		this.word2tagsHM.put(wordEntry, list);
+		list.add(kw);
+		if (updateWords) {
+			this.words.add(wordEntry); // adding this new word to words
+			needToSortWords = true;
+		}
+	} else {
+		if (!list.contains(kw)) {
+			list.add(kw);
+		}
+	}
+	return needToSortWords;
+}
+
+public void deleteItem(E kw) {
+	Iterator<String> labels = this.labelGetter.getLabels(kw);
+	for(;labels.hasNext();) {
+		removeKwLabel(kw, labels.next(), locale);
+	}
+}
+
+private void removeKwLabel(E kw, String label, Locale locale) {
+	List<String> wordsInLabel = this.indexEntryCalculator.indexEntries(label, locale);
+	for (int i = 0; i < wordsInLabel.size(); i++) {
+		String wordEntry = wordsInLabel.get(i);
+		int k = Collections.binarySearch(this.words, wordEntry);
+		if (k >= 0) { // word found
+			List<E> kws = this.word2tagsHM.get(wordEntry);
+			for (int j = 0; j < kws.size(); j++) {
+				if (kws.get(j).equals(kw)) {
+					kws.remove(j);
+					break;
+				}
+			}
+			if (kws.isEmpty()) {
+				this.word2tagsHM.remove(wordEntry);
+				this.words.remove(k);
+			}
+		}
+	}	
 }
 
 //
-// UPDATES
+//
 //
 
-public static class Update<E> implements AutoCloseable {
-	MultiLabelIndex<E> index;
-	boolean needToComputeWords = false;
-	boolean needToSortWords = false;
-	
-	public Update(MultiLabelIndex<E> index) {
-		this.index = index;
-	}
-	
-	@Override public void close() throws Exception {
-		if (needToComputeWords) {
-			index.setHashMap(index.word2tagsHM); // includes the sorting of words // TODO pas très joli
-		} else {
-			if (needToSortWords) {
-				Collections.sort(index.words);
-			}
-		}
-	}
-	
-	// normally called once, or a few times 
-	public void addIterator(Iterator<E> kws) throws Exception {
-		boolean initing = true;
-		needToComputeWords = initing;
-		if (index.word2tagsHM == null) index.word2tagsHM = new HashMap<>();
-		for (;kws.hasNext();) {
-			addItem(kws.next(), !initing);
-		}
-	}
-
-	public void addItem(E kw) {
-		addItem(kw, true);
-	}
-
-	/**
-	 * @param kw
-	 * @param updateWords if true, this.words is updated, else not. False is used during construction, in order to avoid
-	 * sorting each time a kw is added to the hashmap: words are sorted only once, at the end.
-	 */
-	protected void addItem(E kw, boolean updateWords) {
-		Iterator<String> labels = index.labelGetter.getLabels(kw);	
-		addLabels(kw, labels, index.locale, updateWords);
-	}
-
-	/**
-	 * modifies this.hm
-	 * if updateWords, modifies also this.words if needed but, beware, without sorting it
-	 * Returns true iff this.words has been modified (and therefore needs to be sorted) */
-	protected void addLabels(E kw, Iterator<String> labels, Locale locale, boolean updateWords) {
-		for(;labels.hasNext();) {
-			addLabel(kw, labels.next(), locale, updateWords);
-		}
-	}
-	
-	/**
-	 * modifies this.hm
-	 * if updateWords, modifies also this.words if needed but, beware, without sorting it
-	 * Returns true iff this.words has been modified (and therefore needs to be sorted) */
-	public void addLabel(E kw, String label, Locale locale, boolean updateWords) {
-		List<String> wordsInLabel = index.indexEntryCalculator.indexEntries(label, locale);
-		ObjectLabelPair<E> olp = new ObjectLabelPair<>(kw, label);
-		for (int i = 0; i < wordsInLabel.size(); i++) {
-			String word = wordsInLabel.get(i);
-			boolean b = index.addWordEntry(word, olp, updateWords);
-			if (b) needToSortWords = true;
-		}
-	}
-	
-	//
-	// DELETE
-	//
-	
-	public void deleteItem(E kw) {
-		Iterator<String> labels = index.labelGetter.getLabels(kw);
-		for(;labels.hasNext();) {
-			String label = labels.next();
-			removeKwLabel(kw, label, index.locale);
-		}
-	}
-
-	private void removeKwLabel(E kw, String label, Locale locale) {
-		ObjectLabelPair<E> olp = new ObjectLabelPair<>(kw, label);
-		List<String> wordEntries = index.indexEntryCalculator.indexEntries(label, locale);
-		index.removeEntries(olp, wordEntries);
-	}
-} // class Update
+@Override // implements MultiLabelGetter
+public Iterator<String> getLabels(E o) { return this.labelGetter.getLabels(o); }
 
 /** return their normalized form */
 protected List<String> label2indexEntries(String label, Locale locale) {
@@ -187,10 +221,9 @@ protected List<String> label2indexEntries(String label, Locale locale) {
  *  Search the items containing all words in text. 
  *  <p>(search for the beginning of words: if text is "sem", returns "semanlink", "semantic web", etc.)</p>
  */
-// @Override // implements IndexInterface
-public Set<ObjectLabelPair<E>> searchText(String text) {
+@Override // implements IndexInterface
+public Set<E> searchText(String text) {
 	List<String> wordsInText = this.indexEntryCalculator.indexEntries(text, locale);
-	Set<ObjectLabelPair<E>> olps = searchWordStarts(wordsInText);
 	return searchWordStarts(wordsInText);
 }
 
@@ -198,9 +231,8 @@ public Set<ObjectLabelPair<E>> searchText(String text) {
 /** 
  * for semanlink: Les keywords extraits d'un texte.
  */
-// TODO CHANGE FOR AHO and cette version a été blindly updated
-public Set<ObjectLabelPair<E>> getKeywordsInText(String text) {
-	HashSet<ObjectLabelPair<E>> hs = new HashSet<ObjectLabelPair<E>>();
+public Set<E> getKeywordsInText(String text) {
+	HashSet<E> hs = new HashSet<E>();
 	// word in text
 	List<String> wordsInText = this.indexEntryCalculator.indexEntries(text, locale);
 	// We sort them, because we use it (search for "wordsInText needs to be sorted")
@@ -221,18 +253,18 @@ public Set<ObjectLabelPair<E>> getKeywordsInText(String text) {
 	// - (S3 bis) normalized label of kw is in normalized text (don't sort wordsInText to do that)
 	for (String word : wordsInText) {
 		// les kws contenant word
-		List<ObjectLabelPair<E>> olps = this.word2tagsHM.get(word);
-		if (olps == null) continue;
+		List<E> kws = this.word2tagsHM.get(word);
+		if (kws == null) continue;
 
-		for (int ikw = 0; ikw < olps.size(); ikw++) {
-			ObjectLabelPair<E> olp = olps.get(ikw);
+		for (int ikw = 0; ikw < kws.size(); ikw++) {
+			E kw = kws.get(ikw);
 			// (S2):
 			// hs.add(kw);
 			// (S1)
 			// all the words of kw are in wordsInText?
 
 			boolean isOK = false; // passe à true si tous les mots d'un label sont dans le texte
-			Iterator<String> labels = labelGetter.getLabels(olp.getObject());
+			Iterator<String> labels = labelGetter.getLabels(kw);
 			String label = null;
 			for (;labels.hasNext();) {
 				label = labels.next();
@@ -270,7 +302,7 @@ public Set<ObjectLabelPair<E>> getKeywordsInText(String text) {
 			
 			if (isOK) {
 				// System.out.println("MultiLabelIndex " + text + " : " + label);
-				hs.add(olp);			
+				hs.add(kw);			
 			}
 		} // for ikws
 	}
@@ -291,9 +323,9 @@ public Set<ObjectLabelPair<E>> getKeywordsInText(String text) {
  * (but maybe not in the same order).
  * <p>to get the tag corresponding to a given label.</p>
  */
-public List<ObjectLabelPair<E>> label2KeywordList(String kwLabel, Locale locale) {
+public List<E> label2KeywordList(String kwLabel, Locale locale) {
 	List<String> indexEntriesInLabel = this.indexEntryCalculator.indexEntries(kwLabel , locale);
-	List<ObjectLabelPair<E>> alx = andOfWords(indexEntriesInLabel);
+	List<E> alx = andOfWords(indexEntriesInLabel);
 	if (alx.size() == 0) return alx;
 	
   // kws in alx contain all the words (with more than 2 letters) in kwLabel
@@ -301,63 +333,55 @@ public List<ObjectLabelPair<E>> label2KeywordList(String kwLabel, Locale locale)
 	// // They are OK, except if they also contain other words
 	// They are OK if one of their labels matches kwLabel
 	int n = indexEntriesInLabel.size();
-	Collections.sort(indexEntriesInLabel); // to test for equality of lists -- hum, is it a good idea to reoder?
+	Collections.sort(indexEntriesInLabel); // to test for equality of lists
 	for (int i = alx.size() - 1; i > -1; i--) {
-		ObjectLabelPair<E> kw = alx.get(i);
+		E kw = alx.get(i);
 		// String label = labelGetter.getLabel(kw);
 		// if ((this.indexEntryCalculator).indexEntries(label, locale).size() > n) alx.remove(i);
-		
-//		Iterator<String> labels = labelGetter.getLabels(kw);
-//		boolean ok = false;
-//		for (;labels.hasNext();) {
-//			String label = labels.next();
-//			List<String> indexEntriesInKW = this.indexEntryCalculator.indexEntries(label, locale);
-//			if (indexEntriesInKW.size() > n) continue;
-//			Collections.sort(indexEntriesInKW);  // to test for equality of lists
-//			if (indexEntriesInKW.equals(indexEntriesInLabel)) {
-//				ok = true;
-//				break;
-//			}
-//		}
-
-		String label = kw.getLabel();
-		List<String> indexEntriesInKW = this.indexEntryCalculator.indexEntries(label, locale);
-		if (indexEntriesInKW.size() > n) continue;
-		Collections.sort(indexEntriesInKW);  // to test for equality of lists -- hum, is it a good idea to reoder?
-		if (!indexEntriesInKW.equals(indexEntriesInLabel)) {
-			alx.remove(i);
+		Iterator<String> labels = labelGetter.getLabels(kw);
+		boolean ok = false;
+		for (;labels.hasNext();) {
+			String label = labels.next();
+			List<String> indexEntriesInKW = this.indexEntryCalculator.indexEntries(label, locale);
+			if (indexEntriesInKW.size() > n) continue;
+			Collections.sort(indexEntriesInKW);  // to test for equality of lists
+			if (indexEntriesInKW.equals(indexEntriesInLabel)) {
+				ok = true;
+				break;
+			}
 		}
+		if (!ok) alx.remove(i);
 	}
 	return alx;
 }
 
-///**
-// * The list of ITEMs that are indexed by all the words in a given label.
-// * <p>That is a search for the AND of all words in the label.
-// * <p>"All the words" meaning: as defined by this.indexEntryCalculator</p>
-// */
-//public List<E> getItemsContainingAllWords(String label, Locale locale) {
-//	return andOfWords(this.indexEntryCalculator.indexEntries(label , locale));
-//}
-//
+/**
+ * The list of ITEMs that are indexed by all the words in a given label.
+ * <p>That is a search for the AND of all words in the label.
+ * <p>"All the words" meaning: as defined by this.indexEntryCalculator</p>
+ */
+public List<E> getItemsContainingAllWords(String label, Locale locale) {
+	return andOfWords(this.indexEntryCalculator.indexEntries(label , locale));
+}
+
 /**
  * The list of ITEMs that are indexed by all the words in a given list.
  * @param words if list is empty, returns an empty list
  * @return
  */
-private List<ObjectLabelPair<E>> andOfWords(List<String> words) {
+private List<E> andOfWords(List<String> words) {
 	int n = words.size();
-	if (n == 0) return new ArrayList<>(0);
+	if (n == 0) return new ArrayList<E>(0);
 	String word = words.get(0);
-	List<ObjectLabelPair<E>> kws = word2tagsHM.get(word);
-	if ((kws == null) || (kws.size() == 0)) return new ArrayList<>(0);
+	List<E> kws = word2tagsHM.get(word);
+	if ((kws == null) || (kws.size() == 0)) return new ArrayList<E>(0);
 	// we make a clone of kws (in order to not modify kws!)
-	ArrayList<ObjectLabelPair<E>> alx = new ArrayList<>(kws.size());
+	ArrayList<E> alx = new ArrayList<E>(kws.size());
 	alx.addAll(kws);
 	for (int iword = 1; iword < n; iword++) {
 		word = words.get(iword);
 		kws = word2tagsHM.get(word);
-		if (kws == null) return new ArrayList<>(0);
+		if (kws == null) return new ArrayList<E>(0);
 		for (int i = alx.size() - 1; i > -1; i--) {
 			Object kw = alx.get(i);
 			if (!(kws.contains(kw))) alx.remove(i);

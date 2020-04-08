@@ -1,10 +1,11 @@
 /* Created on dec 2012, based on ModelIndexedByLabel2 (mars 2010) */ // SKOSIFY
-package net.semanlink.util.index;
+package net.semanlink.util.index_B4_2020_04;
 
 import java.text.CollationKey;
 import java.text.Collator;
 import java.util.*;
 
+import net.semanlink.util.index.MultiLabelGetter;
 import net.semanlink.util.text.CharConverter;
 import net.semanlink.util.text.WordsInString;
 
@@ -15,6 +16,8 @@ import net.semanlink.util.text.WordsInString;
  * @author fps
  */
 public class MultiLabelIndex2<E> extends MultiLabelIndex<ObjectLabelPair<E>> {
+// BEWARE, this.labelGetter is a label getter<ObjectLabelPair<E>>
+// NOT a label getter<E>
 protected Collator collator;
 
 public MultiLabelIndex2(Iterator<E> resToBeIndexedByLabel, MultiLabelGetter<E> multiLabelGetter, Locale locale) {
@@ -32,13 +35,15 @@ protected MultiLabelIndex2(IndexEntriesCalculator iec, Locale locale) {
 	this.locale = locale;
 	this.collator = Collator.getInstance(this.locale);
 	collator.setStrength(Collator.PRIMARY);
+	// BEWARE, this.labelGetter is a label getter<ObjectLabelPair<E>>
+	// NOT a label getter<E>
 	this.labelGetter = new MultiLabelGetter<ObjectLabelPair<E>>() {
 		public Iterator<String> getLabels(ObjectLabelPair<E> o) { return Collections.singleton(o.getLabel()).iterator(); }
 	};
 	init(labelGetter, iec, locale) ;
 }
 
-protected void addResIterator(Iterator<E> resToBeIndexedByLabel, MultiLabelGetter<E> multiLabelGetter) {
+public void addResIterator(Iterator<E> resToBeIndexedByLabel, MultiLabelGetter<E> multiLabelGetter) {
 	HashSet<ObjectLabelPair<E>> hs = new HashSet<ObjectLabelPair<E>>(); // avoid to have a res indexed by "truc" and "Truc"
 	for (;resToBeIndexedByLabel.hasNext();) {
 		E res = resToBeIndexedByLabel.next();
@@ -73,6 +78,7 @@ protected void addResIterator(Iterator<E> resToBeIndexedByLabel, MultiLabelGette
 			}
 		}
 	}
+	
 	addIterator(hs.iterator());
 }
 

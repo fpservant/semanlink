@@ -5,7 +5,7 @@ import net.semanlink.semanlink.*;
 import net.semanlink.util.Util;
 
 /**
- * Action demandant de setter le lebel d'un kw.
+ * Action demandant de setter le label d'un kw.
  */
 public class Action_SetKwLabel extends BaseAction {
 public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

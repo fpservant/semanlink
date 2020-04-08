@@ -1346,7 +1346,9 @@ public ThesaurusIndex getThesaurusIndex() {
 }
 void computeThesaurusIndex() {
 	// this.thesaurusIndex = new ThesaurusIndex(this); // for ThesaurusIndexOK
-	this.thesaurusIndex = new ThesaurusIndex(this, Locale.getDefault());
+	try {
+		this.thesaurusIndex = new ThesaurusIndex(this, Locale.getDefault());
+	} catch (Exception e) { throw new RuntimeException(e);}
 }
 
 //

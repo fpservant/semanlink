@@ -1,5 +1,5 @@
 /* Created on dec 2012 */
-package net.semanlink.util.index;
+package net.semanlink.util.index_B4_2020_04;
 
 import java.text.Collator;
 import java.util.Comparator;

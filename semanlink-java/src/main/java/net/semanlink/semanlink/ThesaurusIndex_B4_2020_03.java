@@ -10,9 +10,9 @@ import java.util.Set;
 
 import net.semanlink.skos.SKOS;
 import net.semanlink.sljena.JKeyword;
-import net.semanlink.util.index.I18nFriendlyIndexEntries;
+import net.semanlink.util.index_B4_2020_04.I18nFriendlyIndexEntries;
 import net.semanlink.util.index.MultiLabelGetter;
-import net.semanlink.util.index.MultiLabelIndex;
+import net.semanlink.util.index_B4_2020_04.MultiLabelIndex;
 import net.semanlink.util.text.WordsInString;
 
 import org.apache.jena.rdf.model.Model;

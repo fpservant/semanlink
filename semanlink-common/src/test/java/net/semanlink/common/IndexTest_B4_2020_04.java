@@ -5,14 +5,11 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import net.semanlink.util.index.MultiLabelIndex;
-import net.semanlink.util.index.ObjectLabelPair;
-import net.semanlink.util.index.jena.ModelIndexedByLabel;
+import net.semanlink.util.index_B4_2020_04.jena.ModelIndexedByLabel;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -25,7 +22,7 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.RDFS;
 
-public class IndexTest2 {
+public class IndexTest_B4_2020_04 {
 
 private static Model m;
 private static String NS = "http://wwww.semanlink.net/tag/";
@@ -51,7 +48,7 @@ public void setUp() throws Exception {
 public void tearDown() throws Exception {
 }
 
-private static void init() throws Exception {
+private static void init() {
 	m = ModelFactory.createDefaultModel();
 	tag1 = newTag("semanlink", "Semanlink");
 	tag2 = newTag("semantique", "Sémantique");
@@ -70,13 +67,8 @@ private static Resource newTag(String localName, String label) {
 	return tag;
 }
 
-private static ObjectLabelPair<Resource> newOLP(String localName, String label) {
-	Resource tag = newTag(localName, label);
-	return new ObjectLabelPair<Resource>(tag, label);
-}
-
 @Test
-public void wordsAreSortedTest() throws Exception {
+public void wordsAreSortedTest() {
 	checkWordsAreSorted();
 	// add tags and check words are still sorted
 	Resource tag = newTag("SEMANLINK2", "SEMANLINK2");
@@ -86,10 +78,7 @@ public void wordsAreSortedTest() throws Exception {
 	moreTags.add(tag);
 	moreTags.add(tag2);
 	moreTags.add(tag3);
-
-	try (MultiLabelIndex.Update<Resource> up = new MultiLabelIndex.Update<>(index)) {
-		up.addIterator(moreTags.iterator());
-	}
+	index.addIterator(moreTags.iterator());
 	checkWordsAreSorted();
 	
 	String[] words = index.getWords();
@@ -116,18 +105,21 @@ private void checkWordsAreSorted() {
 
 @Test
 public void exactMatch() {	
-	List<ObjectLabelPair<Resource>> l;
+	List<Resource> l;
 	l = index.label2KeywordList("semantique", Locale.FRANCE);
 	assertTrue(l.size() == 1);
-	assertTrue(l.get(0).getObject().equals(tag2));
+	assertTrue(l.get(0).equals(tag2));
 			
 	l = index.label2KeywordList("semantics", Locale.US);
+	for (Resource r : l) {
+		System.out.println(r);
+	}
 	assertTrue(l.size() == 1);
-	assertTrue(l.get(0).getObject().equals(tag2));
+	assertTrue(l.get(0).equals(tag2));
 			
 	l = index.label2KeywordList("web semantic", Locale.FRANCE);
 	assertTrue(l.size() == 1);
-	assertTrue(l.get(0).getObject().equals(tag3));
+	assertTrue(l.get(0).equals(tag3));
 
 	l = index.label2KeywordList("seman", Locale.FRANCE);
 	assertTrue(l.size() == 0);
@@ -135,26 +127,19 @@ public void exactMatch() {
 
 @Test
 public void partialSearch() {
-	Set<ObjectLabelPair<Resource>> x;
-	Set<Resource> xr;
+	Set<Resource> x;
 	
-	// tag2 is returned in 2 different ObjectLabelPairs when searching for, say, "semant"
-	
-	x = index.searchText("SEMant");
+	x = index.searchText("SEM");
 	assertTrue(x.size() == 4);
-	xr = new HashSet<Resource>();
-	for (ObjectLabelPair<Resource> olp : x) {
-		xr.add(olp.getObject());
-	}
-	assertTrue(xr.size() == 3);
+	
+	x = index.searchText("sèm");
+	assertTrue(x.size() == 4);
 
-	x = index.searchText("semantic");
+	x = index.searchText("SEMANTIC");
 	assertTrue(x.size() == 3);
-	xr = new HashSet<Resource>();
-	for (ObjectLabelPair<Resource> olp : x) {
-		xr.add(olp.getObject());
-	}
-	assertTrue(xr.size() == 3);
+
+	x = index.searchText("web");
+	assertTrue(x.size() == 2);
 }
 
 }
