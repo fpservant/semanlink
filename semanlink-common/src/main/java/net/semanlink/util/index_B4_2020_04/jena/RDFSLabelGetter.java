@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.semanlink.util.index.MultiLabelGetter;
+import net.semanlink.util.index.LabelGetter;
 
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.RDFS;
 
-public class RDFSLabelGetter implements MultiLabelGetter<Resource> {
+public class RDFSLabelGetter implements LabelGetter<Resource> {
 private String lang;
 
 public RDFSLabelGetter(String lang) {

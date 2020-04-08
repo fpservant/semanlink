@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import net.semanlink.util.index.MultiLabelGetter;
-import net.semanlink.util.index.MultiLabelIndex;
+import net.semanlink.util.index.LabelGetter;
+import net.semanlink.util.index.LabelIndex;
 import net.semanlink.util.index.ObjectLabelPair;
-import net.semanlink.util.index.MultiLabelIndex.Update;
+import net.semanlink.util.index.LabelIndex.Update;
 
 /**
  * Index a thesaurus by text of words included in tags. 
@@ -22,8 +22,8 @@ import net.semanlink.util.index.MultiLabelIndex.Update;
  * Now replaced by the use of Aho-Corasick algorithm)
  */
 
-public class ThesaurusIndex extends MultiLabelIndex<SLKeyword> {
-protected MultiLabelGetter<SLKeyword> kwLabelGetter;
+public class ThesaurusIndex extends LabelIndex<SLKeyword> {
+protected LabelGetter<SLKeyword> kwLabelGetter;
 
 //
 // CONSTRUCTION AND UPDATES
@@ -33,8 +33,8 @@ ThesaurusIndex(SLModel mod, Locale locale) throws Exception {
 	this(mod.getKWsInConceptsSpaceArrayList().iterator(), mod.getKwLabelGetter(), locale);
 }
 
-ThesaurusIndex(Iterator<SLKeyword> resToBeIndexedByLabel, MultiLabelGetter<SLKeyword> kwLabelGetter, Locale locale) throws Exception {
-	super(resToBeIndexedByLabel, kwLabelGetter, MultiLabelIndex.newI18nFriendlyIndexEntries(locale), locale);
+ThesaurusIndex(Iterator<SLKeyword> resToBeIndexedByLabel, LabelGetter<SLKeyword> kwLabelGetter, Locale locale) throws Exception {
+	super(resToBeIndexedByLabel, kwLabelGetter, LabelIndex.newI18nFriendlyIndexEntries(locale), locale);
 	this.kwLabelGetter = kwLabelGetter;
 }
 

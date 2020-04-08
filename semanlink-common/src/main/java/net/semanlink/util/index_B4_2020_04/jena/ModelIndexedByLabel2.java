@@ -5,7 +5,7 @@ import java.util.Locale;
 
 import net.semanlink.util.index_B4_2020_04.I18nFriendlyIndexEntries;
 import net.semanlink.util.index_B4_2020_04.IndexEntriesCalculator;
-import net.semanlink.util.index.MultiLabelGetter;
+import net.semanlink.util.index.LabelGetter;
 import net.semanlink.util.index_B4_2020_04.MultiLabelIndex2;
 import net.semanlink.util.text.CharConverter;
 import net.semanlink.util.text.WordsInString;
@@ -33,11 +33,11 @@ public ModelIndexedByLabel2(ResIterator resToBeIndexedByLabel, Model model, Loca
 	this(resToBeIndexedByLabel, new RDFSLabelGetter(indexLabelInAnyLang ? null : locale.getLanguage()), model, locale);
 }
 
-public ModelIndexedByLabel2(ResIterator resToBeIndexedByLabel, MultiLabelGetter<Resource> multiLabelGetter, Model model, Locale locale) {
+public ModelIndexedByLabel2(ResIterator resToBeIndexedByLabel, LabelGetter<Resource> multiLabelGetter, Model model, Locale locale) {
 	this(resToBeIndexedByLabel, multiLabelGetter, new I18nFriendlyIndexEntries(new WordsInString(true, true), new CharConverter(locale, "_")), model, locale);
 }
 
-public ModelIndexedByLabel2(ResIterator resToBeIndexedByLabel, MultiLabelGetter<Resource> multiLabelGetter, IndexEntriesCalculator iec, Model model, Locale locale) {
+public ModelIndexedByLabel2(ResIterator resToBeIndexedByLabel, LabelGetter<Resource> multiLabelGetter, IndexEntriesCalculator iec, Model model, Locale locale) {
 	this(iec, model, locale);
 	addResIterator(resToBeIndexedByLabel, multiLabelGetter);
 }

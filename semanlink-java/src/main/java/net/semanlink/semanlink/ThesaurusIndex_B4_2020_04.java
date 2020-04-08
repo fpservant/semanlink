@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import net.semanlink.util.index.MultiLabelGetter;
+import net.semanlink.util.index.LabelGetter;
 import net.semanlink.util.index_B4_2020_04.MultiLabelIndex2;
 import net.semanlink.util.index_B4_2020_04.ObjectLabelPair;
 
@@ -22,7 +22,7 @@ import net.semanlink.util.index_B4_2020_04.ObjectLabelPair;
  */
 
 public class ThesaurusIndex_B4_2020_04 extends MultiLabelIndex2<SLKeyword> {
-protected MultiLabelGetter<SLKeyword> kwLabelGetter;
+protected LabelGetter<SLKeyword> kwLabelGetter;
 
 //
 // CONSTRUCTION AND UPDATES
@@ -36,7 +36,7 @@ ThesaurusIndex_B4_2020_04(SLModel mod, Locale locale) {
 //	this(mod.getKWsInConceptsSpaceArrayList().iterator(), mod.getKwLabelGetter(), locale);
 //}
 
-ThesaurusIndex_B4_2020_04(Iterator<SLKeyword> resToBeIndexedByLabel, MultiLabelGetter<SLKeyword> kwLabelGetter, Locale locale) {
+ThesaurusIndex_B4_2020_04(Iterator<SLKeyword> resToBeIndexedByLabel, LabelGetter<SLKeyword> kwLabelGetter, Locale locale) {
 	super(resToBeIndexedByLabel, kwLabelGetter, locale);
 	this.kwLabelGetter = kwLabelGetter;
 }

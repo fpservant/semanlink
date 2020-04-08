@@ -28,8 +28,8 @@ import net.semanlink.util.text.WordsInString;
  * <p>Originally built for www.semanlink.net, some methods or parameters still have a name based
  * on the fact that this was developed to index keywords (or tags)</p>
  */
-public class MultiLabelIndex<E> extends GenericIndex<ObjectLabelPair<E>> implements IndexInterface<ObjectLabelPair<E>> {
-protected MultiLabelGetter<E> labelGetter;
+public class LabelIndex<E> extends GenericIndex<ObjectLabelPair<E>> implements IndexInterface<ObjectLabelPair<E>> {
+protected LabelGetter<E> labelGetter;
 protected IndexEntriesCalculator indexEntryCalculator;
 protected Locale locale;
 protected Collator collator;
@@ -46,14 +46,14 @@ protected Collator collator;
  * words in a normalized form.
  * @throws Exception 
  */
-public MultiLabelIndex(Iterator<E> items, MultiLabelGetter<E> labelGetter, IndexEntriesCalculator indexEntriesCalculator, Locale locale) throws Exception {
+public LabelIndex(Iterator<E> items, LabelGetter<E> labelGetter, IndexEntriesCalculator indexEntriesCalculator, Locale locale) throws Exception {
 	this(labelGetter, indexEntriesCalculator, locale);
 	try (Update<E> up = new Update<>(this)) {
 		up.addIterator(items);
 	}
 }
 
-public MultiLabelIndex(MultiLabelGetter<E> labelGetter, IndexEntriesCalculator indexEntryCalculator, Locale locale) {
+public LabelIndex(LabelGetter<E> labelGetter, IndexEntriesCalculator indexEntryCalculator, Locale locale) {
 	super();
 	init(labelGetter, indexEntryCalculator, locale);
 }
@@ -69,7 +69,7 @@ public static I18nFriendlyIndexEntries newI18nFriendlyIndexEntries(Locale locale
  * @param indexEntryCalculator tells how to extract words from a label
  * @param locale
  */
-private void init(MultiLabelGetter<E> labelGetter, IndexEntriesCalculator indexEntryCalculator, Locale locale) {
+private void init(LabelGetter<E> labelGetter, IndexEntriesCalculator indexEntryCalculator, Locale locale) {
 	this.labelGetter = labelGetter;
 	this.indexEntryCalculator = indexEntryCalculator; 
 	this.locale = locale;
@@ -82,11 +82,11 @@ private void init(MultiLabelGetter<E> labelGetter, IndexEntriesCalculator indexE
 //
 
 public static class Update<E> implements AutoCloseable {
-	MultiLabelIndex<E> index;
+	LabelIndex<E> index;
 	boolean needToComputeWords = false;
 	boolean needToSortWords = false;
 	
-	public Update(MultiLabelIndex<E> index) {
+	public Update(LabelIndex<E> index) {
 		this.index = index;
 	}
 	
@@ -269,7 +269,7 @@ public Set<ObjectLabelPair<E>> getKeywordsInText(String text) {
 			} // for labels
 			
 			if (isOK) {
-				// System.out.println("MultiLabelIndex " + text + " : " + label);
+				// System.out.println("LabelIndex " + text + " : " + label);
 				hs.add(olp);			
 			}
 		} // for ikws

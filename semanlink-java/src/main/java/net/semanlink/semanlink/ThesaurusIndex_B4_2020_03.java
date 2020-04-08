@@ -11,7 +11,7 @@ import java.util.Set;
 import net.semanlink.skos.SKOS;
 import net.semanlink.sljena.JKeyword;
 import net.semanlink.util.index_B4_2020_04.I18nFriendlyIndexEntries;
-import net.semanlink.util.index.MultiLabelGetter;
+import net.semanlink.util.index.LabelGetter;
 import net.semanlink.util.index_B4_2020_04.MultiLabelIndex;
 import net.semanlink.util.text.WordsInString;
 
@@ -44,7 +44,7 @@ ThesaurusIndex_B4_2020_03(SLModel mod, Locale locale) {
 }
 
 // TODO (?) use Literal (=String + lang) ?
-class KwLabelGetter implements MultiLabelGetter<SLKeyword> {
+class KwLabelGetter implements LabelGetter<SLKeyword> {
 	public Iterator<String> getLabels(SLKeyword o) {
 		JKeyword kw = (JKeyword) o;
 		Resource res = kw.getRes();

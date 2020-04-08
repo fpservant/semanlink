@@ -82,7 +82,7 @@ import net.semanlink.util.YearMonthDay;
  * - to add statements to doc, we use the listener to save the changes
  * - when removing statement, we must handle the save
  */
-import net.semanlink.util.index.MultiLabelGetter;
+import net.semanlink.util.index.LabelGetter;
 public class JModel extends SLModel {
 
 	
@@ -171,7 +171,7 @@ public void setCorrector(ModelCorrector corrector) {
 }
 
 private JKwLabelGetter kwLabelGetter; // use getter
-@Override public MultiLabelGetter<SLKeyword> getKwLabelGetter() { // 2020-04
+@Override public LabelGetter<SLKeyword> getKwLabelGetter() { // 2020-04
 	if (kwLabelGetter == null) {
 		kwLabelGetter = new JKwLabelGetter();
 	}

@@ -8,7 +8,7 @@ import org.apache.jena.rdf.model.*;
 import net.semanlink.util.index_B4_2020_04.I18nFriendlyIndexEntries;
 import net.semanlink.util.index_B4_2020_04.IndexEntriesCalculator;
 import net.semanlink.util.index_B4_2020_04.MultiLabelIndex;
-import net.semanlink.util.index.MultiLabelGetter;
+import net.semanlink.util.index.LabelGetter;
 import net.semanlink.util.text.CharConverter;
 import net.semanlink.util.text.WordsInString;
 
@@ -30,17 +30,17 @@ public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, Model model, Local
 	this(resToBeIndexedByLabel, new RDFSLabelGetter(indexLabelInAnyLang ? null : locale.getLanguage()), model, locale);
 }
 
-public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, MultiLabelGetter<Resource> labelGetter, Model model, Locale locale) {
+public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, LabelGetter<Resource> labelGetter, Model model, Locale locale) {
 	this(resToBeIndexedByLabel, labelGetter, new I18nFriendlyIndexEntries(new WordsInString(true, true), new CharConverter(locale, "_")), model, locale);
 }
 
-public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, MultiLabelGetter<Resource> labelGetter, IndexEntriesCalculator iec, Model model, Locale locale) {
+public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, LabelGetter<Resource> labelGetter, IndexEntriesCalculator iec, Model model, Locale locale) {
 	this(labelGetter, iec, model, locale);
 	addIterator(resToBeIndexedByLabel);
 }
 
 /** addIterator or addCollection must be called after that */
-protected ModelIndexedByLabel(MultiLabelGetter<Resource> labelGetter, IndexEntriesCalculator iec, Model model, Locale locale) {
+protected ModelIndexedByLabel(LabelGetter<Resource> labelGetter, IndexEntriesCalculator iec, Model model, Locale locale) {
 	super();
 	this.model = model;
 	this.locale = locale;

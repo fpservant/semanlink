@@ -69,7 +69,7 @@ import net.semanlink.sljena.modelcorrections.ModelCorrector;
 import net.semanlink.util.CopyFiles;
 import net.semanlink.util.FileUriFormat;
 import net.semanlink.util.YearMonthDay;
-import net.semanlink.util.index.MultiLabelGetter;
+import net.semanlink.util.index.LabelGetter;
 import net.semanlink.util.text.CharConverter;
 import net.semanlink.util.text.WordsInString;
 
@@ -163,7 +163,7 @@ private WebServer getWebServer() { return this.webServer; }
 public SLThesaurus newSLThesaurus(String thUri, String thFilename) { // 2020-04
 	return new SLThesaurusAdapter(thUri, thFilename, getKwLabelGetter());
 }
-abstract public MultiLabelGetter<SLKeyword> getKwLabelGetter(); // 2020-04
+abstract public LabelGetter<SLKeyword> getKwLabelGetter(); // 2020-04
 
 //
 // URI TO DOC OU KW

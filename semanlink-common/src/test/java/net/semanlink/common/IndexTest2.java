@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import net.semanlink.util.index.MultiLabelIndex;
+import net.semanlink.util.index.LabelIndex;
 import net.semanlink.util.index.ObjectLabelPair;
 import net.semanlink.util.index.jena.ModelIndexedByLabel;
 
@@ -87,7 +87,7 @@ public void wordsAreSortedTest() throws Exception {
 	moreTags.add(tag2);
 	moreTags.add(tag3);
 
-	try (MultiLabelIndex.Update<Resource> up = new MultiLabelIndex.Update<>(index)) {
+	try (LabelIndex.Update<Resource> up = new LabelIndex.Update<>(index)) {
 		up.addIterator(moreTags.iterator());
 	}
 	checkWordsAreSorted();

@@ -1,6 +1,6 @@
 package net.semanlink.semanlink;
 
-import net.semanlink.util.index.MultiLabelGetter;
+import net.semanlink.util.index.LabelGetter;
 
 /**
  * Un ensemble de Keywords.
@@ -27,5 +27,5 @@ public interface SLThesaurus extends SLResource {
 	//
 	//
 	
-	public MultiLabelGetter<SLKeyword> getKwLabelGetter();
+	public LabelGetter<SLKeyword> getKwLabelGetter();
 }

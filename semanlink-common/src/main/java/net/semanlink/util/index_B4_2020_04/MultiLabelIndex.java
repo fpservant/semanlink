@@ -3,7 +3,7 @@ package net.semanlink.util.index_B4_2020_04;
 
 import java.util.*;
 
-import net.semanlink.util.index.MultiLabelGetter;
+import net.semanlink.util.index.LabelGetter;
 
 /**
  * Index a thesaurus by the words included in its terms. 
@@ -25,8 +25,8 @@ import net.semanlink.util.index.MultiLabelGetter;
  * <p>Originally built for www.semanlink.net, some methods or parameters still have a name based
  * on the fact that this was developed to index keywords (or tags)</p>
  */
-public class MultiLabelIndex<E> extends GenericIndex<E> implements MultiLabelGetter<E>, IndexInterface<E> {
-protected MultiLabelGetter<E> labelGetter;
+public class MultiLabelIndex<E> extends GenericIndex<E> implements LabelGetter<E>, IndexInterface<E> {
+protected LabelGetter<E> labelGetter;
 protected IndexEntriesCalculator indexEntryCalculator;
 protected Locale locale;
 
@@ -41,14 +41,14 @@ protected Locale locale;
  * @param indexEntriesCalculator tells how to extract index entries from a label. Index entries should typically be
  * words in a normalized form.
  */
-public MultiLabelIndex(Collection<E> items, MultiLabelGetter<E> labelGetter, IndexEntriesCalculator indexEntriesCalculator, Locale locale) {
+public MultiLabelIndex(Collection<E> items, LabelGetter<E> labelGetter, IndexEntriesCalculator indexEntriesCalculator, Locale locale) {
 	init(labelGetter, indexEntriesCalculator, locale);
 	addIterator(items.iterator());
 }
 
-public MultiLabelIndex(Collection<E> items, final LabelGetter<E> labelGetter, IndexEntriesCalculator indexEntriesCalculator, Locale locale) {
+public MultiLabelIndex(Collection<E> items, final SimpleLabelGetter<E> labelGetter, IndexEntriesCalculator indexEntriesCalculator, Locale locale) {
 	this(items, 
-			new MultiLabelGetter<E>() {
+			new LabelGetter<E>() {
 				@Override
 				public Iterator<String> getLabels(E o) {
 					return Collections.singleton(labelGetter.getLabel(o)).iterator();
@@ -69,7 +69,7 @@ public MultiLabelIndex() {}
  * @param indexEntryCalculator tells how to extract words from a label
  * @param locale
  */
-public void init(MultiLabelGetter<E> labelGetter, IndexEntriesCalculator indexEntryCalculator, Locale locale) {
+public void init(LabelGetter<E> labelGetter, IndexEntriesCalculator indexEntryCalculator, Locale locale) {
 	this.labelGetter = labelGetter;
 	this.indexEntryCalculator = indexEntryCalculator; 
 	this.locale = locale;
@@ -198,7 +198,7 @@ private void removeKwLabel(E kw, String label, Locale locale) {
 //
 //
 
-@Override // implements MultiLabelGetter
+@Override // implements LabelGetter
 public Iterator<String> getLabels(E o) { return this.labelGetter.getLabels(o); }
 
 /** return their normalized form */
@@ -301,7 +301,7 @@ public Set<E> getKeywordsInText(String text) {
 			} // for labels
 			
 			if (isOK) {
-				// System.out.println("MultiLabelIndex " + text + " : " + label);
+				// System.out.println("LabelIndex " + text + " : " + label);
 				hs.add(kw);			
 			}
 		} // for ikws

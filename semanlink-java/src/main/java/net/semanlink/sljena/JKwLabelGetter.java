@@ -12,13 +12,13 @@ import org.apache.jena.util.iterator.ExtendedIterator;
 
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.skos.SKOS;
-import net.semanlink.util.index.MultiLabelGetter;
+import net.semanlink.util.index.LabelGetter;
 
-// pff, java doesn't want to implement MultiLabelGetter<SLKeyword> and MultiLabelGetter<Resource>
+// pff, java doesn't want to implement LabelGetter<SLKeyword> and LabelGetter<Resource>
 // at the same time!!! // java sucks
 
 //TODO (?) use Literal (=String + lang) ?
-public class JKwLabelGetter implements MultiLabelGetter<SLKeyword> {
+public class JKwLabelGetter implements LabelGetter<SLKeyword> {
 	@Override public Iterator<String> getLabels(SLKeyword o) {
 		JKeyword kw = (JKeyword) o;
 		Resource res = kw.getRes();
