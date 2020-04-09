@@ -42,7 +42,7 @@ public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, LabelGetter<Resour
 
 public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, LabelGetter<Resource> multiLabelGetter, IndexEntriesCalculator iec, Model model, Locale locale) throws Exception {
 	this(multiLabelGetter, iec, model, locale);
-	try (Update<Resource> up = new Update<>(this)) {
+	try (Update<Resource> up = new Update<>(this, true)) {
 		up.addIterator(resToBeIndexedByLabel);
 	}
 }

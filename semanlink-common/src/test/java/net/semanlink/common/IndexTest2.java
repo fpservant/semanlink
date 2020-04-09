@@ -77,6 +77,11 @@ private static ObjectLabelPair<Resource> newOLP(String localName, String label) 
 
 @Test
 public void wordsAreSortedTest() throws Exception {
+	wordsAreSortedTest(true);
+	wordsAreSortedTest(false);	
+}
+
+private void wordsAreSortedTest(boolean initing) throws Exception {
 	checkWordsAreSorted();
 	// add tags and check words are still sorted
 	Resource tag = newTag("SEMANLINK2", "SEMANLINK2");
@@ -87,15 +92,15 @@ public void wordsAreSortedTest() throws Exception {
 	moreTags.add(tag2);
 	moreTags.add(tag3);
 
-	try (LabelIndex.Update<Resource> up = new LabelIndex.Update<>(index)) {
+	try (LabelIndex.Update<Resource> up = new LabelIndex.Update<>(index, initing)) {
 		up.addIterator(moreTags.iterator());
 	}
 	checkWordsAreSorted();
 	
-	String[] words = index.getWords();
-	for (String w : words) {
-		System.out.println(w);
-	}
+//	String[] words = index.getWords();
+//	for (String w : words) {
+//		System.out.println(w);
+//	}
 	
 	// reset for other tests
 	init();

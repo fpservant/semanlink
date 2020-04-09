@@ -48,7 +48,7 @@ protected Collator collator;
  */
 public LabelIndex(Iterator<E> items, LabelGetter<E> labelGetter, IndexEntriesCalculator indexEntriesCalculator, Locale locale) throws Exception {
 	this(labelGetter, indexEntriesCalculator, locale);
-	try (Update<E> up = new Update<>(this)) {
+	try (Update<E> up = new Update<>(this, true)) {
 		up.addIterator(items);
 	}
 }
@@ -83,11 +83,19 @@ private void init(LabelGetter<E> labelGetter, IndexEntriesCalculator indexEntryC
 
 public static class Update<E> implements AutoCloseable {
 	LabelIndex<E> index;
-	boolean needToComputeWords = false;
-	boolean needToSortWords = false;
+	boolean initing;
+	boolean needToComputeWords;
+	boolean needToSortWords;
 	
-	public Update(LabelIndex<E> index) {
+	/**
+	 * @param index
+	 * @param initing true for an init, or a "big update", false otherwise
+	 */
+	public Update(LabelIndex<E> index, boolean initing) {
 		this.index = index;
+		this.initing = initing;
+		this.needToComputeWords = initing;
+		this.needToSortWords = initing;
 	}
 	
 	@Override public void close() throws Exception {
@@ -102,47 +110,32 @@ public static class Update<E> implements AutoCloseable {
 	
 	// normally called once, or a few times 
 	public void addIterator(Iterator<E> kws) throws Exception {
-		boolean initing = true;
-		needToComputeWords = initing;
+		/// boolean initing = true;
+		/// needToComputeWords = initing;
 		if (index.word2tagsHM == null) index.word2tagsHM = new HashMap<>();
 		for (;kws.hasNext();) {
-			addItem(kws.next(), !initing);
+			addItem(kws.next());
 		}
 	}
 
 	public void addItem(E kw) {
-		addItem(kw, true);
-	}
-
-	/**
-	 * @param kw
-	 * @param updateWords if true, this.words is updated, else not. False is used during construction, in order to avoid
-	 * sorting each time a kw is added to the hashmap: words are sorted only once, at the end.
-	 */
-	protected void addItem(E kw, boolean updateWords) {
 		Iterator<String> labels = index.labelGetter.getLabels(kw);	
-		addLabels(kw, labels, index.locale, updateWords);
+		addLabels(kw, labels, index.locale);
 	}
 
-	/**
-	 * modifies this.hm
-	 * if updateWords, modifies also this.words if needed but, beware, without sorting it
-	 * Returns true iff this.words has been modified (and therefore needs to be sorted) */
-	protected void addLabels(E kw, Iterator<String> labels, Locale locale, boolean updateWords) {
+	public void addLabels(E kw, Iterator<String> labels, Locale locale) {
 		for(;labels.hasNext();) {
-			addLabel(kw, labels.next(), locale, updateWords);
+			addLabel(kw, labels.next(), locale);
 		}
 	}
 	
-	/**
-	 * modifies this.hm
-	 * if updateWords, modifies also this.words if needed but, beware, without sorting it
-	 * Returns true iff this.words has been modified (and therefore needs to be sorted) */
-	public void addLabel(E kw, String label, Locale locale, boolean updateWords) {
+	public void addLabel(E kw, String label, Locale locale) {
 		List<String> wordsInLabel = index.indexEntryCalculator.indexEntries(label, locale);
 		ObjectLabelPair<E> olp = new ObjectLabelPair<>(kw, label);
+		boolean updateWords = !initing;
 		for (int i = 0; i < wordsInLabel.size(); i++) {
 			String word = wordsInLabel.get(i);
+			// if updateWords, modifies also this.words if needed but, beware, without sorting it
 			boolean b = index.addWordEntry(word, olp, updateWords);
 			if (b) needToSortWords = true;
 		}
