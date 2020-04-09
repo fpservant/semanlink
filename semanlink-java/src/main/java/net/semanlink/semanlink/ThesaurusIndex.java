@@ -39,19 +39,19 @@ ThesaurusIndex(Iterator<SLKeyword> resToBeIndexedByLabel, LabelGetter<SLKeyword>
 }
 
 public void deleteKw(SLKeyword kw) throws Exception {
-	try (Update<SLKeyword> up = new Update<>(this, false)) {
+	try (Update<SLKeyword> up = newUpdate(false)) {
 		up.deleteItem(kw);
 	}
 }
 
 public void addKw(SLKeyword kw) {
-	try (Update<SLKeyword> up = new Update<>(this, false)) {
+	try (Update<SLKeyword> up = newUpdate(false)) {
 		up.addItem(kw);
 	} catch (Exception e) { throw new RuntimeException(e) ; }
 }
 
 public void addKw(SLKeyword kw, String label, Locale locale) {
-	try (Update<SLKeyword> up = new Update<>(this, false)) {
+	try (Update<SLKeyword> up = newUpdate(false)) {
 		up.addLabel(kw, label, locale);
 	} catch (Exception e) { throw new RuntimeException(e) ; }
 }

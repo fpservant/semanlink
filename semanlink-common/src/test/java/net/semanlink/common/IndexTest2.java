@@ -92,7 +92,7 @@ private void wordsAreSortedTest(boolean initing) throws Exception {
 	moreTags.add(tag2);
 	moreTags.add(tag3);
 
-	try (LabelIndex.Update<Resource> up = new LabelIndex.Update<>(index, initing)) {
+	try (LabelIndex.Update<Resource> up = index.newUpdate(initing)) {
 		up.addIterator(moreTags.iterator());
 	}
 	checkWordsAreSorted();

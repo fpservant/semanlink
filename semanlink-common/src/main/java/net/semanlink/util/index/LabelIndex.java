@@ -11,19 +11,13 @@ import net.semanlink.util.text.WordsInString;
 /**
  * Index a thesaurus by the words included in its terms. 
  * 
- * <p> Contains both a HashMap (word -> list of things) and a sorted list of the words.
+ * <p> Contains both a HashMap (word -> list of (thing, label)) and a sorted list of the words.
  * The sorted list of words (index entries) allows to search for the beginning of a word. (Should be rewritten using 
  * the TreeMap class?). Searches are performed on these entries considered as simple strings, not "text".
  * The "index entries" should therefore be a normalized form of words 
  * (such as those produced using {@link net.semanlink.util.index.I18nFriendlyIndexEntries I18nFriendlyIndexEntries}).</p>
  *
- * <p>The Index does not store the labels of the items. But labels are often necessary when displaying
- * search results. One way is to have the labels included in the items being indexed. </p>
- * @see net.semanlink.util.index.jena.ModelIndexedByLabel
- * 
- * <p>Note:
- * which label should be displayed in a search result: the one related to the searched terms, or the
- * preferred label of the item found? Well, it depends</p>
+ * <p>The Index store data as couples (item, label). </p>
  * 
  * <p>Originally built for www.semanlink.net, some methods or parameters still have a name based
  * on the fact that this was developed to index keywords (or tags)</p>
@@ -81,6 +75,13 @@ private void init(LabelGetter<E> labelGetter, IndexEntriesCalculator indexEntryC
 // UPDATES
 //
 
+// to update the index, create an Update then add items to it.
+// Update is an AutoClosable: structures are updated on close.
+
+public Update<E> newUpdate(boolean initing) {
+	return new Update<>(this, initing);
+}
+
 public static class Update<E> implements AutoCloseable {
 	LabelIndex<E> index;
 	boolean initing;
@@ -91,7 +92,7 @@ public static class Update<E> implements AutoCloseable {
 	 * @param index
 	 * @param initing true for an init, or a "big update", false otherwise
 	 */
-	public Update(LabelIndex<E> index, boolean initing) {
+	Update(LabelIndex<E> index, boolean initing) {
 		this.index = index;
 		this.initing = initing;
 		this.needToComputeWords = initing;
@@ -183,7 +184,6 @@ protected List<String> label2indexEntries(String label, Locale locale) {
 // @Override // implements IndexInterface
 public Set<ObjectLabelPair<E>> searchText(String text) {
 	List<String> wordsInText = this.indexEntryCalculator.indexEntries(text, locale);
-	Set<ObjectLabelPair<E>> olps = searchWordStarts(wordsInText);
 	return searchWordStarts(wordsInText);
 }
 
