@@ -131,12 +131,12 @@ public static class Update<E> implements AutoCloseable {
 	}
 	
 	public void addLabel(E kw, String label, Locale locale) {
-		List<String> wordsInLabel = index.indexEntryCalculator.indexEntries(label, locale);
+		List<String> wordEntries = index.indexEntryCalculator.indexEntries(label, locale);
 		ObjectLabelPair<E> olp = new ObjectLabelPair<>(kw, label);
 		boolean updateWords = !initing;
-		for (int i = 0; i < wordsInLabel.size(); i++) {
-			String word = wordsInLabel.get(i);
-			// if updateWords, modifies also this.words if needed but, beware, without sorting it
+		for (int i = 0; i < wordEntries.size(); i++) {
+			String word = wordEntries.get(i);
+			// if updateWords, this modifies also this.words if needed but, beware, without sorting it:
 			boolean b = index.addWordEntry(word, olp, updateWords);
 			if (b) needToSortWords = true;
 		}
@@ -150,11 +150,11 @@ public static class Update<E> implements AutoCloseable {
 		Iterator<String> labels = index.labelGetter.getLabels(kw);
 		for(;labels.hasNext();) {
 			String label = labels.next();
-			removeKwLabel(kw, label, index.locale);
+			removeLabel(kw, label, index.locale);
 		}
 	}
 
-	private void removeKwLabel(E kw, String label, Locale locale) {
+	private void removeLabel(E kw, String label, Locale locale) {
 		ObjectLabelPair<E> olp = new ObjectLabelPair<>(kw, label);
 		List<String> wordEntries = index.indexEntryCalculator.indexEntries(label, locale);
 		index.removeEntries(olp, wordEntries);
@@ -294,7 +294,7 @@ public List<ObjectLabelPair<E>> label2KeywordList(String kwLabel, Locale locale)
 	// // They are OK, except if they also contain other words
 	// They are OK if one of their labels matches kwLabel
 	int n = indexEntriesInLabel.size();
-	Collections.sort(indexEntriesInLabel); // to test for equality of lists -- hum, is it a good idea to reoder?
+	Collections.sort(indexEntriesInLabel); // to test for equality of lists -- hum, is it a good idea to reorder?
 	for (int i = alx.size() - 1; i > -1; i--) {
 		ObjectLabelPair<E> kw = alx.get(i);
 		// String label = labelGetter.getLabel(kw);
@@ -316,7 +316,7 @@ public List<ObjectLabelPair<E>> label2KeywordList(String kwLabel, Locale locale)
 		String label = kw.getLabel();
 		List<String> indexEntriesInKW = this.indexEntryCalculator.indexEntries(label, locale);
 		if (indexEntriesInKW.size() > n) continue;
-		Collections.sort(indexEntriesInKW);  // to test for equality of lists -- hum, is it a good idea to reoder?
+		Collections.sort(indexEntriesInKW);  // to test for equality of lists -- hum, is it a good idea to reorder?
 		if (!indexEntriesInKW.equals(indexEntriesInLabel)) {
 			alx.remove(i);
 		}
