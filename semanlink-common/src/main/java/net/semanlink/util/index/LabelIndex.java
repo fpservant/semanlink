@@ -11,16 +11,12 @@ import net.semanlink.util.text.WordsInString;
 /**
  * Index a thesaurus by the words included in its terms. 
  * 
- * <p> Contains both a HashMap (word -> list of (thing, label)) and a sorted list of the words.
+ * <p> Contains both a Map (word -> list of couples (entity, label)) and a sorted list of the words.
  * The sorted list of words (index entries) allows to search for the beginning of a word. (Should be rewritten using 
  * the TreeMap class?). Searches are performed on these entries considered as simple strings, not "text".
  * The "index entries" should therefore be a normalized form of words 
  * (such as those produced using {@link net.semanlink.util.index.I18nFriendlyIndexEntries I18nFriendlyIndexEntries}).</p>
  *
- * <p>The Index store data as couples (item, label). </p>
- * 
- * <p>Originally built for www.semanlink.net, some methods or parameters still have a name based
- * on the fact that this was developed to index keywords (or tags)</p>
  */
 public class LabelIndex<E> extends GenericIndex<ObjectLabelPair<E>> implements IndexInterface<ObjectLabelPair<E>> {
 protected LabelGetter<E> labelGetter;

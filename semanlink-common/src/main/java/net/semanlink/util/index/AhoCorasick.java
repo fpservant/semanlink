@@ -45,6 +45,7 @@ public AhoCorasick(Iterator<E> kws, LabelGetter<E> labelGetter, CharConverter co
 	trie = trieBuilder.build();
 }
 
+/** Extract the tags mentioned in a text. */
 public ArrayList<E> tagList(String text) {
 	 // convert the text to the normalized form
 	text = converter.convert(text);
