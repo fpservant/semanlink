@@ -22,7 +22,7 @@ import net.semanlink.util.index.LabelIndex.Update;
  * Now replaced by the use of Aho-Corasick algorithm)
  */
 
-public class ThesaurusIndex extends LabelIndex<SLKeyword> {
+class ThesaurusIndex extends LabelIndex<SLKeyword> {
 protected LabelGetter<SLKeyword> kwLabelGetter;
 
 //
@@ -61,14 +61,14 @@ public void addKw(SLKeyword kw, String label, Locale locale) {
 // SEARCHING TAGS IN A TEXT
 //
 
-// 2020-04: better to use Aho-Corasick algo !
-
 // TODO PROBLEME DE LOCALE
 /** 
  * Les keywords d'un texte.
  * Si thesaurusUri est non null, ne prend que des kws ds ce thesaurus
  * (TODO : ATTENTION ce filtre ne serait peut être pas être correct si on avait des alias
  * d'un vocab pointant vers un autre vocab)
+ * 
+ * @deprecated 2020-04: use ThesaurusLabel.getKeywordsInText
  */
 
 public Collection<SLKeyword> getKeywordsInText(String text, Locale locale, String thesaurusUri) {
@@ -100,7 +100,7 @@ public Collection<SLKeyword> getKeywordsInText(String text, Locale locale, Strin
 //
 
 // 2020-03 : JUSTE FAIT POUR REIMPLEMENTER CE QUI EXISTE A FCT IDENTIQUE
-/** @deprecated */
+// used by SLModel.kwLabel2KwCreatingItIfNecessary 
 public SLKeyword[] label2Keyword(String kwLabel, Locale locale) {
 	List<ObjectLabelPair<SLKeyword>> alx = label2KeywordList(kwLabel, locale);
 	SLKeyword[] x = new SLKeyword[alx.size()];

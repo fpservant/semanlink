@@ -35,8 +35,7 @@ import net.semanlink.util.text.CharConverter;
 // /semanlink/tag/aho_corasick_algorithm.html
 // https://github.com/robert-bor/aho-corasick
 
-public class AhoCorasicTest {
-
+public class AhoCorasickTest {
 @BeforeClass
 public static void setUpBeforeClass() throws Exception {
 }

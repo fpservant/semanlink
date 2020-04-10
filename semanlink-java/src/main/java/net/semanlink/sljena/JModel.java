@@ -707,8 +707,7 @@ public void addKwProperty(String kwUri, String propertyUri, String propertyValue
 				} else {
 					locale = new Locale(lang);
 				}
-				// this.thesaurusIndex.addKw(kw, propertyValue, locale); // for ThesaurusIndexOK
-				this.thesaurusIndex.addKw(kw, propertyValue, locale);
+				this.thesaurusLabels.addKw(kw, propertyValue, locale);
 			}
 			JFileBiModel bi = getJFileBiModel4Kws(kwUri);
 			bi.add(kwUri, propertyUri, propertyValue, lang);
@@ -740,7 +739,7 @@ public void setKwProperty(String kwUri, String propertyUri, String propertyValue
 			// we remove all the current labels for kws in index
 			// (and add the new ones later below)
 			kw = getKeyword(kwUri);
-			this.thesaurusIndex.deleteKw(kw);
+			this.thesaurusLabels.deleteKw(kw);
 			/*Locale locale = null;
 			if ((lang == null) || ("".equals(lang))) {
 				locale = Locale.getDefault();
@@ -756,7 +755,7 @@ public void setKwProperty(String kwUri, String propertyUri, String propertyValue
 		bi.save();
 		if (isLabelProperty) {
 			// this.thesaurusIndex.addKw(kw); // for ThesaurusIndexOK
-			this.thesaurusIndex.addKw(kw);
+			this.thesaurusLabels.addKw(kw);
 		}
 	} catch (Exception e) { throw new SLRuntimeException(e); }
 }
@@ -1215,7 +1214,7 @@ ArrayList<SLKeyword> getKeywordsList(Resource doc) {
 /** Detruit un keyword. */
 public void delete(SLKeyword kw) {
 	try {
-		getThesaurusIndex().deleteKw(kw);
+		getThesaurusLabels().deleteKw(kw);
 		
 		String kwUri = kw.getURI();
 		JFileBiModel bi = getJFileBiModel4Kws(kwUri);

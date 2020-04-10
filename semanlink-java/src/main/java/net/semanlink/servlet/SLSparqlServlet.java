@@ -26,7 +26,7 @@ import net.semanlink.sljena.*;
 import net.semanlink.sparql.TagDescribeHandlerFactory;
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLModel;
-import net.semanlink.semanlink.ThesaurusIndex;
+import net.semanlink.semanlink.ThesaurusLabels;
 import net.semanlink.servlet.Jsp_Page;
 import net.semanlink.util.index.IndexInterface;
 import net.semanlink.util.index.ObjectLabelPair;
@@ -151,7 +151,7 @@ protected SPARQLEndPoint initSparqlEndPoint(HttpServletRequest req) {
 	
 	uri = slNs + "tagText";
 	PropertyFunctionRegistry.get().put(uri, TextMatchMagicProp.class);
-	TextMatchMagicProp.setIndex(new AdaptedIndex(SLServlet.getSLModel().getThesaurusIndex()));
+	TextMatchMagicProp.setIndex(new AdaptedIndex(SLServlet.getSLModel().getThesaurusLabels()));
 	
 	//
 	// to return the sons in the description of a Tag
@@ -164,14 +164,14 @@ protected SPARQLEndPoint initSparqlEndPoint(HttpServletRequest req) {
 
 // that's a hack
 private static class AdaptedIndex implements IndexInterface<Resource> {
-	ThesaurusIndex thIndex;
-	AdaptedIndex(ThesaurusIndex thIndex) {
-		this.thIndex = thIndex;
+	ThesaurusLabels th;
+	AdaptedIndex(ThesaurusLabels thIndex) {
+		this.th = thIndex;
 	}
 	public Collection<Resource> searchText(String searchString) {
 		// 2020-03
-		// Set<SLKeyword> set = thIndex.searchText(searchString);
-		Set<ObjectLabelPair<SLKeyword>> set = thIndex.searchText(searchString);
+		// Set<SLKeyword> set = th.searchText(searchString);
+		Set<ObjectLabelPair<SLKeyword>> set = th.searchText(searchString);
 		ArrayList<Resource> x = new ArrayList<Resource>(set.size());
 		// Model model = ((JModel) SLServlet.getSLModel()).getKWsModel();
 		for (ObjectLabelPair pair : set) {

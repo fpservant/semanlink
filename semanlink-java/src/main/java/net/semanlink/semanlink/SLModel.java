@@ -113,7 +113,7 @@ private SLDataFolder notesFolder;
 private WebServer webServer;
 private MetadataExtractorManager metadataExtractorManager;
 /** use getter! */
-protected ThesaurusIndex thesaurusIndex;
+protected ThesaurusLabels thesaurusLabels;
 // this is not very good: imagine you're french and you install on a server in the US // TODO
 static public CharConverter converter = new CharConverter(Locale.getDefault());
 static private WordsInString wordsInString = new WordsInString(false, true);
@@ -124,7 +124,7 @@ private boolean isFavoriComputed = false;
 public SLModel() {}
 /** can be called once everything is loaded, to initialize every attributes that are else computed only on request. */
 public void endInit() {
-	this.getThesaurusIndex();
+	this.getThesaurusLabels();
 }
 
 public String toString() { return "SLModel " + getModelUrl(); }
@@ -993,7 +993,7 @@ protected abstract void createKw(String uri, String label, Locale locale) throws
 public SLKeyword doCreateKeyword(String uri, String kwLabel, Locale locale) throws Exception {
 	createKw(uri,kwLabel,locale);
 	SLKeyword kw = getKeyword(uri);
-	this.getThesaurusIndex().addKw(kw, kwLabel, locale);
+	this.getThesaurusLabels().addKw(kw, kwLabel, locale);
 	return kw;
 }
 
@@ -1020,12 +1020,12 @@ public SLKeyword kwLabel2KwCreatingItIfNecessary(String kwLabel, String thesauru
 	} else {
 		return doCreateKeyword(uri,kwLabel,locale);
 	}*/
-	SLKeyword[] kws = getThesaurusIndex().label2Keyword(kwLabel, locale);
+	SLKeyword[] kws = getThesaurusLabels().label2Keyword(kwLabel, locale);
 	if (kws.length == 0) {
 		String uri = kwLabel2UriQuick(kwLabel, thesaurusUri, locale);
 		return doCreateKeyword(uri,kwLabel,locale);
 	} else {
-		// TODO if there are more than one
+		// TODO if there are more than one -- 2020-04 waou, yes TODO. is it the cause of problem when adding new tags from search???
 		return getKeyword(resolveAliasAsUri(kws[0].getURI()));
 	}
 }
@@ -1337,17 +1337,28 @@ abstract public void onNewDoc(SLDocument doc) throws Exception;
  * d'un vocab pointant vers un autre vocab)
  */
 public Collection<SLKeyword> getKeywordsInText(String text, Locale locale, String thesaurusUri) {
-	return getThesaurusIndex().getKeywordsInText(text, locale, thesaurusUri);
+	return getThesaurusLabels().getKeywordsInText(text, locale, thesaurusUri);
 }
 
-public ThesaurusIndex getThesaurusIndex() {
-	if (this.thesaurusIndex == null) computeThesaurusIndex();
-	return this.thesaurusIndex;
+//public ThesaurusIndex getThesaurusIndex() {
+//	if (this.thesaurusIndex == null) computeThesaurusIndex();
+//	return this.thesaurusIndex;
+//}
+//void computeThesaurusIndex() {
+//	// this.thesaurusIndex = new ThesaurusIndex(this); // for ThesaurusIndexOK
+//	try {
+//		this.thesaurusIndex = new ThesaurusIndex(this, Locale.getDefault());
+//	} catch (Exception e) { throw new RuntimeException(e);}
+//}
+
+public ThesaurusLabels getThesaurusLabels() {
+	if (this.thesaurusLabels == null) computeThesaurusLabels();
+	return this.thesaurusLabels;
 }
-void computeThesaurusIndex() {
+void computeThesaurusLabels() {
 	// this.thesaurusIndex = new ThesaurusIndex(this); // for ThesaurusIndexOK
 	try {
-		this.thesaurusIndex = new ThesaurusIndex(this, Locale.getDefault());
+		this.thesaurusLabels = new ThesaurusLabels(this, this.converter, Locale.getDefault());
 	} catch (Exception e) { throw new RuntimeException(e);}
 }
 
@@ -1390,7 +1401,7 @@ public void addAlias(String aliasLabel, String lang, SLKeyword kw) {
 		SLKeyword alias = getKeyword(aliasUri); 
 		
 		// removing the labels of the alias from the index
-		ThesaurusIndex th = getThesaurusIndex();
+		ThesaurusLabels th = getThesaurusLabels();
 		th.deleteKw(alias);
 		
 		// transfering the properties

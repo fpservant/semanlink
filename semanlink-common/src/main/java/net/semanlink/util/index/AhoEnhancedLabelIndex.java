@@ -4,29 +4,53 @@ package net.semanlink.util.index;
 import java.text.Collator;
 import java.util.*;
 
+import org.apache.jena.rdf.model.Resource;
+import org.ahocorasick.trie.Emit;
+import org.ahocorasick.trie.PayloadEmit;
+import org.ahocorasick.trie.PayloadTrie;
+import org.ahocorasick.trie.PayloadTrie.PayloadTrieBuilder;
+import org.ahocorasick.trie.Trie;
+
 import net.semanlink.util.index.I18nFriendlyIndexEntries;
 import net.semanlink.util.text.CharConverter;
 import net.semanlink.util.text.WordsInString;
 
 /**
- * Index a thesaurus by the words included in its terms. 
- * 
- * <p> Contains both a HashMap (word -> list of (thing, label)) and a sorted list of the words.
- * The sorted list of words (index entries) allows to search for the beginning of a word. (Should be rewritten using 
- * the TreeMap class?). Searches are performed on these entries considered as simple strings, not "text".
- * The "index entries" should therefore be a normalized form of words 
- * (such as those produced using {@link net.semanlink.util.index.I18nFriendlyIndexEntries I18nFriendlyIndexEntries}).</p>
- *
- * <p>The Index store data as couples (item, label). </p>
- * 
- * <p>Originally built for www.semanlink.net, some methods or parameters still have a name based
- * on the fact that this was developed to index keywords (or tags)</p>
  */
-public class LabelIndex<E> extends GenericIndex<ObjectLabelPair<E>> implements IndexInterface<ObjectLabelPair<E>> {
-protected LabelGetter<E> labelGetter;
-protected IndexEntriesCalculator indexEntryCalculator;
-protected Locale locale;
-protected Collator collator;
+public class AhoEnhancedLabelIndex<E> extends LabelIndex<E> {
+private Aho<E> aho;
+Aho<E> getAho() { return this.aho ; }
+
+// it looks like we're obliged to recompute the all trie
+// after each update.
+// We could (maybe) save the trieBuilder
+static class Aho<E> {
+	private CharConverter converter;
+	private PayloadTrieBuilder<E> trieBuilder; // use getter
+	private PayloadTrie<E> trie;
+	
+	Aho(CharConverter converter) {
+		this.converter = converter;
+	}
+	
+	CharConverter getConverter() { return this.converter ; }
+	
+	PayloadTrieBuilder<E> getTrieBuilder() {
+		if (trieBuilder == null) {
+			trieBuilder = PayloadTrie.builder();
+			trieBuilder.ignoreOverlaps()
+					// .ignoreCase()
+					.onlyWholeWords();
+					// .onlyWholeWordsWhiteSpaceSeparated(); // no probably cause the conevrter we use
+		}
+		return trieBuilder;
+	}
+	
+	PayloadTrie<E> build() {
+		trie = getTrieBuilder().build();
+		return trie;
+	}
+}
 
 //
 // CONSTRUCTION AND UPDATES
@@ -40,41 +64,20 @@ protected Collator collator;
  * words in a normalized form.
  * @throws Exception 
  */
-public LabelIndex(Iterator<E> items, LabelGetter<E> labelGetter, IndexEntriesCalculator indexEntriesCalculator, Locale locale) throws Exception {
-	this(labelGetter, indexEntriesCalculator, locale);
+public AhoEnhancedLabelIndex(Iterator<E> items, LabelGetter<E> labelGetter, CharConverter converter, Locale locale) throws Exception {
+	this(labelGetter, converter, locale);
 	try (Update<E> up = new Update<>(this, true)) {
 		up.addIterator(items);
 	}
 }
 
-public LabelIndex(LabelGetter<E> labelGetter, IndexEntriesCalculator indexEntryCalculator, Locale locale) {
-	super();
-	init(labelGetter, indexEntryCalculator, locale);
-}
+// hum, converter for super and this not necessarily the same one.
+// AND/OR not necessarily replacing spcaes by "_"
+// TODO
 
-public static I18nFriendlyIndexEntries newI18nFriendlyIndexEntries(Locale locale) {
-	return newI18nFriendlyIndexEntries(new CharConverter(locale, "_"));
-}
-
-public static I18nFriendlyIndexEntries newI18nFriendlyIndexEntries(CharConverter converter) {
-	return new I18nFriendlyIndexEntries(new WordsInString(true, true), converter);
-}
-
-
-
-/**
- * sets the parameters of the indexing.
- * <p>To be used after the default empty constructor.</p>
- * @param labelGetter tells how to get the label of an item
- * @param indexEntryCalculator tells how to extract words from a label
- * @param locale
- */
-private void init(LabelGetter<E> labelGetter, IndexEntriesCalculator indexEntryCalculator, Locale locale) {
-	this.labelGetter = labelGetter;
-	this.indexEntryCalculator = indexEntryCalculator; 
-	this.locale = locale;
-	this.collator = Collator.getInstance(this.locale);
-	collator.setStrength(Collator.PRIMARY);
+public AhoEnhancedLabelIndex(LabelGetter<E> labelGetter, CharConverter converter, Locale locale) {
+	super(labelGetter, newI18nFriendlyIndexEntries(converter), locale);
+	this.aho = new Aho<>(converter);
 }
 
 //
@@ -85,92 +88,50 @@ private void init(LabelGetter<E> labelGetter, IndexEntriesCalculator indexEntryC
 // Update is an AutoClosable: structures are updated on close.
 
 public Update<E> newUpdate(boolean initing) {
-	return new Update<>(this, initing);
+	return new AhoUpdate<>(this, initing);
 }
 
-public static class Update<E> implements AutoCloseable {
-	LabelIndex<E> index;
-	protected final boolean initing;
-	private boolean needToComputeWords;
-	private boolean needToSortWords;
+public static class AhoUpdate<E> extends Update<E> {
+	private Aho<E> aho;
 	
 	/**
 	 * @param index
 	 * @param initing true for an init, or a "big update", false otherwise
 	 */
-	Update(LabelIndex<E> index, boolean initing) {
-		this.index = index;
-		this.initing = initing;
-		this.needToComputeWords = initing;
-		this.needToSortWords = initing;
+	AhoUpdate(AhoEnhancedLabelIndex<E> index, boolean initing) {
+		super(index, initing);
+		this.aho = index.getAho();
+		// PayloadTrieBuilder<E> trieBuilder = index.getAho().getTrieBuilder();
 	}
 	
 	@Override public void close() throws Exception {
-		if (needToComputeWords) {
-			index.setHashMap(index.word2tagsHM); // includes the sorting of words // TODO pas très joli
-		} else {
-			if (needToSortWords) {
-				Collections.sort(index.words);
-			}
-		}
+		super.close();
 	}
 	
-	// normally called once, or a few times 
-	public void addIterator(Iterator<E> kws) throws Exception {
-		/// boolean initing = true;
-		/// needToComputeWords = initing;
-		if (index.word2tagsHM == null) index.word2tagsHM = new HashMap<>();
-		for (;kws.hasNext();) {
-			addItem(kws.next());
+	@Override public void addLabel(E kw, String label, Locale locale) {
+		super.addLabel(kw, label, locale);
+		
+		// todo optim (a lot already computed in super)
+		Iterator<String> labs = index.labelGetter.getLabels(kw);
+		for (;labs.hasNext();) {
+			String lab = labs.next();
+			// convert the labels to a normalized form
+			lab = aho.getConverter().convert(lab);
+			aho.getTrieBuilder().addKeyword(lab, kw);
 		}
+
 	}
 
-	public void addItem(E kw) {
-		Iterator<String> labels = index.labelGetter.getLabels(kw);	
-		addLabels(kw, labels, index.locale);
-	}
-
-	public void addLabels(E kw, Iterator<String> labels, Locale locale) {
-		for(;labels.hasNext();) {
-			addLabel(kw, labels.next(), locale);
-		}
-	}
-	
-	public void addLabel(E kw, String label, Locale locale) {
-		List<String> wordEntries = index.indexEntryCalculator.indexEntries(label, locale);
-		ObjectLabelPair<E> olp = new ObjectLabelPair<>(kw, label);
-		boolean updateWords = !initing;
-		for (int i = 0; i < wordEntries.size(); i++) {
-			String word = wordEntries.get(i);
-			// if updateWords, this modifies also this.words if needed but, beware, without sorting it:
-			boolean b = index.addWordEntry(word, olp, updateWords);
-			if (b) needToSortWords = true;
-		}
-	}
-	
-	//
-	// DELETE
-	//
-	
-	public void deleteItem(E kw) {
-		Iterator<String> labels = index.labelGetter.getLabels(kw);
-		for(;labels.hasNext();) {
-			String label = labels.next();
-			removeLabel(kw, label, index.locale);
-		}
-	}
-
-	public void removeLabel(E kw, String label, Locale locale) {
-		ObjectLabelPair<E> olp = new ObjectLabelPair<>(kw, label);
-		List<String> wordEntries = index.indexEntryCalculator.indexEntries(label, locale);
-		index.removeEntries(olp, wordEntries);
+	@Override public void removeLabel(E kw, String label, Locale locale) {
+		super.removeLabel(kw, label, locale);
+		
 	}
 } // class Update
 
-/** return their normalized form */
-protected List<String> label2indexEntries(String label, Locale locale) {
-	return this.indexEntryCalculator.indexEntries(label, locale);
-}
+///** return their normalized form */
+//protected List<String> label2indexEntries(String label, Locale locale) {
+//	return this.indexEntryCalculator.indexEntries(label, locale);
+//}
 
 /**
  *  Search the items containing all words in text. 
@@ -273,29 +234,11 @@ public Set<ObjectLabelPair<E>> getKeywordsInText(String text) {
 //
 
 // made for semanlink
-
-// Until 2020-04, used by SLModel.kwLabel2KwCreatingItIfNecessary
-
-// 2020-04 comments: the "equality" is seen independltly of the order of words
-// "Justine Gado" == "Gado Justine"
-// 
 /**
- * 
- * Get the tag(s) corresponding to a given label.
- * 
  * The list of ITEMs which have a label "matching exactly" a given label, that is, 
  * composed of exactly the same words (word in the meaning of IndexEntriesCalculator)
  * (but maybe not in the same order).
- * 
- * This is used in particular by the livesearch. Hum, is it? Only when creating tags, I think
- * 
- * WHy this "independent-of-word-order equality"?
- * well, because I seem to be used to it!
- * eg. searching for "sem web" to find "semantic web" or web "sémantique"
- * (in that case, wouldn't heart, as both labels are used for the tag.
- * But when you don't know and are genuinely searching? eg. searching
- * for a person by name, then thinking you should also give firstname)
- * 
+ * <p>to get the tag corresponding to a given label.</p>
  */
 public List<ObjectLabelPair<E>> label2KeywordList(String kwLabel, Locale locale) {
 	List<String> indexEntriesInLabel = this.indexEntryCalculator.indexEntries(kwLabel , locale);

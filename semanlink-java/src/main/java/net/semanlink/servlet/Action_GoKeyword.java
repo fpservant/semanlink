@@ -8,9 +8,20 @@ import net.semanlink.util.Util;
 import net.semanlink.util.servlet.BasicServlet;
 
 
-// VOIR Action_EditTagList : pourquoi les 2 ??????
+// VOIR Action_EditTagList : pourquoi les 2 ?????? -- HUM, l'autre saisie directe sur page edit
+// qu'on a maintenue pour un pb impossibilité de le faire sur certains cas tordus
+// à partir du search.
+//
+// QUELS SONT CES CAS ? 2020-04
+// he ben, c quand le label retourne un KW qui matche
+// - même si l'uri qui serait créée ne matche pas
+// (serait maieux si correspondait seulement au sens de SLModel.kwLabel2KwCreatingItIfNecessary ?)
 
+//
 // ATTENTION MAL NOMME : ds livesearch, appelé en mode edit
+//
+
+// (hum, appelé dans d'autres cas que livesearch ???) // TODO To see
 
 /**
  * Action demandant d'afficher un kw donné par une simple String (son label)
@@ -19,7 +30,7 @@ import net.semanlink.util.servlet.BasicServlet;
  * Au sujet du livesearchform, voir les scripts js liveSearchSubmit4Get et liveSearchSubmit4Post
  * Le livesearchform (suite à highlight + enter ou enter ds la boite de saisie)
  * retourne ds les params :
- * kwhref, qui est l'href du 1er élément de la liste (s'il y en a )
+ * kwhref, qui est l'href du 1er élément de la liste (s'il y en a)
  * q qui est ce qui est saisi ds la boite
  */
 public class Action_GoKeyword extends BaseAction {

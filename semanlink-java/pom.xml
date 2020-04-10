@@ -107,12 +107,5 @@ https://stackoverflow.com/questions/22022114/org-glassfish-jersey-servlet-servle
 			<version>1.3.10</version>
 		</dependency>
 		
-		<!-- https://github.com/robert-bor/aho-corasick -->
-		<dependency>
-		  <groupId>org.ahocorasick</groupId>
-		  <artifactId>ahocorasick</artifactId>
-		  <version>0.6.0</version>
-		</dependency>
-
 	</dependencies>
 </project>

@@ -145,6 +145,11 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 				// locale = Locale.getDefault();
 				locale = null;
 			}
+			// 2020-04 comment: situation is, we've just clicked "create new tag" on the bookmark form
+			// (and things are ok until here: if page already bookmarked, no bookmark form
+			// On bookmarkform, if entering a title that is already used as label
+			// for a tag, we are redirected to page - with the new link to decription added - not too bad)
+			
 			SLKeyword kw = mod.kwLabel2KwCreatingItIfNecessary(kwLabel, mod.getDefaultThesaurus().getURI(), locale);
 			String kwUri = kw.getURI();
 			mod.addKwProperty(kwUri, SLVocab.SL_DESCRIBED_BY_PROPERTY, docOnline.getURI());

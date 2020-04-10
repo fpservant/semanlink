@@ -40,6 +40,15 @@
 				</exclusion>				
 			</exclusions>
 		</dependency>
+		
+		<!-- https://github.com/robert-bor/aho-corasick -->
+        <dependency>
+          <groupId>org.ahocorasick</groupId>
+          <artifactId>ahocorasick</artifactId>
+          <version>0.6.0</version>
+        </dependency>
+
+		
 	</dependencies>
 
 </project>
