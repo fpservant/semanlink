@@ -9,6 +9,7 @@
 <li><a href="https://www.npmjs.com/package/markdown-it-replace-link">markdown-it-replace-link</a></li>
 <li><a href="https://github.com/nagaozen/markdown-it-toc-done-right">markdown-it-toc-done-right</a></li>
 <li><a href="https://github.com/valeriangalliat/markdown-it-anchor">markdown-it-anchor</a></li>
+<li>Aho-Corasick algorithm <a href="https://github.com/robert-bor/aho-corasick">implementation by Robert Bor</a>
 </ul> </li>
 </ul>
 <p>Also,</p><ul><li>the livesearch has been built using code by Bitflux GmbH &lt;devel at bitflux.ch&gt;</li></ul>If I forgot something, please let me know. Thanks to all.</div>

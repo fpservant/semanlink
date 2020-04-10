@@ -5,10 +5,12 @@
 <h1>Release notes</h1>
 <div class="graybox">
 
-<h2>0.7.2 2020-03-xx</h2>
+<h2>0.7.2 2020-04-11</h2>
 <ul>
 <li>Arxiv docs, specific metadata</li>
 <li>Bookmark form simplified</li>
+<li>Use of <a href="https://github.com/robert-bor/aho-corasick">Aho-Corasick algo. implementation</a> to extract tags from a text</li>
+<li>Refactoring of the indexing of thesaurus by words</li>
 </ul>
 
 <h2>0.7.1 2020-03-03</h2>
