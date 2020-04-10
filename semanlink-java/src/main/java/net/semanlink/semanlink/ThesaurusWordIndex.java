@@ -9,7 +9,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import net.semanlink.util.index.LabelGetter;
-import net.semanlink.util.index.LabelIndex;
+import net.semanlink.util.index.WordIndex;
 import net.semanlink.util.index.ObjectLabelPair;
 
 /**
@@ -21,19 +21,19 @@ import net.semanlink.util.index.ObjectLabelPair;
  * Now replaced by the use of Aho-Corasick algorithm)
  */
 
-class ThesaurusIndex extends LabelIndex<SLKeyword> {
+class ThesaurusWordIndex extends WordIndex<SLKeyword> {
 protected LabelGetter<SLKeyword> kwLabelGetter;
 
 //
 // CONSTRUCTION AND UPDATES
 //
 
-ThesaurusIndex(SLModel mod, Locale locale) throws Exception {
+ThesaurusWordIndex(SLModel mod, Locale locale) throws Exception {
 	this(mod.getKWsInConceptsSpaceArrayList().iterator(), mod.getKwLabelGetter(), locale);
 }
 
-ThesaurusIndex(Iterator<SLKeyword> resToBeIndexedByLabel, LabelGetter<SLKeyword> kwLabelGetter, Locale locale) throws Exception {
-	super(resToBeIndexedByLabel, kwLabelGetter, LabelIndex.newI18nFriendlyIndexEntries(locale), locale);
+ThesaurusWordIndex(Iterator<SLKeyword> resToBeIndexedByLabel, LabelGetter<SLKeyword> kwLabelGetter, Locale locale) throws Exception {
+	super(resToBeIndexedByLabel, kwLabelGetter, WordIndex.newI18nFriendlyIndexEntries(locale), locale);
 	this.kwLabelGetter = kwLabelGetter;
 }
 

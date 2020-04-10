@@ -11,7 +11,7 @@ import net.semanlink.util.text.WordsInString;
 
 /**
  * Indexing (object, label) pairs.
- * <p>When compared to LabelIndex (which indexes objects, on several labels),
+ * <p>When compared to WordIndex (which indexes objects, on several labels),
  * this has the advantage of allowing to return the found label.
  * @author fps
  */

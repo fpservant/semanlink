@@ -9,16 +9,18 @@ import net.semanlink.util.text.CharConverter;
 import net.semanlink.util.text.WordsInString;
 
 /**
- * Index a thesaurus by the words included in its terms. 
+ * Index a set of entities by the words of their labels. 
  * 
- * <p> Contains both a Map (word -> list of couples (entity, label)) and a sorted list of the words.
+ * Contains both a Map (word -> list of couples (entity, label)) and a sorted list of the words.
+ * 
  * The sorted list of words (index entries) allows to search for the beginning of a word. (Should be rewritten using 
  * the TreeMap class?). Searches are performed on these entries considered as simple strings, not "text".
+ * 
  * The "index entries" should therefore be a normalized form of words 
- * (such as those produced using {@link net.semanlink.util.index.I18nFriendlyIndexEntries I18nFriendlyIndexEntries}).</p>
+ * (such as those produced using {@link net.semanlink.util.index.I18nFriendlyIndexEntries I18nFriendlyIndexEntries}).
  *
  */
-public class LabelIndex<E> extends GenericIndex<ObjectLabelPair<E>> implements IndexInterface<ObjectLabelPair<E>> {
+public class WordIndex<E> extends GenericWordIndex<ObjectLabelPair<E>> implements WordIndexInterface<ObjectLabelPair<E>> {
 protected LabelGetter<E> labelGetter;
 protected IndexEntriesCalculator indexEntryCalculator;
 protected Locale locale;
@@ -36,14 +38,14 @@ protected Collator collator;
  * words in a normalized form.
  * @throws Exception 
  */
-public LabelIndex(Iterator<E> items, LabelGetter<E> labelGetter, IndexEntriesCalculator indexEntriesCalculator, Locale locale) throws Exception {
+public WordIndex(Iterator<E> items, LabelGetter<E> labelGetter, IndexEntriesCalculator indexEntriesCalculator, Locale locale) throws Exception {
 	this(labelGetter, indexEntriesCalculator, locale);
 	try (Update<E> up = new Update<>(this, true)) {
 		up.addIterator(items);
 	}
 }
 
-public LabelIndex(LabelGetter<E> labelGetter, IndexEntriesCalculator indexEntryCalculator, Locale locale) {
+public WordIndex(LabelGetter<E> labelGetter, IndexEntriesCalculator indexEntryCalculator, Locale locale) {
 	super();
 	init(labelGetter, indexEntryCalculator, locale);
 }
@@ -85,7 +87,7 @@ public Update<E> newUpdate(boolean initing) {
 }
 
 public static class Update<E> implements AutoCloseable {
-	LabelIndex<E> index;
+	WordIndex<E> index;
 	protected final boolean initing;
 	private boolean needToComputeWords;
 	private boolean needToSortWords;
@@ -94,7 +96,7 @@ public static class Update<E> implements AutoCloseable {
 	 * @param index
 	 * @param initing true for an init, or a "big update", false otherwise
 	 */
-	Update(LabelIndex<E> index, boolean initing) {
+	Update(WordIndex<E> index, boolean initing) {
 		this.index = index;
 		this.initing = initing;
 		this.needToComputeWords = initing;
@@ -172,8 +174,8 @@ protected List<String> label2indexEntries(String label, Locale locale) {
  *  Search the items containing all words in text. 
  *  <p>(search for the beginning of words: if text is "sem", returns "semanlink", "semantic web", etc.)</p>
  */
-// @Override // implements IndexInterface
-public Set<ObjectLabelPair<E>> searchText(String text) {
+// @Override // implements WordIndexInterface
+public Set<ObjectLabelPair<E>> string2entities(String text) {
 	List<String> wordsInText = this.indexEntryCalculator.indexEntries(text, locale);
 	return searchWordStarts(wordsInText);
 }
@@ -253,7 +255,7 @@ public Set<ObjectLabelPair<E>> getKeywordsInText(String text) {
 			} // for labels
 			
 			if (isOK) {
-				// System.out.println("LabelIndex " + text + " : " + label);
+				// System.out.println("WordIndex " + text + " : " + label);
 				hs.add(olp);			
 			}
 		} // for ikws

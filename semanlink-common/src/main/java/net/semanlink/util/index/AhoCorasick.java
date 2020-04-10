@@ -12,6 +12,8 @@ import org.ahocorasick.trie.PayloadTrie.PayloadTrieBuilder;
 import net.semanlink.util.text.CharConverter;
 
 /**
+ * Structure allowing to extract entities mentioned in a text.
+ * 
  * @since v0.7.2
  */
 public class AhoCorasick<E> { // 2020-04

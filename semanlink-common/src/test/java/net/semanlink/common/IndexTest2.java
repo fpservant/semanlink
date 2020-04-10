@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import net.semanlink.util.index.LabelIndex;
+import net.semanlink.util.index.WordIndex;
 import net.semanlink.util.index.ObjectLabelPair;
 import net.semanlink.util.index.jena.ModelIndexedByLabel;
 
@@ -92,7 +92,7 @@ private void wordsAreSortedTest(boolean initing) throws Exception {
 	moreTags.add(tag2);
 	moreTags.add(tag3);
 
-	try (LabelIndex.Update<Resource> up = index.newUpdate(initing)) {
+	try (WordIndex.Update<Resource> up = index.newUpdate(initing)) {
 		up.addIterator(moreTags.iterator());
 	}
 	checkWordsAreSorted();
@@ -145,7 +145,7 @@ public void partialSearch() {
 	
 	// tag2 is returned in 2 different ObjectLabelPairs when searching for, say, "semant"
 	
-	x = index.searchText("SEMant");
+	x = index.string2entities("SEMant");
 	assertTrue(x.size() == 4);
 	xr = new HashSet<Resource>();
 	for (ObjectLabelPair<Resource> olp : x) {
@@ -153,7 +153,7 @@ public void partialSearch() {
 	}
 	assertTrue(xr.size() == 3);
 
-	x = index.searchText("semantic");
+	x = index.string2entities("semantic");
 	assertTrue(x.size() == 3);
 	xr = new HashSet<Resource>();
 	for (ObjectLabelPair<Resource> olp : x) {

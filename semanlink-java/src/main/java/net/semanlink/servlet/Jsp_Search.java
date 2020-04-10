@@ -35,7 +35,7 @@ public Jsp_Search(String searchString, HttpServletRequest request) {
 	// we could display the found label in search results,
 	// instead of just the skos:prefered label of the kw
 	ThesaurusLabels th = mod.getThesaurusLabels();
-	Set<ObjectLabelPair<SLKeyword>> set = th.searchText(searchString);
+	Set<ObjectLabelPair<SLKeyword>> set = th.string2entities(searchString);
 	
 	ArrayList<ObjectLabelPair<SLKeyword>> pairs = new ArrayList<>(set.size());
 	pairs.addAll(set);

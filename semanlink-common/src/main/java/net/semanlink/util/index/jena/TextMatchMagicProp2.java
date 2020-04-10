@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.function.Function;
 
-import net.semanlink.util.index.LabelIndex;
+import net.semanlink.util.index.WordIndex;
 import net.semanlink.util.index.ObjectLabelPair;
 
 import org.apache.jena.graph.Node;
@@ -42,9 +42,9 @@ import org.apache.jena.util.iterator.Map1Iterator;
 
 public class TextMatchMagicProp2 extends PropertyFunctionEval
 {
-		private static LabelIndex<Resource> index;
+		private static WordIndex<Resource> index;
 		/** MUST be called */
-		public static void setIndex(LabelIndex<Resource> textIndex) { index = textIndex; }
+		public static void setIndex(WordIndex<Resource> textIndex) { index = textIndex; }
 		
 		public TextMatchMagicProp2() // must be public or Class org.apache.jena.sparql.pfunction.PropertyFunctionFactoryAuto can not access a member of class package net.semanlink.util.jena.TextMatchMagicProp2 with modifiers "protected"
     {
@@ -162,11 +162,11 @@ public class TextMatchMagicProp2 extends PropertyFunctionEval
                                     Var textMatchVar,
                                     String searchString,
                                     String lang,
-                                    LabelIndex<Resource> index,
+                                    WordIndex<Resource> index,
                                     ExecutionContext execCxt)
     {
       	// Iterator<HitLARQ> iter = getIndex(execCxt).search(searchString) ;
-    		Collection<ObjectLabelPair<Resource>> hits = index.searchText(searchString);
+    		Collection<ObjectLabelPair<Resource>> hits = index.string2entities(searchString);
 
          
         HitConverter converter = new HitConverter(binding, match, textMatchVar, lang) ;
@@ -234,11 +234,11 @@ public class TextMatchMagicProp2 extends PropertyFunctionEval
     public QueryIterator boundSubject(Binding binding, 
                                       Node match,
                                       String searchString,
-                                      LabelIndex<Resource> index,
+                                      WordIndex<Resource> index,
                                       ExecutionContext execCxt)
     {
         // HitLARQ hit = getIndex(execCxt).contains(match, searchString) ;
-     		Collection<ObjectLabelPair<Resource>> hits = index.searchText(searchString);
+     		Collection<ObjectLabelPair<Resource>> hits = index.string2entities(searchString);
      		boolean found = false;
 
      		String matchUri = match.getURI(); // MODE 1

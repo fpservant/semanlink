@@ -9,11 +9,11 @@ import java.util.*;
 /**
  * Index a thesaurus by the words included in its terms. 
  * 
- * <p> Contains both a HashMap (word -> list of things) and a sorted list of the words.
+ * Contains both a HashMap (word -> list of things) and a sorted list of the words.
  * The sorted list of words allows to search for the beginning of a word. (Should be rewritten using 
- * the TreeMap class?)</p>
+ * the TreeMap class?)
  */
-public class GenericIndex<E> {
+public class GenericWordIndex<E> {
 protected HashMap<String, List<E>> word2tagsHM;
 /** List of words in tags (in normalized form, cf CharConverter).
  *  Sorted by construction, used for binary search */
@@ -23,12 +23,12 @@ protected ArrayList<String> words;
 // CONSTRUCTION AND UPDATES
 //
 
-public GenericIndex(HashMap<String, List<E>> word2tagsHM) {
+public GenericWordIndex(HashMap<String, List<E>> word2tagsHM) {
 	setHashMap(word2tagsHM);
 }
 
 /** You must call setHashmap after that */
-GenericIndex() {}
+GenericWordIndex() {}
 
 // this includes the update (sorting) of this.words
 final void setHashMap(HashMap<String, List<E>> word2tagsHM) {

@@ -28,7 +28,7 @@ import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLModel;
 import net.semanlink.semanlink.ThesaurusLabels;
 import net.semanlink.servlet.Jsp_Page;
-import net.semanlink.util.index.IndexInterface;
+import net.semanlink.util.index.WordIndexInterface;
 import net.semanlink.util.index.ObjectLabelPair;
 import net.semanlink.util.index.jena.TextMatchMagicProp;
 
@@ -163,15 +163,15 @@ protected SPARQLEndPoint initSparqlEndPoint(HttpServletRequest req) {
 }
 
 // that's a hack
-private static class AdaptedIndex implements IndexInterface<Resource> {
+private static class AdaptedIndex implements WordIndexInterface<Resource> {
 	ThesaurusLabels th;
 	AdaptedIndex(ThesaurusLabels thIndex) {
 		this.th = thIndex;
 	}
-	public Collection<Resource> searchText(String searchString) {
+	public Collection<Resource> string2entities(String searchString) {
 		// 2020-03
 		// Set<SLKeyword> set = th.searchText(searchString);
-		Set<ObjectLabelPair<SLKeyword>> set = th.searchText(searchString);
+		Set<ObjectLabelPair<SLKeyword>> set = th.string2entities(searchString);
 		ArrayList<Resource> x = new ArrayList<Resource>(set.size());
 		// Model model = ((JModel) SLServlet.getSLModel()).getKWsModel();
 		for (ObjectLabelPair pair : set) {

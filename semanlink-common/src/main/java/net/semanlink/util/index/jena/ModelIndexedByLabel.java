@@ -6,8 +6,7 @@ import java.util.Locale;
 import net.semanlink.util.index.I18nFriendlyIndexEntries;
 import net.semanlink.util.index.IndexEntriesCalculator;
 import net.semanlink.util.index.LabelGetter;
-import net.semanlink.util.index.LabelIndex;
-import net.semanlink.util.index.LabelIndex.Update;
+import net.semanlink.util.index.WordIndex;
 import net.semanlink.util.text.CharConverter;
 import net.semanlink.util.text.WordsInString;
 
@@ -19,9 +18,8 @@ import org.apache.jena.rdf.model.Resource;
  * Indexing (Resource, label) pairs.
  * <p>When compared to ModelIndexedByLabel (which indexes Resources, by several labels),
  * this allows to return the found label.
- * @author fps
  */
-public class ModelIndexedByLabel extends LabelIndex<Resource> {
+public class ModelIndexedByLabel extends WordIndex<Resource> {
 protected Model model;
 
 /** Default: uses RDFS.label. Beware, only index the labels in the language given by the Locale
@@ -36,18 +34,17 @@ public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, Model model, Local
 	this(resToBeIndexedByLabel, new RDFSLabelGetter(indexLabelInAnyLang ? null : locale.getLanguage()), model, locale);
 }
 
-public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, LabelGetter<Resource> multiLabelGetter, Model model, Locale locale) throws Exception {
-	this(resToBeIndexedByLabel, multiLabelGetter, new I18nFriendlyIndexEntries(new WordsInString(true, true), new CharConverter(locale, "_")), model, locale);
+public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, LabelGetter<Resource> labelGetter, Model model, Locale locale) throws Exception {
+	this(resToBeIndexedByLabel, labelGetter, new I18nFriendlyIndexEntries(new WordsInString(true, true), new CharConverter(locale, "_")), model, locale);
 }
 
-public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, LabelGetter<Resource> multiLabelGetter, IndexEntriesCalculator iec, Model model, Locale locale) throws Exception {
-	this(multiLabelGetter, iec, model, locale);
+public ModelIndexedByLabel(ResIterator resToBeIndexedByLabel, LabelGetter<Resource> labelGetter, IndexEntriesCalculator iec, Model model, Locale locale) throws Exception {
+	this(labelGetter, iec, model, locale);
 	try (Update<Resource> up = newUpdate(true)) {
 		up.addIterator(resToBeIndexedByLabel);
 	}
 }
 
-/** addIterator or addCollection must be called after that */
 protected ModelIndexedByLabel(LabelGetter<Resource> labelGetter, IndexEntriesCalculator iec, Model model, Locale locale) {
 	super(labelGetter, iec,locale);
 	this.model = model;

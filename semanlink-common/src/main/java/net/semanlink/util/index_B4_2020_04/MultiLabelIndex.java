@@ -221,7 +221,7 @@ protected List<String> label2indexEntries(String label, Locale locale) {
  *  Search the items containing all words in text. 
  *  <p>(search for the beginning of words: if text is "sem", returns "semanlink", "semantic web", etc.)</p>
  */
-@Override // implements IndexInterface
+@Override // implements WordIndexInterface
 public Set<E> searchText(String text) {
 	List<String> wordsInText = this.indexEntryCalculator.indexEntries(text, locale);
 	return searchWordStarts(wordsInText);
@@ -301,7 +301,7 @@ public Set<E> getKeywordsInText(String text) {
 			} // for labels
 			
 			if (isOK) {
-				// System.out.println("LabelIndex " + text + " : " + label);
+				// System.out.println("WordIndex " + text + " : " + label);
 				hs.add(kw);			
 			}
 		} // for ikws

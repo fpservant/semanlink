@@ -112,7 +112,7 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 					
 					// System.out.println("kwuri : " + kwuri);
 					// Il se trouve qu'on peut avoir des alias (ceci dit, uniquement sur le 1er niveau de l'arbre,
-					// voir Jsp_Search et ThesaurusIndex. On ne peut donc faire simplement :
+					// voir Jsp_Search et ThesaurusWordIndex. On ne peut donc faire simplement :
 					// kw = mod.getKeyword(kwuri);
 					kw = mod.resolveAlias(tag);
 	

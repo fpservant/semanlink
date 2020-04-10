@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.function.Function;
 
-import net.semanlink.util.index.IndexInterface;
+import net.semanlink.util.index.WordIndexInterface;
 
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.Node_Literal;
@@ -32,9 +32,9 @@ import org.apache.jena.util.iterator.Map1Iterator;
  */
 public class TextMatchMagicProp extends PropertyFunctionEval
 {
-		private static IndexInterface<Resource> index; // use getter. One by lang ??? TODO
+		private static WordIndexInterface<Resource> index; // use getter. One by lang ??? TODO
 		/** MUST be called */
-		public static void setIndex(IndexInterface<Resource> textIndex) { index = textIndex; }
+		public static void setIndex(WordIndexInterface<Resource> textIndex) { index = textIndex; }
 		public TextMatchMagicProp() // must be public or Class org.apache.jena.sparql.pfunction.PropertyFunctionFactoryAuto can not access a member of class sicg.euro5.magicprop.TextMatch with modifiers "protected"
     {
         // super(PropFuncArgType.PF_ARG_EITHER,
@@ -44,7 +44,7 @@ public class TextMatchMagicProp extends PropertyFunctionEval
     }
 		
 		// @TODO
-		protected IndexInterface<Resource> getIndex(String lang) { return index; }
+		protected WordIndexInterface<Resource> getIndex(String lang) { return index; }
 
     @Override
     public void build(PropFuncArg argSubject, Node predicate, PropFuncArg argObject, ExecutionContext execCxt)
@@ -87,7 +87,7 @@ public class TextMatchMagicProp extends PropertyFunctionEval
         String searchString = searchLit.getLiteralLexicalForm();
         
         // RDCLabelIndex index = euro5Service.rdcLabelIndex(lang);
-        IndexInterface<Resource> index = getIndex(lang);
+        WordIndexInterface<Resource> index = getIndex(lang);
         if (index == null) {
        		// Log.warn(this, "No index for lang " + lang) ;
        		return IterLib.noResults(execCxt) ;
@@ -124,11 +124,11 @@ public class TextMatchMagicProp extends PropertyFunctionEval
     public QueryIterator varSubject(Binding binding, 
                                     Var match,
                                     String searchString,
-                                    IndexInterface<Resource> index,
+                                    WordIndexInterface<Resource> index,
                                     ExecutionContext execCxt)
     {
     		// Iterator<HitLARQ> iter = getIndex(execCxt).search(searchString) ;
-    		Collection<Resource> hits = index.searchText(searchString);
+    		Collection<Resource> hits = index.string2entities(searchString);
 
          
         HitConverter converter = new HitConverter(binding, match) ;
@@ -168,11 +168,11 @@ public class TextMatchMagicProp extends PropertyFunctionEval
     public QueryIterator boundSubject(Binding binding, 
                                       Node match,
                                       String searchString,
-                                      IndexInterface<Resource> index,
+                                      WordIndexInterface<Resource> index,
                                       ExecutionContext execCxt)
     {
         // HitLARQ hit = getIndex(execCxt).contains(match, searchString) ;
-    		Collection<Resource> hits = index.searchText(searchString);
+    		Collection<Resource> hits = index.string2entities(searchString);
      		boolean found = false;
      		String matchUri = match.getURI();
      		for(Resource res : hits) {

@@ -778,7 +778,7 @@ abstract public void setKwProperty(String kwUri, String propertyUri, String obje
 abstract public void setKwProperty(String kwUri, String propertyUri, String propertyValue, String lang);
 
 
-/** true iff values must be indexed by ThesaurusIndex */
+/** true iff values must be indexed by ThesaurusWordIndex */
 public boolean isLabelProperty(String propertyUri) {
 	if (SLVocab.PREF_LABEL_PROPERTY.equals(propertyUri)) return true;
 	if (SLVocab.ALT_LABEL_PROPERTY.equals(propertyUri)) return true; // 2020-04
@@ -1171,7 +1171,7 @@ public ArrayList getKWsInRealSpaceArrayList() {
 
 // j'ai constaté que ceertaisn kws (par ex fps et cocoon) n'avaient pas le rdf:type kw,
 // ce qui fait qu'on ne les trouve pas ds le livesearch
-// (ils ne sont pas dans le ThesaurusIndex) // WHY ???
+// (ils ne sont pas dans le ThesaurusWordIndex) // WHY ???
 // Pour faire la liste de ces cas
 public ArrayList debugRealKWsNotInConceptSpace() {
 	ArrayList x = new ArrayList();
@@ -1326,7 +1326,7 @@ abstract public void onNewDoc(SLDocument doc) throws Exception;
 /**
 
 //
-// KEYWORD D'UN TEXTE / ThesaurusIndex
+// KEYWORD D'UN TEXTE / ThesaurusWordIndex
 //
 
 
@@ -1340,14 +1340,14 @@ public Collection<SLKeyword> getKeywordsInText(String text, Locale locale, Strin
 	return getThesaurusLabels().getKeywordsInText(text, locale, thesaurusUri);
 }
 
-//public ThesaurusIndex getThesaurusIndex() {
+//public ThesaurusWordIndex getThesaurusIndex() {
 //	if (this.thesaurusIndex == null) computeThesaurusIndex();
 //	return this.thesaurusIndex;
 //}
 //void computeThesaurusIndex() {
-//	// this.thesaurusIndex = new ThesaurusIndex(this); // for ThesaurusIndexOK
+//	// this.thesaurusIndex = new ThesaurusWordIndex(this); // for ThesaurusIndexOK
 //	try {
-//		this.thesaurusIndex = new ThesaurusIndex(this, Locale.getDefault());
+//		this.thesaurusIndex = new ThesaurusWordIndex(this, Locale.getDefault());
 //	} catch (Exception e) { throw new RuntimeException(e);}
 //}
 
@@ -1356,7 +1356,7 @@ public ThesaurusLabels getThesaurusLabels() {
 	return this.thesaurusLabels;
 }
 void computeThesaurusLabels() {
-	// this.thesaurusIndex = new ThesaurusIndex(this); // for ThesaurusIndexOK
+	// this.thesaurusIndex = new ThesaurusWordIndex(this); // for ThesaurusIndexOK
 	try {
 		this.thesaurusLabels = new ThesaurusLabels(this, this.converter, Locale.getDefault());
 	} catch (Exception e) { throw new RuntimeException(e);}

@@ -1,39 +1,24 @@
 /* Created on 16 mai 2005 */
 package net.semanlink.semanlink;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import org.ahocorasick.trie.PayloadEmit;
-import org.ahocorasick.trie.PayloadTrie;
-import org.ahocorasick.trie.PayloadTrie.PayloadTrieBuilder;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ResIterator;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.vocabulary.RDF;
-
-import net.semanlink.sljena.JKwLabelGetter;
 import net.semanlink.util.index.AhoCorasick;
-import net.semanlink.util.index.IndexInterface;
-import net.semanlink.util.index.LabelGetter;
-import net.semanlink.util.index.LabelIndex;
 import net.semanlink.util.index.ObjectLabelPair;
-import net.semanlink.util.index.LabelIndex.Update;
+import net.semanlink.util.index.WordIndexInterface;
 import net.semanlink.util.text.CharConverter;
 
 /**
  * Structures used for the handling of tag labels
  * 
- * @since 0.7.2 (2020-04), we only had ThesaurusIndex (inverted index: words in tags -> (tag, label))
+ * @since 0.7.2 (2020-04), we only had ThesaurusWordIndex (inverted index: words in tags -> (tag, label))
  * We now also use a Aho-Corasick Trie to search for tag labels in text.
  */
-public class ThesaurusLabels implements IndexInterface<ObjectLabelPair<SLKeyword>> {
-private ThesaurusIndex thIndex;
+public class ThesaurusLabels implements WordIndexInterface<ObjectLabelPair<SLKeyword>> {
+private ThesaurusWordIndex thIndex;
 private AhoCorasick<SLKeyword> aho;
 
 private SLModel mod;
@@ -47,7 +32,7 @@ ThesaurusLabels(SLModel mod, CharConverter converter, Locale locale) throws Exce
 	this.mod = mod;
 	this.converter = converter;
 	List<SLKeyword> kws = mod.getKWsInConceptsSpaceArrayList();
-	thIndex = new ThesaurusIndex(kws.iterator(), mod.getKwLabelGetter(), locale);
+	thIndex = new ThesaurusWordIndex(kws.iterator(), mod.getKwLabelGetter(), locale);
 	aho = new AhoCorasick<>(kws.iterator(), mod.getKwLabelGetter(), converter);
 }
 
@@ -73,9 +58,9 @@ public void addKw(SLKeyword kw, String label, Locale locale) {
 //
 //
 
-@Override // implements IndexInterface<ObjectLabelPair<SLKeyword>>
-public Set<ObjectLabelPair<SLKeyword>> searchText(String searchString) {
-	return thIndex.searchText(searchString);
+@Override // implements WordIndexInterface<ObjectLabelPair<SLKeyword>>
+public Set<ObjectLabelPair<SLKeyword>> string2entities(String searchString) {
+	return thIndex.string2entities(searchString);
 }
 
 //
