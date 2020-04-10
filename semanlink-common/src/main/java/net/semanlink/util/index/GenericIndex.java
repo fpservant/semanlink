@@ -91,8 +91,6 @@ protected void removeEntries(E kw, List<String> wordEntries) {
 	}	
 }
 
-
-
 //
 // GETS
 //

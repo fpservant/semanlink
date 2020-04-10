@@ -18,6 +18,7 @@ import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.vocabulary.RDF;
 
 import net.semanlink.sljena.JKwLabelGetter;
+import net.semanlink.util.index.AhoCorasick;
 import net.semanlink.util.index.IndexInterface;
 import net.semanlink.util.index.LabelGetter;
 import net.semanlink.util.index.LabelIndex;
@@ -33,7 +34,7 @@ import net.semanlink.util.text.CharConverter;
  */
 public class ThesaurusLabels implements IndexInterface<ObjectLabelPair<SLKeyword>> {
 private ThesaurusIndex thIndex;
-private AhoCorasickTagExtractor<SLKeyword> aho;
+private AhoCorasick<SLKeyword> aho;
 
 private SLModel mod;
 private CharConverter converter;
@@ -47,64 +48,12 @@ ThesaurusLabels(SLModel mod, CharConverter converter, Locale locale) throws Exce
 	this.converter = converter;
 	List<SLKeyword> kws = mod.getKWsInConceptsSpaceArrayList();
 	thIndex = new ThesaurusIndex(kws.iterator(), mod.getKwLabelGetter(), locale);
-	aho = new AhoCorasickTagExtractor<>(kws.iterator(), mod.getKwLabelGetter(), converter);
+	aho = new AhoCorasick<>(kws.iterator(), mod.getKwLabelGetter(), converter);
 }
 
-private AhoCorasickTagExtractor<SLKeyword> newAho() {
-	return new AhoCorasickTagExtractor<>(mod.getKWsInConceptsSpaceArrayList().iterator(), mod.getKwLabelGetter(), converter);
+private AhoCorasick<SLKeyword> newAho() {
+	return new AhoCorasick<>(mod.getKWsInConceptsSpaceArrayList().iterator(), mod.getKwLabelGetter(), converter);
 }
-
-
-class AhoCorasickTagExtractor<E> {
-	//private Model kwsModel;
-	//private JKwLabelGetter labelGetter;
-	private CharConverter converter;
-	private PayloadTrie<E> trie;
-	
-	AhoCorasickTagExtractor(Iterator<E> kws, LabelGetter<E> labelGetter, CharConverter converter) {
-	//	this.kwsModel = kwsModel;
-	//	this.labelGetter = labelGetter;
-		this.converter = converter;
-		
-		// we do not use ignoreCase, because we also want to handle diacritics.
-		// So we store normalized (lowercase wo diacritics) labels in the Trie,
-		// and we also normalize the text we want to scan.
-	
-		PayloadTrieBuilder<E> trieBuilder = PayloadTrie.builder();
-		trieBuilder.ignoreOverlaps()
-				// .ignoreCase()
-				.onlyWholeWords();
-				// .onlyWholeWordsWhiteSpaceSeparated();
-		
-		// ResIterator kws = kwsModel.listSubjectsWithProperty(RDF.type, kwsModel.getResource(SLSchema.Tag.getURI()));	
-		for(;kws.hasNext();) {
-			E kw = kws.next();
-			Iterator<String> labs = labelGetter.getLabels(kw);
-			for (;labs.hasNext();) {
-				String lab = labs.next();
-				// convert the labels to a normalized form
-				lab = converter.convert(lab);
-				trieBuilder.addKeyword(lab, kw);
-			}
-		}
-		trie = trieBuilder.build();
-	}
-
-	public ArrayList<E> tagList(String text) {
-		 // convert the text to the normalized form
-		text = converter.convert(text);
-		Collection<PayloadEmit<E>> emits = trie.parseText(text);
-		HashSet<E> tags = new HashSet<>();
-		for (PayloadEmit<E> emit : emits) {
-			// System.out.println(emit.getKeyword() + " : " + emit.getPayload() + " pos: " + emit.getStart() + "/" + emit.getEnd());
-			tags.add(emit.getPayload());
-		}
-		ArrayList<E> x = new ArrayList<>();
-		x.addAll(tags);
-		return x;
-	}
-} // AhoCorasickTagExtractor
-
 public void deleteKw(SLKeyword kw) throws Exception {
 	thIndex.deleteKw(kw);
 	this.aho = newAho();

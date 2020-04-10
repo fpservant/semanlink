@@ -11,7 +11,6 @@ import java.util.Set;
 import net.semanlink.util.index.LabelGetter;
 import net.semanlink.util.index.LabelIndex;
 import net.semanlink.util.index.ObjectLabelPair;
-import net.semanlink.util.index.LabelIndex.Update;
 
 /**
  * Index a thesaurus by text of words included in tags. 
@@ -72,7 +71,6 @@ public void addKw(SLKeyword kw, String label, Locale locale) {
  */
 
 public Collection<SLKeyword> getKeywordsInText(String text, Locale locale, String thesaurusUri) {
-	// Set<SLKeyword> hs = getKeywordsInText(text);
 	Set<ObjectLabelPair<SLKeyword>> hs = getKeywordsInText(text);
 	
 	ArrayList<SLKeyword> al = new ArrayList<SLKeyword>(hs.size());
