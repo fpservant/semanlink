@@ -20,6 +20,11 @@ import net.semanlink.util.text.WordsInString;
  * (such as those produced using {@link net.semanlink.util.index.I18nFriendlyIndexEntries I18nFriendlyIndexEntries}).
  *
  */
+
+//
+// WHEN RETURNING LISTS, BEWARE TO NOT DIRECTLY RETURN A LIST FROM THE INDEX THAT COULD BE MODIFIED EXTERNALLY !!!
+//
+
 public class WordIndex<E> extends GenericWordIndex<ObjectLabelPair<E>> implements WordIndexInterface<ObjectLabelPair<E>> {
 protected LabelGetter<E> labelGetter;
 protected IndexEntriesCalculator indexEntryCalculator;
@@ -57,8 +62,6 @@ public static I18nFriendlyIndexEntries newI18nFriendlyIndexEntries(Locale locale
 public static I18nFriendlyIndexEntries newI18nFriendlyIndexEntries(CharConverter converter) {
 	return new I18nFriendlyIndexEntries(new WordsInString(true, true), converter);
 }
-
-
 
 /**
  * sets the parameters of the indexing.
@@ -183,6 +186,8 @@ public Set<ObjectLabelPair<E>> string2entities(String text) {
 
 /** 
  * for semanlink: Les keywords extraits d'un texte.
+ * 
+ * @deprecated use AhoCorasick instead
  */
 // TODO CHANGE FOR AHO and cette version a été blindly updated
 public Set<ObjectLabelPair<E>> getKeywordsInText(String text) {
@@ -274,7 +279,7 @@ public Set<ObjectLabelPair<E>> getKeywordsInText(String text) {
 
 // Until 2020-04, used by SLModel.kwLabel2KwCreatingItIfNecessary
 
-// 2020-04 comments: the "equality" is seen independltly of the order of words
+// 2020-04 comments: the "equality" is seen independenltly of the order of words
 // "Justine Gado" == "Gado Justine"
 // 
 /**
@@ -301,10 +306,8 @@ public List<ObjectLabelPair<E>> label2KeywordList(String kwLabel, Locale locale)
 	if (alx.size() == 0) return alx;
 	
   // kws in alx contain all the words (with more than 2 letters) in kwLabel
-	// // This comment was when we were dealing with one label only
-	// // They are OK, except if they also contain other words
-	// They are OK if one of their labels matches kwLabel
-	int n = indexEntriesInLabel.size();
+	// A kw in alx OK if one of its labels matches kwLabel exactly
+	int n = indexEntriesInLabel.size(); // nb of words in kwLabel
 	Collections.sort(indexEntriesInLabel); // to test for equality of lists -- hum, is it a good idea to reorder?
 	for (int i = alx.size() - 1; i > -1; i--) {
 		ObjectLabelPair<E> kw = alx.get(i);
@@ -326,10 +329,13 @@ public List<ObjectLabelPair<E>> label2KeywordList(String kwLabel, Locale locale)
 
 		String label = kw.getLabel();
 		List<String> indexEntriesInKW = this.indexEntryCalculator.indexEntries(label, locale);
-		if (indexEntriesInKW.size() > n) continue;
-		Collections.sort(indexEntriesInKW);  // to test for equality of lists -- hum, is it a good idea to reorder?
-		if (!indexEntriesInKW.equals(indexEntriesInLabel)) {
+		if (indexEntriesInKW.size() != n) { // 2 lists of words have different size 
 			alx.remove(i);
+		} else {
+			Collections.sort(indexEntriesInKW);  // to test for equality of lists -- hum, is it a good idea to reorder?
+			if (!indexEntriesInKW.equals(indexEntriesInLabel)) {
+				alx.remove(i);
+			}
 		}
 	}
 	return alx;
@@ -349,15 +355,19 @@ public List<ObjectLabelPair<E>> label2KeywordList(String kwLabel, Locale locale)
  * @param words if list is empty, returns an empty list
  * @return
  */
-private List<ObjectLabelPair<E>> andOfWords(List<String> words) {
+// BEWARE, WE MUST RETURN A COPY OF THE CONTENT TO AVOID MODIFYING word2tagsHM !!!
+private List<ObjectLabelPair<E>> andOfWords(List<String> words) { // 2020-04 TODO : si un seul mot, optim
 	int n = words.size();
 	if (n == 0) return new ArrayList<>(0);
 	String word = words.get(0);
 	List<ObjectLabelPair<E>> kws = word2tagsHM.get(word);
 	if ((kws == null) || (kws.size() == 0)) return new ArrayList<>(0);
+	// NO, don't do that, see next line 
+	// if (n == 1) return kws;
 	// we make a clone of kws (in order to not modify kws!)
 	ArrayList<ObjectLabelPair<E>> alx = new ArrayList<>(kws.size());
 	alx.addAll(kws);
+	if (n == 1) return alx; // now we may
 	for (int iword = 1; iword < n; iword++) {
 		word = words.get(iword);
 		kws = word2tagsHM.get(word);
