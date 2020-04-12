@@ -4,6 +4,7 @@ import java.util.Locale;
 import javax.servlet.http.*;
 import org.apache.struts.action.*;
 import net.semanlink.semanlink.*;
+import net.semanlink.semanlink.SLModel.Label2KeywordMatching;
 import net.semanlink.util.Util;
 import net.semanlink.util.servlet.BasicServlet;
 
@@ -116,29 +117,11 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 					// kw = mod.getKeyword(kwuri);
 					kw = mod.resolveAlias(tag);
 	
-					/*String whatToDo = request.getParameter("actionprop");
-					String targetUri = request.getParameter("targeturi");
-					if ("add2doc".equals(whatToDo)) {
-						SLDocument doc = mod.getDocument(targetUri);
-						mod.addKeyword(doc, kw);
-						BaseAction.getJsp_Document(doc, request);
-					} else if ("add2parents".equals(whatToDo)) {
-						SLKeyword targetKw = mod.getKeyword( targetUri) ;
-						mod.addChild(kw, targetKw);
-						request.setAttribute("net.semanlink.servlet.jsp", new Jsp_Keyword(targetKw, request));
-					} else if ("add2children".equals(whatToDo)) {
-						SLKeyword targetKw = mod.getKeyword( targetUri) ;
-						mod.addChild(targetKw, kw);
-						request.setAttribute("net.semanlink.servlet.jsp", new Jsp_Keyword(targetKw, request));
-					} else { // go kw
-						request.setAttribute("net.semanlink.servlet.jsp", new Jsp_Keyword(kw, request));
-					}*/
 				}			
 			} // livesearchform avec action sur la liste trouvée
 		} 
 		
-		if (!isActionOnFoundList) {
-			// request.setCharacterEncoding("UTF-8"); // TODO
+		if (!isActionOnFoundList) { // we have a label, and have to convert it to a tag
 			String kwLabel = request.getParameter("kw"); // old "go" form
 			if (kwLabel == null) kwLabel = request.getParameter("q"); // live search form
 			if (kwLabel == null) kwLabel = ""; // to avoid an exception - but when does it happen? It does // 2020-01
@@ -150,37 +133,25 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 	  		if (kwUri != null) kwUri = mod.kwLabel2UriQuick(kwLabel, mod.getDefaultThesaurus().getURI(), null); // in this case, we'll just go to an unexisting kw
 	  		kw = mod.getKeyword(kwUri);
 	  	} else {
-				kw = mod.kwLabel2KwCreatingItIfNecessary(kwLabel, mod.getDefaultThesaurus().getURI(), null); // optim possible
+	  		// 2020-04 pfff, fatigue
+	  		Label2KeywordMatching match = mod.label2KeywordMatch(kwLabel, mod.getDefaultThesaurus().getURI(), null);
+	  		SLKeyword[] kws =  match.getKwsCreatingIfNecessary();
+	  		if (kws.length > 0) {
+	  			kw = kws[0];
+	  		} else { // kwuri exists, but not linked to label. pfff... // 2020-04 WHAT TODO?
+	  			String kwUri = match.label2Uri();
+	  			kw = mod.getKeyword(kwUri);
+	  		}
+	  		
 	  	}
 		}
 		
+		//
 		// At this point, kw not null (but maybe doesn't exist -- only in the case !edit)
+		//
 		
 		String whatToDo = request.getParameter("actionprop");
 		String targetUri = request.getParameter("targeturi"); // HUM this is old stuff - not the 2020-02 TagAndTag
-		/*
-		// This was before 2007-01:
-		// everything OK, except that we get urls such as "..../gokeyword.do" in the browser nav box
-		// DON'T DELETE
-		if ("add2doc".equals(whatToDo)) {
-			SLDocument doc = mod.getDocument(targetUri);
-			mod.addKeyword(doc, kw);
-			BaseAction.getJsp_Document(doc, request);
-
-		} else if ("add2parents".equals(whatToDo)) {
-			SLKeyword targetKw = mod.getKeyword( targetUri) ;
-			mod.addChild(kw, targetKw);
-			request.setAttribute("net.semanlink.servlet.jsp", new Jsp_Keyword(targetKw, request));
-
-		} else if ("add2children".equals(whatToDo)) {
-			SLKeyword targetKw = mod.getKeyword( targetUri) ;
-			mod.addChild(targetKw, kw);
-			request.setAttribute("net.semanlink.servlet.jsp", new Jsp_Keyword(targetKw, request));
-
-		} else { // go kw
-			request.setAttribute("net.semanlink.servlet.jsp", new Jsp_Keyword(kw, request));
-		}
-		*/
 
 		// POST REDIRECT 
 		// we want to display a bookmarkable url (the one of the resource we modify) after a post

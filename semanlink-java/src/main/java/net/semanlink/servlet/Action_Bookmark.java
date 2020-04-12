@@ -16,6 +16,7 @@ import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLModel;
 import net.semanlink.semanlink.SLUtils;
 import net.semanlink.semanlink.SLVocab;
+import net.semanlink.semanlink.SLModel.Label2KeywordMatching;
 import net.semanlink.sljena.JenaUtils;
 import net.semanlink.util.Util;
 
@@ -135,31 +136,69 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 			// CREATION OF A TAG FROM THE URI OF A BOOKMARK
 			//
 			
+			// 2020-04 comment: situation is, we've just clicked "create new tag" on the bookmark form
+			// (and things are ok until here: if page already bookmarked, no bookmark form)
+			// If title entered on bookmark form is already used as label
+			// for a tag,
+			// if used only for on tag, we are redirected to tag'spage - with the new link to decription added - not too bad)
+			// if used for several tags, redirected to first one, with no change to tag (should be improved)
+			
 			String kwLabel = title;
 			if (kwLabel == null) return error(mapping, request, "No label for tag");
 			Locale locale = null;
 			if (lang != null) {
 				locale = new Locale(lang);
-			} else {
-				// 2017-08
-				// locale = Locale.getDefault();
-				locale = null;
 			}
-			// 2020-04 comment: situation is, we've just clicked "create new tag" on the bookmark form
-			// (and things are ok until here: if page already bookmarked, no bookmark form
-			// On bookmarkform, if entering a title that is already used as label
-			// for a tag, we are redirected to page - with the new link to decription added - not too bad)
 			
-			SLKeyword kw = mod.kwLabel2KwCreatingItIfNecessary(kwLabel, mod.getDefaultThesaurus().getURI(), locale);
-			String kwUri = kw.getURI();
-			mod.addKwProperty(kwUri, SLVocab.SL_DESCRIBED_BY_PROPERTY, docOnline.getURI());
-			if (comment != null) mod.addKwProperty(kwUri, SLVocab.COMMENT_PROPERTY, comment, lang); // si on était sûr que c'est un new kw, on pourrait faire set seulement
+			String thesaurusUri = mod.getDefaultThesaurus().getURI();
+			Label2KeywordMatching match = mod.label2KeywordMatch(kwLabel, thesaurusUri, locale);
+			
+			
+			SLKeyword[] kws = match.existingMatches();
+			
+			
+			
+			
+			String kwUri = null;
+			if (kws.length == 0) {
+				// alreadyExisted = false;
+				
+				// kwLabel doesn't match any existing tag
+				// try to create one. 
+				
+				SLKeyword kw = match.create();
+				if (kw != null) { // created
+					kwUri = kw.getURI();
+					mod.addKwProperty(kwUri, SLVocab.SL_DESCRIBED_BY_PROPERTY, docOnline.getURI());
+					if (comment != null) mod.setKwProperty(kwUri, SLVocab.COMMENT_PROPERTY, comment, lang); 		
+				} else {
+					// what would have been the uri of the created kw, but that already exixts
+					// just to go to it
+					// we should give a alert // TODO
+					kwUri = match.label2Uri();
+				}
+			} else {
+				// already existed
+				if (kws.length == 1) {
+					// a kw corresponding to label already existed, and there is only one
+					// Let's add the SL_DESCRIBED_BY_PROPERTY to it
+					// (typical case: create kw from a wikipedia page, and there were already such a kw:
+					// let's link it to wikipedia)
+					kwUri = kws[0].getURI();
+					mod.addKwProperty(kwUri, SLVocab.SL_DESCRIBED_BY_PROPERTY, docOnline.getURI());
+					// add, pas set seulement // BOF TODO
+					if (comment != null) mod.addKwProperty(kwUri, SLVocab.COMMENT_PROPERTY, comment, lang); 
 
-			redirectURL = HTML_Link.getTagURL(Util.getContextURL(request), kwUri, false, ".html");
+				} else {
+					// BOF, should go to a page with a list of 2 kws? And then?
+					// TODO CHANGE
+					// for now, we go to the first of the kws and do nothing (?)
+					// TODO WE SHOULD AT LEAST GIVE A MESSAGE
+					kwUri = kws[0].getURI();
 
-
-
-
+				}				
+			}
+			redirectURL = HTML_Link.getTagURL(Util.getContextURL(request), kwUri, false, ".html");						
 
 		} else {
 			
@@ -400,31 +439,4 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 		return error(mapping, request, e );
 	}
 } // end execute
-
-/** si le HTMLPageDownload est présent ds le Form_Bookmark, le prend, sinon le calcule.
- *  N'y a-t-il pas un pb si on a déjà fait un HTMLPageDownload sur un autre doc, puis
- *  qu'il n'y en a pas de remis au dernier apple ? Si, surement : il doit faloir remettre
- * à vide le HTMLPageDownload de Form_Bookmark une fois qu'il est consommé. Ceci est fait en fin
- * de l'execute
- * @param bookmarkForm
- * @return
- * @throws URISyntaxException 
- * @throws MalformedURLException
- * @throws IOException
- */
-/*private HTMLPageDownload getDownload(Form_Bookmark bookmarkForm) throws MalformedURLException, IOException {
- // return new HTMLPageDownload(new URL(docuri));
-  HTMLPageDownload x = bookmarkForm.getDownload();
-  if (x == null) x = new HTMLPageDownload(new URL(bookmarkForm.getDocuri()));
-  return x;
-  }*/
-
-/*private String getTitle(Form_Bookmark bookmarkForm) throws MalformedURLException, IOException {
- String title = bookmarkForm.getTitle();
- if ((title == null)||("".equals(title))) title = getDownload(bookmarkForm).getTitle();
- // title = getDownload(bookmarkForm).getTitle();
-  return title;
- }*/
-
-
 } // end Action

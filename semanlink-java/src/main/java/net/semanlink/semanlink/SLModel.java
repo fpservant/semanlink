@@ -365,7 +365,8 @@ public String doc2markdownHref(String contextUrl, String docUri) throws IOExcept
 /** Attention, ne retourne jamais null. 
  *  Ne tente pas de résoudre les alias.
  *  @see kwExists(String)
- *  @see resolveAlias(String) */
+ *  @see resolveAlias(String) 
+ *  Ne créée rien du tout */
 abstract public SLKeyword getKeyword(String uri);
 
 //
@@ -795,19 +796,23 @@ public boolean isLabelProperty(String propertyUri) {
  *  si il n'y a pas de thesaurus défini pour le fichier -- ce qui survient
  *  en particulier si docsFile n'existe pas encore (? j'ai en tous cas eu le cas lors de ma 1ere tentative cinema)
  * BUG AVERE le 2004-08-08 : ds ce cas, le thesaurus pris est celui par défaut - ce qui ne va pas,
- * ex cas ajout d'un kw à un fichier manifestement si cg
+ * ex cas ajout d'un kw à un fichier manifestement sicg
  * palier le bug en créant le docsFile (par ex en créant une ppté via extract metadata) ET en relancant
  * (becoze je pense le 1er bug ci dessus : pas ajoutés aux open files ?
  * paliatif qui pourrait être fait : forcer la création de fichiers de de loadlist.txt (en haut de hierarchie)
  * CORRIGE (?) le 2004-08-16 grace à une recher ds dataFolderList : see getLoaderDocsFile
  */
-public SLKeyword addKeyword(SLDocument doc, String kwLabel, Locale locale) throws Exception {
+// find 2020-04 label2kwcreation only used in editTagList
+public SLKeyword[] addKeyword(SLDocument doc, String kwLabel, Locale locale) throws Exception {
 	if ((kwLabel == null) || (kwLabel.equals(""))) throw new IllegalArgumentException("Label of kw null or empty");
 	SLThesaurus th = getThesaurus(doc); // thesaurus à utiliser
-	SLKeyword kw = kwLabel2KwCreatingItIfNecessary(kwLabel, th.getURI(), locale);
-	addKeyword(doc, kw);
-	return kw;
+	
+	Label2KeywordMatching match = label2KeywordMatch(kwLabel, th.getURI(), locale);
+	SLKeyword[] kws =  match.getKwsCreatingIfNecessary();
+	addKeyword(doc, kws);
+	return kws;
 }
+
 
 /** you may prefer to use SLDocUpdate.addKeyword */
 public void addKeyword(SLDocument doc, SLKeyword kw)  throws Exception {
@@ -979,15 +984,15 @@ public String kwLabel2Uri(String kwLabel, String thesaurusUri) {
 	return kwLabel2Uri (kwLabel, thesaurusUri, null);
 }
 
-/** Modifie le modèle pour y ajouter les statements nécessaires à la création du mot clé, sensé ne pas exister. 
- * Attention, ce qu'il faut utiliser, c'est doCreateKeyword, qui met aussi à jour l'index du thésuarus. 
+/** Modifie le modèle pour y ajouter les statements nécessaires à la création du mot clé, censé ne pas exister. 
+ * Attention, ce qu'il faut utiliser, c'est doCreateKeyword, qui met aussi à jour l'index du thésaurus. 
  */
 protected abstract void createKw(String uri, String label, Locale locale) throws Exception;
 
 /**
  * Modifie le modèle pour y ajouter les statements nécessaires à la création du mot clé, sensé ne pas exister.
  * met à jour le thesaurus
- * retourne le kw créé (sensé ne pas exister avant) 
+ * retourne le kw créé (censé ne pas exister avant) 
  * @param thesaurusUri not null
  */
 public SLKeyword doCreateKeyword(String uri, String kwLabel, Locale locale) throws Exception {
@@ -997,7 +1002,7 @@ public SLKeyword doCreateKeyword(String uri, String kwLabel, Locale locale) thro
 	return kw;
 }
 
-/** retourne null et ne fait rien si existe déjà.
+/** retourne null et ne fait rien si l'uri qui serait créée à partir du label existe déjà.
  * @param thesaurusUri non null
  * @param locale
  * @return
@@ -1008,25 +1013,86 @@ public SLKeyword kwLabel2NewKeyword(String kwLabel, String thesaurusUri, Locale 
 	return doCreateKeyword(uri,kwLabel,locale);
 }
 
+/** 
+ * existing tags matching a label
+ * @since 2020-04 */
+public SLKeyword[] kwLabel2Kws(String kwLabel, String thesaurusUri, Locale locale) {
+	return getThesaurusLabels().label2Keyword(kwLabel, locale);
+}
+
 /**
  * @param thesaurusUri non null
  */
-public SLKeyword kwLabel2KwCreatingItIfNecessary(String kwLabel, String thesaurusUri, Locale locale) throws Exception {
-	// 2007/10
-	/*String uri = kwLabel2UriQuick(kwLabel, thesaurusUri, locale);
-	if (kwExists(uri)) {
-		uri = resolveAliasAsUri(uri);
-		return getKeyword(uri);
-	} else {
-		return doCreateKeyword(uri,kwLabel,locale);
-	}*/
-	SLKeyword[] kws = getThesaurusLabels().label2Keyword(kwLabel, locale);
-	if (kws.length == 0) {
-		String uri = kwLabel2UriQuick(kwLabel, thesaurusUri, locale);
-		return doCreateKeyword(uri,kwLabel,locale);
-	} else {
-		// TODO if there are more than one -- 2020-04 waou, yes TODO. is it the cause of problem when adding new tags from search???
-		return getKeyword(resolveAliasAsUri(kws[0].getURI()));
+public Label2KeywordMatching label2KeywordMatch(String kwLabel, String thesaurusUri, Locale locale) {
+	return new Label2KeywordMatching(kwLabel, thesaurusUri, locale);
+}
+
+public class Label2KeywordMatching { // 2020-04
+	String kwLabel;
+	String thesaurusUri;
+	Locale locale;
+	/** beware size 0 if no match, not null) */
+	SLKeyword[] kws;
+	public Label2KeywordMatching(String kwLabel, String thesaurusUri, Locale locale) {
+		this.kwLabel = kwLabel;
+		this.thesaurusUri = thesaurusUri;
+		this.locale = locale;
+		kws = kwLabel2Kws(kwLabel, thesaurusUri, locale);		
+	}
+	
+	private boolean noMatch() {
+		return ((kws == null) || (kws.length == 0));
+	}
+	
+	public SLKeyword[] getKwsCreatingIfNecessary() throws Exception {
+		SLKeyword[] x = existingMatches();
+		if (!noMatch()) return x;
+		SLKeyword kw = create();
+		if (kw != null) {
+			x = new SLKeyword[1];
+			x[0] = kw;
+			return x;
+		}
+		return new SLKeyword[0];		
+	}
+	
+	public SLKeyword[] existingMatches() {
+		return kws;
+	}
+	
+	/** The URI that would be created from the label */
+	public String label2Uri() {
+		return kwLabel2UriQuick(kwLabel, thesaurusUri, locale);
+	}
+	
+	/**
+	 * IllegalArgumentException if match already exists
+	 * null if URI that would be created already exists
+	 * @throws Exception 
+	 */
+	public SLKeyword create() throws Exception {
+		if (!noMatch()) throw new IllegalArgumentException("Match already exists");
+		// kwLabel doesn't match any existing tag
+		// try to create one. What would its uri be?
+		String kwUri = label2Uri();
+		if (kwExists(kwUri)) {
+			// the uri that would be generated for the kw is
+			// the uri of an existing keyword
+			// (but the label is not linked to that kw)
+			
+			// do that?
+			// kw = mod.getKeyword(kwuri);
+			// or choose another uri (aka kwuri_n) and create a new kw???
+
+			// add label to kw?
+			
+			return null;
+								
+		} else {
+			// create kw
+			return doCreateKeyword(kwUri,kwLabel,locale);
+		}
+
 	}
 }
 

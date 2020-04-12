@@ -20,7 +20,7 @@ public ObjectLabelPair(E res, String label) {
 public boolean equals(Object o) {
 	if (!(o instanceof ObjectLabelPair<?>)) return false;
 	ObjectLabelPair<?> opair = (ObjectLabelPair<?>) o;
-	return res.equals(opair.res) && label.equals(opair.label);
+	return res.equals(opair.res) && label.equals(opair.label); // TODO to see: shoudn't it be modulo collator???
 }
 
 public int hashCode() { 

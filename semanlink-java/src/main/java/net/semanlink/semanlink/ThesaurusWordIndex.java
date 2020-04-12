@@ -105,6 +105,7 @@ public SLKeyword[] label2Keyword(String kwLabel, Locale locale) {
 	int i = 0;
 	for (ObjectLabelPair<SLKeyword> pair : alx) {
 		x[i] = pair.getObject();
+		i++;
 	}
 	return x;
 }

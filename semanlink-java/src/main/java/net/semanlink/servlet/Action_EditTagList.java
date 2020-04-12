@@ -9,6 +9,7 @@ import net.semanlink.semanlink.SLDocument;
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLModel;
 import net.semanlink.semanlink.SLThesaurus;
+import net.semanlink.semanlink.SLModel.Label2KeywordMatching;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -92,17 +93,21 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 	    	}
 	    	System.out.println();*/
 				if (doc != null) {
-				    mod.addKeyword(doc, kwLabel, null);
+				    mod.addKeyword(doc, kwLabel, null); // find 2020-04 label2kwcreation
 				} else {
-					SLKeyword addedKw = kwLabel2Kw(kwLabel, mod, mod.kwUri2Thesaurus(kw.getURI()));
-					if (field.equals("children")) {
-						mod.addChild(kw, addedKw);
-					} else if (field.equals("parents")) {
-						mod.addParent(kw, addedKw);
-					} else if (field.equals("friends")) {
-						mod.addFriend(kw, addedKw);
-					} else {
-						throw new RuntimeException("Unexpected field: " + field);
+					// 2020-04: there may be more than one KW associated to a label
+					// SLKeyword addedKw = kwLabel2Kw(kwLabel, mod, mod.kwUri2Thesaurus(kw.getURI()));
+					SLKeyword[] addedKws = kwLabel2Kw(kwLabel, mod, mod.kwUri2Thesaurus(kw.getURI()));
+					for (SLKeyword addedKw : addedKws) {
+						if (field.equals("children")) {
+							mod.addChild(kw, addedKw);
+						} else if (field.equals("parents")) {
+							mod.addParent(kw, addedKw);
+						} else if (field.equals("friends")) {
+							mod.addFriend(kw, addedKw);
+						} else {
+							throw new RuntimeException("Unexpected field: " + field);
+						}
 					}
 				}
 				
@@ -141,8 +146,9 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 /** Retourne le kw pour le label passé en argument, dans le thesaurus auquel appartient kw.
  *  Crée le kw au besoin.
  */
-protected SLKeyword kwLabel2Kw(String label, SLModel mod, SLThesaurus thesaurus) throws Exception {
-	return mod.kwLabel2KwCreatingItIfNecessary(label, thesaurus.getURI(), null);
+protected SLKeyword[] kwLabel2Kw(String label, SLModel mod, SLThesaurus thesaurus) throws Exception {
+	Label2KeywordMatching match = mod.label2KeywordMatch(label, mod.getDefaultThesaurus().getURI(), null);
+	return  match.getKwsCreatingIfNecessary();
 }
 
 static void doPaste(String pasteToUri, String field, HttpSession session, SLModel mod) throws Exception {
