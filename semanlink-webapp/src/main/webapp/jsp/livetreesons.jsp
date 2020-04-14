@@ -121,13 +121,18 @@ if (targetUri == null) {
 		onClick = " onClick=\"postTag('" + href + "');return false\"";
 	}    // 2017-01 DRAG TEST: <li  draggable="true" ondragstart="drag(event)" >
 	
+	// BEWARE, what gives the id of the line is associated to an image with id="trigger:id" 
+	// -- neccasary even there is no event (script)
+	// (it ws not possible to have the id associated with li, because we use it for highlight
+	// in displaying the livesearch results, cf id LSHighlight)
+	
     if (!canBeOpened) {
 	      // ATTENTION A NE PAS INTRODUIRE DE TEXTE "VIDE" ENTRE LES DIFFERENTS ELEMENTS
-	      // cas sans image : une image vide pour avoir le même nb de fils ds les 2 cas (cf highlight de livesearch) et
+	      // cas sans image : une image vide pour avoir le même nb de fils ds les 2 cas 
+	      // et porter l'id de ligne (mise en fait sur l'image, parce que l'id de la ligne sert
+	      // poir le highlight
 	      // avoir aussi le trigger:divid qui sert à se repérer ds le parcours de l'arbre.
 	      
-	      // ci-dessous, mettre une id à li ne marche pas parce que pour le highlight, on met à LSHighlight,
-	      // puis à null, l'id de la ligne sélectionnée
 	      if (kw == null) {
 	          %><%//PAS DE VIDE!!!%><li><img src="<%=context%>/ims/box_nada.gif" height="0" width="8" alt="" id="trigger:<%=sonDivId%>" /><a href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%
 	      } else { // 2013-08 RDFa
