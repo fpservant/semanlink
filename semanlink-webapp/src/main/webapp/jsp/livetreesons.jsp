@@ -135,10 +135,10 @@ if (targetUri == null) {
 	      }
 	} else { // son has sons
 	      if (kw == null) {
-	          %><%//PAS DE VIDE!!!%><li id="li:<%=sonDivId%>"><img src="<%=context%>/ims/box_closed.gif" id="trigger:<%=sonDivId%>" alt="" height="8" width="8" onclick="toggle2('<%=sonDivId%>', '<%=encodedSonUri%>', '<%=withDocs%>', '<%=postTagOnClick%>', '<%=targetUri%>')" /><% // ne rien mettre entre les 2
+	          %><%//PAS DE VIDE!!!%><li><img src="<%=context%>/ims/box_closed.gif" id="trigger:<%=sonDivId%>" alt="" height="8" width="8" onclick="toggle2('<%=sonDivId%>', '<%=encodedSonUri%>', '<%=withDocs%>', '<%=postTagOnClick%>', '<%=targetUri%>')" /><% // ne rien mettre entre les 2
 	                   // ne rien mettre entre les 2%><a href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%
 	      } else {
-	          %><%//PAS DE VIDE!!!%><li id="li:<%=sonDivId%>"><img src="<%=context%>/ims/box_closed.gif" id="trigger:<%=sonDivId%>" alt="" height="8" width="8" onclick="toggle2('<%=sonDivId%>', '<%=encodedSonUri%>', '<%=withDocs%>', '<%=postTagOnClick%>', '<%=targetUri%>')" /><% // ne rien mettre entre les 2
+	          %><%//PAS DE VIDE!!!%><li><img src="<%=context%>/ims/box_closed.gif" id="trigger:<%=sonDivId%>" alt="" height="8" width="8" onclick="toggle2('<%=sonDivId%>', '<%=encodedSonUri%>', '<%=withDocs%>', '<%=postTagOnClick%>', '<%=targetUri%>')" /><% // ne rien mettre entre les 2
 	           // ne rien mettre entre les 2%><a property="skos:narrower" href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%
 	      }
 	} // if (son.hasChild())
