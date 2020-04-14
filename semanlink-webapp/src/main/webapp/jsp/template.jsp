@@ -221,11 +221,11 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
     // Add a script element as a child of the body %>
     function downloadJS() {
          var element = document.createElement("script");
-         element.src = "<%=contextPath%>/scripts/livesearch.js?v=0.7.1-37";
+         element.src = "<%=contextPath%>/scripts/livesearch.js?v=0.7.2";
          document.body.appendChild(element);
          
          element = document.createElement("script");
-         element.src = "<%=contextPath%>/scripts/trees.js?v=0.7.1-37";
+         element.src = "<%=contextPath%>/scripts/trees.js?v=0.7.2";
          document.body.appendChild(element);
     }
     </script>
