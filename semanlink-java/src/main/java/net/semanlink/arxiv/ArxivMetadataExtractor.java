@@ -94,15 +94,14 @@ private String lastWord(String firstAuthor) {
 
 @Override public String getText4kwExtraction(ExtractorData data) throws IOException, URISyntaxException {
 	SLDocument doc = data.getSLDocument();
-	String title = SLUtils.getLabel(doc);
 	StringBuilder sb = new StringBuilder();
-	sb.append(title);
+	// no, use the real arxiv title (avoids having "arxiv" systematically added to kws)
+//	String title = SLUtils.getLabel(doc);
+//	sb.append(title);
 	List vals = doc.getPropertyAsStrings(ARXIV_PROP_DEB + "title");
 	if ((vals != null) & (vals.size() > 0)) {
 		String arxiv_title = (String) vals.get(0);
-		if (!(arxiv_title.equals(title))) {
-			sb.append("\n" + arxiv_title);
-		}
+		sb.append(arxiv_title);
 	}
 	String comment = doc.getComment();
 	if (comment != null) {
