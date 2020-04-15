@@ -113,19 +113,31 @@ static String cleanTextContent(String text, boolean replaceLineBreakBySpace) {
 	BufferedReader reader = new BufferedReader(new StringReader(text));
 	StringBuilder sb = new StringBuilder();
 	String line;
+	// true once we have skipped all empty lines that may occur at the beginning
+	// (used to skip empty lines at the beginning)
+	boolean foundFirstRealLine = false;
 	// true when last line is not finished, that is, not followed by a true new line
 	boolean lastLineNotFinished = false;
 	// need to add a true line break (that is, \n\n)
-	boolean lineBreakAdded = false;
+	boolean lineBreakAdded = true;
 	
 	try {
 		while((line = reader.readLine()) != null) { // java sucks
 			line = cleanSpaces(line);
+			// first remove empty lines at the beginning
+			if (!foundFirstRealLine) {
+				if ("".equals(line)) {
+					continue;
+				} else {
+					foundFirstRealLine = true;
+				}
+			}
+			
 			if ("".equals(line)) {
 				if (!lineBreakAdded) {
-					sb.append("\n\n");
+					// sb.append("\n\n");
 					lastLineNotFinished = false;
-					lineBreakAdded = true;
+					// lineBreakAdded = true;
 				}
 			} else {
 				if (lastLineNotFinished) {
@@ -133,6 +145,11 @@ static String cleanTextContent(String text, boolean replaceLineBreakBySpace) {
 						sb.append(" ");
 					} else {
 						sb.append("\n");
+					}
+				} else {
+					if (!lineBreakAdded) {
+						sb.append("\n\n");
+						lineBreakAdded = true;
 					}
 				}
 				sb.append(line);
@@ -145,7 +162,7 @@ static String cleanTextContent(String text, boolean replaceLineBreakBySpace) {
 }
 
 //HUM, aurait surement pu faire replaceAll("\\h+", " ")
-/** trim and replace all successions of white chars (including tabs, non breaking ones) by one white space */
+/** trim, and replace all successions of white chars (including tabs, non breaking ones) by one white space */
 public static String cleanSpaces(String s) {
 	// return s.replaceAll("(\\h*)", " "); // +/g
 	String x = space2space(s);

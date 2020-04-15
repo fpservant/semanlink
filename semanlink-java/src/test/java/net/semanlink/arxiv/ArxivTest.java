@@ -39,7 +39,18 @@ public final void test() throws IOException, ParserConfigurationException, SAXEx
 	text += "Sombres                  jours !\n";
 	text += "L'empereur revenait lentement,\n\n";
 	text += "Laissant derrière lui brûler Moscou fumant.";
-	System.out.println(ArxivEntry.cleanTextContent(text));
+	
+	String good = "Il neigeait, on était vaincu par sa conquête.\n" + 
+			"\n" + 
+			"Pour la première fois l'Aigle baissait la tête.\n" + 
+			"\n" + 
+			"Sombres jours ! L'empereur revenait lentement,\n" + 
+			"\n" + 
+			"Laissant derrière lui brûler Moscou fumant.";
+	
+	String x = ArxivEntry.cleanTextContent(text);
+	
+	assertTrue(x.equals(good));
 }
 
 @Test public void url2numTest() {
@@ -57,6 +68,13 @@ public final void test() throws IOException, ParserConfigurationException, SAXEx
 	x = Arxiv.url2num(url);
 	System.out.println(x);
 	assertTrue(num.contentEquals(x));
+}
+
+@Test public void foo() {
+	String text = "\n\nnom auteur\n\n";
+	boolean replaceLineBreakBySpace = true;
+	String x = ArxivEntry.cleanTextContent(text, replaceLineBreakBySpace);
+	System.out.println("X"+x+"X");
 }
 
 }
