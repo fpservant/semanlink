@@ -51,6 +51,12 @@ public final void test() throws IOException, ParserConfigurationException, SAXEx
 	String x = ArxivEntry.cleanTextContent(text);
 	
 	assertTrue(x.equals(good));
+	
+	text = "\n\nnom auteur\n\n";
+	boolean replaceLineBreakBySpace = true;
+	x = ArxivEntry.cleanTextContent(text, replaceLineBreakBySpace);
+	assertTrue(x.equals("nom auteur"));
+
 }
 
 @Test public void url2numTest() {
