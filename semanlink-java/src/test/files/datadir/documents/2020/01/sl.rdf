@@ -1,0 +1,775 @@
+<!DOCTYPE rdf:RDF [
+  <!ENTITY skos 'http://www.w3.org/2004/02/skos/core#'>
+  <!ENTITY sl 'http://www.semanlink.net/2001/00/semanlink-schema#'>
+  <!ENTITY tag 'http://www.semanlink.net/tag/'>
+  <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+  <!ENTITY dc 'http://purl.org/dc/elements/1.1/'>]>
+<rdf:RDF
+    xmlns:rdf="&rdf;"
+    xmlns:dc="&dc;"
+    xmlns:skos="&skos;"
+    xmlns:sl="&sl;"
+    xmlns:tag="&tag;">
+  <rdf:Description rdf:about="github_opennmt_opennmt_py_op">
+    <dc:title>GitHub - OpenNMT/OpenNMT-py: Open Source Neural Machine Translation in PyTorch</dc:title>
+    <sl:creationDate>2020-01-17</sl:creationDate>
+    <sl:creationTime>2020-01-17T12:57:35Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://github.com/OpenNMT/OpenNMT-py#features"/>
+    <sl:tag rdf:resource="&tag;pytorch"/>
+    <sl:tag rdf:resource="&tag;neural_machine_translation"/>
+    <sl:tag rdf:resource="&tag;open_source"/>
+    <sl:tag rdf:resource="&tag;github_project"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="_1912_12510_detecting_out_of_d">
+    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1912.12510"/>
+    <sl:creationTime>2020-01-15T13:04:14Z</sl:creationTime>
+    <sl:creationDate>2020-01-15</sl:creationDate>
+    <dc:title>[1912.12510] Detecting Out-of-Distribution Examples with In-distribution Examples and Gram Matrices</dc:title>
+    <sl:comment>&gt; we propose to detect OOD examples by identifying inconsistencies between activity patterns and class predicted... &#xD;
+&gt; Unlike many approaches, this can be used with any pre-trained softmax classifier and does not require access to OOD data</sl:comment>
+    <sl:tag rdf:resource="&tag;out_of_distribution_detection"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="adapters_a_compact_and_extensi">
+    <sl:comment xml:lang="en">Enable **transfer learning for NLP on an incoming stream of tasks without training a new model for every new task**.&#xD;
+&#xD;
+In fine tuning, new layers are added and adjusted for each task. The proposed model adds new modules ("adapters") between layers of the pretrained network. Parameters of the pretrained network remain fixed, and only a few&#xD;
+additional task-specific parameters are added for each new task, all&#xD;
+without affecting previous ones.</sl:comment>
+    <sl:creationTime>2020-01-06T01:45:19Z</sl:creationTime>
+    <sl:creationDate>2020-01-06</sl:creationDate>
+    <dc:title>Adapters: A Compact and Extensible Transfer Learning Method for NLP</dc:title>
+    <sl:tag rdf:resource="&tag;transfer_learning_in_nlp"/>
+    <sl:bookmarkOf rdf:resource="https://medium.com/dair-ai/adapters-a-compact-and-extensible-transfer-learning-method-for-nlp-6d18c2399f62"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="the_berkeley_nlp_group">
+    <sl:tag rdf:resource="&tag;nlp_teams"/>
+    <sl:tag rdf:resource="&tag;berkeley"/>
+    <sl:bookmarkOf rdf:resource="http://nlp.cs.berkeley.edu/"/>
+    <sl:creationTime>2020-01-12T10:48:23Z</sl:creationTime>
+    <sl:creationDate>2020-01-12</sl:creationDate>
+    <dc:title>The Berkeley NLP Group</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="interpretable_named_entity_reco">
+    <sl:comment xml:lang="en">Same author: [NER with BERT](/doc/2020/01/named_entity_recognition_with_b)</sl:comment>
+    <sl:tag rdf:resource="&tag;lime"/>
+    <sl:bookmarkOf rdf:resource="https://www.depends-on-the-definition.com/interpretable-named-entity-recognition/"/>
+    <sl:creationTime>2020-01-09T02:03:56Z</sl:creationTime>
+    <sl:creationDate>2020-01-09</sl:creationDate>
+    <dc:title>Interpretable Named entity recognition with keras and LIME – Depends on the definition</dc:title>
+    <sl:tag rdf:resource="&tag;named_entity_recognition"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="three_myths_of_graph_databases">
+    <sl:bookmarkOf rdf:resource="https://medium.com/@steve.sarsfield/three-myths-of-graph-databases-6494a9d2be49?"/>
+    <sl:creationTime>2020-01-07T13:45:07Z</sl:creationTime>
+    <sl:creationDate>2020-01-07</sl:creationDate>
+    <dc:title>Three Myths of Graph Databases</dc:title>
+    <sl:tag rdf:resource="&tag;graph_database"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="facebook_paid_teen_vogue_to_run">
+    <sl:tag rdf:resource="&tag;deletefb"/>
+    <sl:tag rdf:resource="&tag;election"/>
+    <dc:title>Facebook paid Teen Vogue to run a fake article praising Facebook for "helping ensure the integrity of the 2020 election" / Boing Boing</dc:title>
+    <sl:creationDate>2020-01-09</sl:creationDate>
+    <sl:creationTime>2020-01-09T14:05:23Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://boingboing.net/2020/01/09/facebook-paid-teen-vogue-to-ru.html"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="neurala_how_lifelong_dnn_solve">
+    <sl:bookmarkOf rdf:resource="https://info.neurala.com/hubfs/docs/Neurala_LifelongDNNWhitepaper.pdf"/>
+    <sl:creationTime>2020-01-01T12:06:57Z</sl:creationTime>
+    <sl:creationDate>2020-01-01</sl:creationDate>
+    <dc:title>Neurala: How Lifelong-DNN Solves for Inherent Problems with Traditional DNNs</dc:title>
+    <sl:tag rdf:resource="&tag;neurala_lifelong_dnn"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="building_a_search_engine_with_b">
+    <sl:comment>[somewhat related](/doc/2020/01/elasticsearch_meets_bert_build)</sl:comment>
+    <sl:creationDate>2020-01-12</sl:creationDate>
+    <sl:tag rdf:resource="&tag;bert"/>
+    <sl:tag rdf:resource="&tag;tensorflow"/>
+    <dc:title>Building a Search Engine with BERT and TensorFlow - Towards Data Science</dc:title>
+    <sl:tag rdf:resource="&tag;nearest_neighbor_search"/>
+    <sl:tag rdf:resource="&tag;nlp_and_search"/>
+    <sl:tag rdf:resource="&tag;search_engines"/>
+    <sl:creationTime>2020-01-12T17:13:45Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://towardsdatascience.com/building-a-search-engine-with-bert-and-tensorflow-c6fdc0186c8a"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="%C2%AB_toi_le_yadga_mangeur_de_riz_">
+    <sl:tag rdf:resource="&tag;parente_a_plaisanterie"/>
+    <sl:tag rdf:resource="&tag;burkina_faso"/>
+    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/afrique/article/2020/01/17/au-burkina-faso-on-s-insulte-pour-rire-et-faire-la-paix_6026369_3212.html"/>
+    <dc:title>« Toi le Yadga mangeur de riz, tu es mon esclave » : pour rire et faire la paix, les Burkinabés s’insultent</dc:title>
+    <sl:creationDate>2020-01-19</sl:creationDate>
+    <sl:creationTime>2020-01-19T17:18:04Z</sl:creationTime>
+  </rdf:Description>
+  <rdf:Description rdf:about="thread_by_wzuidema_the_2010s_">
+    <sl:tag rdf:resource="&tag;nlp_current_state"/>
+    <sl:tag rdf:resource="&tag;nlp_introduction"/>
+    <dc:title>Thread by @wzuidema: The 2010s were an eventful decade for NLP! Here are ten shocking developments since 2010, and 13 papers* illustrating them, that have change…</dc:title>
+    <sl:creationDate>2020-01-03</sl:creationDate>
+    <sl:creationTime>2020-01-03T12:15:41Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://threadreaderapp.com/thread/1212727352037429248.html"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="nlp_s_clever_hans_moment_has_ar">
+    <sl:tag rdf:resource="&tag;bertology"/>
+    <sl:bookmarkOf rdf:resource="https://thegradient.pub/nlps-clever-hans-moment-has-arrived/"/>
+    <sl:comment>Do neural networks learn what we think they learn? @benbenhh reviews research that suggests that they often instead fall prey to the so-called Clever Hans effect and discusses its implications for NLP.</sl:comment>
+    <dc:title>NLP's Clever Hans Moment has Arrived</dc:title>
+    <sl:creationDate>2020-01-10</sl:creationDate>
+    <sl:creationTime>2020-01-10T16:33:27Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;benjamin_heinzerling"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="paris_nlp_season_4_meetup_3_">
+    <sl:creationTime>2020-01-23T22:26:20Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;job_matching"/>
+    <sl:creationDate>2020-01-23</sl:creationDate>
+    <sl:tag rdf:resource="&tag;paris_nlp_meetup"/>
+    <sl:tag rdf:resource="&tag;triplet_loss"/>
+    <sl:comment xml:lang="en">- Siamese CNN for jobs-candidate matching: learning document embeddings with triplet loss.&#xD;
+- Sesame street-based naming schemes must fade out, long live CamemBERT et le French fromage!</sl:comment>
+    <sl:tag rdf:resource="&tag;siamese_network"/>
+    <sl:tag rdf:resource="&tag;camembert_nlp"/>
+    <sl:bookmarkOf rdf:resource="https://nlpparis.wordpress.com/2020/01/23/paris-nlp-season-4-meetup-3/"/>
+    <dc:title>Paris NLP Season 4 Meetup #3 – Paris NLP</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="transfer_learning_vs_neurala%E2%80%99s">
+    <sl:tag rdf:resource="&tag;neurala_lifelong_dnn"/>
+    <sl:tag rdf:resource="&tag;transfer_learning"/>
+    <dc:title>Transfer Learning vs. Neurala’s L-DNN: clearing up minds | LinkedIn</dc:title>
+    <sl:bookmarkOf rdf:resource="https://www.linkedin.com/pulse/transfer-learning-vs-neuralas-l-dnn-clearing-up-minds-versace/"/>
+    <sl:creationTime>2020-01-01T12:11:03Z</sl:creationTime>
+    <sl:creationDate>2020-01-01</sl:creationDate>
+  </rdf:Description>
+  <rdf:Description rdf:about="nlp_year_in_review_2019_dai">
+    <sl:tag rdf:resource="&tag;nlp"/>
+    <sl:bookmarkOf rdf:resource="https://medium.com/dair-ai/nlp-year-in-review-2019-fb8d523bcb19"/>
+    <sl:creationTime>2020-01-05T17:37:18Z</sl:creationTime>
+    <sl:creationDate>2020-01-05</sl:creationDate>
+    <dc:title>NLP Year in Review — 2019 - dair.ai - Medium</dc:title>
+    <sl:tag rdf:resource="&tag;survey"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="lecture_14_contextual_vectors">
+    <sl:mainDoc>
+      <rdf:Description rdf:about="cs224u_natural_language_unders">
+        <sl:tag rdf:resource="&tag;nlp_stanford"/>
+        <sl:tag rdf:resource="&tag;nlu"/>
+        <dc:title>CS224U: Natural Language Understanding</dc:title>
+        <sl:creationDate>2020-01-05</sl:creationDate>
+        <sl:creationTime>2020-01-05T18:12:42Z</sl:creationTime>
+        <sl:bookmarkOf rdf:resource="http://onlinehub.stanford.edu/cs224u-natural-language-understanding"/>
+        <sl:tag rdf:resource="&tag;online_course_materials"/>
+      </rdf:Description>
+    </sl:mainDoc>
+    <sl:tag rdf:resource="&tag;elmo"/>
+    <sl:tag rdf:resource="&tag;nlp_stanford"/>
+    <dc:title>Lecture 14 – Contextual Vectors | Stanford CS224U: Natural Language Understanding | Spring 2019</dc:title>
+    <sl:creationDate>2020-01-05</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="http://onlinehub.stanford.edu/cs224u-natural-language-understanding/stanford-cs224u-natural-language-understanding-spring-2019-lecture-14-contextual-vectors"/>
+    <sl:creationTime>2020-01-05T18:17:47Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;contextualised_word_representations"/>
+    <sl:tag rdf:resource="&tag;bert"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="huggingface_tokenizers_fast_st">
+    <sl:tag rdf:resource="&tag;github_project"/>
+    <sl:creationTime>2020-01-11T11:52:47Z</sl:creationTime>
+    <sl:creationDate>2020-01-11</sl:creationDate>
+    <dc:title>huggingface/tokenizers: Fast State-of-the-Art Tokenizers optimized for Research and Production</dc:title>
+    <sl:bookmarkOf rdf:resource="https://github.com/huggingface/tokenizers"/>
+    <sl:tag rdf:resource="&tag;hugging_face"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="killer_slime_dead_birds_an_ex">
+    <sl:tag rdf:resource="&tag;pac"/>
+    <sl:creationDate>2020-01-04</sl:creationDate>
+    <dc:title>Killer Slime, Dead Birds, an Expunged Map: The Dirty Secrets of European Farm Subsidies - The New York Times</dc:title>
+    <sl:bookmarkOf rdf:resource="https://www.nytimes.com/interactive/2019/12/25/world/europe/farms-environment.html"/>
+    <sl:creationTime>2020-01-04T10:30:31Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;agriculture_industrielle"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="pandoc">
+    <sl:tag rdf:resource="&tag;file_convert"/>
+    <sl:tag rdf:resource="&tag;markdown"/>
+    <sl:tag rdf:resource="&tag;markup"/>
+    <sl:creationDate>2020-01-18</sl:creationDate>
+    <sl:creationTime>2020-01-18T23:45:03Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://pandoc.org/"/>
+    <sl:comment>If you need to convert files from one markup format into another, pandoc is your swiss-army knife.</sl:comment>
+    <dc:title>Pandoc</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="hazukashi_%F0%9F%8C%A9_sur_twitter_th">
+    <sl:tag rdf:resource="&tag;tweet"/>
+    <dc:title>Hazukashi 🌩 sur Twitter : "[THREAD] Je vous ai déjà parlé de la Cité Emmurée de Kowloon, le ghetto dystopique cyberpunk Hong-Kongais impénétrable des années 80 ?</dc:title>
+    <sl:bookmarkOf rdf:resource="https://twitter.com/Hazukashi1/status/1222841442030247936?s=20"/>
+    <sl:creationTime>2020-01-31T14:54:57Z</sl:creationTime>
+    <sl:creationDate>2020-01-31</sl:creationDate>
+    <sl:tag rdf:resource="&tag;hong_kong"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="advancing_natural_language_proc">
+    <dc:title>Advancing Natural Language Processing (NLP) for Enterprise Domains</dc:title>
+    <sl:tag rdf:resource="&tag;nlp_ibm"/>
+    <sl:tag rdf:resource="&tag;nlp_juridique"/>
+    <sl:creationTime>2020-01-07T12:05:46Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://towardsdatascience.com/advancing-natural-language-processing-nlp-for-enterprise-domains-1060052294a"/>
+    <sl:tag rdf:resource="&tag;nlp_in_enterprise"/>
+    <sl:comment xml:lang="en">Reviews 4 papers by IBM research. &#xD;
+&#xD;
+Introductive remark: the specificities of search  in enterprises when compared to the web: &#xD;
+content stored in silos with much less repetition of key information, &#xD;
+intricate questions expecting detailed answers, &#xD;
+reluctance to blackbox. &#xD;
+Regarding NLP: silos, incomplete data, small data, changing environment.&#xD;
+&#xD;
+-&gt; 3 themes of research at IBM Research to improve NLP for enterprises:&#xD;
+&#xD;
+- systems that can work with small data, external knowledge and use neurosymbolic approaches to language&#xD;
+- explainability on how a system reached a conclusion&#xD;
+- scaling to allow continuous adaptation</sl:comment>
+    <sl:creationDate>2020-01-07</sl:creationDate>
+    <sl:tag rdf:resource="&tag;abstract_meaning_representation"/>
+    <sl:tag rdf:resource="&tag;acl_2019"/>
+    <sl:tag rdf:resource="&tag;combining_knowledge_graphs"/>
+    <sl:tag rdf:resource="&tag;attention_knowledge_graphs"/>
+    <sl:tag rdf:resource="&tag;human_in_the_loop"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="papers_with_code_the_latest_i">
+    <sl:tag rdf:resource="&tag;research_papers"/>
+    <sl:tag rdf:resource="&tag;machine_learning"/>
+    <sl:tag rdf:resource="&tag;code"/>
+    <sl:bookmarkOf rdf:resource="https://www.paperswithcode.com/"/>
+    <sl:creationTime>2020-01-10T10:32:35Z</sl:creationTime>
+    <sl:creationDate>2020-01-10</sl:creationDate>
+    <dc:title>Papers With Code : the latest in machine learning</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="trust_but_verify_better_entit">
+    <sl:tag rdf:resource="&tag;benjamin_heinzerling"/>
+    <sl:creationTime>2020-01-10T17:49:11Z</sl:creationTime>
+    <sl:creationDate>2020-01-10</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="https://www.aclweb.org/anthology/E17-1078/"/>
+    <sl:tag rdf:resource="&tag;entity_linking"/>
+    <dc:title xml:lang="en">Trust, but verify! Better entity linking through automatic verification (2017)</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="named_entity_recognition_with_b">
+    <sl:tag rdf:resource="&tag;hugging_face"/>
+    <sl:tag rdf:resource="&tag;nlp_sample_code"/>
+    <sl:tag rdf:resource="&tag;named_entity_recognition"/>
+    <dc:title>Named Entity Recognition with Bert – Depends on the definition</dc:title>
+    <sl:creationDate>2020-01-09</sl:creationDate>
+    <sl:creationTime>2020-01-09T02:01:52Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://www.depends-on-the-definition.com/named-entity-recognition-with-bert/"/>
+    <sl:tag rdf:resource="&tag;bert"/>
+    <sl:comment xml:lang="en">Same author: [NER with Lime](/doc/2020/01/interpretable_named_entity_reco)</sl:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="thomas_wolf_sur_twitter_i_li">
+    <sl:tag rdf:resource="&tag;deep_learning_attention"/>
+    <sl:tag rdf:resource="&tag;locality_sensitive_hashing"/>
+    <dc:title>Thomas Wolf sur Twitter : "I liked the LSH attention in the reformer..."</dc:title>
+    <sl:creationDate>2020-01-05</sl:creationDate>
+    <sl:creationTime>2020-01-05T18:29:05Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://twitter.com/Thom_Wolf/status/1213592668644749314?s=20"/>
+    <sl:tag rdf:resource="&tag;thomas_wolf"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="creme_ml_creme_online_machine_">
+    <sl:tag rdf:resource="&tag;raphaelsty"/>
+    <sl:bookmarkOf rdf:resource="https://github.com/creme-ml/creme"/>
+    <dc:title>creme-ml/creme: Online machine learning in Python</dc:title>
+    <sl:creationDate>2020-01-01</sl:creationDate>
+    <sl:creationTime>2020-01-01T12:19:07Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;github_project"/>
+    <sl:tag rdf:resource="&tag;continual_learning"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="the_independent_sur_twitter_">
+    <sl:tag rdf:resource="&tag;rechauffement_climatique"/>
+    <sl:tag rdf:resource="&tag;alexandria_ocasio_cortez"/>
+    <sl:bookmarkOf rdf:resource="https://twitter.com/Independent/status/1187719206562910209"/>
+    <sl:creationTime>2020-01-05T18:50:01Z</sl:creationTime>
+    <sl:creationDate>2020-01-05</sl:creationDate>
+    <dc:title>The Independent sur Twitter : "Alexandria Ocasio-Cortez grills former Exxon scientists on oil giant's climate change denial"</dc:title>
+    <sl:tag rdf:resource="&tag;exxonmobil"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="comment_voir_et_supprimer_les">
+    <dc:title>Comment voir (et supprimer) les données envoyées à Facebook par des sites tiers</dc:title>
+    <sl:creationDate>2020-01-29</sl:creationDate>
+    <sl:creationTime>2020-01-29T23:00:04Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/pixels/article/2020/01/29/activite-en-dehors-de-facebook-comment-voir-et-supprimer-les-donnees-envoyees-a-facebok-par-des-sites-tiers_6027688_4408996.html"/>
+    <sl:tag rdf:resource="&tag;facebook"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="_2001_01447v1_improving_entity">
+    <dc:title xml:lang="en">[2001.01447] Improving Entity Linking by Modeling Latent Entity Type Information (2020)</dc:title>
+    <sl:creationTime>2020-01-09T02:37:01Z</sl:creationTime>
+    <sl:creationDate>2020-01-09</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2001.01447"/>
+    <sl:tag rdf:resource="&tag;entity_linking"/>
+    <sl:tag rdf:resource="&tag;nlp_microsoft"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="how_to_build_deep_neural_networ">
+    <sl:tag rdf:resource="&tag;named_entity_recognition"/>
+    <dc:title>How to build deep neural network for custom NER with Keras</dc:title>
+    <sl:creationDate>2020-01-07</sl:creationDate>
+    <sl:creationTime>2020-01-07T11:57:40Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://confusedcoders.com/data-science/deep-learning/how-to-build-deep-neural-network-for-custom-ner-with-keras"/>
+    <sl:tag rdf:resource="&tag;keras"/>
+    <sl:tag rdf:resource="&tag;nlp_sample_code"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="_1912_08904_macaw_an_extensib">
+    <sl:tag rdf:resource="&tag;question_answering"/>
+    <sl:tag rdf:resource="&tag;chatbot"/>
+    <sl:creationDate>2020-01-01</sl:creationDate>
+    <sl:creationTime>2020-01-01T10:55:09Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1912.08904#clicktoread"/>
+    <dc:title>[1912.08904] Macaw: An Extensible Conversational Information Seeking Platform</dc:title>
+    <sl:tag rdf:resource="&tag;information_retrieval"/>
+    <sl:tag rdf:resource="&tag;nlp_tools"/>
+    <sl:tag rdf:resource="&tag;nlp_microsoft"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="tech_cliqz">
+    <dc:title>Tech @ Cliqz</dc:title>
+    <sl:creationDate>2020-01-20</sl:creationDate>
+    <sl:creationTime>2020-01-20T19:15:12Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://0x65.dev/"/>
+    <sl:tag rdf:resource="&tag;cliqz"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="three_years_after_the_w3c_appro">
+    <sl:tag rdf:resource="&tag;harry_halpin"/>
+    <sl:tag rdf:resource="&tag;eme"/>
+    <sl:tag rdf:resource="&tag;brouteur"/>
+    <sl:tag rdf:resource="&tag;w3c"/>
+    <dc:title>Three years after the W3C approved a DRM standard, it's no longer possible to make a functional indie browser / Boing Boing</dc:title>
+    <sl:creationDate>2020-01-09</sl:creationDate>
+    <sl:creationTime>2020-01-09T23:12:02Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://boingboing.net/2020/01/08/rip-open-web-platform.html"/>
+    <sl:tag rdf:resource="&tag;drm"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="crossing_divides_how_a_social_">
+    <sl:tag rdf:resource="&tag;taiwan"/>
+    <sl:tag rdf:resource="&tag;consensus"/>
+    <sl:creationTime>2020-01-24T13:24:35Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://www.bbc.com/news/amp/technology-50127713?__twitter_impression=true"/>
+    <dc:title>Crossing Divides: How a social network could save democracy from deadlock - BBC News</dc:title>
+    <sl:creationDate>2020-01-24</sl:creationDate>
+    <sl:tag rdf:resource="&tag;democratie"/>
+    <sl:tag rdf:resource="&tag;social_networks"/>
+    <sl:comment xml:lang="en">In Taiwan, a social media platform to reach political consensus on tough questions</sl:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="text_similarity_search_in_elast">
+    <sl:tag rdf:resource="&tag;nlp_and_search"/>
+    <sl:tag rdf:resource="&tag;text_similarity"/>
+    <sl:comment xml:lang="en">&gt; How text embeddings and Elasticsearch’s dense_vector type **could be** used to support similarity search.&#xD;
+&#xD;
+&gt; In practice, sentence embeddings often don’t generalize well to large sections of text. They are not commonly used to represent text longer than a short paragraph.&#xD;
+&#xD;
+Example of use: search similar question in a collection of Q/A&#xD;
+&#xD;
+Sample code is given to rank search results  (TensorFlow + Google's universal sentence encoder + cosineSimilarity)&#xD;
+&#xD;
+Current limitation of vector similarity in Elasticsearch: vectors can be used for scoring documents, but not in the initial retrieval step. ([Ongoing work about approximate nearest neighbours search](https://github.com/elastic/elasticsearch/issues/42326). Will be a licensed feature of ES).&#xD;
+&#xD;
+&gt; Conclusions: Using vectors for search is an important and **nuanced** area</sl:comment>
+    <sl:tag rdf:resource="&tag;approximate_nearest_neighbor"/>
+    <sl:creationTime>2020-01-10T17:24:31Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;using_word_embedding"/>
+    <dc:title>Text similarity search in Elasticsearch using vector fields | Elastic Blog</dc:title>
+    <sl:bookmarkOf rdf:resource="https://www.elastic.co/fr/blog/text-similarity-search-with-vectors-in-elasticsearch"/>
+    <sl:creationDate>2020-01-10</sl:creationDate>
+    <sl:tag rdf:resource="&tag;elasticsearch_nearest_neighbor_s"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="nsmntx_neo4j_rdf_semantics_">
+    <dc:title xml:lang="en">NSMNTX - Neo4j RDF &amp; Semantics toolkit</dc:title>
+    <sl:creationDate>2020-01-19</sl:creationDate>
+    <sl:tag rdf:resource="&tag;neo4j"/>
+    <sl:tag rdf:resource="&tag;rdf"/>
+    <sl:bookmarkOf rdf:resource="https://neo4j.com/labs/nsmtx-rdf/"/>
+    <sl:creationTime>2020-01-19T01:01:49Z</sl:creationTime>
+  </rdf:Description>
+  <rdf:Description rdf:about="10_ml_nlp_research_highlights">
+    <sl:tag rdf:resource="&tag;sebastian_ruder"/>
+    <sl:creationDate>2020-01-06</sl:creationDate>
+    <sl:creationTime>2020-01-06T10:28:48Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://ruder.io/research-highlights-2019/"/>
+    <sl:tag rdf:resource="&tag;nlp"/>
+    <dc:title>10 ML &amp; NLP Research Highlights of 2019</dc:title>
+    <sl:tag rdf:resource="&tag;survey"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="marcel_frohlich_sur_twitter_te">
+    <sl:tag rdf:resource="&tag;weapon_of_mass_distraction"/>
+    <sl:bookmarkOf rdf:resource="https://twitter.com/FroehlichMarcel/status/1219010997563928579?s=20"/>
+    <dc:title>Marcel Fröhlich sur Twitter: Tech products, culture are ‘designed intentionally for mass deception’</dc:title>
+    <sl:creationDate>2020-01-20</sl:creationDate>
+    <sl:creationTime>2020-01-20T00:05:13Z</sl:creationTime>
+  </rdf:Description>
+  <rdf:Description rdf:about="investigating_entity_knowledge_">
+    <dc:title xml:lang="en">Investigating Entity Knowledge in BERT with Simple Neural End-To-End Entity Linking (2019)</dc:title>
+    <sl:tag rdf:resource="&tag;bertology"/>
+    <sl:tag rdf:resource="&tag;end_to_end_entity_linking"/>
+    <sl:tag rdf:resource="&tag;bert"/>
+    <sl:bookmarkOf rdf:resource="https://www.aclweb.org/anthology/K19-1063.pdf"/>
+    <sl:creationTime>2020-01-09T10:36:17Z</sl:creationTime>
+    <sl:creationDate>2020-01-09</sl:creationDate>
+    <sl:comment xml:lang="en">&gt; [Durrett and Klein (2014)](/doc/2020/01/a_joint_model_for_entity_analys) were the first to propose&#xD;
+jointly modelling Mention detection, Candidate generation and Entity disambiguation in a graphical&#xD;
+model and could show that each of those steps are&#xD;
+interdependent and benefit from a joint objective&#xD;
+&#xD;
+This paper uses neural techniques instead of CRF.&#xD;
+&#xD;
+&gt; BERT+Entity is a straightforward extension on top&#xD;
+of BERT, i.e. we initialize BERT with the publicly&#xD;
+available weights from the BERT-base-uncased&#xD;
+model and add an output classification layer on&#xD;
+top of the architecture. Given a contextualized token,&#xD;
+the classifier computes the probability of an&#xD;
+entity link for each entry in the entity vocabulary.&#xD;
+&#xD;
+Investigate the factual&#xD;
+information in form of entities that is contained in&#xD;
+BERT, seeking to understand to what degree this&#xD;
+information is already identifiable in BERT and if&#xD;
+the entity knowledge can be improved.&#xD;
+&#xD;
+&gt; the model&#xD;
+is the first that performs entity linking without any&#xD;
+pipeline or any heuristics, compared to all prior&#xD;
+approaches. We found that with our approach we&#xD;
+can learn additional entity knowledge in BERT that&#xD;
+helps in entity linking. **However, we also found&#xD;
+that almost none of the downstream tasks really&#xD;
+required entity knowledge**.</sl:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="hits_at_tac_kbp_2015_entity_dis">
+    <sl:tag rdf:resource="&tag;benjamin_heinzerling"/>
+    <sl:tag rdf:resource="&tag;entity_discovery_and_linking"/>
+    <dc:title>HITS at TAC KBP 2015:Entity Discovery and Linking, and Event Nugget Detection</dc:title>
+    <sl:bookmarkOf rdf:resource="https://tac.nist.gov/publications/2015/participant.papers/TAC2015.HITS.proceedings.pdf"/>
+    <sl:creationTime>2020-01-10T17:15:24Z</sl:creationTime>
+    <sl:creationDate>2020-01-10</sl:creationDate>
+  </rdf:Description>
+  <rdf:Description rdf:about="i_oversaw_the_us_nuclear_power_">
+    <sl:bookmarkOf rdf:resource="https://www.commondreams.org/views/2019/05/17/i-oversaw-us-nuclear-power-industry-now-i-think-it-should-be-banned?utm_campaign=shareaholic&amp;utm_medium=referral&amp;utm_source=twitter"/>
+    <dc:title>I Oversaw the US Nuclear Power Industry. Now I Think It Should Be Banned. | Common Dreams Views</dc:title>
+    <sl:creationDate>2020-01-04</sl:creationDate>
+    <sl:creationTime>2020-01-04T00:59:31Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;nuclear_power_no_thanks"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="_1503_03832_facenet_a_unified">
+    <dc:title xml:lang="en">[1503.03832] FaceNet: A Unified Embedding for Face Recognition and Clustering (2015)</dc:title>
+    <sl:tag rdf:resource="&tag;face_recognition"/>
+    <sl:comment xml:lang="en">Learns a Euclidean embedding per image&#xD;
+&#xD;
+&gt; Uses a deep CNN trained to directly optimize the embedding itself, rather than an intermediate bottleneck layer as in previous deep learning approaches. To train, we use triplets of roughly aligned matching / non-matching face patches generated using a novel online triplet mining method.&#xD;
+&#xD;
+&gt; state-of-the-art face recognition performance using only **128-bytes per face**. &#xD;
+&#xD;
+</sl:comment>
+    <sl:creationDate>2020-01-25</sl:creationDate>
+    <sl:creationTime>2020-01-25T01:03:31Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1503.03832"/>
+    <sl:tag rdf:resource="&tag;ml_google"/>
+    <sl:tag rdf:resource="&tag;siamese_network"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="ocasio_cortez_stumps_zuckerberg">
+    <sl:comment xml:lang="en">&gt; Congresswoman, I think that lying is bad</sl:comment>
+    <sl:tag rdf:resource="&tag;facebook_cambridge_analytica"/>
+    <dc:title>Ocasio-Cortez stumps Zuckerberg with questions on far right and Cambridge Analytica | Technology | The Guardian</dc:title>
+    <sl:bookmarkOf rdf:resource="https://www.theguardian.com/technology/2019/oct/23/mark-zuckerberg-alexandria-ocasio-cortez-facebook-cambridge-analytica"/>
+    <sl:creationTime>2020-01-01T13:10:10Z</sl:creationTime>
+    <sl:creationDate>2020-01-01</sl:creationDate>
+    <sl:tag rdf:resource="&tag;alexandria_ocasio_cortez"/>
+    <sl:tag rdf:resource="&tag;mark_zuckerberg"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="_1711_00046_replace_or_retriev">
+    <sl:comment xml:lang="en">For a document of size N (characters) and a dictionary of M keywords, the time complexity is O(N) (compared to O(MxN) with regex). FlashText is designed to only match complete words (words with boundary characters on both sides). Different from Aho Corasick Algorithm, as it doesn't match substrings. This algorithm is also designed to go for the longest match first. For an input dictionary {Machine, Learning, Machine learning} on a string 'I like Machine learning', it will only consider the longest match, which is Machine Learning&#xD;
+&#xD;
+[Github](https://github.com/vi3k6i5/flashtext)</sl:comment>
+    <sl:tag rdf:resource="&tag;regex"/>
+    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1711.00046"/>
+    <dc:title>[1711.00046] Replace or Retrieve Keywords In Documents at Scale (FlashText algorithm)</dc:title>
+    <sl:creationDate>2020-01-09</sl:creationDate>
+    <sl:creationTime>2020-01-09T16:26:49Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;string_searching_algorithm"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="_2001_07685_fixmatch_simplify">
+    <sl:comment xml:lang="en">[github](https://github.com/google-research/fixmatch)&#xD;
+&#xD;
+&gt; we demonstrate the **power of a&#xD;
+simple combination of two common Semi-Supervised Learning methods**: consistency&#xD;
+regularization and pseudo-labeling.&#xD;
+&#xD;
+1. First generates pseudo-labels using the model’s&#xD;
+predictions on weakly-augmented unlabeled images. For a&#xD;
+given image, the pseudo-label is only retained if the model&#xD;
+produces a high-confidence prediction. &#xD;
+2. The model is then&#xD;
+trained to predict the pseudo-label when fed a strongly augmented&#xD;
+version of the same image.</sl:comment>
+    <sl:creationTime>2020-01-22T18:11:37Z</sl:creationTime>
+    <sl:creationDate>2020-01-22</sl:creationDate>
+    <dc:title>[2001.07685] FixMatch: Simplifying Semi-Supervised Learning with Consistency and Confidence</dc:title>
+    <sl:tag rdf:resource="&tag;semi_supervised_learning"/>
+    <sl:tag rdf:resource="&tag;google_research"/>
+    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2001.07685"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="building_a_real_time_embeddings">
+    <sl:tag rdf:resource="&tag;google_cloud_platform"/>
+    <sl:tag rdf:resource="&tag;nearest_neighbor_search"/>
+    <sl:tag rdf:resource="&tag;good"/>
+    <sl:tag rdf:resource="&tag;approximate_nearest_neighbor"/>
+    <sl:bookmarkOf rdf:resource="https://cloud.google.com/solutions/machine-learning/building-real-time-embeddings-similarity-matching-system"/>
+    <dc:title>Building a real-time embeddings similarity matching system  |  Solutions  |  Google Cloud</dc:title>
+    <sl:tag rdf:resource="&tag;doc_by_google"/>
+    <sl:tag rdf:resource="&tag;sample_code"/>
+    <sl:creationTime>2020-01-11T02:29:47Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;text_similarity"/>
+    <sl:creationDate>2020-01-11</sl:creationDate>
+    <sl:comment xml:lang="en">- an overview of approximate similarity&#xD;
+matching&#xD;
+- an end-to-end example solution for&#xD;
+performing real-time text semantic search</sl:comment>
+    <sl:tag rdf:resource="&tag;similarity_queries"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="richer_sentence_embeddings_usin">
+    <sl:comment xml:lang="en">Simplistic (and often used) methods for sentence embeddings with BERT are too simplistic to be good (avearaging the word vectors, or using the \[CLS\] special vector (start of sequence).&#xD;
+&#xD;
+[About this paper](/doc/2019/08/_1908_10084_sentence_bert_sen)</sl:comment>
+    <sl:tag rdf:resource="&tag;sentence_embeddings"/>
+    <sl:tag rdf:resource="&tag;bert"/>
+    <sl:bookmarkOf rdf:resource="https://medium.com/genei-technology/richer-sentence-embeddings-using-sentence-bert-part-i-ce1d9e0b1343"/>
+    <sl:creationTime>2020-01-06T01:48:12Z</sl:creationTime>
+    <sl:creationDate>2020-01-06</sl:creationDate>
+    <dc:title>Richer Sentence Embeddings using Sentence-BERT — Part I</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="_1902_10909_bert_for_joint_int">
+    <sl:comment xml:lang="en">&gt; Experimental results show that our&#xD;
+proposed joint BERT model outperforms BERT&#xD;
+models modeling intent classification and slot filling&#xD;
+separately, demonstrating the efficacy of exploiting&#xD;
+the relationship between the two tasks.&#xD;
+&#xD;
+Adding a CRF on top of the model doesn't improve the results.</sl:comment>
+    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1902.10909"/>
+    <sl:creationTime>2020-01-09T01:13:39Z</sl:creationTime>
+    <sl:creationDate>2020-01-09</sl:creationDate>
+    <dc:title>[1902.10909] BERT for Joint Intent Classification and Slot Filling</dc:title>
+    <sl:tag rdf:resource="&tag;bert"/>
+    <sl:tag rdf:resource="&tag;intent_classification_and_slot_filling"/>
+    <sl:tag rdf:resource="&tag;alibaba"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="pfliu_nlp_named_entity_recognit">
+    <sl:tag rdf:resource="&tag;research_papers"/>
+    <sl:tag rdf:resource="&tag;named_entity_recognition"/>
+    <dc:title>pfliu-nlp/Named-Entity-Recognition-NER-Papers: An elaborate and exhaustive paper list for Named Entity Recognition (NER)</dc:title>
+    <sl:creationDate>2020-01-12</sl:creationDate>
+    <sl:creationTime>2020-01-12T22:29:32Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://github.com/pfliu-nlp/Named-Entity-Recognition-NER-Papers"/>
+    <sl:tag rdf:resource="&tag;github_project"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="joint_intent_classification_and">
+    <sl:tag rdf:resource="&tag;intent_classification_and_slot_filling"/>
+    <sl:tag rdf:resource="&tag;sample_code"/>
+    <sl:creationDate>2020-01-09</sl:creationDate>
+    <dc:title>Joint Intent Classification and Slot Filling with Transformers (Jupyter Notebook Viewer)</dc:title>
+    <sl:tag rdf:resource="&tag;attention_is_all_you_need"/>
+    <sl:tag rdf:resource="&tag;hugging_face"/>
+    <sl:tag rdf:resource="&tag;olivier_grisel"/>
+    <sl:creationTime>2020-01-09T01:15:16Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://nbviewer.jupyter.org/github/m2dsupsdlclass/lectures-labs/blob/master/labs/06_deep_nlp/Transformers_Joint_Intent_Classification_Slot_Filling_rendered.ipynb"/>
+    <sl:comment xml:lang="en">tutorial to build a simple Natural Language Understanding system using the &#xD;
+@snips&#xD;
+ voice assistant dataset (English only).</sl:comment>
+    <sl:tag rdf:resource="&tag;tutorial"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="natural_language_understanding_">
+    <sl:tag rdf:resource="&tag;slot_filling"/>
+    <sl:tag rdf:resource="&tag;nlu"/>
+    <dc:title>Natural Language Understanding with Sequence to Sequence Models</dc:title>
+    <sl:creationDate>2020-01-09</sl:creationDate>
+    <sl:creationTime>2020-01-09T00:50:49Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://towardsdatascience.com/natural-language-understanding-with-sequence-to-sequence-models-e87d41ad258b"/>
+    <sl:tag rdf:resource="&tag;sequence_to_sequence_learning"/>
+    <sl:tag rdf:resource="&tag;intent_classification_and_slot_filling"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="elasticsearch_meets_bert_build">
+    <sl:tag rdf:resource="&tag;github_project"/>
+    <sl:creationTime>2020-01-10T17:23:50Z</sl:creationTime>
+    <dc:title>Elasticsearch meets BERT: Building Search Engine with Elasticsearch and BERT</dc:title>
+    <sl:tag rdf:resource="&tag;bert"/>
+    <sl:comment>- Links to [this ES blog post](/doc/2020/01/text_similarity_search_in_elast)&#xD;
+- [somewhat related](/doc/2020/01/building_a_search_engine_with_b)</sl:comment>
+    <sl:bookmarkOf rdf:resource="https://github.com/Hironsan/bertsearch"/>
+    <sl:tag rdf:resource="&tag;nlp_and_search"/>
+    <sl:tag rdf:resource="&tag;elasticsearch"/>
+    <sl:tag rdf:resource="&tag;text_similarity"/>
+    <sl:creationDate>2020-01-10</sl:creationDate>
+  </rdf:Description>
+  <rdf:Description rdf:about="scraping_data_uhack_guide">
+    <sl:tag rdf:resource="&tag;pdf_extract"/>
+    <sl:tag rdf:resource="&tag;pdf_format"/>
+    <sl:tag rdf:resource="&tag;howto"/>
+    <sl:bookmarkOf rdf:resource="https://uhack-guide.readthedocs.io/en/latest/technical/scraping/"/>
+    <sl:creationTime>2020-01-23T18:14:58Z</sl:creationTime>
+    <sl:creationDate>2020-01-23</sl:creationDate>
+    <dc:title>Scraping Data - UHack Guide</dc:title>
+    <sl:tag rdf:resource="&tag;scraping"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="_1802_07569_continual_lifelong">
+    <sl:tag rdf:resource="&tag;continual_learning"/>
+    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1802.07569"/>
+    <dc:title>[1802.07569] Continual Lifelong Learning with Neural Networks: A Review</dc:title>
+    <sl:creationDate>2020-01-01</sl:creationDate>
+    <sl:creationTime>2020-01-01T12:12:08Z</sl:creationTime>
+  </rdf:Description>
+  <rdf:Description rdf:about="siamese_network_keras_for_image">
+    <dc:title xml:lang="en">Siamese Network for Image and Text similarity using Keras</dc:title>
+    <sl:bookmarkOf rdf:resource="https://medium.com/@prabhnoor0212/siamese-network-keras-31a3a8f37d04"/>
+    <sl:creationTime>2020-01-22T16:50:08Z</sl:creationTime>
+    <sl:creationDate>2020-01-22</sl:creationDate>
+    <sl:tag rdf:resource="&tag;sample_code"/>
+    <sl:tag rdf:resource="&tag;siamese_network"/>
+    <sl:tag rdf:resource="&tag;keras"/>
+    <sl:tag rdf:resource="&tag;triplet_loss"/>
+    <sl:tag rdf:resource="&tag;quora_question_pairs"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="your_own_hosted_blog_the_easy_">
+    <sl:mainDoc>
+      <rdf:Description rdf:about="your_own_blog_with_github_pages">
+        <sl:tag rdf:resource="&tag;fast_ai"/>
+        <sl:tag rdf:resource="&tag;blog"/>
+        <sl:tag rdf:resource="&tag;jeremy_howard"/>
+        <sl:tag rdf:resource="&tag;tutorial"/>
+        <dc:title>Your own blog with GitHub Pages and fast_template (4 part tutorial) · fast.ai</dc:title>
+        <sl:tag rdf:resource="&tag;github_pages"/>
+        <sl:bookmarkOf rdf:resource="https://www.fast.ai/2020/01/20/blog_overview/"/>
+        <sl:creationTime>2020-01-21T12:18:58Z</sl:creationTime>
+        <sl:creationDate>2020-01-21</sl:creationDate>
+      </rdf:Description>
+    </sl:mainDoc>
+    <sl:tag rdf:resource="&tag;blog"/>
+    <sl:bookmarkOf rdf:resource="https://www.fast.ai/2020/01/16/fast_template/"/>
+    <sl:creationTime>2020-01-16T22:15:22Z</sl:creationTime>
+    <sl:creationDate>2020-01-16</sl:creationDate>
+    <dc:title>Your own hosted blog, the easy, free, open way· fast.ai</dc:title>
+    <sl:tag rdf:resource="&tag;github"/>
+    <sl:tag rdf:resource="&tag;jeremy_howard"/>
+    <sl:comment>[twitter](https://twitter.com/jeremyphoward/status/1217909025259442176?s=20)</sl:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="les_brexiters_ont_ils_eu_ce_qu_">
+    <dc:title xml:lang="fr">Les brexiters ont-ils eu ce qu'ils voulaient ?</dc:title>
+    <sl:creationTime>2020-01-28T00:29:59Z</sl:creationTime>
+    <sl:creationDate>2020-01-28</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/les-decodeurs/article/2020/01/27/les-brexiters-ont-ils-eu-ce-qu-ils-voulaient_6027404_4355770.html"/>
+    <sl:tag rdf:resource="&tag;brexit"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="a_call_to_minimize_distration">
+    <dc:title>A Call To Minimize Distration</dc:title>
+    <sl:creationDate>2020-01-20</sl:creationDate>
+    <sl:creationTime>2020-01-20T00:10:19Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="http://minimizedistraction.com/"/>
+    <sl:tag rdf:resource="&tag;weapon_of_mass_distraction"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="self_supervised_learning_and_co">
+    <sl:creationDate>2020-01-21</sl:creationDate>
+    <sl:creationTime>2020-01-21T08:56:49Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://www.fast.ai/2020/01/13/self_supervised/"/>
+    <dc:title>Self-supervised learning and computer vision · fast.ai</dc:title>
+    <sl:tag rdf:resource="&tag;self_supervised_learning"/>
+    <sl:tag rdf:resource="&tag;computer_vision"/>
+    <sl:tag rdf:resource="&tag;jeremy_howard"/>
+    <sl:tag rdf:resource="&tag;noise_contrastive_estimation"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="training_a_speaker_embedding_fr">
+    <dc:title xml:lang="en">Training a Speaker Embedding from Scratch with Triplet Learning (2018)</dc:title>
+    <sl:tag rdf:resource="&tag;triplet_loss"/>
+    <sl:tag rdf:resource="&tag;siamese_network"/>
+    <sl:bookmarkOf rdf:resource="https://blog.goodaudience.com/training-a-speaker-embedding-from-scratch-24baf990ccf"/>
+    <sl:creationTime>2020-01-23T09:03:12Z</sl:creationTime>
+    <sl:creationDate>2020-01-23</sl:creationDate>
+    <sl:comment xml:lang="en">Author shares his learnings building a a text independent speaker identification system. General advices and detailed explanation of the difficulties of triplet loss implementation ((plateaued training, Hard negative mining very costly,...):&#xD;
+&#xD;
+&gt; implementing triplet training&#xD;
+efficiently and correctly proved to be frustrating and&#xD;
+error-prone.&#xD;
+&#xD;
+"Light bulb moment": this [paper](/doc/2020/02/_1703_07464_no_fuss_distance_m) "**Proxy based triplet learning**"&#xD;
+&#xD;
+&gt; instead of generating triplets, we learn an&#xD;
+embedding for each class and use&#xD;
+the learnt embedding as a proxy for triplets as part of the&#xD;
+training. In other words, we can train end to end without&#xD;
+the computationally expensive step of resampling triplets&#xD;
+after each network update.&#xD;
+</sl:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="fastai_nbdev_create_delightful">
+    <sl:tag rdf:resource="&tag;jeremy_howard"/>
+    <sl:comment xml:lang="en">a library that allows you to fully develop a library in Jupyter Notebooks, putting all your code, tests and documentation in one place&#xD;
+&#xD;
+[Blog post](https://www.fast.ai/2019/12/02/nbdev/)</sl:comment>
+    <sl:creationDate>2020-01-12</sl:creationDate>
+    <sl:creationTime>2020-01-12T18:33:29Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://github.com/fastai/nbdev"/>
+    <dc:title>fastai/nbdev: Create delightful python projects using Jupyter Notebooks</dc:title>
+    <sl:tag rdf:resource="&tag;fastai_nbdev"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="best_practices_for_ml_engineeri">
+    <sl:tag rdf:resource="&tag;ml_engineering"/>
+    <dc:title>Best Practices for ML Engineering  |  Google Developers</dc:title>
+    <sl:tag rdf:resource="&tag;best_practices"/>
+    <sl:bookmarkOf rdf:resource="https://developers.google.com/machine-learning/guides/rules-of-ml/?_ga=2.85269593.-1158947199.1579618956&amp;hl=en"/>
+    <sl:creationTime>2020-01-21T16:40:23Z</sl:creationTime>
+    <sl:creationDate>2020-01-21</sl:creationDate>
+    <sl:tag rdf:resource="&tag;doc_by_google"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="syncing_your_blog_with_your_pc_">
+    <sl:mainDoc rdf:resource="your_own_blog_with_github_pages"/>
+    <sl:bookmarkOf rdf:resource="https://www.fast.ai/2020/01/18/gitblog/"/>
+    <dc:title>Syncing your blog with your PC, and using your word processor · fast.ai</dc:title>
+    <sl:creationDate>2020-01-19</sl:creationDate>
+    <sl:creationTime>2020-01-19T00:03:00Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;jeremy_howard"/>
+    <sl:tag rdf:resource="&tag;blog"/>
+    <sl:tag rdf:resource="&tag;fast_ai"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="a_joint_model_for_entity_analys">
+    <sl:tag rdf:resource="&tag;conditional_random_field"/>
+    <sl:tag rdf:resource="&tag;end_to_end_entity_linking"/>
+    <dc:title>A Joint Model for Entity Analysis: Coreference, Typing, and Linking (Greg Durrett, Dan Klein 2014)</dc:title>
+    <sl:creationDate>2020-01-09</sl:creationDate>
+    <sl:creationTime>2020-01-09T14:56:24Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://transacl.org/ojs/index.php/tacl/article/view/412"/>
+    <sl:tag rdf:resource="&tag;multitask_learning_in_nlp"/>
+    <sl:comment xml:lang="en">model interactions between the Mention Detection (MD), Candidate Generation (CG) and Entity Disambiguation (ED) tasks jointly. They find that the joint objective is beneficial (each task improves). They also note that there is&#xD;
+no natural order of the tasks and they should interact&#xD;
+freely. Their approach to CG is to learn to&#xD;
+generate queries to the KB</sl:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="en_inde_la_resistance_aux_anti">
+    <sl:tag rdf:resource="&tag;inde"/>
+    <sl:tag rdf:resource="&tag;antibiotic_resistance"/>
+    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/sciences/article/2020/01/27/en-inde-la-resistance-aux-antibiotiques-devient-un-probleme-sanitaire-tres-serieux_6027416_1650684.html"/>
+    <sl:creationTime>2020-01-28T00:16:00Z</sl:creationTime>
+    <sl:creationDate>2020-01-28</sl:creationDate>
+    <dc:title>En Inde, la résistance aux antibiotiques devient un problème sanitaire très sérieux</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="davidsbatista_breds_bootstrap">
+    <sl:tag rdf:resource="&tag;using_word_embedding"/>
+    <sl:creationTime>2020-01-11T16:44:00Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://github.com/davidsbatista/BREDS"/>
+    <sl:creationDate>2020-01-11</sl:creationDate>
+    <dc:title>davidsbatista/BREDS: "Bootstrapping Relationship Extractors with Distributional Semantics" (Batista et al., 2015) - code for EMNLP'15 paper</dc:title>
+    <sl:tag rdf:resource="&tag;relation_extraction"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="semantic_text_matching_for_long">
+    <sl:tag rdf:resource="&tag;nlp_google"/>
+    <sl:tag rdf:resource="&tag;semantic_text_matching"/>
+    <sl:tag rdf:resource="&tag;nlp_long_documents"/>
+    <sl:creationDate>2020-01-23</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="https://jyunyu.csie.org/docs/pubs/www2019paper.pdf"/>
+    <sl:comment xml:lang="en">A document can be represented as a hierarchy&#xD;
+of paragraph, sentence and word sequences. Different paragraphs&#xD;
+and sentences can have different semantic meaning&#xD;
+and importance.&#xD;
+&#xD;
+A multi-depth attention-based hierarchical RNN derive representations for each level of document&#xD;
+structure, which are then aggregated to build a representation of the entire document&#xD;
+&#xD;
+Uses a Siamese structure for semantic text matching.</sl:comment>
+    <sl:tag rdf:resource="&tag;thewebconf_2019"/>
+    <dc:title xml:lang="en">Semantic Text Matching for Long-Form Documents (2019)</dc:title>
+    <sl:creationTime>2020-01-23T10:21:17Z</sl:creationTime>
+  </rdf:Description>
+</rdf:RDF>

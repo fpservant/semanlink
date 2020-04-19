@@ -6,38 +6,41 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import javax.servlet.ServletContext;
+
+import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.NodeIterator;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.RDFErrorHandler;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.RDFReader;
+import org.apache.jena.rdf.model.ResIterator;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.shared.JenaException;
+import org.apache.jena.vocabulary.RDF;
 
 import net.semanlink.metadataextraction.MetadataExtractorManager;
 import net.semanlink.semanlink.SLDataFolder;
 import net.semanlink.semanlink.SLModel;
+import net.semanlink.semanlink.SLModel.LoadingMode;
 import net.semanlink.semanlink.SLThesaurus;
 import net.semanlink.semanlink.SLVocab;
 import net.semanlink.semanlink.WebServer;
-import net.semanlink.semanlink.SLModel.LoadingMode;
 import net.semanlink.skos.SKOS;
 import net.semanlink.sljena.JModel;
-import net.semanlink.sljena.modelcorrections.AliasCorrection;
 import net.semanlink.sljena.modelcorrections.AliasToSkosAltLabelCorrection;
 import net.semanlink.sljena.modelcorrections.CreationDateCorrection;
 import net.semanlink.sljena.modelcorrections.ModelCorrector;
-import net.semanlink.sljena.modelcorrections.NameSpaceCorrection;
-import net.semanlink.sljena.modelcorrections.OldSLVocab2NewSLVocabTransformer;
-import net.semanlink.sljena.modelcorrections.PropertyCopyCorrection;
 import net.semanlink.sljena.modelcorrections.PropertyURICorrection;
 import net.semanlink.sljena.modelcorrections.TagLabel2PrefLabelCorrection;
 import net.semanlink.sljena.modelcorrections.ThesaurusUriCorrection;
-import net.semanlink.sljena.modelcorrections.KeywordUriCorrection;
-import net.semanlink.util.Util;
 import net.semanlink.util.jena.JenaUtils;
-
-import org.apache.jena.rdf.model.*;
-import org.apache.jena.shared.JenaException;
-import org.apache.jena.vocabulary.RDF;
 
 
 
@@ -92,18 +95,14 @@ public static final String SL_BASE_PROP = SEMANLINK_CONFIG_SCHEMA + "base";
 
 public static final String SLC_USE_PROPERTY_PROP = SEMANLINK_CONFIG_SCHEMA + "useProperty";
 
-private Model model;
+Model model;
 private Property filePathProp;
 private Property pathRelativeToMainDataDirProp;
 private Property fileURIProp;
 private Property thesaurusProp;
 private Property loadFileModeProp;
-/*private Property thesaurusFileProp;
-private Property loadFileBaseProp;
-private Property loadFileThesaurusProp;
-private Property pathRelativToServletProp;*/
-static class ConfigErrorHandler implements RDFErrorHandler {
 
+static class ConfigErrorHandler implements RDFErrorHandler {
 	public void error(Exception e) {
 		throw new LoadException(e);
 	}
@@ -115,8 +114,8 @@ static class ConfigErrorHandler implements RDFErrorHandler {
 	public void warning(Exception e) {
 		throw new LoadException(e);
 	}
-	
 }
+
 public SemanlinkConfig(File configFile, String servletUrl, ServletContext servletContext) throws JenaException, IOException {
 	// super(configFile.getAbsolutePath(), slashEndedServletUrl(servletUrl));
 	this.configFile = configFile;
@@ -158,9 +157,10 @@ public ApplicationParams getApplicationParams() { return this.applicationParams;
 
 /** Retourne une liste de SLModel (aussi ajoutée au param, pour que la globale de slservlet soit documentée
  *  le plus vite possible, ce afin que slservlet.getSLMOdel ne se gauffre pas si on y fait référence. Je sais ça craint
- *  mais (cf update sicg), c'est parce que on a ref à slServlet.getSLModel dans ModelFileIOManager.writeModel */
-public ArrayList<SLModel> load(ArrayList<SLModel> slModelList) throws IOException, URISyntaxException {
-	ArrayList<SLModel> x = slModelList;
+ *  mais (cf update sicg), c'est parce que on a ref à slServlet.getSLModel dans ModelFileIOManager.writeModel 
+ * @throws Exception */
+public ArrayList<SLModel> load() throws Exception {
+	ArrayList<SLModel> x = new ArrayList<>();
 	ResIterator ite;
 	
 	// the application params
@@ -202,7 +202,6 @@ public ArrayList<SLModel> load(ArrayList<SLModel> slModelList) throws IOExceptio
 			webServer.addMapping(new URI(uri), dir);
 		}			
 	}
-
 	ite.close();
 	
 	Property slModelTypeProp = model.getProperty(SLMODEL_TYPE);
@@ -210,144 +209,333 @@ public ArrayList<SLModel> load(ArrayList<SLModel> slModelList) throws IOExceptio
 	// the list of SLModel to be loaded
 	ite = model.listSubjectsWithProperty(RDF.type, slModelTypeProp);
 	for (;ite.hasNext();) {
-		SLModel slModel = new JModel();
-		// le faire le plus tôt possible, afin que
-		// d'éventuels appels, par ex à SLServlet.getModel()
-		// ne se viandent pas misérablement
-		x.add(slModel);
-		
-		slModel.setWebServer(this.webServer);
-		
-		Resource slModelRes = ite.nextResource();	
-		String slModelUri = slModelRes.getURI();
-		slModel.setModelUrl(slModelUri);
-		
-		// Mettre un corrector si on en veut un
-		ModelCorrector corrector = getCorrector(slModel);
-		// ModelCorrector corrector = new ModelCorrector();
-		slModel.setCorrector(corrector);
-
-	 	StmtIterator site = null;
-		RDFNode node = null;
-
-		// THESAURUS
-		// default thesaurus
-		site = slModelRes.listProperties(model.getProperty(SL_DEFAULT_THESAURUS_PROP)); // TODO vérifier ce qui se passe si pas défini
-		node = iterator2RDFNodeCheck(site, SL_DEFAULT_THESAURUS_PROP, true);
-		SLThesaurus slThesaurus = loadThesaurus(slModel, (Resource) node, corrector);
-		SLThesaurus defaultThesaurus = slThesaurus;
-		slModel.setDefaultThesaurus(defaultThesaurus);
-		
-		// other thesaurus
-		site = slModelRes.listProperties(model.getProperty(SEMANLINK_CONFIG_SCHEMA + "thesaurus"));
-		for (;site.hasNext();) {
-			node = site.nextStatement().getObject();
-			if (!node.isResource() ) {
-				throw new LoadException("error in " + configFile + " : thesaurus " + node + " should be a resource");
-			}
-			loadThesaurus(slModel, (Resource) node, corrector);
-		}
-		site.close();
-
-		// DATA FOLDERS
-		// default datafolder
-		Resource defaultDataFolderRes = prop2ResourceCheck(model, slModelRes, SL_DEFAULT_DATA_FOLDER_PROP);
-		if (defaultDataFolderRes == null) throw new LoadException("defaultFolder undefined");
-		SLDataFolder defaultDataFolder = loadSLFile(slModel, defaultDataFolderRes, defaultThesaurus);
-	 	slModel.setDefaultDataFolder(defaultDataFolder);
-	 	webServer.setDefaultDocFolder(defaultDataFolder.getFile()); // @find CORS pb with markdown
-	 	
-	 	
-	 	
-	 	
-//	 	// on ajoute systématiquement un (1/2) mapping de servlet/document vers le default data folder
-//	 	// (cf pb CORS pour markdown file chez moi : le doc est servi par apache, on ne peut getter le fichier en ajax.
-//	 	// Je veux donc donner la possibilité de linker vers 127.0.0.1:8080/semanlink/document/2015/10/UnFichier.md
-//	 	// et il faut donc que cela envoie vers le fichier correspondant pour être servi par static file servlet
-//	 	defaultDataFolder
-//	 	webServer.addMapping(null, mainDataDir);
-	 	
-	 	
-	 	
-	 	
-
-	 	// bookmark folder
-		/*  // pas obligatoire, pour moi. 
-		Resource bookmarkFolderRes = prop2ResourceCheck(model, slModelRes, SL_BOOKMARK_FOLDER_PROP);
-		if (bookmarkFolderRes == null) throw new LoadException("bookmarkFolder undefined"); */
-	 	Resource bookmarkFolderRes = null;
-		site = slModelRes.listProperties(model.getProperty(SL_BOOKMARK_FOLDER_PROP));
-		for (;site.hasNext();) {
-			node = site.nextStatement().getObject();
-			if (!node.isResource() ) {
-				throw new LoadException("error in " + configFile + " : bookmark folder " + node + " should be a resource");
-			}
-			bookmarkFolderRes = (Resource) node;
-			break;
-		}
-		site.close();
-		if (bookmarkFolderRes != null) {
-			// 2019-03 uris for bookmarks
-			// SLDataFolder bookmarkDataFolder = loadSLFile(slModel, bookmarkFolderRes, defaultThesaurus, null, true);
-			SLDataFolder bookmarkDataFolder = loadSLFile(slModel, bookmarkFolderRes, defaultThesaurus, bookmarkFolderRes.getURI(), true);
-		 	slModel.setBookmarkFolder(bookmarkDataFolder);
-		}
-
-	 	// notes folder
-		Resource notesFolderRes = prop2ResourceCheck(model, slModelRes, SL_NOTES_FOLDER_PROP);
-		if (notesFolderRes == null) throw new LoadException("notesFolder undefined");
-		// notesFolderRes is now an anonymous resource (we don't state anymore that it is "....NOTE_SERVLET_PATH")
-		// File notesFolderFile = loadSLFile(slModel, notesFolderRes);
-		String notesUri = null;
-		if (notesFolderRes.isAnon()) {
-			// notesUri = aSlashB(this.servletUrl,CoolUriServlet.DOC_SERVLET_PATH); // 2006/10
-			notesUri = aSlashB(this.servletUrl,CoolUriServlet.NOTE_SERVLET_PATH);			
-		} else {
-			notesUri = notesFolderRes.getURI();
-		}
-		SLDataFolder notesDataFolder = loadSLFile(slModel, notesFolderRes, defaultThesaurus, notesUri, false);
-	 	// notes are accessed through the servlet
-	 	// we have to state that there is a web server association between the path
-	 	// to the dir containing the notes and the servlet
-		// done in loadSLFile : webServer.addMapping(new URI(notesUri  + "/"), notesFolderFile);
-	 	slModel.setNotesFolder(notesDataFolder);
-
-		// other data folders
-	
-	 	site = slModelRes.listProperties(model.getProperty(SL_DATA_FOLDER_PROP));
-		for (;site.hasNext();) {
-			node = site.nextStatement().getObject();
-			if (!node.isResource() ) {
-				throw new LoadException("error in " + configFile + " : " + node + " should be a resource");
-			}
-			try {
-				loadSLFile(slModel, (Resource) node, defaultThesaurus);
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("ERROR trying to load " + node + " : " + e);
-			}
-		}
-		site.close();
-
-		// attention, ce truc ne recharge pas le model :
-  	// si on l'utilise, il faut donc quitter juste après et relancer
-		// (la différence avec les corrections habituelles, c'est qu'on a besoin d'avoir
-		// déjà chargé le slModel pour définir la correction
-  	// ((JModel) slModel).correctOldKwUris(); // commenter (mais A GARDER!!!)
-  	////////// JAMAIS FAIT ((JModel) slModel).correctAlias();
-	  	
-		// slModel.listenDocs();
-
-		// x.add(slModel);
-		
-		// maintenant que les fichiers sont chargés, supprimer le corrector
-		slModel.setCorrector(null);
+		x.add(loadSLModel(ite.nextResource(), webServer));
+//		SLModel slModel = new JModel();
+//		// le faire le plus tôt possible, afin que
+//		// d'éventuels appels, par ex à SLServlet.getModel()
+//		// ne se viandent pas misérablement
+//		x.add(slModel);
+//		
+//		
+//		
+//		
+//		
+//		
+//		slModel.setWebServer(this.webServer);
+//		
+//		Resource slModelRes = ite.nextResource();	
+//		String slModelUri = slModelRes.getURI();
+//		slModel.setModelUrl(slModelUri);
+//		
+//		// Mettre un corrector si on en veut un
+//		ModelCorrector corrector = getCorrector();
+//		// ModelCorrector corrector = new ModelCorrector();
+//		slModel.setCorrector(corrector);
+//
+//	 	StmtIterator site = null;
+//		RDFNode node = null;
+//
+//		// THESAURUS
+//		// default thesaurus
+//		site = slModelRes.listProperties(model.getProperty(SL_DEFAULT_THESAURUS_PROP)); // TODO vérifier ce qui se passe si pas défini
+//		node = iterator2RDFNodeCheck(site, SL_DEFAULT_THESAURUS_PROP, true);
+//		SLThesaurus slThesaurus = loadThesaurus(slModel, (Resource) node, corrector);
+//		SLThesaurus defaultThesaurus = slThesaurus;
+//		slModel.setDefaultThesaurus(defaultThesaurus);
+//		
+//		// other thesaurus
+//		site = slModelRes.listProperties(model.getProperty(SEMANLINK_CONFIG_SCHEMA + "thesaurus"));
+//		for (;site.hasNext();) {
+//			node = site.nextStatement().getObject();
+//			if (!node.isResource() ) {
+//				throw new LoadException("error in " + configFile + " : thesaurus " + node + " should be a resource");
+//			}
+//			loadThesaurus(slModel, (Resource) node, corrector);
+//		}
+//		site.close();
+//
+//		// DATA FOLDERS
+//		// default datafolder
+//		Resource defaultDataFolderRes = prop2ResourceCheck(model, slModelRes, SL_DEFAULT_DATA_FOLDER_PROP);
+//		if (defaultDataFolderRes == null) throw new LoadException("defaultFolder undefined");
+//		SLDataFolder defaultDataFolder = loadSLFile(slModel, defaultDataFolderRes, defaultThesaurus);
+//	 	slModel.setDefaultDataFolder(defaultDataFolder);
+//	 	webServer.setDefaultDocFolder(defaultDataFolder.getFile()); // @find CORS pb with markdown
+//	 	
+//	 	
+//	 	
+//	 	
+////	 	// on ajoute systématiquement un (1/2) mapping de servlet/document vers le default data folder
+////	 	// (cf pb CORS pour markdown file chez moi : le doc est servi par apache, on ne peut getter le fichier en ajax.
+////	 	// Je veux donc donner la possibilité de linker vers 127.0.0.1:8080/semanlink/document/2015/10/UnFichier.md
+////	 	// et il faut donc que cela envoie vers le fichier correspondant pour être servi par static file servlet
+////	 	defaultDataFolder
+////	 	webServer.addMapping(null, mainDataDir);
+//	 	
+//	 	
+//	 	
+//	 	
+//
+//	 	// bookmark folder
+//		/*  // pas obligatoire, pour moi. 
+//		Resource bookmarkFolderRes = prop2ResourceCheck(model, slModelRes, SL_BOOKMARK_FOLDER_PROP);
+//		if (bookmarkFolderRes == null) throw new LoadException("bookmarkFolder undefined"); */
+//	 	Resource bookmarkFolderRes = null;
+//		site = slModelRes.listProperties(model.getProperty(SL_BOOKMARK_FOLDER_PROP));
+//		for (;site.hasNext();) {
+//			node = site.nextStatement().getObject();
+//			if (!node.isResource() ) {
+//				throw new LoadException("error in " + configFile + " : bookmark folder " + node + " should be a resource");
+//			}
+//			bookmarkFolderRes = (Resource) node;
+//			break;
+//		}
+//		site.close();
+//		if (bookmarkFolderRes != null) {
+//			// 2019-03 uris for bookmarks
+//			// SLDataFolder bookmarkDataFolder = loadSLFile(slModel, bookmarkFolderRes, defaultThesaurus, null, true);
+//			SLDataFolder bookmarkDataFolder = loadSLFile(slModel, bookmarkFolderRes, defaultThesaurus, bookmarkFolderRes.getURI(), true);
+//		 	slModel.setBookmarkFolder(bookmarkDataFolder);
+//		}
+//
+//	 	// notes folder
+//		Resource notesFolderRes = prop2ResourceCheck(model, slModelRes, SL_NOTES_FOLDER_PROP);
+//		if (notesFolderRes == null) throw new LoadException("notesFolder undefined");
+//		// notesFolderRes is now an anonymous resource (we don't state anymore that it is "....NOTE_SERVLET_PATH")
+//		// File notesFolderFile = loadSLFile(slModel, notesFolderRes);
+//		String notesUri = null;
+//		if (notesFolderRes.isAnon()) {
+//			// notesUri = aSlashB(this.servletUrl,CoolUriServlet.DOC_SERVLET_PATH); // 2006/10
+//			notesUri = aSlashB(this.servletUrl,CoolUriServlet.NOTE_SERVLET_PATH);			
+//		} else {
+//			notesUri = notesFolderRes.getURI();
+//		}
+//		SLDataFolder notesDataFolder = loadSLFile(slModel, notesFolderRes, defaultThesaurus, notesUri, false);
+//	 	// notes are accessed through the servlet
+//	 	// we have to state that there is a web server association between the path
+//	 	// to the dir containing the notes and the servlet
+//		// done in loadSLFile : webServer.addMapping(new URI(notesUri  + "/"), notesFolderFile);
+//	 	slModel.setNotesFolder(notesDataFolder);
+//
+//		// other data folders
+//	
+//	 	site = slModelRes.listProperties(model.getProperty(SL_DATA_FOLDER_PROP));
+//		for (;site.hasNext();) {
+//			node = site.nextStatement().getObject();
+//			if (!node.isResource() ) {
+//				throw new LoadException("error in " + configFile + " : " + node + " should be a resource");
+//			}
+//			try {
+//				loadSLFile(slModel, (Resource) node, defaultThesaurus);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//				System.out.println("ERROR trying to load " + node + " : " + e);
+//			}
+//		}
+//		site.close();
+//
+//		// attention, ce truc ne recharge pas le model :
+//  	// si on l'utilise, il faut donc quitter juste après et relancer
+//		// (la différence avec les corrections habituelles, c'est qu'on a besoin d'avoir
+//		// déjà chargé le slModel pour définir la correction
+//  	// ((JModel) slModel).correctOldKwUris(); // commenter (mais A GARDER!!!)
+//  	////////// JAMAIS FAIT ((JModel) slModel).correctAlias();
+//	  	
+//		// slModel.listenDocs();
+//
+//		// x.add(slModel);
+//		
+//		// maintenant que les fichiers sont chargés, supprimer le corrector
+//		slModel.setCorrector(null);
 	}
 	// PrintWriter pw = new PrintWriter(new FileWriter(longFileName+"aaa"));
 	// model.write(pw,"RDF/XML-ABBREV",null);
 
 	return x;
 }
+
+
+/** Loads a SLModel defined in config file */
+private SLModel loadSLModel(Resource slModelRes, WebServer webServer) throws Exception {
+	SLModel slModel = new JModel();
+	slModel.setWebServer(this.webServer);
+	slModel.setModelUrl(slModelRes.getURI());
+	
+	// Mettre un corrector si on en veut un
+	ModelCorrector corrector = getCorrector();
+	
+ 	StmtIterator site = null;
+	RDFNode node = null;
+
+	// THESAURUS
+	// default thesaurus
+	site = slModelRes.listProperties(model.getProperty(SL_DEFAULT_THESAURUS_PROP)); // TODO vérifier ce qui se passe si pas défini
+	node = iterator2RDFNodeCheck(site, SL_DEFAULT_THESAURUS_PROP, true);
+	
+	SLThesaurus defaultThesaurus = null;
+	{
+		Resource thesaurusRes = (Resource) node;
+		String thUri = thesaurusRes.getURI();
+		File thDir = getResDir(thesaurusRes, true);
+		// SL_OLD_URI_PROP
+		String oldThUri = prop2Uri(model, thesaurusRes, SL_OLD_URI_PROP);
+		if (oldThUri != null) {
+			corrector.add(new ThesaurusUriCorrection(oldThUri, thUri));
+		}
+		defaultThesaurus = slModel.loadThesaurus(thUri, thDir);
+		slModel.setDefaultThesaurus(defaultThesaurus);
+	}
+	
+	// other thesaurus
+	site = slModelRes.listProperties(model.getProperty(SEMANLINK_CONFIG_SCHEMA + "thesaurus"));
+	for (;site.hasNext();) {
+		node = site.nextStatement().getObject();
+		if (!node.isResource() ) {
+			throw new LoadException("error in " + configFile + " : thesaurus " + node + " should be a resource");
+		}
+		Resource thesaurusRes = (Resource) node;
+		String thUri = thesaurusRes.getURI();
+		File thDir = getResDir(thesaurusRes, true);
+		SLThesaurus slThesaurus =  slModel.loadThesaurus(thUri, thDir);
+	}
+	site.close();
+
+	// DATA FOLDERS
+	// default datafolder
+	Resource defaultDataFolderRes = prop2ResourceCheck(model, slModelRes, SL_DEFAULT_DATA_FOLDER_PROP);
+	if (defaultDataFolderRes == null) throw new LoadException("defaultFolder undefined");
+	SLDataFolder defaultDataFolder = loadSLFile(slModel, defaultDataFolderRes, defaultThesaurus);
+ 	slModel.setDefaultDataFolder(defaultDataFolder);
+ 	webServer.setDefaultDocFolder(defaultDataFolder.getFile()); // @find CORS pb with markdown
+ 	
+ 	
+// 	// on ajoute systématiquement un (1/2) mapping de servlet/document vers le default data folder
+// 	// (cf pb CORS pour markdown file chez moi : le doc est servi par apache, on ne peut getter le fichier en ajax.
+// 	// Je veux donc donner la possibilité de linker vers 127.0.0.1:8080/semanlink/document/2015/10/UnFichier.md
+// 	// et il faut donc que cela envoie vers le fichier correspondant pour être servi par static file servlet
+// 	defaultDataFolder
+// 	webServer.addMapping(null, mainDataDir);
+ 	
+
+ 	// bookmark folder
+	/*  // pas obligatoire, pour moi. 
+	Resource bookmarkFolderRes = prop2ResourceCheck(model, slModelRes, SL_BOOKMARK_FOLDER_PROP);
+	if (bookmarkFolderRes == null) throw new LoadException("bookmarkFolder undefined"); */
+ 	Resource bookmarkFolderRes = null;
+	site = slModelRes.listProperties(model.getProperty(SL_BOOKMARK_FOLDER_PROP));
+	for (;site.hasNext();) {
+		node = site.nextStatement().getObject();
+		if (!node.isResource() ) {
+			throw new LoadException("error in " + configFile + " : bookmark folder " + node + " should be a resource");
+		}
+		bookmarkFolderRes = (Resource) node;
+		break;
+	}
+	site.close();
+	if (bookmarkFolderRes != null) {
+		// 2019-03 uris for bookmarks
+		// SLDataFolder bookmarkDataFolder = loadSLFile(slModel, bookmarkFolderRes, defaultThesaurus, null, true);
+		SLDataFolder bookmarkDataFolder = loadSLFile(slModel, bookmarkFolderRes, defaultThesaurus, bookmarkFolderRes.getURI(), true);
+	 	slModel.setBookmarkFolder(bookmarkDataFolder);
+	}
+
+ 	// notes folder
+	Resource notesFolderRes = prop2ResourceCheck(model, slModelRes, SL_NOTES_FOLDER_PROP);
+	if (notesFolderRes == null) throw new LoadException("notesFolder undefined");
+	// notesFolderRes is now an anonymous resource (we don't state anymore that it is "....NOTE_SERVLET_PATH")
+	// File notesFolderFile = loadSLFile(slModel, notesFolderRes);
+	String notesUri = null;
+	if (notesFolderRes.isAnon()) {
+		// notesUri = aSlashB(this.servletUrl,CoolUriServlet.DOC_SERVLET_PATH); // 2006/10
+		notesUri = aSlashB(this.servletUrl,CoolUriServlet.NOTE_SERVLET_PATH);			
+	} else {
+		notesUri = notesFolderRes.getURI();
+	}
+	SLDataFolder notesDataFolder = loadSLFile(slModel, notesFolderRes, defaultThesaurus, notesUri, false);
+ 	// notes are accessed through the servlet
+ 	// we have to state that there is a web server association between the path
+ 	// to the dir containing the notes and the servlet
+	// done in loadSLFile : webServer.addMapping(new URI(notesUri  + "/"), notesFolderFile);
+ 	slModel.setNotesFolder(notesDataFolder);
+
+	// other data folders
+
+ 	site = slModelRes.listProperties(model.getProperty(SL_DATA_FOLDER_PROP));
+	for (;site.hasNext();) {
+		node = site.nextStatement().getObject();
+		if (!node.isResource() ) {
+			throw new LoadException("error in " + configFile + " : " + node + " should be a resource");
+		}
+		try {
+			loadSLFile(slModel, (Resource) node, defaultThesaurus);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("ERROR trying to load " + node + " : " + e);
+		}
+	}
+	site.close();
+
+	// attention, ce truc ne recharge pas le model :
+	// si on l'utilise, il faut donc quitter juste après et relancer
+	// (la différence avec les corrections habituelles, c'est qu'on a besoin d'avoir
+	// déjà chargé le slModel pour définir la correction
+	// ((JModel) slModel).correctOldKwUris(); // commenter (mais A GARDER!!!)
+	////////// JAMAIS FAIT ((JModel) slModel).correctAlias();
+  	
+	// slModel.listenDocs();
+
+	// x.add(slModel);
+	
+	// maintenant que les fichiers sont chargés, supprimer le corrector
+	slModel.setCorrector(null);
+
+	return slModel;
+}
+
+
+
+//// 2020-04 keep that
+//private SLModel loadMinimalSLModel(String modelUri, WebServer webServer, 
+//		SLThesaurus defaultThesaurus, SLDataFolder defaultDataFolder) throws Exception {
+//	SLModel slModel = new JModel();
+//	slModel.setWebServer(webServer);
+//	slModel.setModelUrl(modelUri);
+//	slModel.setDefaultThesaurus(defaultThesaurus);
+// 	slModel.setDefaultDataFolder(defaultDataFolder);
+// 	webServer.setDefaultDocFolder(defaultDataFolder.getFile()); // @find CORS pb with markdown
+//	return slModel;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /** Returns part1 / part2, en faisant gaffe de ne pas mettre un slash en trop s'il y en a un à la fin de part1 ou au début de part2.*/
 private String aSlashB(String part1, String part2) {
@@ -366,24 +554,25 @@ private String aSlashB(String part1, String part2) {
 	}
 }
 
-/** modify corrector (supposed to be the corrector of slMod), if there is a property oldUri */
-private SLThesaurus loadThesaurus(SLModel slMod, Resource thesaurusRes, ModelCorrector corrector) throws IOException, URISyntaxException {
-	String uri = thesaurusRes.getURI();
-	try {
-		File dir = getResDir(thesaurusRes, true);
-		// SL_OLD_URI_PROP
-		String oldUri = prop2Uri(model, thesaurusRes, SL_OLD_URI_PROP);
-		if (oldUri != null) {
-			corrector.add(new ThesaurusUriCorrection(oldUri, uri));
-		}
-		
-		trace("loadThesaurus:" + uri + " ; dir: " + dir + " oldUri: " + oldUri);
-		return slMod.loadThesaurus(uri, dir);
-	} catch (Exception e) {
-		e.printStackTrace();		
-		throw new LoadException("Impossible to access file corresponding to thesaurus " + thesaurusRes.getURI() + ":" + e.toString());
-	}
-}
+///** modify corrector (supposed to be the corrector of slMod), if there is a property oldUri */
+//private SLThesaurus loadThesaurus(SLModel slMod, Resource thesaurusRes, ModelCorrector corrector) throws IOException, URISyntaxException {
+//	String uri = thesaurusRes.getURI();
+//	try {
+//		File dir = getResDir(thesaurusRes, true);
+//		// SL_OLD_URI_PROP
+//		String oldUri = prop2Uri(model, thesaurusRes, SL_OLD_URI_PROP);
+//		if (oldUri != null) {
+//			corrector.add(new ThesaurusUriCorrection(oldUri, uri));
+//		}
+//		
+//		trace("loadThesaurus:" + uri + " ; dir: " + dir + " oldUri: " + oldUri);
+//		return slMod.loadThesaurus(uri, dir);
+//	} catch (Exception e) {
+//		e.printStackTrace();		
+//		throw new LoadException("Impossible to access file corresponding to thesaurus " + thesaurusRes.getURI() + ":" + e.toString());
+//	}
+//}
+
 
 /** Retourne fichier chargé. */
 private SLDataFolder loadSLFile(SLModel slMod, Resource dataFolderRes, SLThesaurus defaultThesaurus) throws IOException, URISyntaxException {
@@ -394,9 +583,11 @@ private SLDataFolder loadSLFile(SLModel slMod, Resource dataFolderRes, SLThesaur
 
 // 2007/02 isBookmarkDataFolder
 
-/** ATTENTION, il faut absolument donner base parce que, si null, prend l'uri du thesaurus (ce qui ne convient qu'au cas du bookmarkFolder)
- * 	pour un dataFolder normal, passer dataFolderRes.getURI() 
- *  pour notesFolder, il faut l'avoir déterminé. */
+/** 
+ * ATTENTION, il faut absolument donner base parce que, si null, prend l'uri du thesaurus 
+ * (ce qui ne convient qu'au cas du bookmarkFolder)
+ * pour un dataFolder normal, passer dataFolderRes.getURI() 
+ * pour notesFolder, il faut l'avoir déterminé. */
 private SLDataFolder loadSLFile(SLModel slMod, Resource dataFolderRes, SLThesaurus defaultThesaurus, String base, boolean isBookmarkDataFolder) throws IOException, URISyntaxException {
 	Resource thesaurus = (Resource) this.iterator2RDFNode(dataFolderRes.listProperties(this.thesaurusProp));
 	String thesaurusURI = null;
@@ -420,13 +611,15 @@ private SLDataFolder loadSLFile(SLModel slMod, Resource dataFolderRes, SLThesaur
 	trace("loadSLFile: " + file);
 	
 	// if ((isBookmarkDataFolder) || (base == null)) { // 2019-03 uris for bookmarks
-	if (base == null) {
-		base = thesaurusURI;
-		// ATTENTION base must be slash terminated (ou # si on avait choisi l'autre option pour les uris de thesaurus ? // #thing)
-		if (!base.endsWith("/")) base += "/";
-	} else if (base.startsWith("http")) { // (pas si c'est une file-protocol url!)
-		this.webServer.addMapping(new URI(base), file); // attention, absolument nécessaire, cf par ex StaticFileServlet
-	}
+	
+	// 2020-04 moved to slMod.loadSLDataFolder
+//	if (base == null) {
+//		base = thesaurusURI;
+//		// ATTENTION base must be slash terminated (ou # si on avait choisi l'autre option pour les uris de thesaurus ? // #thing)
+//		if (!base.endsWith("/")) base += "/";
+//	} else if (base.startsWith("http")) { // (pas si c'est une file-protocol url!)
+//		this.webServer.addMapping(new URI(base), file); // attention, absolument nécessaire, cf par ex StaticFileServlet
+//	}
 	return slMod.loadSLDataFolder(file, base, thesaurusURI, loadingMode);
 }
 
@@ -516,7 +709,7 @@ private static String iterator2StringValue(StmtIterator ite) {
 }
 
 // @find changing uris
-private ModelCorrector getCorrector(SLModel slModel) {
+private ModelCorrector getCorrector() {
 	ModelCorrector x = new ModelCorrector();
 	// try {
 		// x.add(new KeywordUriCorrection("http://www.hypersolutions.fr/2001/00/vocab#mars_2004_mars_2004", "http://www.hypersolutions.fr/2001/00/vocab#mars_2004", Util.shortDate2Long("11/11/2004", Locale.FRANCE)));
@@ -621,7 +814,7 @@ public class ApplicationParams {
 //			if ((this.logonPage == null) || ("".equals(this.logonPage))) this.logonPage = null;
 //		}
 		// on n'utilise plus un logonPage, on veut juste savoir s'il faut mettre ou pas un bouton edit
-		// Par paresse, je fait de quoi ne rien avoir à changer sur semanlink.net
+		// Par paresse, je fais de quoi ne rien avoir à changer sur semanlink.net
 		if (!editorByDefault) {
 			s = prop2StringValue(model, res, SEMANLINK_CONFIG_SCHEMA + "logonPage");
 			if ((s == null) || ("".equals(s))) {
@@ -648,7 +841,7 @@ public class ApplicationParams {
 		
 		Property metadataExtractionBlackListedProp = model.getProperty(SL_METADATA_EXTRACTION_BLACKLISTED);
 		NodeIterator it = model.listObjectsOfProperty(res, metadataExtractionBlackListedProp);
-		ArrayList al = new ArrayList(16);
+		ArrayList<String> al = new ArrayList<>(16);
 		for (;it.hasNext();) {
 			s = ((Literal)it.next()).getString().trim();
 			if ("".equals(s)) continue;
@@ -754,7 +947,7 @@ private File getResFile(Resource res, boolean throwException) throws IOException
 
 	String filename = iterator2StringValue(res.listProperties(filePathProp));
 	if (filename != null) {	
-		File f = getFile(filename, false);
+		File f = getFile(filename, this.servletContext, false);
 		if (f == null) {
 			if (throwException) throw new LoadException("File " + filename + " for " + res + " doesn't exists.");
 		}
@@ -823,11 +1016,11 @@ private File getResDir(Resource res, boolean throwException) throws IOException,
  * If file doesn't exist, returns null if !throwException, else throw an exception. 
  * first, tries the filename as it is. If this doesn't work,
  * tries as a path relative to servlet (based on "realpath").*/
-private File getFile(String filename, boolean throwException) { 		// kattare // ???
+static private File getFile(String filename, ServletContext servletContext, boolean throwException) { 		// kattare // ???
 	File f = new File(filename);
 	if (!f.exists()) {
 		String svg = filename;
-		filename = this.servletContext.getRealPath(svg);
+		filename = servletContext.getRealPath(svg);
 		f = new File(filename);
 		if (!f.exists()) {
 			String s = "File \"" + svg +"\" doesn't exist, neither as absolute path, nor as realPath: " + filename;

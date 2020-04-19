@@ -108,28 +108,6 @@ String fn = I18l.pathToI18lFile("/welcomepage/veryshortintro.jsp", session, serv
 			</div>
 		<%} // if false %>
 		
-		<%
-		if (false) {
-			if (jsp.isEditor()) { // DEBUG %>
-				<%ArrayList al = model.debugRealKWsNotInConceptSpace(); %>
-				
-				<div class="graybox">
-					<h2>Keywords sans type: <%=al.size()%></h2>
-					<div class="kwlist">
-						<%
-						{
-							for (int i = 0; i < al.size(); i++) {
-								SLKeyword kw = (SLKeyword) al.get(i);
-								HTML_Link link = HTML_Link.linkToKeyword(kw);
-								%><html:link page="<%=link.getPage()%>"><%=link.getLabel()%></html:link><br><%
-							}
-						}
-						%>
-					</div>
-				</div>
-			<%
-			} // if if (jsp.isEditor()) (debug)
-		} // if false %>
 		
 		
 		

@@ -66,21 +66,27 @@ private String text = "Quel écosysteme ?"
 		+ "Experimental results on multiple benchmark knowledge graphs show that our method can "
 		+ "achieve state-of-the-art performance in triple classification, link prediction and relation prediction tasks."
 		+ "BERTLOGIE GRAP";
+
+private String text2 = "[Yao 2019] KG-BERT: BERT for Knowledge Graph completion (Arxiv:1909.03193)";
+
 @Test
 public final void test() {
 	Trie trie = Trie.builder()
-			.ignoreOverlaps()
+			.ignoreOverlaps() // important to have "Artificial intelligence", but not "intelligence"
 			.ignoreCase()
 			.onlyWholeWords()
 	    .addKeyword("Graph")
 	    .addKeyword("Graphs")
 	    .addKeyword("Knowledge Graph")
 	    .addKeyword("Knowledge Graphs")
+	    .addKeyword("Knowledge Graph Completion")
+	    .addKeyword("Artificial")
+	    .addKeyword("Intelligence")
 	    .addKeyword("Artificial Intelligence")
 	    .addKeyword("Language Model")
 	    .addKeyword("BERT")
 	    .build();
-	Collection<Emit> emits = trie.parseText(text);
+	Collection<Emit> emits = trie.parseText(text2);
 	
 	for (Emit emit : emits) {
 		System.out.println(emit);

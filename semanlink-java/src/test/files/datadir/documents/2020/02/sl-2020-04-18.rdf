@@ -1,0 +1,22 @@
+<!DOCTYPE rdf:RDF [
+  <!ENTITY sl 'http://www.semanlink.net/2001/00/semanlink-schema#'>
+  <!ENTITY skos 'http://www.w3.org/2004/02/skos/core#'>
+  <!ENTITY tag 'http://www.semanlink.net/tag/'>
+  <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>]>
+<rdf:RDF
+    xmlns:rdf="&rdf;"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:skos="&skos;"
+    xmlns:sl="&sl;"
+    xmlns:tag="&tag;">
+  <rdf:Description rdf:about="_2002_12327_a_primer_in_bertol">
+    <sl:tag rdf:resource="&tag;survey"/>
+    <sl:tag rdf:resource="&tag;bertology"/>
+    <dc:title>[2002.12327] A Primer in BERTology: What we know about how BERT works</dc:title>
+    <sl:creationDate>2020-02-28</sl:creationDate>
+    <sl:creationTime>2020-02-28T13:25:30Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2002.12327"/>
+    <sl:tag rdf:resource="&tag;bert"/>
+    <sl:comment xml:lang="en">(article praised on [twitter](https://twitter.com/dennybritz/status/1233343170596917248?s=20) by D Britz and Y. Goldberg)</sl:comment>
+  </rdf:Description>
+</rdf:RDF>

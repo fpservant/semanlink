@@ -1296,13 +1296,13 @@ public long docsSize() { return this.docsModel.size(); }
  *  (supporte null ds propertyUri via getDocumentsList2)
  *  @see getDocumentsList(Resource)
  */
-public ArrayList getDocumentsList(String propertyUri, String objectUri) throws JenaException {
+public ArrayList<SLDocument> getDocumentsList(String propertyUri, String objectUri) throws JenaException {
 	Model model = this.docsModel;
 	if (propertyUri == null) return getDocumentsList2(null, objectUri);
 	Property prop = this.docsModel.getProperty(propertyUri);
 	Resource obj = this.docsModel.getResource(objectUri);
 	ResIterator ite = model.listSubjectsWithProperty(prop, obj);
-	ArrayList x = new ArrayList();
+	ArrayList<SLDocument> x = new ArrayList<>();
 	for (;ite.hasNext();) {
 		x.add(new JDocument(this, ite.nextResource()));
 	}
@@ -1310,11 +1310,11 @@ public ArrayList getDocumentsList(String propertyUri, String objectUri) throws J
 	return x;
 }
 
-public ArrayList getDocumentsList(String propertyUri, String propertyValue, String lang) throws JenaException {
+public ArrayList<SLDocument> getDocumentsList(String propertyUri, String propertyValue, String lang) throws JenaException {
 	Model model = this.docsModel;
 	Property prop = this.docsModel.getProperty(propertyUri);
 	ResIterator ite = model.listSubjectsWithProperty(prop, model.createLiteral(propertyValue, lang));
-	ArrayList x = new ArrayList();
+	ArrayList<SLDocument> x = new ArrayList<>();
 	for (;ite.hasNext();) {
 		x.add(new JDocument(this, ite.nextResource()));
 	}
@@ -1324,14 +1324,14 @@ public ArrayList getDocumentsList(String propertyUri, String propertyValue, Stri
 
 // fait pour trouver la source d'un doc (avec inverse = true)
 // propertyUri probableemnt pas supporté si inverse = true
-public ArrayList getDocumentsList(String propertyUri, String uri, boolean inverse) throws JenaException {
+public ArrayList<SLDocument> getDocumentsList(String propertyUri, String uri, boolean inverse) throws JenaException {
 	if (!inverse) return getDocumentsList(propertyUri, uri);
 	Model model = this.docsModel;
 	if (propertyUri == null) return getDocumentsList2(null, uri);
 	Property prop = this.docsModel.getProperty(propertyUri);
 	Resource subj = this.docsModel.getResource(uri);
 	NodeIterator ite = model.listObjectsOfProperty(subj,prop);
-	ArrayList x = new ArrayList();
+	ArrayList<SLDocument> x = new ArrayList<>();
 	for (;ite.hasNext();) {
 		Object o = (ite.next());
 		if (o instanceof Resource) {
@@ -1387,13 +1387,13 @@ public ArrayList getKeywordsList(String propertyUri, String propertyValue, Strin
  * @param propertyUri peut être null
  * @param objectUri
  */
-public ArrayList getDocumentsList2(String propertyUri, String objectUri) throws JenaException {
+public ArrayList<SLDocument> getDocumentsList2(String propertyUri, String objectUri) throws JenaException {
 	Model model = this.docsModel;
 	Property prop = null;
 	if (propertyUri != null) prop = this.docsModel.getProperty(propertyUri);
 	Resource obj = this.docsModel.getResource(objectUri);
 	StmtIterator ite = model.listStatements(null, prop, obj);
-	ArrayList x = new ArrayList();
+	ArrayList<SLDocument> x = new ArrayList<>();
 	for (;ite.hasNext();) {
 		Statement sta = ite.nextStatement();
 		x.add(new JDocument(this, sta.getSubject()));

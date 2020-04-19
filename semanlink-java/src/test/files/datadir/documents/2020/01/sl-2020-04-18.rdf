@@ -1,0 +1,20 @@
+<!DOCTYPE rdf:RDF [
+  <!ENTITY sl 'http://www.semanlink.net/2001/00/semanlink-schema#'>
+  <!ENTITY skos 'http://www.w3.org/2004/02/skos/core#'>
+  <!ENTITY tag 'http://www.semanlink.net/tag/'>
+  <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>]>
+<rdf:RDF
+    xmlns:rdf="&rdf;"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:skos="&skos;"
+    xmlns:sl="&sl;"
+    xmlns:tag="&tag;">
+  <rdf:Description rdf:about="hazukashi_%F0%9F%8C%A9_sur_twitter_th">
+    <sl:tag rdf:resource="&tag;hong_kong"/>
+    <sl:creationDate>2020-01-31</sl:creationDate>
+    <sl:creationTime>2020-01-31T14:54:57Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://twitter.com/Hazukashi1/status/1222841442030247936?s=20"/>
+    <dc:title>Hazukashi 🌩 sur Twitter : "[THREAD] Je vous ai déjà parlé de la Cité Emmurée de Kowloon, le ghetto dystopique cyberpunk Hong-Kongais impénétrable des années 80 ?</dc:title>
+    <sl:tag rdf:resource="&tag;tweet"/>
+  </rdf:Description>
+</rdf:RDF>

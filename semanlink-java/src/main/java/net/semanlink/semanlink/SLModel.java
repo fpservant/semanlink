@@ -86,22 +86,20 @@ public abstract class SLModel implements SLVocab {
 private String modelUrl;
 
 /** la liste des SLThesaurus ouverts. */
-protected Vector thesauri = new Vector();
+protected Vector<SLThesaurus> thesauri = new Vector<>();
 /** la liste des fichiers kws. Les elts sont des KwsFile
 * Sert pour les corrections */
-protected Vector openKWsFiles = new Vector();
+protected Vector<KwsFile> openKWsFiles = new Vector<>();
 /** la liste des fichiers de docs. Les elts sont de classe DocsFile 
  * Sert pour les corrections
  * Pbs : 
  * 1) les fichiers créés après le load ne sont pas dedans
  * 2) les fichiers mentionnés ds les fichiers à charger ne sont pas dedans s'ils n'existent pas
  */
-protected Vector openDocsFiles = new Vector();
+protected Vector<DocsFile> openDocsFiles = new Vector<>();
 /** List of loaded SLDataFolder */
-protected Vector dataFolderList = new Vector();
+protected Vector<SLDataFolder> dataFolderList = new Vector<>();
 private boolean dataFolderListSorted = false;
-/** Fichier kws utilisé par défaut. */
-/// private String defaultKwsFile;
 /** Thesaurus utilisé par défaut. */
 private SLThesaurus defaultThesaurus;
 private SLDataFolder defaultFolder;
@@ -122,6 +120,7 @@ private SLKeyword favori;
 private boolean isFavoriComputed = false;
 
 public SLModel() {}
+
 /** can be called once everything is loaded, to initialize every attributes that are else computed only on request. */
 public void endInit() {
 	this.getThesaurusLabels();
@@ -135,7 +134,12 @@ public SLThesaurus getDefaultThesaurus() { return this.defaultThesaurus; }
 public void setDefaultThesaurus(SLThesaurus th) { this.defaultThesaurus = th; }
 
 public SLDataFolder getDefaultFolder() { return this.defaultFolder; }
-public void setDefaultDataFolder(SLDataFolder defaultFolder) { this.defaultFolder = defaultFolder; }
+public void setDefaultDataFolder(SLDataFolder defaultFolder) { 
+	this.defaultFolder = defaultFolder; 
+	if (webServer!=null) { // 2020-04 was in SemanlinkConfig
+		webServer.setDefaultDocFolder(defaultFolder.getFile()); // @find CORS pb with markdown
+	}
+}
 
 public SLDataFolder getBookmarkFolder() { 
 	if (this.bookmarkFolder != null) return this.bookmarkFolder;
@@ -159,10 +163,6 @@ public void setNotesFolder(SLDataFolder f) {
 public void setWebServer(WebServer webServer) { this.webServer = webServer; }
 private WebServer getWebServer() { return this.webServer; }
 
-// abstract public SLThesaurus newSLThesaurus(String thUri, File thDir); // 2020-04
-public SLThesaurus newSLThesaurus(String thUri, String thFilename) { // 2020-04
-	return new SLThesaurusAdapter(thUri, thFilename, getKwLabelGetter());
-}
 abstract public LabelGetter<SLKeyword> getKwLabelGetter(); // 2020-04
 
 //
@@ -190,7 +190,7 @@ abstract public boolean existsAsSubject(SLDocument doc); // pertinent en pre 201
  * @since 0.6
  */ 
 public SLDocument bookmarkUrl2Doc(String bookmarkUrl) throws Exception { // 2019-03 uris for bookmarks
-	List al = getDocumentsList(SLVocab.SL_BOOKMARK_OF_PROPERTY, bookmarkUrl);
+	List<SLDocument> al = getDocumentsList(SLVocab.SL_BOOKMARK_OF_PROPERTY, bookmarkUrl);
 	if ((al == null) || (al.size() == 0)) {
 		// peut-être https alors qu'on avait stocké http. Cool URIs don't change, they say
 		if (bookmarkUrl.startsWith("https://")) {
@@ -199,7 +199,7 @@ public SLDocument bookmarkUrl2Doc(String bookmarkUrl) throws Exception { // 2019
 		}
 	}
 	if ((al == null) || (al.size() == 0)) return null;
-	return (SLDocument) al.get(0);
+	return al.get(0);
 }
 
 
@@ -377,17 +377,17 @@ abstract public SLKeyword getKeyword(String uri);
  * Attention, ne se préoccupe pas de descendants.`
  * Si on veut avoir les docs des descendants, utiliser la méthode de SLTree
  */
-public Collection findDocs(List kws) {
-	Collection x = new ArrayList();
+public Collection<SLDocument> findDocs(List<SLKeyword> kws) {
+	Collection<SLDocument> x = new ArrayList<>();
 	int nKws = kws.size();
 	if (nKws == 0) throw new IllegalArgumentException("Empty list of keywords.");
-	SLKeyword kw = (SLKeyword) kws.get(0);
+	SLKeyword kw = kws.get(0);
 	x = kw.getDocuments();
 	if (nKws == 1) return x;
 	
-	x = new HashSet(x);
+	x = new HashSet<>(x);
 	for (int i = 1; i < nKws; i++) {
-		List docs = ((SLKeyword) kws.get(i)).getDocuments();
+		List<SLDocument> docs = kws.get(i).getDocuments();
 		x.addAll(docs);
 	}
 	return x;
@@ -404,12 +404,14 @@ public Collection findDocs(List kws) {
 /**La lecture/ecriture de fichiers depend de la facon de convertir une uri relative en absolue :
  * celle-ci peut etre locale (de type file) ou de type http, selon la facon dont le client va
  * pouvoir y acceder.
- * @param base utilisée pour la lecture dans le cas d'un fichier de documents. Must not be null
+ * @param base utilisée pour la lecture dans le cas d'un fichier de documents.
+ * if null, thesaurusURI is used
  * @param thesaurusURI Si le thésaurus correspondant n'est pas chargé, le charge
  * Si null, getDefaultThesaurus sera utilisé
+ * @throws URISyntaxException 
  * @see load(File, String, SLThesaurus)
  */
-public SLDataFolder loadSLDataFolder(File file, String base, String thesaurusURI, LoadingMode loadingMode) throws IOException {
+public SLDataFolder loadSLDataFolder(File file, String base, String thesaurusURI, LoadingMode loadingMode) throws IOException, URISyntaxException {
 	if (!file.exists()) throw new RuntimeException(file + " doesn't exist.");
 	if (!file.isDirectory()) throw new RuntimeException(file + " is not a directory.");
 	SLThesaurus th;
@@ -421,6 +423,16 @@ public SLDataFolder loadSLDataFolder(File file, String base, String thesaurusURI
 			throw new RuntimeException("Unknown thesaurus: " + thesaurusURI);
 		}
 	}
+	
+	// 2020-04 was in SemanlinkConfig
+	if (base == null) {
+		base = thesaurusURI;
+		// ATTENTION base must be slash terminated 
+		if (!base.endsWith("/")) base += "/";
+	} else if (base.startsWith("http")) { // (pas si c'est une file-protocol url!)
+		this.webServer.addMapping(new URI(base), file); // attention, absolument nécessaire, cf par ex StaticFileServlet
+	}
+
 	return load(file, base, th, loadingMode);
 }
 
@@ -966,16 +978,16 @@ public String kwLabel2UriQuick(String kwLabel, String thesaurusUri, Locale local
  * voir ds SLServelt.initSL ((JModel) mod).correctOldKwUris();
  */
 public String kwLabel2ShortUri(String kwLabel, Locale locale) {
-	ArrayList al = (wordsInString).words(kwLabel , locale);
+	ArrayList<String> al = (wordsInString).words(kwLabel , locale);
 	int n = al.size();
 	if (n == 0) return "";
-	String s = (String) al.get(0);
+	String s = al.get(0);
 	s = converter.urlConvert(s);
 	if (n == 1) return s;
 	StringBuffer sb = new StringBuffer(s);
 	for (int i = 1; i < n; i++) {
 		sb.append("_");
-		sb.append(converter.urlConvert((String) al.get(i)));
+		sb.append(converter.urlConvert(al.get(i)));
 	}
 	return sb.toString();
 }
@@ -1172,7 +1184,7 @@ public static String docUri2Folder(String docUri) throws MalformedURLException {
  *  qu'intervenir comme parent ou child) 
  * @throws IOException 
  * @throws JenaException */
-public void kwsIntoCollection(Collection coll) throws Exception {
+public void kwsIntoCollection(Collection<SLKeyword> coll) throws Exception {
   // Cette implementation ne met que les keywords correspondant ? des
   // Resource de rdfs:Class JKeyword. Manque donc les litteraux.
   // kwsResIntoCollection(coll);
@@ -1187,7 +1199,7 @@ public void kwsIntoCollection(Collection coll) throws Exception {
  *  (litteraux compris) - mais aucun de ceux qui ne sont pas utilises (meme s'ils y sont definis)
  NE CREE PAS DES RES A LA PLACE DES LITTERAUX
  */
-abstract public void usedKWsIntoCollection(Collection coll);
+abstract public void usedKWsIntoCollection(Collection<SLKeyword> coll);
 /** Met les JKeyword correspondant aux Resource de rdfs:Class JKeyword
  *  dans la collection passée en argument.
  *  (Ne prend donc pas en compte les littéraux.)
@@ -1201,7 +1213,7 @@ abstract public void kwsResIntoCollection(Collection<SLKeyword> coll);
 //
 
 /** retourne une ArrayList des SLKeyword d'un doc */
-abstract public ArrayList getKeywordsList(String uri);
+abstract public ArrayList<SLKeyword> getKeywordsList(String uri);
 
 ///////////////////////// MODIFS POUR SERVLET
 
@@ -1211,7 +1223,7 @@ abstract public ArrayList getKeywordsList(String uri);
  */
 public ArrayList<SLKeyword> getKWsInConceptsSpaceArrayList() {
   try {
-	ArrayList<SLKeyword> x = new ArrayList<SLKeyword>();
+	ArrayList<SLKeyword> x = new ArrayList<>();
 	kwsResIntoCollection(x);
 	Collections.sort(x);
 	return x;
@@ -1226,9 +1238,9 @@ public ArrayList<SLKeyword> getKWsInConceptsSpaceArrayList() {
  * que les kws retournés ne sont pas vraimeent les vrais : en recherchant les parents
  * d'un elt, pas trouvé
  */
-public ArrayList getKWsInRealSpaceArrayList() {
+public ArrayList<SLKeyword> getKWsInRealSpaceArrayList() {
   try {
-	ArrayList x = new ArrayList();
+	ArrayList<SLKeyword> x = new ArrayList<>();
 	usedKWsIntoCollection(x);
 	Collections.sort(x);
 	return x;
@@ -1239,22 +1251,21 @@ public ArrayList getKWsInRealSpaceArrayList() {
 // ce qui fait qu'on ne les trouve pas ds le livesearch
 // (ils ne sont pas dans le ThesaurusWordIndex) // WHY ???
 // Pour faire la liste de ces cas
-public ArrayList debugRealKWsNotInConceptSpace() {
-	ArrayList x = new ArrayList();
-	ArrayList list1 = getKWsInRealSpaceArrayList();
-	ArrayList list2 = getKWsInConceptsSpaceArrayList();
-	HashSet hs = new HashSet();
+public ArrayList<SLKeyword> debugRealKWsNotInConceptSpace() {
+	ArrayList<SLKeyword> x = new ArrayList<>();
+	ArrayList<SLKeyword> list1 = getKWsInRealSpaceArrayList();
+	ArrayList<SLKeyword> list2 = getKWsInConceptsSpaceArrayList();
+	HashSet<SLKeyword> hs = new HashSet<>();
 	for (int i = 0; i < list2.size(); i++) {
 		hs.add(list2.get(i));
 	}
 	for (int i = 0; i < list1.size(); i++) {
-		Object o = list1.get(i);
-		if (hs.contains(o)) continue;
-		SLKeyword kw = (SLKeyword) o;
+		SLKeyword kw = list1.get(i);
+		if (hs.contains(kw)) continue;
 		SLKeyword resolu = resolveAlias(kw.getURI());
 		// System.out.println(kw.getURI() + " hasAlias " + resolu.getURI());
 		if (resolu.equals(kw)) {
-			x.add(o);
+			x.add(kw);
 		}
 	}
 	return x;
@@ -1264,13 +1275,13 @@ public ArrayList debugRealKWsNotInConceptSpace() {
  *  calcule à chaque fois : ne va pas pour l'utilisation qui en est faite
  *  @todo change
  */
-public List getKWs(SLThesaurus th) {
+public List<SLKeyword> getKWs(SLThesaurus th) {
 	if (thesauri.size() < 2) return getKWsInConceptsSpaceArrayList();
 	String thUri = th.getURI();
-	ArrayList x = new ArrayList();
+	ArrayList<SLKeyword> x = new ArrayList<>();
 	kwsResIntoCollection(x);
 	for (int i = x.size()-1; i >= 0; i--) {
-		SLKeyword kw = (SLKeyword) x.get(i);
+		SLKeyword kw = x.get(i);
 		if (!((kw.getURI().startsWith(thUri)))) x.remove(i);
 	}
 	Collections.sort(x);
@@ -1278,14 +1289,14 @@ public List getKWs(SLThesaurus th) {
 }
 
 /** Retourne les kws sans parents d'une liste données de kws. */
-public ArrayList withoutParents(List kws) {
+public ArrayList<SLKeyword> withoutParents(List<SLKeyword> kws) {
 	int n = kws.size();
-	ArrayList x = new ArrayList();
+	ArrayList<SLKeyword> x = new ArrayList<>();
 	for (int i = 0; i < n; i++) {
-		SLKeyword kw = (SLKeyword) kws.get(i);
+		SLKeyword kw = kws.get(i);
 		// TODO OPTIMISER : il suffit qu'il y ait un parent.
 		// Pas besoin de calculer la liste complete
-		List parents = kw.getParents();
+		List<SLKeyword> parents = kw.getParents();
 		if ((parents == null) || (parents.size() == 0)) {
 			x.add(kw);
 		}
@@ -1294,13 +1305,13 @@ public ArrayList withoutParents(List kws) {
 }
 
 /** utilisé juste par welcome.jsp. Ne devrait pas etre public */
-public Vector getOpenKWsFiles() { return this.openKWsFiles; }
+public Vector<KwsFile> getOpenKWsFiles() { return this.openKWsFiles; }
 /** utilisé juste par welcome.jsp. Ne devrait pas etre public */
-public Vector getOpenDocsFiles() { return this.openDocsFiles; }
+public Vector<DocsFile> getOpenDocsFiles() { return this.openDocsFiles; }
 /** utilisé par welcome.jsp */
-public Vector getDataFolderList() { return this.dataFolderList; }
+public Vector<SLDataFolder> getDataFolderList() { return this.dataFolderList; }
 
-public Vector getThesauri() { return this.thesauri; }
+public Vector<SLThesaurus> getThesauri() { return this.thesauri; }
 //
 //
 //
@@ -1339,12 +1350,14 @@ public SLThesaurus loadThesaurus(String thUri, File thDir) throws Exception {
 	if (thesaurus == null) { // pas ouvert
 		File thFile = new File(thDir,"slkws.rdf");
 		String thFilename = thFile.getPath();
-		thesaurus = newSLThesaurus(noSlashAtEnd(thUri), thFilename);
+		thesaurus = new SLThesaurusAdapter(thUri, thFilename, getKwLabelGetter());
 		this.thesauri.add(thesaurus);
-		loadKWsModelFromFile(thFilename,thesaurus);
+		loadKWsModelFromFile(thFilename, thesaurus);
 	}
 	return thesaurus;
 }
+
+//abstract public SLThesaurus newSLThesaurus(String thUri, File thDir); // 2020-04
 
 static private String noSlashAtEnd(String uri) {
 	if (uri.endsWith("/")) return uri.substring(0, uri.length() - 1);
@@ -1358,17 +1371,17 @@ static private String noSlashAtEnd(String uri) {
  */
 public SLThesaurus getThesaurus(String thesaurusURI) {
 	for (int i = 0; i < this.thesauri.size(); i++) {
-		SLThesaurus th = (SLThesaurus) this.thesauri.get(i);
+		SLThesaurus th = this.thesauri.get(i);
 		if (thesaurusURI.equals(th.getURI())) return th;
 	}
 	return null;
 }
 
-public List getActivFiles(SLThesaurus th) throws IOException, URISyntaxException { // 911 //////////////////
-	ArrayList al = new ArrayList();
-	List docs = getActivFolder().getDocuments();
+public List<SLDocument> getActivFiles(SLThesaurus th) throws IOException, URISyntaxException { // 911 //////////////////
+	ArrayList<SLDocument> al = new ArrayList<>();
+	List<SLDocument> docs = getActivFolder().getDocuments();
 	for (int i = 0; i < docs.size(); i++) {
-		SLDocument slDoc = (SLDocument) docs.get(i);
+		SLDocument slDoc = docs.get(i);
 		SLThesaurus saurus = this.getThesaurus(slDoc);
 		if (th.equals(saurus)) al.add(slDoc);
 	}
@@ -1440,11 +1453,11 @@ public abstract long numberOfDocs();
  *  (rq propertyUri peut-être null)
  *  @see getDocumentsList(Resource)
  */
-public abstract ArrayList getDocumentsList(String propertyUri, String objectUri) throws Exception;
-public abstract ArrayList getDocumentsList(String propertyUri, String uri, boolean inverse) throws Exception; // bof grosse daube pour trouver le doc qui est source
-public abstract ArrayList getDocumentsList(String propertyUri, String propertyValue, String lang) throws Exception;
-public abstract ArrayList getKeywordsList(String propertyUri, String objectUri) throws Exception;
-public abstract ArrayList getKeywordsList(String propertyUri, String propertyValue, String lang) throws Exception;
+public abstract ArrayList<SLDocument> getDocumentsList(String propertyUri, String objectUri) throws Exception;
+public abstract ArrayList<SLDocument> getDocumentsList(String propertyUri, String uri, boolean inverse) throws Exception; // bof grosse daube pour trouver le doc qui est source
+public abstract ArrayList<SLDocument> getDocumentsList(String propertyUri, String propertyValue, String lang) throws Exception;
+public abstract ArrayList<SLKeyword> getKeywordsList(String propertyUri, String objectUri) throws Exception;
+public abstract ArrayList<SLKeyword> getKeywordsList(String propertyUri, String propertyValue, String lang) throws Exception;
 
 
 //
@@ -1585,10 +1598,10 @@ public abstract void setCorrector(ModelCorrector corrector);
 //
 
 //peut s'optimiser (par ex en ne recalculant pas tout de YearMonthDay.daysAgo(i)
-public List getRecentDocs(int nbOfDays, String dateProp) throws Exception {
-	List x = getDocumentsList(dateProp, (new YearMonthDay()).getYearMonthDay("-"),null);
+public List<SLDocument> getRecentDocs(int nbOfDays, String dateProp) throws Exception {
+	List<SLDocument> x = getDocumentsList(dateProp, (new YearMonthDay()).getYearMonthDay("-"),null);
 	for (int i = 1; i < nbOfDays+1; i++) {
-		List y = getDocumentsList(dateProp, (YearMonthDay.daysAgo(i)).getYearMonthDay("-"),null);
+		List<SLDocument> y = getDocumentsList(dateProp, (YearMonthDay.daysAgo(i)).getYearMonthDay("-"),null);
 		SLUtils.reverseSortByProperty(y, dateProp);
 		x.addAll(y);
 	}
@@ -1596,10 +1609,10 @@ public List getRecentDocs(int nbOfDays, String dateProp) throws Exception {
 }
 
 //peut s'optimiser (par ex en ne recalculant pas tout de YearMonthDay.daysAgo(i)
-public List getRecentKws(int nbOfDays, String dateProp) throws Exception {
-	List x = getKeywordsList(dateProp, (new YearMonthDay()).getYearMonthDay("-"),null);
+public List<SLKeyword> getRecentKws(int nbOfDays, String dateProp) throws Exception {
+	List<SLKeyword> x = getKeywordsList(dateProp, (new YearMonthDay()).getYearMonthDay("-"),null);
 	for (int i = 1; i < nbOfDays+1; i++) {
-		List y = getKeywordsList(dateProp, (YearMonthDay.daysAgo(i)).getYearMonthDay("-"),null);
+		List<SLKeyword> y = getKeywordsList(dateProp, (YearMonthDay.daysAgo(i)).getYearMonthDay("-"),null);
 		SLUtils.reverseSortByProperty(y, dateProp);
 		x.addAll(y);
 	}
@@ -1614,15 +1627,15 @@ public List getRecentKws(int nbOfDays, String dateProp) throws Exception {
 	return x;
 }
 
-public List getRecentDocs(int nbOfDays) throws Exception {
+public List<SLDocument> getRecentDocs(int nbOfDays) throws Exception {
 	return getRecentDocs(nbOfDays, SLVocab.SL_CREATION_DATE_PROPERTY);
 }
 
-public List getRecentKws(int nbOfDays) throws Exception {
+public List<SLKeyword> getRecentKws(int nbOfDays) throws Exception {
 	return getRecentKws(nbOfDays, SLVocab.SL_CREATION_DATE_PROPERTY);
 }
 
-public List geDocs(Date date) throws Exception {
+public List<SLDocument> geDocs(Date date) throws Exception {
 	return getDocumentsList(SLVocab.SL_CREATION_DATE_PROPERTY, new YearMonthDay(date).getYearMonthDay("-"),null);
 }
 
@@ -1811,7 +1824,7 @@ File getSlDotRdfFileFromDataFolder(File docf, String docUri, SLDataFolder dataFo
 				File dataFolderFile = dataFolder.getFile();
 				// calcul du path relatif à dataFolderFile
 				// list va contenir ses elements, en ordre inverse
-				ArrayList list = new ArrayList();
+				ArrayList<String> list = new ArrayList<>();
 				File ff = docf.getParentFile();
 				for(;((ff != null) && (!(ff.equals(dataFolderFile))));) {
 					list.add(ff.getName());
@@ -1838,7 +1851,7 @@ File getSlDotRdfFileFromDataFolder(File docf, String docUri, SLDataFolder dataFo
 					// if (relativPathOK) {
 					try {
 						for (int i = n-1; i > nfin; i--) {
-							String pathItem = (String) list.get(i);
+							String pathItem = list.get(i);
 							Integer.parseInt(pathItem);
 						}
 					} catch (NumberFormatException e) {
@@ -1864,7 +1877,7 @@ File getSlDotRdfFileFromDataFolder(File docf, String docUri, SLDataFolder dataFo
 					// il faut que "l'année" soit numérique
 					// if (relativPathOK) {
 					try {
-						String pathItem = (String) list.get(n-1);
+						String pathItem = list.get(n-1);
 						Integer.parseInt(pathItem);
 					} catch (NumberFormatException e) {
 						relativPathOK = false;
@@ -1888,7 +1901,7 @@ File getSlDotRdfFileFromDataFolder(File docf, String docUri, SLDataFolder dataFo
 				} // si pas de return jusque là, il est ok d'utiliser le relativ path
 				
 				for (int i = n-1; i > nfin; i--) {
-					String pathItem = (String) list.get(i);
+					String pathItem = list.get(i);
 					fx = new File(fx, pathItem);
 				}
 				return new File(fx,"sl.rdf");

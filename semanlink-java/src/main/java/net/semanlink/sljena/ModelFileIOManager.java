@@ -29,7 +29,7 @@ static public void init(String servletURL) {
 		singleton.servletURL = servletURL;
 	//}
 }
-/** Suppose qu'on a préalablement appelà au moins une fois getInstance(servletUrl) */
+/** Suppose qu'on a préalablement appelà au moins une fois init(servletUrl) */
 static public ModelFileIOManager getInstance() {
 	if (singleton != null) return singleton;
 	throw new IllegalArgumentException("init(String servletUrl) should have been called before.");
@@ -153,7 +153,7 @@ public void writeModel(Model model, OutputStream out, String base) throws JenaEx
 	// BOF BOF
 	SLModel slMod = SLServlet.getSLModel();
 	if (slMod != null) {
-		SLThesaurus th = SLServlet.getSLModel().getDefaultThesaurus();
+		SLThesaurus th = slMod.getDefaultThesaurus();
 		if (th != null) { // th can be null during init of servlet
 			String thURI = th.getBase(); // slash terminated
 			model.setNsPrefix("tag",thURI);

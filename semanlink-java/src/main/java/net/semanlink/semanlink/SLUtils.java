@@ -75,7 +75,7 @@ public static void sortByProperty(List slResList, String propUri) {
 	}
 }
 
-public static void reverseSortByProperty(List<SLResource> slResList, String propUri) {
+public static void reverseSortByProperty(List<? extends SLResource> slResList, String propUri) {
 	Collections.sort(slResList, new CompPropertyReverseOrder(propUri));
 }
 
