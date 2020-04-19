@@ -16,31 +16,22 @@ import net.semanlink.metadataextraction.Extractor;
 import net.semanlink.metadataextraction.ExtractorData;
 import net.semanlink.semanlink.SLDocUpdate;
 import net.semanlink.semanlink.SLDocument;
-import net.semanlink.semanlink.SLDocumentStuff;
 import net.semanlink.semanlink.SLModel;
 import net.semanlink.semanlink.SLSchema;
-import net.semanlink.semanlink.SLUtils;
 
 public class ArxivMetadataExtractor extends Extractor {
 	
 final static String ARXIV_PROP_DEB = SLSchema.NS + "arxiv_";
 /** Retourne true ssi cet extractor traite le document passé en argument. */
-public boolean dealWith(ExtractorData data) {
-	return (sldoc2arxivNum(data) != null);	
-}
-
-static private String sldoc2arxivNum(ExtractorData data) {
-	SLDocumentStuff docstuff = new SLDocumentStuff(data.getSLDocument(), data.getSLModel(), null); // pour ce qu'on en a à faire ici, pas besoin du contexte
-	try {
-		return Arxiv.url2num(docstuff.getHref());
-	} catch (Exception e) { throw new RuntimeException(e); }	
+@Override public boolean dealWith(ExtractorData data) {
+	return (Arxiv.sldoc2arxivNum(data.getSLDocument(), data.getSLModel()) != null);	
 }
 
 // mal branlé cette histoire de ExtractorData - ici, me conduit à calculer sldoc2arxivNum() une 2eme fois // TODO
 @Override public boolean doIt(ExtractorData data) throws Exception {
 	SLModel mod = data.getSLModel();
 	SLDocument sldoc = data.getSLDocument();
-	String num = sldoc2arxivNum(data);
+	String num = Arxiv.sldoc2arxivNum(data.getSLDocument(), data.getSLModel());
 	
 	// is it worth keeping these 2 things and reuse them ?
 	Client client = ClientBuilder.newClient();

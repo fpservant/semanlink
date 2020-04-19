@@ -83,4 +83,10 @@ public final void test() throws IOException, ParserConfigurationException, SAXEx
 	System.out.println("X"+x+"X");
 }
 
+@Test public void numIfBookmarkWithHash() {
+	 String url = "https://arxiv.org/abs/1912.08904#clicktoread";
+	 String num = Arxiv.url2num(url);
+	 assertTrue(num.equals("1912.08904"));
+}
+
 }

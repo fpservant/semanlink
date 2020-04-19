@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Locale;
 
 import org.junit.Test;
@@ -16,7 +16,7 @@ import net.semanlink.sljena.ModelFileIOManager;
 public class LoadingDataTest {
 	
 @Test public final void test() throws Exception {
-	SLModel m = getSLModel();
+	SLModel m = DataLoader.getSLModel();
 	System.out.println("Nb of docs: " + m.docsSize() + " nb of kws: " + m.kwsSize());
 	
 //	List<SLKeyword> kws = m.getKWsInConceptsSpaceArrayList();
@@ -40,57 +40,22 @@ public class LoadingDataTest {
 }
 
 @Test public final void loopDocs() throws Exception {
-	SLModel m = getSLModel();
+	SLModel m = DataLoader.getSLModel();
 	
-	// on piurrait s'en servir, boucler sur les fichiers
+	// on pourrait s'en servir, boucler sur les fichiers
 	// charger le jena model, et faire des modifs directes
 	for (Object f : m.getOpenDocsFiles()) {
 		System.out.println(f);
 	}
-}
-
-//
-// LOADING A SLMODEL
-//
-
-private SLModel getSLModel() throws Exception {
-	String modelUri = "http://127.0.0.1:7080/semanlink/mod"; // ?
-	String thUri = "http://www.semanlink.net/tag"; // The thUri is *not* slash terminated
-	File thFile = new File("src/test/files/datadir/tags/slkws.rdf");
-	assertTrue(thFile.exists());
 	
-	// assumed to be "yearmonth" loading mode
-	File docDir = new File("src/test/files/datadir/documents/");
-	assertTrue(docDir.exists());
-	// String base = "http://www.semanlink.net/tag/";
-
-	return loadMinimalSLModel(modelUri, thUri, thFile, docDir);
-}
-
-static private SLModel loadMinimalSLModel(String modelUri,
-		String thUri, File thFile,
-		File docDir) throws Exception {
+	Iterator<SLDocument> docs = m.documents();
 	
-	// do this, or will fail later
-	try {
-		ModelFileIOManager.getInstance();
-	} catch (Exception e) {
-		ModelFileIOManager.init("http://127.0.0.1:7080/semanlink");
+	int k = 0;
+	for (;docs.hasNext();) {
+		SLDocument doc = docs.next();
+		System.out.println(doc.getURI() + " : " + doc);
+		k++;
+		if (k > 5) break;
 	}
-		
-	SLModel slModel = new JModel();
-	slModel.setWebServer(new WebServer());
-	slModel.setModelUrl(modelUri);
-	SLThesaurus th = slModel.loadThesaurus(thUri, thFile.getParentFile());
-	thUri = th.getURI(); // if we passed thUri with a / at the end, the / is removed
-	slModel.setDefaultThesaurus(th);
-	
-	// SLDataFolder
-	String base = "http://www.semanlink.net/doc/";
-	SLModel.LoadingMode loadingMode = new SLModel.LoadingMode("yearMonth");
-	SLDataFolder defaultDataFolder = slModel.loadSLDataFolder(docDir, base, thUri, loadingMode);	
-	slModel.setDefaultDataFolder(defaultDataFolder);
-	
-	return slModel;
 }
 }

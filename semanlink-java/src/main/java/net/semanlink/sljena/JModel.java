@@ -947,8 +947,8 @@ public void saveAs(String fileName) throws JenaException, MalformedURLException,
  *  Cette implémentation ne met que les keywords effectivement utilisés pour marquer des documents du modèle
  *  (Resource ou littéraux), mais pas ceux qui ne sont que déclarés (ou qui ne font
  *  qu'intervenir comme parent ou child) */
-public void kwsIntoCollection(Collection coll) throws JenaException, IOException {
-  // Cette implémentation ne met que les keywords correspondant ? des
+public void kwsIntoCollection(Collection<SLKeyword> coll) throws JenaException, IOException {
+  // Cette implémentation ne met que les keywords correspondant à des
   // Resource de rdfs:Class JKeyword. Manque donc les littéraux.
   // kwsResIntoCollection(coll);
   // ou bien :
@@ -962,7 +962,7 @@ public void kwsIntoCollection(Collection coll) throws JenaException, IOException
  *  (cas des littéraux à voir //TODO) - mais aucun de ceux qui ne sont pas utilisés (même s'ils y sont définis)
  NE CREE PAS DES RES A LA PLACE DES LITTERAUX
  */
-public void usedKWsIntoCollection(Collection coll) {
+public void usedKWsIntoCollection(Collection<SLKeyword> coll) {
   Model model = this.docsModel;
   NodeIterator ite = model.listObjectsOfProperty(this.hasKeywordProperty);
   try {
@@ -1125,6 +1125,24 @@ public boolean hasDocument(Resource kwRes) {
 	  	return true;
 	  }
 	  return false;
+}
+
+public Iterator<SLDocument> documents() { // 2020-04
+	Model model = this.docsModel;
+	ResIterator ite = model.listSubjectsWithProperty(this.slCreationDateProperty);
+	JModel m = this;
+	return new Iterator<SLDocument>() {
+
+		@Override
+		public boolean hasNext() {
+			return ite.hasNext();
+		}
+
+		@Override
+		public SLDocument next() {
+			return new JDocument(m, ite.next());
+		}		
+	};
 }
 
 /** Retourne une ArrayList de Documents affectés d'un certain keyword.

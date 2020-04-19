@@ -1194,12 +1194,11 @@ public void kwsIntoCollection(Collection<SLKeyword> coll) throws Exception {
 }
 
 // 02/01/03
-/** Met les JKeyword utilises dans ce modele dans la collection passee en argument.
- *  Contient tous les keywords utilises pour marquer une resource dans ce modele
- *  (litteraux compris) - mais aucun de ceux qui ne sont pas utilises (meme s'ils y sont definis)
- NE CREE PAS DES RES A LA PLACE DES LITTERAUX
+/** Met les SLKeyword utilises dans ce modele dans la collection passee en argument.
+ *  Contient tous les keywords utilises pour marquer une resource dans ce modele.
  */
 abstract public void usedKWsIntoCollection(Collection<SLKeyword> coll);
+
 /** Met les JKeyword correspondant aux Resource de rdfs:Class JKeyword
  *  dans la collection passée en argument.
  *  (Ne prend donc pas en compte les littéraux.)
@@ -1213,7 +1212,7 @@ abstract public void kwsResIntoCollection(Collection<SLKeyword> coll);
 //
 
 /** retourne une ArrayList des SLKeyword d'un doc */
-abstract public ArrayList<SLKeyword> getKeywordsList(String uri);
+abstract public ArrayList<SLKeyword> getKeywordsList(String docUri);
 
 ///////////////////////// MODIFS POUR SERVLET
 
@@ -1449,6 +1448,9 @@ public abstract long size();
 public abstract long kwsSize();
 public abstract long docsSize();
 public abstract long numberOfDocs();
+
+public abstract Iterator<SLDocument> documents() throws Exception; // 2020-04
+
 /** Retourne une ArrayList de Documents affectés d'une certaine ppté. 
  *  (rq propertyUri peut-être null)
  *  @see getDocumentsList(Resource)
@@ -1459,10 +1461,10 @@ public abstract ArrayList<SLDocument> getDocumentsList(String propertyUri, Strin
 public abstract ArrayList<SLKeyword> getKeywordsList(String propertyUri, String objectUri) throws Exception;
 public abstract ArrayList<SLKeyword> getKeywordsList(String propertyUri, String propertyValue, String lang) throws Exception;
 
-
 //
 // ALIAS
 //
+
 abstract public SLKeyword resolveAlias(String uri);
 abstract public String resolveAliasAsUri(String uri);
 /** met ds coll les uris des alias (sous forme de Strings). */ 
