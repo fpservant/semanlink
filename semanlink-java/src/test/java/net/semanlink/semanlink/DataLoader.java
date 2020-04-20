@@ -10,7 +10,7 @@ import net.semanlink.sljena.ModelFileIOManager;
 /** To load data for tests */
 public class DataLoader {
 static public SLModel getSLModel() throws Exception {
-	String modelUri = "http://127.0.0.1:7080/semanlink/mod"; // ?
+	String servletUri = "http://127.0.0.1:7080/semanlink";
 	String thUri = "http://www.semanlink.net/tag"; // The thUri is *not* slash terminated
 	File thFile = new File("src/test/files/datadir/tags/slkws.rdf");
 	assertTrue(thFile.exists());
@@ -20,10 +20,10 @@ static public SLModel getSLModel() throws Exception {
 	assertTrue(docDir.exists());
 	// String base = "http://www.semanlink.net/tag/";
 
-	return loadMinimalSLModel(modelUri, thUri, thFile, docDir);
+	return getSLModel(servletUri, thUri, thFile, docDir);
 }
 
-static private SLModel loadMinimalSLModel(String modelUri,
+static public SLModel getSLModel(String servletUri,
 		String thUri, File thFile,
 		File docDir) throws Exception {
 	
@@ -31,18 +31,19 @@ static private SLModel loadMinimalSLModel(String modelUri,
 	try {
 		ModelFileIOManager.getInstance();
 	} catch (Exception e) {
-		ModelFileIOManager.init("http://127.0.0.1:7080/semanlink");
+		ModelFileIOManager.init(servletUri);
 	}
 		
 	SLModel slModel = new JModel();
 	slModel.setWebServer(new WebServer());
-	slModel.setModelUrl(modelUri);
+	String modelUrl = servletUri;
+	slModel.setModelUrl(modelUrl);
 	SLThesaurus th = slModel.loadThesaurus(thUri, thFile.getParentFile());
 	thUri = th.getURI(); // if we passed thUri with a / at the end, the / is removed
 	slModel.setDefaultThesaurus(th);
 	
 	// SLDataFolder
-	String base = "http://127.0.0.1:7080/semanlink/doc/";
+	String base = servletUri + "/doc/";
 	SLModel.LoadingMode loadingMode = new SLModel.LoadingMode("yearMonth");
 	SLDataFolder defaultDataFolder = slModel.loadSLDataFolder(docDir, base, thUri, loadingMode);	
 	slModel.setDefaultDataFolder(defaultDataFolder);

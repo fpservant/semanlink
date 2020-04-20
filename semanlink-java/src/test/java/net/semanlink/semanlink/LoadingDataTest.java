@@ -3,18 +3,12 @@ package net.semanlink.semanlink;
 
 import static org.junit.Assert.assertTrue;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
 import org.junit.Test;
-
-import net.semanlink.servlet.SLServlet;
-import net.semanlink.sljena.JModel;
-import net.semanlink.sljena.ModelFileIOManager;
 
 public class LoadingDataTest {
 	

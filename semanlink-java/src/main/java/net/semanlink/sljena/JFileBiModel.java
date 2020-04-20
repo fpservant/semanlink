@@ -2,10 +2,8 @@ package net.semanlink.sljena;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import org.apache.jena.rdf.model.*;
+import org.apache.jena.rdf.model.Model;
 import org.apache.jena.shared.JenaException;
-
-import net.semanlink.semanlink.SLThesaurus;
 /**
  * Un Model dont une partie des statements se retrouve dans un JFileModel.
  * @author fps
@@ -111,7 +109,6 @@ public boolean equals(Object o) {
  * @param tagNS MUST BE SLASH TERMINATED
  */
 void setTagNS(String tagNS) {
-	System.out.println("JFileBiModel.setTagNS " + tagNS);
 	this.small.setNsPrefix("tag", tagNS);
 }
 
