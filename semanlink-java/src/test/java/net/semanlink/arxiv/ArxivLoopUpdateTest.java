@@ -21,14 +21,16 @@ import net.semanlink.metadataextraction.ExtractorData;
 import net.semanlink.semanlink.DataLoader;
 import net.semanlink.semanlink.SLDocument;
 import net.semanlink.semanlink.SLModel;
+import net.semanlink.servlet.SLServlet;
 /**
  * loop to update the metadata about arxiv bookmarks
  */
-public class ArxivUpdateTest {
+public class ArxivLoopUpdateTest {
 
 @Test public final void test() throws Exception {
 	SLModel m = DataLoader.getSLModel();
 	Client client = ClientBuilder.newClient();
+	ArxivMetadataExtractor extractor = new ArxivMetadataExtractor();
 	Iterator<SLDocument> docs = m.documents();
 	for (;docs.hasNext();) {
 		SLDocument doc = docs.next();
@@ -37,7 +39,11 @@ public class ArxivUpdateTest {
 		if (arxivNum == null) continue;
 		
 		System.out.println(arxivNum + " : " + doc.getURI());
+		ExtractorData extractorData = new ExtractorData(doc, m, client);
 		
+		// it happens that this doesn't handle keywords: very good here
+		// (we do  not want to recompute them)
+		extractor.doIt(extractorData);
 	}
 }
 

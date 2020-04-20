@@ -4,6 +4,8 @@ import java.net.URISyntaxException;
 
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.shared.JenaException;
+
+import net.semanlink.semanlink.SLThesaurus;
 /**
  * Un Model dont une partie des statements se retrouve dans un JFileModel.
  * @author fps
@@ -92,6 +94,25 @@ void save() throws JenaException, IOException, URISyntaxException {
 public boolean equals(Object o) {
 	if (o == null) return false;
 	return this.jFileModel.equals(((JFileBiModel) o).jFileModel);
+}
+
+// 2020-04 @find tagNS
+/* cf
+		SLThesaurus th = slMod.getDefaultThesaurus();
+		if (th != null) { // th can be null during init of servlet
+			String thURI = th.getBase(); // slash terminated
+			model.setNsPrefix("tag",thURI);
+		}
+ */
+// en réalité, ne servait que pour les sl.rdf, pas slkws.rdf
+// il suffit d'appeler donc ça pour les docUpdate
+/**
+ * in order to have the tag ns used when saving the file
+ * @param tagNS MUST BE SLASH TERMINATED
+ */
+void setTagNS(String tagNS) {
+	System.out.println("JFileBiModel.setTagNS " + tagNS);
+	this.small.setNsPrefix("tag", tagNS);
 }
 
 } // class

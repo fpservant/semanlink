@@ -12,7 +12,8 @@ import org.apache.jena.vocabulary.*;
 public class JDocument extends JResource implements SLDocument {
 private boolean dateComputed = false;
 private String date;
-private List<SLKeyword> keywords;
+
+// private List<SLKeyword> keywords; // 2020-04 not updated - but generally we don't need updates...
 
 // CONSTRUCTION
 
@@ -25,20 +26,23 @@ public JDocument(JModel jModel, Resource res) {
 public Resource getRes() { return this.res; }
 public String getURI() { return this.res.getURI(); } // ca va pas 
 
-//IMPLEMENTS Comparable
+// IMPLEMENTS Comparable
 
 public int hashCode() { return this.res.hashCode(); }
 
 public List<SLKeyword> getKeywords() {
-	if (this.keywords == null) this.keywords = computeKeywords();
-	return this.keywords;
-}
-
-public List<SLKeyword> computeKeywords() {
+//	if (this.keywords == null) this.keywords = computeKeywords();
+//	return this.keywords;
   try {
-	return this.jModel.getKeywordsList(this.res);
+  	return this.jModel.getKeywordsList(this.res);
   } catch (Exception ex) { throw new SLRuntimeException(ex); }
 }
+
+//public List<SLKeyword> computeKeywords() {
+//  try {
+//  	return this.jModel.getKeywordsList(this.res);
+//  } catch (Exception ex) { throw new SLRuntimeException(ex); }
+//}
 
 public String getLabel() {
 	String x = null;

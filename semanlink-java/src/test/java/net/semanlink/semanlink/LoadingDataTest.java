@@ -4,12 +4,15 @@ package net.semanlink.semanlink;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 
 import org.junit.Test;
 
+import net.semanlink.servlet.SLServlet;
 import net.semanlink.sljena.JModel;
 import net.semanlink.sljena.ModelFileIOManager;
 
@@ -19,15 +22,17 @@ public class LoadingDataTest {
 	SLModel m = DataLoader.getSLModel();
 	System.out.println("Nb of docs: " + m.docsSize() + " nb of kws: " + m.kwsSize());
 	
-//	List<SLKeyword> kws = m.getKWsInConceptsSpaceArrayList();
-//	assertTrue(kws.size() > 0);
-//	for (int i = 0 ; i < 10 ; i++) {
-//		SLKeyword kw = kws.get(i);
-//		System.out.println(kw.getURI() + " : " + kw);
-//	}
+	List<SLKeyword> kws = m.getKWsInConceptsSpaceArrayList();
+	assertTrue(kws.size() > 0);
+	for (int i = 0 ; i < 10 ; i++) {
+		SLKeyword kw = kws.get(i);
+		System.out.println(kw.getURI() + " : " + kw);
+	}
 	
 	String thUri = "http://www.semanlink.net/tag";
 	assertTrue(m.getThesaurus(thUri) != null);
+	
+	System.out.println("defaultThesaurus uri: " + m.getDefaultThesaurus().getURI() + " base " + m.getDefaultThesaurus().getBase());
 	
 	assertTrue(m.kwExists(thUri + "/nlp"));
 	
@@ -57,5 +62,40 @@ public class LoadingDataTest {
 		k++;
 		if (k > 5) break;
 	}
+	
+	SLDocument doc = m.bookmarkUrl2Doc("https://github.com/raphaelsty/kdmkr");
 }
+
+@Test public final void oneDoc() throws Exception {
+	SLModel m = DataLoader.getSLModel();
+	
+	SLDocument doc = m.bookmarkUrl2Doc("https://github.com/raphaelsty/kdmkr");
+	System.out.println(doc.getURI() + " : " + doc);
+	List<SLKeyword> kws = doc.getKeywords();
+	for (SLKeyword kw : kws) {
+		System.out.println("\t"+ kw.getURI() + " : " + kw);
+	}
+	
+	System.out.println();
+	
+	// TODO REVOIR CES APPELS
+	SLKeyword kw1 = m.getKeyword(m.kwLabel2ExistingKwUri("raphaelsty", null));
+	System.out.println(kw1.getURI() + " : " + kw1);
+	SLKeyword kw2 = m.getKeyword(m.kwLabel2ExistingKwUri("Raphaël Sourty", null));
+	System.out.println(kw2.getURI() + " : " + kw2);
+	m.kwLabel2SLKw("Raphaël Sourty", null, null);
+	SLKeyword kw3 = m.getKeyword(m.kwLabel2ExistingKwUri("raphaelsty", null));
+	System.out.println(kw3.getURI() + " : " + kw3);
+	
+	try (SLDocUpdate du = m.newSLDocUpdate(doc)) {
+		du.addKeyword(kw3);
+		// du.setDocProperty(SLSchema.NS + "arxiv_" + "firstAuthor", "RAPHAEL", "");
+	}
+	
+	for (SLKeyword kw : doc.getKeywords()) {
+		System.out.println("\t"+ kw.getURI() + " : " + kw);
+	}
+	
+}
+
 }

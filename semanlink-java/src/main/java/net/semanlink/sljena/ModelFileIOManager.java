@@ -9,9 +9,6 @@ import java.util.*;
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.shared.JenaException;
 
-import net.semanlink.semanlink.SLModel;
-import net.semanlink.semanlink.SLThesaurus;
-import net.semanlink.servlet.SLServlet;
 import net.semanlink.skos.SKOS;
 
 /** Manages the read/write of model files. */
@@ -151,14 +148,20 @@ public void writeModel(Model model, OutputStream out, String base) throws JenaEx
 	// rdfWriter.setProperty("xmlbase", base);
 	// System.out.println("rdfWriter.getClass().getName(): "+rdfWriter.getClass().getName());
 	// BOF BOF
-	SLModel slMod = SLServlet.getSLModel();
-	if (slMod != null) {
-		SLThesaurus th = slMod.getDefaultThesaurus();
-		if (th != null) { // th can be null during init of servlet
-			String thURI = th.getBase(); // slash terminated
-			model.setNsPrefix("tag",thURI);
-		}
-	}
+	
+	// 2020-04 removed, this sucks @find tagNS
+	// added to JFileBiModel
+//	SLModel slMod = SLServlet.getSLModel();
+//	if (slMod != null) {
+//		SLThesaurus th = slMod.getDefaultThesaurus();
+//		if (th != null) { // th can be null during init of servlet
+//			String thURI = th.getBase(); // slash terminated
+//			model.setNsPrefix("tag",thURI);
+//		}
+//	}
+
+	
+	
 	model.setNsPrefix("skos", SKOS.getURI());
 	rdfWriter.write (model, out, base);
 }

@@ -1799,6 +1799,7 @@ class JDocUpdate extends SLDocUpdate {
 		//
 		//
 		
+		bi.setTagNS(mod.getDefaultThesaurus().getBase()); // @findTagNS
 		bi.save();
 	}
 	

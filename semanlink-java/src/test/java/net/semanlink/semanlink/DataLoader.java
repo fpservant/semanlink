@@ -42,7 +42,7 @@ static private SLModel loadMinimalSLModel(String modelUri,
 	slModel.setDefaultThesaurus(th);
 	
 	// SLDataFolder
-	String base = "http://www.semanlink.net/doc/";
+	String base = "http://127.0.0.1:7080/semanlink/doc/";
 	SLModel.LoadingMode loadingMode = new SLModel.LoadingMode("yearMonth");
 	SLDataFolder defaultDataFolder = slModel.loadSLDataFolder(docDir, base, thUri, loadingMode);	
 	slModel.setDefaultDataFolder(defaultDataFolder);
