@@ -66,8 +66,11 @@ final static String ARXIV_PROP_DEB = SLSchema.NS + "arxiv_";
 //			du.setDocProperty(SLModel.TITLE_PROPERTY, arxiv.getTitle(), "en");
 //		}
 		String year = arxiv.getPublished().substring(0, 4);
-		String title = "[" + lastWord(firstAuthor) + year + "] " + arxiv.getTitle() + " (Arxiv:" + num + ")";
+		// String title = "[" + lastWord(firstAuthor) + year + "] " + arxiv.getTitle() + " (Arxiv:" + num + ")";
+		// String title = arxiv.getTitle() + " [" + firstAuthor + " " + year + "] "+ "(Arxiv:" + num + ")";
+		String title =  "[" + num + "] " + arxiv.getTitle();
 		du.setDocProperty(SLModel.TITLE_PROPERTY, title, "en");
+		
 		
 		return true;
 	}

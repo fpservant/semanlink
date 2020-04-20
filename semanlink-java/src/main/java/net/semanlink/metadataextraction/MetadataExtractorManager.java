@@ -117,7 +117,8 @@ public static boolean extractKWs(String text, Locale locale, SLDocument doc, SLM
 					}
 				}
 				if (doit) {
-					mod.addKeyword(doc, kw);
+					// mod.addKeyword(doc, kw); NO!!! we're within a SLDocUpdate
+					du.addKeyword(kw);
 					x = true;
 				}
 			}
