@@ -69,25 +69,8 @@ public String getLabel() {
 }
 
 private String getLabel(Property prop) {
-	// la ligne suivante fonctionnait quand on n'avait qu'un seul modèle ds JModel.
-	// On y trouvaut en effet ce qui décrivait le KW.
-	// Or maintenant, le KW a pû être créé avec une res kw provenant d'un docsModel
-	// (créé parce que un doc hasKayword un kw). On ne trouve alors pas
-	// les infos sur le kw ds ce modèle.
-	/*
-	StmtIterator stmtIt = this.res.listProperties(RDFS.label);
-	for (;stmtIt.hasNext();) { // normalement yen a qu'un - et on n'en prend qu'un
-	Statement sta = stmtIt.next();
-	return sta.getObject().toString();
-	}
-	*/
 	Model model = this.jModel.getDocsModel();
 	NodeIterator ite = model.listObjectsOfProperty(res, prop);
-	// est-ce que ça va marcher ? Et bien oui,
-	// ce qui n'était pas sûr et est intéressant quand on le compare
-	// au code commenté plus haut. Prouesse de la POO.
-	// QUESTION est-ce + lent ?
-	// Dépend de l'implémentation de ModelMem. Peut l'être. Optim à voir.
 	for (;ite.hasNext();) { // normalement yen a qu'un - et on n'en prend qu'un
 		RDFNode node = ite.nextNode();
 		ite.close();
