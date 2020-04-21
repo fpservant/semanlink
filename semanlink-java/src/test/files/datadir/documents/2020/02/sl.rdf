@@ -10,140 +10,16 @@
     xmlns:skos="&skos;"
     xmlns:sl="&sl;"
     xmlns:tag="&tag;">
-  <rdf:Description rdf:about="online_speech_recognition_with_">
-    <sl:tag rdf:resource="&tag;ai_facebook"/>
-    <dc:title>Online speech recognition with wav2letter@anywhere</dc:title>
+  <rdf:Description rdf:about="the_men_who_starved_to_death_to">
+    <sl:tag rdf:resource="&tag;leningrad"/>
+    <sl:tag rdf:resource="&tag;heroisme"/>
+    <sl:bookmarkOf rdf:resource="https://www.rbth.com/blogs/2014/05/12/the_men_who_starved_to_death_to_save_the_worlds_seeds_35135"/>
+    <sl:creationTime>2020-02-12T00:39:56Z</sl:creationTime>
     <sl:creationDate>2020-02-12</sl:creationDate>
-    <sl:creationTime>2020-02-12T14:19:09Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://ai.facebook.com/blog/online-speech-recognition-with-wav2letteranywhere/"/>
-    <sl:tag rdf:resource="&tag;speech_recognition"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="_1910_04126_scalable_nearest_n">
-    <sl:tag rdf:resource="&tag;word_mover_s_distance"/>
-    <sl:tag rdf:resource="&tag;nearest_neighbor_search"/>
-    <dc:title>[1910.04126] Scalable Nearest Neighbor Search for Optimal Transport</dc:title>
-    <sl:creationDate>2020-02-20</sl:creationDate>
-    <sl:creationTime>2020-02-20T09:11:40Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1910.04126"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="caraa_sur_twitter_probably_t">
-    <sl:tag rdf:resource="&tag;tweet"/>
-    <sl:bookmarkOf rdf:resource="https://twitter.com/CARAA_Center/status/1228220123854458888"/>
-    <sl:tag rdf:resource="&tag;notre_dame_de_paris"/>
-    <dc:title>CARAA sur Twitter : "Probably the first photo of Notre Dame de Paris in 1838 !! (daguerreotype)"</dc:title>
-    <sl:creationDate>2020-02-16</sl:creationDate>
-    <sl:creationTime>2020-02-16T13:48:54Z</sl:creationTime>
-  </rdf:Description>
-  <rdf:Description rdf:about="_2002_02925_bert_of_theseus_c">
-    <sl:comment xml:lang="en">approach to compress BERT by progressive module replacing.&#xD;
-&#xD;
-&gt; Compared to the previous knowledge distillation approaches for BERT compression, our approach leverages only one loss function and one hyper-parameter&#xD;
-&#xD;
-[Github](https://github.com/JetRunner/BERT-of-Theseus)</sl:comment>
-    <sl:creationTime>2020-02-10T21:50:03Z</sl:creationTime>
-    <sl:creationDate>2020-02-10</sl:creationDate>
-    <dc:title>[2002.02925] BERT-of-Theseus: Compressing BERT by Progressive Module Replacing</dc:title>
-    <sl:tag rdf:resource="&tag;knowledge_distillation"/>
-    <sl:tag rdf:resource="&tag;bert"/>
-    <sl:tag rdf:resource="&tag;nlp_microsoft"/>
-    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2002.02925"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="yoshua_bengio">
-    <sl:comment xml:lang="en">[Yoshua Bengio’s blog – first words](https://yoshuabengio.org/2020/02/10/fusce-risus/)</sl:comment>
-    <sl:tag rdf:resource="&tag;yoshua_bengio"/>
-    <sl:bookmarkOf rdf:resource="https://yoshuabengio.org/"/>
-    <sl:creationTime>2020-02-12T08:38:52Z</sl:creationTime>
-    <sl:creationDate>2020-02-12</sl:creationDate>
-    <dc:title>Yoshua Bengio</dc:title>
-  </rdf:Description>
-  <rdf:Description rdf:about="nucleaire_pourquoi_la_central">
-    <sl:tag rdf:resource="&tag;industrie_nucleaire"/>
-    <dc:title>Nucléaire : pourquoi la centrale de Flamanville ne produit plus d’électricité depuis six mois</dc:title>
-    <sl:creationDate>2020-02-26</sl:creationDate>
-    <sl:creationTime>2020-02-26T20:42:38Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/economie/article/2020/02/26/nucleaire-pourquoi-la-centrale-de-flamanville-ne-produit-plus-d-electricite-depuis-six-mois_6030944_3234.html"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="is_the_future_of_neural_network">
-    <sl:tag rdf:resource="&tag;attention_is_all_you_need"/>
-    <sl:bookmarkOf rdf:resource="https://medium.com/huggingface/is-the-future-of-neural-networks-sparse-an-introduction-1-n-d03923ecbd70"/>
-    <dc:title>Is the future of Neural Networks Sparse? An Introduction</dc:title>
-    <sl:creationDate>2020-02-05</sl:creationDate>
-    <sl:creationTime>2020-02-05T00:33:11Z</sl:creationTime>
-    <sl:tag rdf:resource="&tag;sparse_matrix"/>
-    <sl:comment xml:lang="en">&gt; are all the dimensions of my input&#xD;
-vector interacting with all the others? Usually not. So&#xD;
-going sparse maybe useful.&#xD;
-&#xD;
-&gt; Convolutional layers are a smart and efficient way to&#xD;
-implement a sparse transformation on an input tensor... Some&#xD;
-other networks contain much larger matrices that may&#xD;
-benefit from sparsity: Transformers&#xD;
-&#xD;
-But&#xD;
-&#xD;
-&gt; It’s hard to&#xD;
-implement general sparse matrice computations on&#xD;
-GPUs in an efficient way... Easier if the&#xD;
-matrices non-zeros grouped in small&#xD;
-fixed-size blocks&#xD;
-</sl:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="enquete_sur_les_usines_d%E2%80%99antibi">
-    <sl:comment xml:lang="fr">&gt; Plus de 90 % de nos antibiotiques sortent des usines chinoises ou indiennes, dont une partie des effluents finissent dans l’environnement, créant des foyers d’antibiorésistance</sl:comment>
-    <sl:tag rdf:resource="&tag;inde"/>
-    <sl:tag rdf:resource="&tag;antibiotic_resistance"/>
-    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/sciences/article/2018/12/10/les-usines-d-antibiotiques-indiennes-sont-des-fabriques-d-antibioresistance_5395476_1650684.html"/>
-    <sl:creationTime>2020-02-09T12:28:01Z</sl:creationTime>
-    <sl:creationDate>2020-02-09</sl:creationDate>
-    <dc:title xml:lang="fr">Enquête sur les usines d’antibiotiques indiennes, fabriques d’antibiorésistance (2018)</dc:title>
-  </rdf:Description>
-  <rdf:Description rdf:about="%C2%AB_le_pangolin_tient_il_sa_revan">
-    <sl:tag rdf:resource="&tag;chine"/>
-    <sl:tag rdf:resource="&tag;coronavirus"/>
-    <dc:title>« Le pangolin tient-il sa revanche avec le nouveau coronavirus ? »</dc:title>
-    <sl:creationDate>2020-02-16</sl:creationDate>
-    <sl:creationTime>2020-02-16T11:12:31Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/idees/article/2020/02/15/le-pangolin-tient-il-sa-revanche-avec-le-nouveau-coronavirus_6029645_3232.html"/>
-    <sl:tag rdf:resource="&tag;pangolin"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="_2002_12327_a_primer_in_bertol">
-    <sl:comment xml:lang="en">(article praised on [twitter](https://twitter.com/dennybritz/status/1233343170596917248?s=20) by D Britz and Y. Goldberg)</sl:comment>
-    <sl:tag rdf:resource="&tag;bert"/>
-    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2002.12327"/>
-    <sl:creationTime>2020-02-28T13:25:30Z</sl:creationTime>
-    <sl:creationDate>2020-02-28</sl:creationDate>
-    <dc:title>[2002.12327] A Primer in BERTology: What we know about how BERT works</dc:title>
-    <sl:tag rdf:resource="&tag;bertology"/>
-    <sl:tag rdf:resource="&tag;survey"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="_2002_11402_detecting_potentia">
-    <sl:tag rdf:resource="&tag;named_entity_recognition"/>
-    <sl:tag rdf:resource="&tag;wikipedia"/>
-    <sl:tag rdf:resource="&tag;conditional_random_field"/>
-    <dc:title>[2002.11402] Detecting Potential Topics In News Using BERT, CRF and Wikipedia</dc:title>
-    <sl:creationDate>2020-02-27</sl:creationDate>
-    <sl:creationTime>2020-02-27T23:36:54Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2002.11402"/>
-    <sl:tag rdf:resource="&tag;bert"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="machine_learning_crash_course_">
-    <sl:tag rdf:resource="&tag;doc_by_google"/>
-    <sl:tag rdf:resource="&tag;machine_learning_course"/>
-    <sl:bookmarkOf rdf:resource="https://developers.google.com/machine-learning/crash-course"/>
-    <dc:title>Machine Learning Crash Course  |  Google Developers</dc:title>
-    <sl:creationDate>2020-02-18</sl:creationDate>
-    <sl:creationTime>2020-02-18T16:29:34Z</sl:creationTime>
-  </rdf:Description>
-  <rdf:Description rdf:about="hugging_face_sur_twitter_to_">
-    <dc:title xml:lang="en">Hugging Face sur Twitter :  DistilBERT-cased for Question Answering w/ just 3 lines of javascript</dc:title>
-    <sl:tag rdf:resource="&tag;javascript"/>
-    <sl:tag rdf:resource="&tag;question_answering"/>
-    <sl:creationDate>2020-02-14</sl:creationDate>
-    <sl:creationTime>2020-02-14T00:23:36Z</sl:creationTime>
-    <sl:tag rdf:resource="&tag;hugging_face"/>
-    <sl:bookmarkOf rdf:resource="https://twitter.com/huggingface/status/1228025045412438019"/>
-    <sl:tag rdf:resource="&tag;tweet"/>
-    <sl:tag rdf:resource="&tag;distilbert"/>
+    <dc:title>The men who starved to death to save the world's seeds - Russia Beyond</dc:title>
+    <sl:tag rdf:resource="&tag;nikolai_vavilov"/>
+    <sl:tag rdf:resource="&tag;urss"/>
+    <sl:comment xml:lang="en">&gt; During the siege of Leningrad, a group of Russian botanists starved to death rather than consume the greatest collection of seeds they were guarding. Nikolay Vavilov, the man who had collected the seeds, also died of hunger in Stalin’s gulag.</sl:comment>
   </rdf:Description>
   <rdf:Description rdf:about="my_first_nn_part_3_multi_layer">
     <sl:tag rdf:resource="&tag;tutorial"/>
@@ -160,17 +36,9 @@ fixed-size blocks&#xD;
     <sl:creationTime>2020-02-20T22:27:40Z</sl:creationTime>
     <sl:creationDate>2020-02-20</sl:creationDate>
   </rdf:Description>
-  <rdf:Description rdf:about="canwen_xu_sur_twitter_wtf_w">
-    <sl:tag rdf:resource="&tag;nlp_microsoft"/>
-    <sl:comment>[paper](/doc/2020/02/_2002_02925_bert_of_theseus_c)</sl:comment>
-    <sl:tag rdf:resource="&tag;knowledge_distillation"/>
-    <sl:tag rdf:resource="&tag;bert"/>
-    <dc:title>Canwen Xu sur Twitter : "WTF? We brutally dismember BERT and replace all his organs?"</dc:title>
-    <sl:creationDate>2020-02-10</sl:creationDate>
-    <sl:creationTime>2020-02-10T09:21:44Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://twitter.com/XuCanwen/status/1226682713983160324"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="_1703_07464_no_fuss_distance_m">
+  <sl:ArxivDoc rdf:about="_1703_07464_no_fuss_distance_m">
+    <sl:creationDate>2020-02-09</sl:creationDate>
+    <sl:arxiv_author>Thomas K. Leung</sl:arxiv_author>
     <sl:comment xml:lang="en">&gt; We address the problem of distance metric learning (DML), defined as learning a distance consistent with a notion of semantic similarity...&#xD;
 &gt; Traditionnaly, supervision is expressed in the form of sets of points that follow&#xD;
 an ordinal relationship – an anchor point x is similar to&#xD;
@@ -198,25 +66,397 @@ state of the art in zero-shot learning, but also offers an explanation&#xD;
 to the effectiveness of the standard trick of training&#xD;
 a classifier, and using its penultimate layer’s output as the&#xD;
 embedding.**</sl:comment>
-    <sl:tag rdf:resource="&tag;similarity_learning"/>
-    <sl:creationTime>2020-02-09T18:44:26Z</sl:creationTime>
+    <sl:arxiv_published>2017-03-21T23:11:56Z</sl:arxiv_published>
+    <sl:arxiv_firstAuthor>Yair Movshovitz-Attias</sl:arxiv_firstAuthor>
+    <sl:arxiv_author>Alexander Toshev</sl:arxiv_author>
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1703.07464"/>
-    <sl:creationDate>2020-02-09</sl:creationDate>
-    <dc:title xml:lang="en">[1703.07464] No Fuss Distance Metric Learning using Proxies (2017)</dc:title>
-    <sl:tag rdf:resource="&tag;triplet_loss"/>
-    <sl:tag rdf:resource="&tag;google_research"/>
+    <sl:tag rdf:resource="&tag;similarity_learning"/>
+    <sl:arxiv_num>1703.07464</sl:arxiv_num>
+    <sl:arxiv_summary xml:lang="en">We address the problem of distance metric learning (DML), defined as learning
+a distance consistent with a notion of semantic similarity. Traditionally, for
+this problem supervision is expressed in the form of sets of points that follow
+an ordinal relationship -- an anchor point $x$ is similar to a set of positive
+points $Y$, and dissimilar to a set of negative points $Z$, and a loss defined
+over these distances is minimized. While the specifics of the optimization
+differ, in this work we collectively call this type of supervision Triplets and
+all methods that follow this pattern Triplet-Based methods. These methods are
+challenging to optimize. A main issue is the need for finding informative
+triplets, which is usually achieved by a variety of tricks such as increasing
+the batch size, hard or semi-hard triplet mining, etc. Even with these tricks,
+the convergence rate of such methods is slow. In this paper we propose to
+optimize the triplet loss on a different space of triplets, consisting of an
+anchor data point and similar and dissimilar proxy points which are learned as
+well. These proxies approximate the original data points, so that a triplet
+loss over the proxies is a tight upper bound of the original loss. This
+proxy-based loss is empirically better behaved. As a result, the proxy-loss
+improves on state-of-art results for three standard zero-shot learning
+datasets, by up to 15% points, while converging three times as fast as other
+triplet-based losses.</sl:arxiv_summary>
+    <dc:title xml:lang="en">[1703.07464] No Fuss Distance Metric Learning using Proxies</dc:title>
+    <sl:arxiv_author>Sergey Ioffe</sl:arxiv_author>
     <sl:tag rdf:resource="&tag;zero_shot_learning"/>
+    <sl:creationTime>2020-02-09T18:44:26Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;google_research"/>
+    <sl:arxiv_author>Yair Movshovitz-Attias</sl:arxiv_author>
+    <sl:tag rdf:resource="&tag;triplet_loss"/>
+    <sl:arxiv_title xml:lang="en">No Fuss Distance Metric Learning using Proxies</sl:arxiv_title>
+    <sl:arxiv_author>Saurabh Singh</sl:arxiv_author>
+    <sl:arxiv_updated>2017-08-01T19:52:13Z</sl:arxiv_updated>
+  </sl:ArxivDoc>
+  <rdf:Description rdf:about="jeremy_howard_sur_twitter_th">
+    <dc:title>Jeremy Howard sur Twitter : "The fastai paper (with @GuggerSylvain) covers v2..."</dc:title>
+    <sl:creationDate>2020-02-13</sl:creationDate>
+    <sl:creationTime>2020-02-13T17:50:53Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://twitter.com/jeremyphoward/status/1227975138097819650"/>
+    <sl:tag rdf:resource="&tag;fast_ai"/>
+    <sl:tag rdf:resource="&tag;jeremy_howard"/>
+    <sl:tag rdf:resource="&tag;tweet"/>
+    <sl:mainDoc>
+      <sl:ArxivDoc rdf:about="_2002_04688_fastai_a_layered_">
+        <dc:title xml:lang="en">[2002.04688] fastai: A Layered API for Deep Learning</dc:title>
+        <sl:tag rdf:resource="&tag;jeremy_howard"/>
+        <sl:creationTime>2020-02-13T21:07:29Z</sl:creationTime>
+        <sl:comment xml:lang="en">Paper describing the fast.ai v2 API</sl:comment>
+        <sl:arxiv_firstAuthor>Jeremy Howard</sl:arxiv_firstAuthor>
+        <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2002.04688"/>
+        <sl:arxiv_num>2002.04688</sl:arxiv_num>
+        <sl:arxiv_summary xml:lang="en">fastai is a deep learning library which provides practitioners with
+high-level components that can quickly and easily provide state-of-the-art
+results in standard deep learning domains, and provides researchers with
+low-level components that can be mixed and matched to build new approaches. It
+aims to do both things without substantial compromises in ease of use,
+flexibility, or performance. This is possible thanks to a carefully layered
+architecture, which expresses common underlying patterns of many deep learning
+and data processing techniques in terms of decoupled abstractions. These
+abstractions can be expressed concisely and clearly by leveraging the dynamism
+of the underlying Python language and the flexibility of the PyTorch library.
+fastai includes: a new type dispatch system for Python along with a semantic
+type hierarchy for tensors; a GPU-optimized computer vision library which can
+be extended in pure Python; an optimizer which refactors out the common
+functionality of modern optimizers into two basic pieces, allowing optimization
+algorithms to be implemented in 4-5 lines of code; a novel 2-way callback
+system that can access any part of the data, model, or optimizer and change it
+at any point during training; a new data block API; and much more. We have used
+this library to successfully create a complete deep learning course, which we
+were able to write more quickly than using previous approaches, and the code
+was more clear. The library is already in wide use in research, industry, and
+teaching. NB: This paper covers fastai v2, which is currently in pre-release at
+http://dev.fast.ai/</sl:arxiv_summary>
+        <sl:creationDate>2020-02-13</sl:creationDate>
+        <sl:arxiv_published>2020-02-11T21:16:48Z</sl:arxiv_published>
+        <sl:arxiv_title xml:lang="en">fastai: A Layered API for Deep Learning</sl:arxiv_title>
+        <sl:tag rdf:resource="&tag;api"/>
+        <sl:tag rdf:resource="&tag;fast_ai"/>
+        <sl:arxiv_updated>2020-02-16T18:17:51Z</sl:arxiv_updated>
+        <sl:arxiv_author>Sylvain Gugger</sl:arxiv_author>
+        <sl:arxiv_author>Jeremy Howard</sl:arxiv_author>
+      </sl:ArxivDoc>
+    </sl:mainDoc>
   </rdf:Description>
-  <rdf:Description rdf:about="the_men_who_starved_to_death_to">
-    <sl:tag rdf:resource="&tag;leningrad"/>
-    <sl:tag rdf:resource="&tag;heroisme"/>
-    <sl:bookmarkOf rdf:resource="https://www.rbth.com/blogs/2014/05/12/the_men_who_starved_to_death_to_save_the_worlds_seeds_35135"/>
-    <sl:creationTime>2020-02-12T00:39:56Z</sl:creationTime>
+  <rdf:Description rdf:about="extractive_text_summarization_u">
+    <sl:tag rdf:resource="&tag;nlp_sample_code"/>
+    <sl:tag rdf:resource="&tag;extractive_summarization"/>
+    <sl:tag rdf:resource="&tag;spacy"/>
+    <dc:title>Extractive Text Summarization Using spaCy in Python</dc:title>
+    <sl:creationDate>2020-02-09</sl:creationDate>
+    <sl:creationTime>2020-02-09T23:35:36Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://medium.com/better-programming/extractive-text-summarization-using-spacy-in-python-88ab96d1fd97"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="distilling_bert_models_with_spa">
+    <sl:tag rdf:resource="&tag;yves_peirsman"/>
+    <sl:tag rdf:resource="&tag;knowledge_distillation"/>
+    <sl:tag rdf:resource="&tag;spacy"/>
+    <sl:tag rdf:resource="&tag;bert"/>
+    <dc:title>Distilling BERT models with spaCy - Towards Data Science (2019)</dc:title>
+    <sl:creationDate>2020-02-15</sl:creationDate>
+    <sl:creationTime>2020-02-15T11:15:11Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://towardsdatascience.com/distilling-bert-models-with-spacy-277c7edc426c"/>
+    <sl:tag rdf:resource="&tag;transfer_learning_in_nlp"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="enquete_sur_les_usines_d%E2%80%99antibi">
+    <sl:comment xml:lang="fr">&gt; Plus de 90 % de nos antibiotiques sortent des usines chinoises ou indiennes, dont une partie des effluents finissent dans l’environnement, créant des foyers d’antibiorésistance</sl:comment>
+    <sl:tag rdf:resource="&tag;inde"/>
+    <sl:tag rdf:resource="&tag;antibiotic_resistance"/>
+    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/sciences/article/2018/12/10/les-usines-d-antibiotiques-indiennes-sont-des-fabriques-d-antibioresistance_5395476_1650684.html"/>
+    <sl:creationTime>2020-02-09T12:28:01Z</sl:creationTime>
+    <sl:creationDate>2020-02-09</sl:creationDate>
+    <dc:title xml:lang="fr">Enquête sur les usines d’antibiotiques indiennes, fabriques d’antibiorésistance (2018)</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="joint_embedding_of_words_and_la">
+    <sl:creationTime>2020-02-18T15:01:31Z</sl:creationTime>
+    <sl:creationDate>2020-02-18</sl:creationDate>
+    <dc:title>Joint Embedding of Words and Labels for Text Classification - ACL Anthology (2018)</dc:title>
+    <sl:tag rdf:resource="&tag;nlp_text_classification"/>
+    <sl:bookmarkOf rdf:resource="https://www.aclweb.org/anthology/P18-1216/"/>
+    <sl:tag rdf:resource="&tag;label_embedding"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="siamese_cnn_for_job_candidate_m_1">
+    <dc:title>Siamese CNN for job–candidate matching (slides)</dc:title>
+    <sl:tag rdf:resource="&tag;slides"/>
+    <sl:tag rdf:resource="&tag;siamese_network"/>
+    <sl:relatedDoc>
+      <rdf:Description rdf:about="matching_resumes_to_jobs_via_de">
+        <sl:tag rdf:resource="&tag;nlp_ibm"/>
+        <sl:tag rdf:resource="&tag;thewebconf_2018"/>
+        <dc:title>Matching Resumes to Jobs via Deep Siamese Network | Companion Proceedings of the The Web Conference 2018</dc:title>
+        <sl:tag rdf:resource="&tag;siamese_network"/>
+        <sl:bookmarkOf rdf:resource="https://dl.acm.org/doi/10.1145/3184558.3186942"/>
+        <sl:creationTime>2020-02-10T13:43:44Z</sl:creationTime>
+        <sl:creationDate>2020-02-10</sl:creationDate>
+        <sl:tag rdf:resource="&tag;job_matching"/>
+        <sl:comment xml:lang="en">Siamese adaptation of CNN, using contrastive loss. The document embedding of resumes and job descriptions&#xD;
+(dim 200) are generated using [#Doc2Vec](/tag/doc2vec.html) and are given as&#xD;
+inputs to the network.</sl:comment>
+      </rdf:Description>
+    </sl:relatedDoc>
+    <sl:tag rdf:resource="&tag;job_matching"/>
+    <sl:bookmarkOf rdf:resource="https://nlpparis.files.wordpress.com/2020/01/siamese_cnn_job_candidate_matching.pdf"/>
+    <sl:creationDate>2020-02-10</sl:creationDate>
+    <sl:creationTime>2020-02-10T14:19:40Z</sl:creationTime>
+    <sl:mainDoc rdf:resource="../01/paris_nlp_season_4_meetup_3_"/>
+    <sl:tag rdf:resource="&tag;paris_nlp_meetup"/>
+    <sl:tag rdf:resource="&tag;triplet_loss"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="hugging_face_how_to_train_a_ne">
+    <dc:title xml:lang="en">Hugging Face: How to train a new language model from scratch using Transformers and Tokenizers</dc:title>
+    <sl:creationDate>2020-02-16</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="https://huggingface.co/blog/how-to-train"/>
+    <sl:creationTime>2020-02-16T13:39:46Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;hugging_face"/>
+    <sl:tag rdf:resource="&tag;language_model"/>
+    <sl:tag rdf:resource="&tag;nlp_sample_code"/>
+    <sl:tag rdf:resource="&tag;attention_is_all_you_need"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="elastik_nearest_neighbors_ins">
+    <sl:creationTime>2020-02-13T23:48:03Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://blog.insightdatascience.com/elastik-nearest-neighbors-4b1f6821bd62"/>
+    <dc:title xml:lang="en">ElastiK Nearest Neighbors</dc:title>
+    <sl:tag rdf:resource="&tag;locality_sensitive_hashing"/>
+    <sl:creationDate>2020-02-13</sl:creationDate>
+    <sl:tag rdf:resource="&tag;elasticsearch_nearest_neighbor_s"/>
+    <sl:comment xml:lang="en">Combining Locality-Sensitive Hashing and Elasticsearch for Scalable Online K-Nearest Neighbors Search.&#xD;
+[Github](https://github.com/alexklibisz/elastik-nearest-neighbors), [Improved version](https://github.com/alexklibisz/elastiknn)</sl:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="%C2%AB_le_pangolin_tient_il_sa_revan">
+    <sl:tag rdf:resource="&tag;chine"/>
+    <sl:tag rdf:resource="&tag;coronavirus"/>
+    <dc:title>« Le pangolin tient-il sa revanche avec le nouveau coronavirus ? »</dc:title>
+    <sl:creationDate>2020-02-16</sl:creationDate>
+    <sl:creationTime>2020-02-16T11:12:31Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/idees/article/2020/02/15/le-pangolin-tient-il-sa-revanche-avec-le-nouveau-coronavirus_6029645_3232.html"/>
+    <sl:tag rdf:resource="&tag;pangolin"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="nlp_newsletter_the_annotated_g">
+    <sl:tag rdf:resource="&tag;knowledge_distillation"/>
+    <sl:tag rdf:resource="&tag;ml_nlp_blog"/>
+    <dc:title>NLP Newsletter: The Annotated GPT-2, Understanding self-distillation, Haiku, GANILLA, Sparkwiki, Ethics in NLP, Torchmeta,…</dc:title>
+    <sl:creationDate>2020-02-24</sl:creationDate>
+    <sl:creationTime>2020-02-24T09:48:11Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://medium.com/dair-ai/nlp-newsletter-the-annotated-gpt-2-understanding-self-distillation-haiku-ganilla-sparkwiki-b0f47f595c82"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="is_the_future_of_neural_network">
+    <sl:tag rdf:resource="&tag;attention_is_all_you_need"/>
+    <sl:bookmarkOf rdf:resource="https://medium.com/huggingface/is-the-future-of-neural-networks-sparse-an-introduction-1-n-d03923ecbd70"/>
+    <dc:title>Is the future of Neural Networks Sparse? An Introduction</dc:title>
+    <sl:creationDate>2020-02-05</sl:creationDate>
+    <sl:creationTime>2020-02-05T00:33:11Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;sparse_matrix"/>
+    <sl:comment xml:lang="en">&gt; are all the dimensions of my input&#xD;
+vector interacting with all the others? Usually not. So&#xD;
+going sparse maybe useful.&#xD;
+&#xD;
+&gt; Convolutional layers are a smart and efficient way to&#xD;
+implement a sparse transformation on an input tensor... Some&#xD;
+other networks contain much larger matrices that may&#xD;
+benefit from sparsity: Transformers&#xD;
+&#xD;
+But&#xD;
+&#xD;
+&gt; It’s hard to&#xD;
+implement general sparse matrice computations on&#xD;
+GPUs in an efficient way... Easier if the&#xD;
+matrices non-zeros grouped in small&#xD;
+fixed-size blocks&#xD;
+</sl:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="hugo_la_legende_des_siecles">
+    <sl:comment xml:lang="fr">&gt; Ils se battent - combat terrible !...&#xD;
+&#xD;
+&gt; Il dit, et déracine un chêne.&#xD;
+&gt; &#xD;
+&gt; Sire Olivier arrache un orme dans la plaine&#xD;
+&#xD;
+&gt; Nous lutterons ainsi que lions et panthères. &#xD;
+&gt;&#xD;
+&gt; Ne vaudrait-il pas mieux que nous devinssions frères ? &#xD;
+&gt;&#xD;
+&gt; Écoute, j’ai ma sœur, la belle Aude au bras blanc, &#xD;
+&gt;&#xD;
+&gt; Épouse-là. - Pardieu ! je veux bien, dit Roland.&#xD;
+&gt;&#xD;
+&gt; Et maintenant buvons, car l'affaire était chaude."&#xD;
+&gt;&#xD;
+&gt; C'est ainsi que Roland épousa la belle Aude.</sl:comment>
+    <sl:creationDate>2020-02-20</sl:creationDate>
+    <sl:creationTime>2020-02-20T22:35:47Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://matieredefrance.blogspot.com/2012/01/le-duel-de-roland-et-olivier.html"/>
+    <sl:tag rdf:resource="&tag;hugo"/>
+    <dc:title xml:lang="fr">« Le Mariage de Roland », Victor Hugo, La Légende des Siècles, 1859.</dc:title>
+  </rdf:Description>
+  <sl:ArxivDoc rdf:about="_2002_02925_bert_of_theseus_c">
+    <sl:comment xml:lang="en">approach to compress BERT by progressive module replacing.&#xD;
+&#xD;
+&gt; Compared to the previous knowledge distillation approaches for BERT compression, our approach leverages only one loss function and one hyper-parameter&#xD;
+&#xD;
+[Github](https://github.com/JetRunner/BERT-of-Theseus)</sl:comment>
+    <sl:arxiv_published>2020-02-07T17:52:16Z</sl:arxiv_published>
+    <sl:tag rdf:resource="&tag;bert"/>
+    <sl:arxiv_updated>2020-03-25T15:20:44Z</sl:arxiv_updated>
+    <sl:arxiv_author>Canwen Xu</sl:arxiv_author>
+    <sl:arxiv_firstAuthor>Canwen Xu</sl:arxiv_firstAuthor>
+    <sl:arxiv_title xml:lang="en">BERT-of-Theseus: Compressing BERT by Progressive Module Replacing</sl:arxiv_title>
+    <sl:arxiv_num>2002.02925</sl:arxiv_num>
+    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2002.02925"/>
+    <sl:creationDate>2020-02-10</sl:creationDate>
+    <sl:tag rdf:resource="&tag;knowledge_distillation"/>
+    <dc:title xml:lang="en">[2002.02925] BERT-of-Theseus: Compressing BERT by Progressive Module Replacing</dc:title>
+    <sl:arxiv_author>Tao Ge</sl:arxiv_author>
+    <sl:arxiv_author>Furu Wei</sl:arxiv_author>
+    <sl:creationTime>2020-02-10T21:50:03Z</sl:creationTime>
+    <sl:arxiv_author>Ming Zhou</sl:arxiv_author>
+    <sl:arxiv_summary xml:lang="en">In this paper, we propose a novel model compression approach to effectively
+compress BERT by progressive module replacing. Our approach first divides the
+original BERT into several modules and builds their compact substitutes. Then,
+we randomly replace the original modules with their substitutes to train the
+compact modules to mimic the behavior of the original modules. We progressively
+increase the probability of replacement through the training. In this way, our
+approach brings a deeper level of interaction between the original and compact
+models, and smooths the training process. Compared to the previous knowledge
+distillation approaches for BERT compression, our approach leverages only one
+loss function and one hyper-parameter, liberating human effort from
+hyper-parameter tuning. Our approach outperforms existing knowledge
+distillation approaches on GLUE benchmark, showing a new perspective of model
+compression.</sl:arxiv_summary>
+    <sl:arxiv_author>Wangchunshu Zhou</sl:arxiv_author>
+    <sl:tag rdf:resource="&tag;nlp_microsoft"/>
+  </sl:ArxivDoc>
+  <sl:ArxivDoc rdf:about="_2002_12327_a_primer_in_bertol">
+    <sl:tag rdf:resource="&tag;bert"/>
+    <sl:arxiv_published>2020-02-27T18:46:42Z</sl:arxiv_published>
+    <sl:comment xml:lang="en">(article praised on [twitter](https://twitter.com/dennybritz/status/1233343170596917248?s=20) by D Britz and Y. Goldberg)</sl:comment>
+    <sl:creationDate>2020-02-28</sl:creationDate>
+    <dc:title xml:lang="en">[2002.12327] A Primer in BERTology: What we know about how BERT works</dc:title>
+    <sl:arxiv_title xml:lang="en">A Primer in BERTology: What we know about how BERT works</sl:arxiv_title>
+    <sl:arxiv_updated>2020-02-27T18:46:42Z</sl:arxiv_updated>
+    <sl:arxiv_firstAuthor>Anna Rogers</sl:arxiv_firstAuthor>
+    <sl:arxiv_author>Anna Rumshisky</sl:arxiv_author>
+    <sl:arxiv_num>2002.12327</sl:arxiv_num>
+    <sl:tag rdf:resource="&tag;survey"/>
+    <sl:arxiv_author>Olga Kovaleva</sl:arxiv_author>
+    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2002.12327"/>
+    <sl:arxiv_summary xml:lang="en">Transformer-based models are now widely used in NLP, but we still do not
+understand a lot about their inner workings. This paper describes what is known
+to date about the famous BERT model (Devlin et al. 2019), synthesizing over 40
+analysis studies. We also provide an overview of the proposed modifications to
+the model and its training regime. We then outline the directions for further
+research.</sl:arxiv_summary>
+    <sl:tag rdf:resource="&tag;bertology"/>
+    <sl:creationTime>2020-02-28T13:25:30Z</sl:creationTime>
+    <sl:arxiv_author>Anna Rogers</sl:arxiv_author>
+  </sl:ArxivDoc>
+  <rdf:Description rdf:about="online_speech_recognition_with_">
+    <sl:tag rdf:resource="&tag;ai_facebook"/>
+    <dc:title>Online speech recognition with wav2letter@anywhere</dc:title>
     <sl:creationDate>2020-02-12</sl:creationDate>
-    <dc:title>The men who starved to death to save the world's seeds - Russia Beyond</dc:title>
-    <sl:tag rdf:resource="&tag;nikolai_vavilov"/>
-    <sl:tag rdf:resource="&tag;urss"/>
-    <sl:comment xml:lang="en">&gt; During the siege of Leningrad, a group of Russian botanists starved to death rather than consume the greatest collection of seeds they were guarding. Nikolay Vavilov, the man who had collected the seeds, also died of hunger in Stalin’s gulag.</sl:comment>
+    <sl:creationTime>2020-02-12T14:19:09Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://ai.facebook.com/blog/online-speech-recognition-with-wav2letteranywhere/"/>
+    <sl:tag rdf:resource="&tag;speech_recognition"/>
+  </rdf:Description>
+  <sl:ArxivDoc rdf:about="_1911_05507_compressive_transf">
+    <sl:tag rdf:resource="&tag;nlp_long_documents"/>
+    <dc:title xml:lang="en">[1911.05507] Compressive Transformers for Long-Range Sequence Modelling</dc:title>
+    <sl:tag rdf:resource="&tag;sequence_to_sequence_learning"/>
+    <sl:comment xml:lang="en">&gt; the Compressive Transformer, an attentive sequence model which compresses past memories for long-range sequence learning.&#xD;
+&#xD;
+[Blog post](/doc/2020/02/a_new_model_and_dataset_for_lon)</sl:comment>
+    <sl:arxiv_num>1911.05507</sl:arxiv_num>
+    <sl:arxiv_updated>2019-11-13T14:36:01Z</sl:arxiv_updated>
+    <sl:creationTime>2020-02-11T08:48:20Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;google_deepmind"/>
+    <sl:arxiv_firstAuthor>Jack W. Rae</sl:arxiv_firstAuthor>
+    <sl:arxiv_summary xml:lang="en">We present the Compressive Transformer, an attentive sequence model which
+compresses past memories for long-range sequence learning. We find the
+Compressive Transformer obtains state-of-the-art language modelling results in
+the WikiText-103 and Enwik8 benchmarks, achieving 17.1 ppl and 0.97 bpc
+respectively. We also find it can model high-frequency speech effectively and
+can be used as a memory mechanism for RL, demonstrated on an object matching
+task. To promote the domain of long-range sequence learning, we propose a new
+open-vocabulary language modelling benchmark derived from books, PG-19.</sl:arxiv_summary>
+    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1911.05507"/>
+    <sl:arxiv_author>Jack W. Rae</sl:arxiv_author>
+    <sl:creationDate>2020-02-11</sl:creationDate>
+    <sl:arxiv_published>2019-11-13T14:36:01Z</sl:arxiv_published>
+    <sl:tag rdf:resource="&tag;memory_in_deep_learning"/>
+    <sl:arxiv_title xml:lang="en">Compressive Transformers for Long-Range Sequence Modelling</sl:arxiv_title>
+    <sl:arxiv_author>Anna Potapenko</sl:arxiv_author>
+    <sl:tag rdf:resource="&tag;attention_is_all_you_need"/>
+    <sl:arxiv_author>Siddhant M. Jayakumar</sl:arxiv_author>
+    <sl:arxiv_author>Timothy P. Lillicrap</sl:arxiv_author>
+  </sl:ArxivDoc>
+  <rdf:Description rdf:about="canwen_xu_sur_twitter_wtf_w">
+    <sl:tag rdf:resource="&tag;nlp_microsoft"/>
+    <sl:comment>[paper](/doc/2020/02/_2002_02925_bert_of_theseus_c)</sl:comment>
+    <sl:tag rdf:resource="&tag;knowledge_distillation"/>
+    <sl:tag rdf:resource="&tag;bert"/>
+    <dc:title>Canwen Xu sur Twitter : "WTF? We brutally dismember BERT and replace all his organs?"</dc:title>
+    <sl:creationDate>2020-02-10</sl:creationDate>
+    <sl:creationTime>2020-02-10T09:21:44Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://twitter.com/XuCanwen/status/1226682713983160324"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="fastai_fastpages_an_easy_to_us">
+    <sl:bookmarkOf rdf:resource="https://fastpages.fast.ai/"/>
+    <sl:creationDate>2020-02-25</sl:creationDate>
+    <sl:creationTime>2020-02-25T08:56:03Z</sl:creationTime>
+    <dc:title>fastai/fastpages: An easy to use blogging platform, with enhanced support for Jupyter Notebooks.</dc:title>
+    <sl:tag rdf:resource="&tag;fast_ai"/>
+    <sl:tag rdf:resource="&tag;blog_software"/>
+  </rdf:Description>
+  <sl:ArxivDoc rdf:about="_2002_11402_detecting_potentia">
+    <sl:arxiv_title xml:lang="en">Detecting Potential Topics In News Using BERT, CRF and Wikipedia</sl:arxiv_title>
+    <sl:arxiv_author>Swapnil Ashok Jadhav</sl:arxiv_author>
+    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2002.11402"/>
+    <sl:creationDate>2020-02-27</sl:creationDate>
+    <sl:arxiv_updated>2020-02-28T18:44:07Z</sl:arxiv_updated>
+    <sl:tag rdf:resource="&tag;bert"/>
+    <sl:tag rdf:resource="&tag;wikipedia"/>
+    <sl:arxiv_num>2002.11402</sl:arxiv_num>
+    <sl:creationTime>2020-02-27T23:36:54Z</sl:creationTime>
+    <sl:arxiv_published>2020-02-26T10:48:53Z</sl:arxiv_published>
+    <dc:title xml:lang="en">[2002.11402] Detecting Potential Topics In News Using BERT, CRF and Wikipedia</dc:title>
+    <sl:tag rdf:resource="&tag;named_entity_recognition"/>
+    <sl:arxiv_summary xml:lang="en">For a news content distribution platform like Dailyhunt, Named Entity
+Recognition is a pivotal task for building better user recommendation and
+notification algorithms. Apart from identifying names, locations, organisations
+from the news for 13+ Indian languages and use them in algorithms, we also need
+to identify n-grams which do not necessarily fit in the definition of
+Named-Entity, yet they are important. For example, "me too movement", "beef
+ban", "alwar mob lynching". In this exercise, given an English language text,
+we are trying to detect case-less n-grams which convey important information
+and can be used as topics and/or hashtags for a news. Model is built using
+Wikipedia titles data, private English news corpus and BERT-Multilingual
+pre-trained model, Bi-GRU and CRF architecture. It shows promising results when
+compared with industry best Flair, Spacy and Stanford-caseless-NER in terms of
+F1 and especially Recall.</sl:arxiv_summary>
+    <sl:arxiv_firstAuthor>Swapnil Ashok Jadhav</sl:arxiv_firstAuthor>
+    <sl:tag rdf:resource="&tag;conditional_random_field"/>
+  </sl:ArxivDoc>
+  <rdf:Description rdf:about="machine_learning_at_the_vu_univ">
+    <sl:creationTime>2020-02-18T13:52:09Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://mlvu.github.io/"/>
+    <sl:creationDate>2020-02-18</sl:creationDate>
+    <dc:title>Machine Learning at the VU University Amsterdam</dc:title>
+    <sl:tag rdf:resource="&tag;machine_learning_course"/>
+    <sl:tag rdf:resource="&tag;peter_bloem"/>
   </rdf:Description>
   <rdf:Description rdf:about="contrastive_self_supervised_lea">
     <sl:comment xml:lang="en">methods that build representations by learning to encode what makes two things similar or different&#xD;
@@ -249,53 +489,114 @@ score(f(x), f(x+)) &gt;&gt; score(f(x), f(x-))&#xD;
     <sl:tag rdf:resource="&tag;self_supervised_learning"/>
     <sl:tag rdf:resource="&tag;lilian_weng"/>
   </rdf:Description>
-  <rdf:Description rdf:about="_1802_01528_the_matrix_calculu">
-    <sl:comment>Related blog post [The Math Behind Neural Networks](https://towardsdatascience.com/step-by-step-the-math-behind-neural-networks-490dc1f3cfd9)</sl:comment>
-    <dc:title>[1802.01528] The Matrix Calculus You Need For Deep Learning</dc:title>
-    <sl:creationDate>2020-02-19</sl:creationDate>
-    <sl:creationTime>2020-02-19T21:52:12Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1802.01528"/>
-    <sl:tag rdf:resource="&tag;matrix_calculus"/>
-    <sl:tag rdf:resource="&tag;jeremy_howard"/>
+  <rdf:Description rdf:about="a_new_model_and_dataset_for_lon">
+    <sl:tag rdf:resource="&tag;google_deepmind"/>
+    <sl:tag rdf:resource="&tag;memory_in_deep_learning"/>
+    <dc:title>A new model and dataset for long-range memory | DeepMind</dc:title>
+    <sl:creationDate>2020-02-11</sl:creationDate>
+    <sl:creationTime>2020-02-11T08:40:48Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://deepmind.com/blog/article/A_new_model_and_dataset_for_long-range_memory"/>
+    <sl:comment xml:lang="en">the use of memory in deep learning, and how modelling language may be an ideal task for developing better memory architectures&#xD;
+&#xD;
+[paper](/doc/2020/02/_1911_05507_compressive_transf)</sl:comment>
   </rdf:Description>
-  <rdf:Description rdf:about="hugging_face_how_to_train_a_ne">
-    <dc:title xml:lang="en">Hugging Face: How to train a new language model from scratch using Transformers and Tokenizers</dc:title>
-    <sl:creationDate>2020-02-16</sl:creationDate>
-    <sl:bookmarkOf rdf:resource="https://huggingface.co/blog/how-to-train"/>
-    <sl:creationTime>2020-02-16T13:39:46Z</sl:creationTime>
-    <sl:tag rdf:resource="&tag;hugging_face"/>
-    <sl:tag rdf:resource="&tag;language_model"/>
-    <sl:tag rdf:resource="&tag;nlp_sample_code"/>
-    <sl:tag rdf:resource="&tag;attention_is_all_you_need"/>
+  <rdf:Description rdf:about="information_retrieval_for_hr">
+    <sl:tag rdf:resource="&tag;paris_nlp_meetup"/>
+    <sl:tag rdf:resource="&tag;job_matching"/>
+    <sl:tag rdf:resource="&tag;discounted_cumulative_gain"/>
+    <sl:tag rdf:resource="&tag;ranking_information_retrieval"/>
+    <sl:creationTime>2020-02-14T16:57:51Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://nlpparis.files.wordpress.com/2018/07/meetup_nlp_hiresweet.pdf"/>
+    <sl:creationDate>2020-02-14</sl:creationDate>
+    <sl:mainDoc rdf:resource="../..?uri=https%3A%2F%2Fwww.meetup.com%2Ffr-FR%2FParis-NLP%2Fevents%2F242014884%2F%3Fcomment_table_id%3D493219381%26comment_table_name%3Devent_comment"/>
+    <sl:tag rdf:resource="&tag;nlp_human_resources"/>
+    <dc:title>Information Retrieval for HR</dc:title>
+    <sl:comment xml:lang="fr">Meetup NLP #6 – July 25, 2018 Ismael Belghiti, CTO @ Hiresweet&#xD;
+&#xD;
+&gt; comment différentes techniques de NLP peuvent être appliquées pour calculer un score de matching entre un profil et une offre, en comparant leur performance sur une métrique de ranking dédiée.</sl:comment>
   </rdf:Description>
-  <rdf:Description rdf:about="calling_java_from_python_stac">
-    <sl:tag rdf:resource="&tag;java_in_python"/>
-    <sl:tag rdf:resource="&tag;stack_overflow"/>
-    <dc:title>Calling Java from Python - Stack Overflow</dc:title>
-    <sl:creationDate>2020-02-20</sl:creationDate>
-    <sl:creationTime>2020-02-20T17:14:23Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://stackoverflow.com/questions/3652554/calling-java-from-python"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="extractive_text_summarization_u">
-    <sl:tag rdf:resource="&tag;nlp_sample_code"/>
-    <sl:tag rdf:resource="&tag;extractive_summarization"/>
-    <sl:tag rdf:resource="&tag;spacy"/>
-    <dc:title>Extractive Text Summarization Using spaCy in Python</dc:title>
-    <sl:creationDate>2020-02-09</sl:creationDate>
-    <sl:creationTime>2020-02-09T23:35:36Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://medium.com/better-programming/extractive-text-summarization-using-spacy-in-python-88ab96d1fd97"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="_2002_05867v1_transformers_as_">
-    <sl:tag rdf:resource="&tag;attention_is_all_you_need"/>
+  <sl:ArxivDoc rdf:about="_2002_05867v1_transformers_as_">
+    <sl:arxiv_author>Kyle Richardson</sl:arxiv_author>
+    <sl:arxiv_num>2002.05867</sl:arxiv_num>
+    <sl:arxiv_title xml:lang="en">Transformers as Soft Reasoners over Language</sl:arxiv_title>
     <sl:tag rdf:resource="&tag;rules"/>
-    <sl:tag rdf:resource="&tag;knowledge_representation"/>
+    <sl:arxiv_published>2020-02-14T04:23:28Z</sl:arxiv_published>
+    <sl:arxiv_updated>2020-02-14T04:23:28Z</sl:arxiv_updated>
+    <sl:arxiv_firstAuthor>Peter Clark</sl:arxiv_firstAuthor>
+    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2002.05867"/>
+    <sl:tag rdf:resource="&tag;attention_is_all_you_need"/>
+    <sl:arxiv_author>Peter Clark</sl:arxiv_author>
+    <sl:arxiv_summary xml:lang="en">AI has long pursued the goal of having systems reason over *explicitly
+provided* knowledge, but building suitable representations has proved
+challenging. Here we explore whether transformers can similarly learn to reason
+(or emulate reasoning), but using rules expressed in language, thus bypassing a
+formal representation. We provide the first demonstration that this is
+possible, and characterize the extent of this capability. To do this, we use a
+collection of synthetic datasets that test increasing levels of reasoning
+complexity (number of rules, presence of negation, and depth of chaining). We
+find transformers appear to learn rule-based reasoning with high (99%) accuracy
+on these datasets, and in a way that generalizes to test data requiring
+substantially deeper chaining than in the training data (95%+ scores). We also
+demonstrate that the models transfer well to two hand-authored rulebases, and
+to rulebases paraphrased into more natural language. These findings are
+significant as it suggests a new role for transformers, namely as a limited
+"soft theorem prover" operating over explicit theories in language. This in
+turn suggests new possibilities for explainability, correctability, and
+counterfactual reasoning in question-answering. All datasets and a live demo
+are available at http://rule-reasoning.apps.allenai.org/</sl:arxiv_summary>
+    <sl:comment xml:lang="en">&gt; AI has long pursued the goal of having systems reason over *explicitly provided* knowledge, but building suitable representations has proved challenging. Here we explore whether transformers can similarly learn to reason (or emulate reasoning), but **using rules expressed in language, thus bypassing a formal representation**.</sl:comment>
     <sl:creationDate>2020-02-17</sl:creationDate>
     <sl:creationTime>2020-02-17T09:06:44Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2002.05867"/>
     <sl:tag rdf:resource="&tag;allen_institute_for_ai_a2i"/>
-    <dc:title>[2002.05867v1] Transformers as Soft Reasoners over Language</dc:title>
+    <dc:title xml:lang="en">[2002.05867] Transformers as Soft Reasoners over Language</dc:title>
+    <sl:arxiv_author>Oyvind Tafjord</sl:arxiv_author>
+    <sl:tag rdf:resource="&tag;knowledge_representation"/>
     <sl:tag rdf:resource="&tag;reasoning"/>
-    <sl:comment xml:lang="en">&gt; AI has long pursued the goal of having systems reason over *explicitly provided* knowledge, but building suitable representations has proved challenging. Here we explore whether transformers can similarly learn to reason (or emulate reasoning), but **using rules expressed in language, thus bypassing a formal representation**.</sl:comment>
+  </sl:ArxivDoc>
+  <rdf:Description rdf:about="yoshua_bengio">
+    <sl:comment xml:lang="en">[Yoshua Bengio’s blog – first words](https://yoshuabengio.org/2020/02/10/fusce-risus/)</sl:comment>
+    <sl:tag rdf:resource="&tag;yoshua_bengio"/>
+    <sl:bookmarkOf rdf:resource="https://yoshuabengio.org/"/>
+    <sl:creationTime>2020-02-12T08:38:52Z</sl:creationTime>
+    <sl:creationDate>2020-02-12</sl:creationDate>
+    <dc:title>Yoshua Bengio</dc:title>
+  </rdf:Description>
+  <sl:ArxivDoc rdf:about="_1802_01528_the_matrix_calculu">
+    <sl:arxiv_num>1802.01528</sl:arxiv_num>
+    <sl:tag rdf:resource="&tag;jeremy_howard"/>
+    <sl:tag rdf:resource="&tag;matrix_calculus"/>
+    <dc:title xml:lang="en">[1802.01528] The Matrix Calculus You Need For Deep Learning</dc:title>
+    <sl:arxiv_firstAuthor>Terence Parr</sl:arxiv_firstAuthor>
+    <sl:arxiv_summary xml:lang="en">This paper is an attempt to explain all the matrix calculus you need in order
+to understand the training of deep neural networks. We assume no math knowledge
+beyond what you learned in calculus 1, and provide links to help you refresh
+the necessary math where needed. Note that you do not need to understand this
+material before you start learning to train and use deep learning in practice;
+rather, this material is for those who are already familiar with the basics of
+neural networks, and wish to deepen their understanding of the underlying math.
+Don't worry if you get stuck at some point along the way---just go back and
+reread the previous section, and try writing down and working through some
+examples. And if you're still stuck, we're happy to answer your questions in
+the Theory category at forums.fast.ai. Note: There is a reference section at
+the end of the paper summarizing all the key matrix calculus rules and
+terminology discussed here. See related articles at http://explained.ai</sl:arxiv_summary>
+    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1802.01528"/>
+    <sl:arxiv_published>2018-02-05T17:37:59Z</sl:arxiv_published>
+    <sl:arxiv_title xml:lang="en">The Matrix Calculus You Need For Deep Learning</sl:arxiv_title>
+    <sl:comment>Related blog post [The Math Behind Neural Networks](https://towardsdatascience.com/step-by-step-the-math-behind-neural-networks-490dc1f3cfd9)</sl:comment>
+    <sl:arxiv_author>Jeremy Howard</sl:arxiv_author>
+    <sl:creationDate>2020-02-19</sl:creationDate>
+    <sl:arxiv_updated>2018-07-02T17:36:34Z</sl:arxiv_updated>
+    <sl:creationTime>2020-02-19T21:52:12Z</sl:creationTime>
+    <sl:arxiv_author>Terence Parr</sl:arxiv_author>
+  </sl:ArxivDoc>
+  <rdf:Description rdf:about="machine_learning_crash_course_">
+    <sl:tag rdf:resource="&tag;doc_by_google"/>
+    <sl:tag rdf:resource="&tag;machine_learning_course"/>
+    <sl:bookmarkOf rdf:resource="https://developers.google.com/machine-learning/crash-course"/>
+    <dc:title>Machine Learning Crash Course  |  Google Developers</dc:title>
+    <sl:creationDate>2020-02-18</sl:creationDate>
+    <sl:creationTime>2020-02-18T16:29:34Z</sl:creationTime>
   </rdf:Description>
   <rdf:Description rdf:about="how_much_knowledge_can_you_pack">
     <sl:comment xml:lang="en">&gt; It has recently been observed that neural language&#xD;
@@ -341,69 +642,68 @@ So, what the point? To be compared with this [IBM's paper](/doc/2019/09/_1909_04
     <sl:tag rdf:resource="&tag;nlp_google"/>
     <sl:tag rdf:resource="&tag;question_answering"/>
   </rdf:Description>
-  <rdf:Description rdf:about="elastik_nearest_neighbors_ins">
-    <sl:creationTime>2020-02-13T23:48:03Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://blog.insightdatascience.com/elastik-nearest-neighbors-4b1f6821bd62"/>
-    <dc:title xml:lang="en">ElastiK Nearest Neighbors</dc:title>
-    <sl:tag rdf:resource="&tag;locality_sensitive_hashing"/>
-    <sl:creationDate>2020-02-13</sl:creationDate>
-    <sl:tag rdf:resource="&tag;elasticsearch_nearest_neighbor_s"/>
-    <sl:comment xml:lang="en">Combining Locality-Sensitive Hashing and Elasticsearch for Scalable Online K-Nearest Neighbors Search.&#xD;
-[Github](https://github.com/alexklibisz/elastik-nearest-neighbors), [Improved version](https://github.com/alexklibisz/elastiknn)</sl:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="a_new_model_and_dataset_for_lon">
-    <sl:tag rdf:resource="&tag;google_deepmind"/>
-    <sl:tag rdf:resource="&tag;memory_in_deep_learning"/>
-    <dc:title>A new model and dataset for long-range memory | DeepMind</dc:title>
+  <rdf:Description rdf:about="adam_roberts_sur_twitter_new">
+    <sl:comment xml:lang="en">[paper](/doc/2020/02/how_much_knowledge_can_you_pack)</sl:comment>
+    <sl:tag rdf:resource="&tag;question_answering"/>
+    <sl:bookmarkOf rdf:resource="https://twitter.com/ada_rob/status/1227062195671822336"/>
+    <sl:tag rdf:resource="&tag;language_model"/>
+    <dc:title>Adam Roberts sur Twitter : "New preprint: How Much Knowledge Can You Pack into the Parameters of a Language Model?..."</dc:title>
     <sl:creationDate>2020-02-11</sl:creationDate>
-    <sl:creationTime>2020-02-11T08:40:48Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://deepmind.com/blog/article/A_new_model_and_dataset_for_long-range_memory"/>
-    <sl:comment xml:lang="en">the use of memory in deep learning, and how modelling language may be an ideal task for developing better memory architectures&#xD;
-&#xD;
-[paper](/doc/2020/02/_1911_05507_compressive_transf)</sl:comment>
+    <sl:creationTime>2020-02-11T12:24:21Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;nlp_google"/>
+    <sl:tag rdf:resource="&tag;knowledge_based_ai"/>
   </rdf:Description>
-  <rdf:Description rdf:about="machine_learning_at_the_vu_univ">
-    <sl:creationTime>2020-02-18T13:52:09Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://mlvu.github.io/"/>
-    <sl:creationDate>2020-02-18</sl:creationDate>
-    <dc:title>Machine Learning at the VU University Amsterdam</dc:title>
-    <sl:tag rdf:resource="&tag;machine_learning_course"/>
-    <sl:tag rdf:resource="&tag;peter_bloem"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="_1911_05507_compressive_transf">
-    <sl:tag rdf:resource="&tag;google_deepmind"/>
-    <sl:comment xml:lang="en">&gt; the Compressive Transformer, an attentive sequence model which compresses past memories for long-range sequence learning.&#xD;
-&#xD;
-[Blog post](/doc/2020/02/a_new_model_and_dataset_for_lon)</sl:comment>
-    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1911.05507"/>
-    <sl:tag rdf:resource="&tag;nlp_long_documents"/>
-    <sl:creationDate>2020-02-11</sl:creationDate>
-    <sl:tag rdf:resource="&tag;memory_in_deep_learning"/>
-    <sl:tag rdf:resource="&tag;sequence_to_sequence_learning"/>
-    <sl:tag rdf:resource="&tag;attention_is_all_you_need"/>
-    <sl:creationTime>2020-02-11T08:48:20Z</sl:creationTime>
-    <dc:title>[1911.05507] Compressive Transformers for Long-Range Sequence Modelling</dc:title>
-  </rdf:Description>
-  <rdf:Description rdf:about="jeremy_howard_sur_twitter_th">
-    <dc:title>Jeremy Howard sur Twitter : "The fastai paper (with @GuggerSylvain) covers v2..."</dc:title>
-    <sl:creationDate>2020-02-13</sl:creationDate>
-    <sl:creationTime>2020-02-13T17:50:53Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://twitter.com/jeremyphoward/status/1227975138097819650"/>
+  <rdf:Description rdf:about="fasthugs_%7C_ntentional">
+    <sl:tag rdf:resource="&tag;nlp_text_classification"/>
+    <sl:creationTime>2020-02-19T01:04:23Z</sl:creationTime>
     <sl:tag rdf:resource="&tag;fast_ai"/>
-    <sl:tag rdf:resource="&tag;jeremy_howard"/>
+    <sl:tag rdf:resource="&tag;hugging_face"/>
+    <sl:comment xml:lang="en">Notebook: fine-tune a text classification model with HuggingFace transformers and fastai-v2.</sl:comment>
+    <dc:title>FastHugs | ntentional</dc:title>
+    <sl:creationDate>2020-02-19</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="http://www.ntentional.com/2020/02/18/fasthugs_demo.html"/>
+    <sl:tag rdf:resource="&tag;nlp_sample_code"/>
+    <sl:tag rdf:resource="&tag;attention_is_all_you_need"/>
+  </rdf:Description>
+  <sl:ArxivDoc rdf:about="_1503_08677_label_embedding_fo">
+    <sl:arxiv_published>2015-03-30T14:04:34Z</sl:arxiv_published>
+    <sl:arxiv_updated>2015-10-01T10:48:38Z</sl:arxiv_updated>
+    <sl:tag rdf:resource="&tag;image_classification"/>
+    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1503.08677"/>
+    <sl:creationDate>2020-02-18</sl:creationDate>
+    <sl:arxiv_num>1503.08677</sl:arxiv_num>
+    <sl:arxiv_author>Florent Perronnin</sl:arxiv_author>
+    <sl:tag rdf:resource="&tag;label_embedding"/>
+    <sl:arxiv_author>Zaid Harchaoui</sl:arxiv_author>
+    <sl:arxiv_firstAuthor>Zeynep Akata</sl:arxiv_firstAuthor>
+    <sl:arxiv_summary xml:lang="en">Attributes act as intermediate representations that enable parameter sharing
+between classes, a must when training data is scarce. We propose to view
+attribute-based image classification as a label-embedding problem: each class
+is embedded in the space of attribute vectors. We introduce a function that
+measures the compatibility between an image and a label embedding. The
+parameters of this function are learned on a training set of labeled samples to
+ensure that, given an image, the correct classes rank higher than the incorrect
+ones. Results on the Animals With Attributes and Caltech-UCSD-Birds datasets
+show that the proposed framework outperforms the standard Direct Attribute
+Prediction baseline in a zero-shot learning scenario. Label embedding enjoys a
+built-in ability to leverage alternative sources of information instead of or
+in addition to attributes, such as e.g. class hierarchies or textual
+descriptions. Moreover, label embedding encompasses the whole range of learning
+settings from zero-shot learning to regular learning with a large number of
+labeled examples.</sl:arxiv_summary>
+    <sl:creationTime>2020-02-18T15:00:20Z</sl:creationTime>
+    <sl:arxiv_title xml:lang="en">Label-Embedding for Image Classification</sl:arxiv_title>
+    <dc:title xml:lang="en">[1503.08677] Label-Embedding for Image Classification</dc:title>
+    <sl:arxiv_author>Zeynep Akata</sl:arxiv_author>
+    <sl:arxiv_author>Cordelia Schmid</sl:arxiv_author>
+  </sl:ArxivDoc>
+  <rdf:Description rdf:about="caraa_sur_twitter_probably_t">
     <sl:tag rdf:resource="&tag;tweet"/>
-    <sl:mainDoc>
-      <rdf:Description rdf:about="_2002_04688_fastai_a_layered_">
-        <sl:comment xml:lang="en">Paper describing the fast.ai v2 API</sl:comment>
-        <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2002.04688"/>
-        <sl:creationTime>2020-02-13T21:07:29Z</sl:creationTime>
-        <sl:creationDate>2020-02-13</sl:creationDate>
-        <dc:title>[2002.04688] fastai: A Layered API for Deep Learning</dc:title>
-        <sl:tag rdf:resource="&tag;fast_ai"/>
-        <sl:tag rdf:resource="&tag;api"/>
-        <sl:tag rdf:resource="&tag;jeremy_howard"/>
-      </rdf:Description>
-    </sl:mainDoc>
+    <sl:bookmarkOf rdf:resource="https://twitter.com/CARAA_Center/status/1228220123854458888"/>
+    <sl:tag rdf:resource="&tag;notre_dame_de_paris"/>
+    <dc:title>CARAA sur Twitter : "Probably the first photo of Notre Dame de Paris in 1838 !! (daguerreotype)"</dc:title>
+    <sl:creationDate>2020-02-16</sl:creationDate>
+    <sl:creationTime>2020-02-16T13:48:54Z</sl:creationTime>
   </rdf:Description>
   <rdf:Description rdf:about="l%E2%80%99evaluation_officielle_du_glyp">
     <dc:title>L’évaluation officielle du glyphosate de nouveau mise en cause</dc:title>
@@ -417,101 +717,38 @@ So, what the point? To be compared with this [IBM's paper](/doc/2019/09/_1909_04
 &#xD;
 &gt; Confidentiels, les tests réglementaires ne peuvent généralement pas être consultés par la communauté scientifique,</sl:comment>
   </rdf:Description>
-  <rdf:Description rdf:about="fastai_fastpages_an_easy_to_us">
-    <sl:bookmarkOf rdf:resource="https://fastpages.fast.ai/"/>
-    <sl:creationDate>2020-02-25</sl:creationDate>
-    <sl:creationTime>2020-02-25T08:56:03Z</sl:creationTime>
-    <dc:title>fastai/fastpages: An easy to use blogging platform, with enhanced support for Jupyter Notebooks.</dc:title>
-    <sl:tag rdf:resource="&tag;fast_ai"/>
-    <sl:tag rdf:resource="&tag;blog_software"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="joint_embedding_of_words_and_la">
-    <sl:creationTime>2020-02-18T15:01:31Z</sl:creationTime>
-    <sl:creationDate>2020-02-18</sl:creationDate>
-    <dc:title>Joint Embedding of Words and Labels for Text Classification - ACL Anthology (2018)</dc:title>
-    <sl:tag rdf:resource="&tag;nlp_text_classification"/>
-    <sl:bookmarkOf rdf:resource="https://www.aclweb.org/anthology/P18-1216/"/>
-    <sl:tag rdf:resource="&tag;label_embedding"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="adam_roberts_sur_twitter_new">
-    <sl:comment xml:lang="en">[paper](/doc/2020/02/how_much_knowledge_can_you_pack)</sl:comment>
-    <sl:tag rdf:resource="&tag;question_answering"/>
-    <sl:bookmarkOf rdf:resource="https://twitter.com/ada_rob/status/1227062195671822336"/>
-    <sl:tag rdf:resource="&tag;language_model"/>
-    <dc:title>Adam Roberts sur Twitter : "New preprint: How Much Knowledge Can You Pack into the Parameters of a Language Model?..."</dc:title>
-    <sl:creationDate>2020-02-11</sl:creationDate>
-    <sl:creationTime>2020-02-11T12:24:21Z</sl:creationTime>
-    <sl:tag rdf:resource="&tag;nlp_google"/>
-    <sl:tag rdf:resource="&tag;knowledge_based_ai"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="fasthugs_%7C_ntentional">
-    <sl:creationTime>2020-02-19T01:04:23Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="http://www.ntentional.com/2020/02/18/fasthugs_demo.html"/>
-    <sl:creationDate>2020-02-19</sl:creationDate>
-    <sl:tag rdf:resource="&tag;nlp_text_classification"/>
-    <sl:tag rdf:resource="&tag;hugging_face"/>
-    <sl:tag rdf:resource="&tag;attention_is_all_you_need"/>
-    <sl:tag rdf:resource="&tag;nlp_sample_code"/>
-    <sl:comment xml:lang="en">Notebook: fine-tune a text classification model with HuggingFace transformers and fastai-v2.</sl:comment>
-    <sl:tag rdf:resource="&tag;fast_ai"/>
-    <dc:title>FastHugs | ntentional</dc:title>
-  </rdf:Description>
-  <rdf:Description rdf:about="hugo_la_legende_des_siecles">
-    <sl:comment xml:lang="fr">&gt; Ils se battent - combat terrible !...&#xD;
-&#xD;
-&gt; Il dit, et déracine un chêne.&#xD;
-&gt; &#xD;
-&gt; Sire Olivier arrache un orme dans la plaine&#xD;
-&#xD;
-&gt; Nous lutterons ainsi que lions et panthères. &#xD;
-&gt;&#xD;
-&gt; Ne vaudrait-il pas mieux que nous devinssions frères ? &#xD;
-&gt;&#xD;
-&gt; Écoute, j’ai ma sœur, la belle Aude au bras blanc, &#xD;
-&gt;&#xD;
-&gt; Épouse-là. - Pardieu ! je veux bien, dit Roland.&#xD;
-&gt;&#xD;
-&gt; Et maintenant buvons, car l'affaire était chaude."&#xD;
-&gt;&#xD;
-&gt; C'est ainsi que Roland épousa la belle Aude.</sl:comment>
+  <sl:ArxivDoc rdf:about="_1910_04126_scalable_nearest_n">
+    <sl:arxiv_updated>2020-02-14T14:54:37Z</sl:arxiv_updated>
+    <sl:creationTime>2020-02-20T09:11:40Z</sl:creationTime>
+    <sl:arxiv_author>Arturs Backurs</sl:arxiv_author>
+    <sl:tag rdf:resource="&tag;word_mover_s_distance"/>
     <sl:creationDate>2020-02-20</sl:creationDate>
-    <sl:creationTime>2020-02-20T22:35:47Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://matieredefrance.blogspot.com/2012/01/le-duel-de-roland-et-olivier.html"/>
-    <sl:tag rdf:resource="&tag;hugo"/>
-    <dc:title xml:lang="fr">« Le Mariage de Roland », Victor Hugo, La Légende des Siècles, 1859.</dc:title>
-  </rdf:Description>
-  <rdf:Description rdf:about="information_retrieval_for_hr">
-    <sl:comment xml:lang="fr">Meetup NLP #6 – July 25, 2018 Ismael Belghiti, CTO @ Hiresweet&#xD;
-&#xD;
-&gt; comment différentes techniques de NLP peuvent être appliquées pour calculer un score de matching entre un profil et une offre, en comparant leur performance sur une métrique de ranking dédiée.</sl:comment>
-    <sl:tag rdf:resource="&tag;nlp_human_resources"/>
-    <sl:tag rdf:resource="&tag;discounted_cumulative_gain"/>
-    <sl:tag rdf:resource="&tag;paris_nlp_meetup"/>
-    <dc:title>Information Retrieval for HR</dc:title>
-    <sl:mainDoc rdf:resource="../..?uri=https%3A%2F%2Fwww.meetup.com%2Ffr-FR%2FParis-NLP%2Fevents%2F242014884%2F%3Fcomment_table_id%3D493219381%26comment_table_name%3Devent_comment"/>
-    <sl:tag rdf:resource="&tag;job_matching"/>
-    <sl:tag rdf:resource="&tag;ranking_information_retrieval"/>
-    <sl:creationDate>2020-02-14</sl:creationDate>
-    <sl:bookmarkOf rdf:resource="https://nlpparis.files.wordpress.com/2018/07/meetup_nlp_hiresweet.pdf"/>
-    <sl:creationTime>2020-02-14T16:57:51Z</sl:creationTime>
-  </rdf:Description>
-  <rdf:Description rdf:about="_1503_08677_label_embedding_fo">
-    <sl:tag rdf:resource="&tag;image_classification"/>
-    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1503.08677"/>
-    <sl:creationTime>2020-02-18T15:00:20Z</sl:creationTime>
-    <sl:creationDate>2020-02-18</sl:creationDate>
-    <dc:title>[1503.08677] Label-Embedding for Image Classification</dc:title>
-    <sl:tag rdf:resource="&tag;label_embedding"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="minhash_token_filter_%7C_elastics">
-    <sl:tag rdf:resource="&tag;minhash"/>
-    <dc:title>MinHash token filter | Elasticsearch Reference</dc:title>
-    <sl:creationDate>2020-02-14</sl:creationDate>
-    <sl:creationTime>2020-02-14T00:03:14Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-minhash-tokenfilter.html"/>
-    <sl:tag rdf:resource="&tag;elasticsearch_nearest_neighbor_s"/>
-    <sl:comment xml:lang="en">One solution to make similarity search more practical and computationally feasible involves hashing of documents, in a way that similar documents are more likely to produce the same hash code (locality sensitive hashing, LSH). Depending on what constitutes the similarity between documents, various LSH functions have been proposed. For Jaccard similarity, a popular LSH function is MinHash.</sl:comment>
-  </rdf:Description>
+    <sl:arxiv_author>Tal Wagner</sl:arxiv_author>
+    <sl:arxiv_title xml:lang="en">Scalable Nearest Neighbor Search for Optimal Transport</sl:arxiv_title>
+    <sl:arxiv_author>Piotr Indyk</sl:arxiv_author>
+    <sl:arxiv_published>2019-10-09T17:12:41Z</sl:arxiv_published>
+    <sl:tag rdf:resource="&tag;nearest_neighbor_search"/>
+    <sl:arxiv_firstAuthor>Arturs Backurs</sl:arxiv_firstAuthor>
+    <sl:arxiv_num>1910.04126</sl:arxiv_num>
+    <dc:title xml:lang="en">[1910.04126] Scalable Nearest Neighbor Search for Optimal Transport</dc:title>
+    <sl:arxiv_author>Yihe Dong</sl:arxiv_author>
+    <sl:arxiv_author>Ilya Razenshteyn</sl:arxiv_author>
+    <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1910.04126"/>
+    <sl:arxiv_summary xml:lang="en">The Optimal Transport (a.k.a. Wasserstein) distance is an increasingly
+popular similarity measure for rich data domains, such as images or text
+documents. This raises the necessity for fast nearest neighbor search with
+respect to this distance, a problem that poses a substantial computational
+bottleneck for various tasks on massive datasets.
+In this work, we study fast tree-based approximation algorithms for searching
+nearest neighbors w.r.t. the Wasserstein-1 distance. A standard tree-based
+technique, known as Quadtree, has been previously shown to obtain good results.
+We introduce a variant of this algorithm, called Flowtree, and formally prove
+it achieves asymptotically better accuracy. Our extensive experiments, on
+real-world text and image datasets, show that Flowtree improves over various
+baselines and existing methods in either running time or accuracy. In
+particular, its quality of approximation is in line with previous high-accuracy
+methods, while its running time is much faster.</sl:arxiv_summary>
+  </sl:ArxivDoc>
   <rdf:Description rdf:about="ivan_maisky_wikipedia">
     <sl:comment xml:lang="fr">Diplomate soviétique - si les Anglais et les Français l'avaient écouté, la 2eme guerre mondiale aurait peut-être été évitée</sl:comment>
     <dc:title>Ivan Maisky</dc:title>
@@ -521,50 +758,39 @@ So, what the point? To be compared with this [IBM's paper](/doc/2019/09/_1909_04
     <sl:tag rdf:resource="&tag;urss"/>
     <sl:tag rdf:resource="&tag;histoire_du_xxe_siecle"/>
   </rdf:Description>
-  <rdf:Description rdf:about="nlp_newsletter_the_annotated_g">
-    <sl:tag rdf:resource="&tag;knowledge_distillation"/>
-    <sl:tag rdf:resource="&tag;ml_nlp_blog"/>
-    <dc:title>NLP Newsletter: The Annotated GPT-2, Understanding self-distillation, Haiku, GANILLA, Sparkwiki, Ethics in NLP, Torchmeta,…</dc:title>
-    <sl:creationDate>2020-02-24</sl:creationDate>
-    <sl:creationTime>2020-02-24T09:48:11Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://medium.com/dair-ai/nlp-newsletter-the-annotated-gpt-2-understanding-self-distillation-haiku-ganilla-sparkwiki-b0f47f595c82"/>
+  <rdf:Description rdf:about="calling_java_from_python_stac">
+    <sl:tag rdf:resource="&tag;java_in_python"/>
+    <sl:tag rdf:resource="&tag;stack_overflow"/>
+    <dc:title>Calling Java from Python - Stack Overflow</dc:title>
+    <sl:creationDate>2020-02-20</sl:creationDate>
+    <sl:creationTime>2020-02-20T17:14:23Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://stackoverflow.com/questions/3652554/calling-java-from-python"/>
   </rdf:Description>
-  <rdf:Description rdf:about="distilling_bert_models_with_spa">
-    <sl:tag rdf:resource="&tag;yves_peirsman"/>
-    <sl:tag rdf:resource="&tag;knowledge_distillation"/>
-    <sl:tag rdf:resource="&tag;spacy"/>
-    <sl:tag rdf:resource="&tag;bert"/>
-    <dc:title>Distilling BERT models with spaCy - Towards Data Science (2019)</dc:title>
-    <sl:creationDate>2020-02-15</sl:creationDate>
-    <sl:creationTime>2020-02-15T11:15:11Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://towardsdatascience.com/distilling-bert-models-with-spacy-277c7edc426c"/>
-    <sl:tag rdf:resource="&tag;transfer_learning_in_nlp"/>
+  <rdf:Description rdf:about="hugging_face_sur_twitter_to_">
+    <dc:title xml:lang="en">Hugging Face sur Twitter :  DistilBERT-cased for Question Answering w/ just 3 lines of javascript</dc:title>
+    <sl:tag rdf:resource="&tag;javascript"/>
+    <sl:tag rdf:resource="&tag;question_answering"/>
+    <sl:creationDate>2020-02-14</sl:creationDate>
+    <sl:creationTime>2020-02-14T00:23:36Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;hugging_face"/>
+    <sl:bookmarkOf rdf:resource="https://twitter.com/huggingface/status/1228025045412438019"/>
+    <sl:tag rdf:resource="&tag;tweet"/>
+    <sl:tag rdf:resource="&tag;distilbert"/>
   </rdf:Description>
-  <rdf:Description rdf:about="siamese_cnn_for_job_candidate_m_1">
-    <sl:tag rdf:resource="&tag;slides"/>
-    <sl:creationDate>2020-02-10</sl:creationDate>
-    <sl:relatedDoc>
-      <rdf:Description rdf:about="matching_resumes_to_jobs_via_de">
-        <sl:tag rdf:resource="&tag;nlp_ibm"/>
-        <sl:tag rdf:resource="&tag;thewebconf_2018"/>
-        <dc:title>Matching Resumes to Jobs via Deep Siamese Network | Companion Proceedings of the The Web Conference 2018</dc:title>
-        <sl:tag rdf:resource="&tag;siamese_network"/>
-        <sl:bookmarkOf rdf:resource="https://dl.acm.org/doi/10.1145/3184558.3186942"/>
-        <sl:creationTime>2020-02-10T13:43:44Z</sl:creationTime>
-        <sl:creationDate>2020-02-10</sl:creationDate>
-        <sl:tag rdf:resource="&tag;job_matching"/>
-        <sl:comment xml:lang="en">Siamese adaptation of CNN, using contrastive loss. The document embedding of resumes and job descriptions&#xD;
-(dim 200) are generated using [#Doc2Vec](/tag/doc2vec.html) and are given as&#xD;
-inputs to the network.</sl:comment>
-      </rdf:Description>
-    </sl:relatedDoc>
-    <sl:tag rdf:resource="&tag;siamese_network"/>
-    <sl:creationTime>2020-02-10T14:19:40Z</sl:creationTime>
-    <sl:tag rdf:resource="&tag;triplet_loss"/>
-    <sl:mainDoc rdf:resource="../01/paris_nlp_season_4_meetup_3_"/>
-    <sl:tag rdf:resource="&tag;job_matching"/>
-    <sl:bookmarkOf rdf:resource="https://nlpparis.files.wordpress.com/2020/01/siamese_cnn_job_candidate_matching.pdf"/>
-    <sl:tag rdf:resource="&tag;paris_nlp_meetup"/>
-    <dc:title>Siamese CNN for job–candidate matching (slides)</dc:title>
+  <rdf:Description rdf:about="nucleaire_pourquoi_la_central">
+    <sl:tag rdf:resource="&tag;industrie_nucleaire"/>
+    <dc:title>Nucléaire : pourquoi la centrale de Flamanville ne produit plus d’électricité depuis six mois</dc:title>
+    <sl:creationDate>2020-02-26</sl:creationDate>
+    <sl:creationTime>2020-02-26T20:42:38Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/economie/article/2020/02/26/nucleaire-pourquoi-la-centrale-de-flamanville-ne-produit-plus-d-electricite-depuis-six-mois_6030944_3234.html"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="minhash_token_filter_%7C_elastics">
+    <sl:tag rdf:resource="&tag;minhash"/>
+    <dc:title>MinHash token filter | Elasticsearch Reference</dc:title>
+    <sl:creationDate>2020-02-14</sl:creationDate>
+    <sl:creationTime>2020-02-14T00:03:14Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-minhash-tokenfilter.html"/>
+    <sl:tag rdf:resource="&tag;elasticsearch_nearest_neighbor_s"/>
+    <sl:comment xml:lang="en">One solution to make similarity search more practical and computationally feasible involves hashing of documents, in a way that similar documents are more likely to produce the same hash code (locality sensitive hashing, LSH). Depending on what constitutes the similarity between documents, various LSH functions have been proposed. For Jaccard similarity, a popular LSH function is MinHash.</sl:comment>
   </rdf:Description>
 </rdf:RDF>

@@ -74,6 +74,12 @@ public final void test() throws IOException, ParserConfigurationException, SAXEx
 	x = Arxiv.url2num(url);
 	System.out.println(x);
 	assertTrue(num.contentEquals(x));
+	
+	url = "http://arxiv.org/abs/0811.3701";
+	x = Arxiv.url2num(url);
+	System.out.println(x);
+	assertTrue("0811.3701".contentEquals(x));
+
 }
 
 @Test public void foo() {

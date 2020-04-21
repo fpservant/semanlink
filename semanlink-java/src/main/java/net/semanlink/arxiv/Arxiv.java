@@ -11,6 +11,7 @@ import net.semanlink.semanlink.SLModel;
  */
 public class Arxiv {
 static final String ARXIV_NS = "https://arxiv.org/";
+static final String ARXIV_NS_OLD = "http://arxiv.org/";
 static final String ABS = ARXIV_NS + "abs/";
 static final String PDF = ARXIV_NS + "pdf/";
 private static final int ABS_LEN = ABS.length();
@@ -25,7 +26,11 @@ private static final int PDF_LEN = PDF.length();
  */
 static public String url2num(String url) {
 	if (!url.startsWith(ARXIV_NS)) {
-		return null;
+		if (!url.startsWith(ARXIV_NS_OLD)) {
+			return null;
+		} else {
+			url = "https:" + url.substring(5);
+		}
 	}
 	String x = null;
 	int k = url.indexOf("#");

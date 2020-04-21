@@ -11,37 +11,38 @@
     xmlns:sl="&sl;"
     xmlns:tag="&tag;">
   <rdf:Description rdf:about="https://aminer.org/bignet_www2018">
-    <sl:tag rdf:resource="&tag;graph_embeddings"/>
-    <sl:tag rdf:resource="&tag;thewebconf_2018"/>
-    <sl:tag rdf:resource="&tag;workshop"/>
-    <dc:title xml:lang="en">WORKSHOP: BigNet @ WWW 2018 Workshop on Learning Representations for Big Networks</dc:title>
-    <sl:creationTime>2018-01-27T15:13:16Z</sl:creationTime>
-    <sl:creationDate>2018-01-27</sl:creationDate>
     <sl:tag rdf:resource="&tag;knowledge_graph_embeddings"/>
+    <sl:creationDate>2018-01-27</sl:creationDate>
+    <sl:creationTime>2018-01-27T15:13:16Z</sl:creationTime>
+    <dc:title xml:lang="en">WORKSHOP: BigNet @ WWW 2018 Workshop on Learning Representations for Big Networks</dc:title>
+    <sl:tag rdf:resource="&tag;workshop"/>
+    <sl:tag rdf:resource="&tag;thewebconf_2018"/>
+    <sl:tag rdf:resource="&tag;graph_embeddings"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.openculture.com/2012/08/the_character_of_physical_law_richard_feynmans_legendary_lecture_series_at_cornell_1964.html">
-    <sl:tag rdf:resource="&tag;physique"/>
-    <dc:title>'The Character of Physical Law': Richard Feynman's Legendary Course Presented at Cornell, 1964 | Open Culture</dc:title>
-    <sl:creationTime>2018-01-08T23:16:54Z</sl:creationTime>
-    <sl:creationDate>2018-01-08</sl:creationDate>
     <sl:tag rdf:resource="&tag;feynman"/>
+    <sl:creationDate>2018-01-08</sl:creationDate>
+    <sl:creationTime>2018-01-08T23:16:54Z</sl:creationTime>
+    <dc:title>'The Character of Physical Law': Richard Feynman's Legendary Course Presented at Cornell, 1964 | Open Culture</dc:title>
+    <sl:tag rdf:resource="&tag;physique"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://gist.github.com/mommi84/07f7c044fa18aaaa7b5133230207d8d4">
-    <sl:tag rdf:resource="&tag;knowledge_graph_embeddings"/>
-    <dc:title>Awesome Knowledge Graph Embedding Approaches</dc:title>
-    <sl:creationTime>2018-01-03T16:41:48Z</sl:creationTime>
-    <sl:comment>lists libraries and approaches for knowledge graph embeddings</sl:comment>
     <sl:creationDate>2018-01-03</sl:creationDate>
+    <sl:comment>lists libraries and approaches for knowledge graph embeddings</sl:comment>
+    <sl:creationTime>2018-01-03T16:41:48Z</sl:creationTime>
+    <dc:title>Awesome Knowledge Graph Embedding Approaches</dc:title>
+    <sl:tag rdf:resource="&tag;knowledge_graph_embeddings"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://www.semanticscholar.org/paper/RDF2Vec-RDF-Graph-Embeddings-for-Data-Mining-Ristoski-Paulheim/21bc51c43a3ed702ccb661d8137f9b5bbe0ed3c8">
-    <sl:creationDate>2018-01-03</sl:creationDate>
-    <sl:tag rdf:resource="&tag;rdf2vec"/>
-    <sl:creationTime>2018-01-03T16:54:19Z</sl:creationTime>
     <dc:title xml:lang="en">RDF2Vec: RDF Graph Embeddings for Data Mining - Semantic Scholar (2016)</dc:title>
+    <sl:creationTime>2018-01-03T16:54:19Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;rdf2vec"/>
+    <sl:creationDate>2018-01-03</sl:creationDate>
   </rdf:Description>
   <rdf:Description rdf:about="http://papers.nips.cc/paper/5071-translating-embeddings-for-modeling-multi-rela">
-    <sl:tag rdf:resource="&tag;transe"/>
-    <sl:creationDate>2018-01-05</sl:creationDate>
+    <sl:creationTime>2018-01-05T14:46:46Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;antoine_bordes"/>
+    <dc:title xml:lang="en">Translating Embeddings for Modeling Multi-relational Data (2013)</dc:title>
     <sl:comment xml:lang="en">This work focuses on modeling multi-relational&#xD;
 data from KBs (Wordnet and Freebase in this paper), with the goal of providing an efficient&#xD;
 tool to complete them by automatically adding new facts, without requiring extra knowledge.&#xD;
@@ -54,64 +55,56 @@ low-dimensional embeddings of the entities. Motivation:&#xD;
 &#xD;
 &#xD;
 [Good blog post by PY Vandenbussche](http://pyvandenbussche.info/2017/translating-embeddings-transe/)</sl:comment>
-    <dc:title xml:lang="en">Translating Embeddings for Modeling Multi-relational Data (2013)</dc:title>
-    <sl:tag rdf:resource="&tag;antoine_bordes"/>
-    <sl:creationTime>2018-01-05T14:46:46Z</sl:creationTime>
+    <sl:creationDate>2018-01-05</sl:creationDate>
+    <sl:tag rdf:resource="&tag;transe"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://fr.slideshare.net/PetarRistoski/rdf2vec-rdf-graph-embeddings-for-data-mining">
-    <sl:tag rdf:resource="&tag;rdf2vec"/>
-    <sl:creationDate>2018-01-03</sl:creationDate>
-    <dc:title>RDF2Vec: RDF Graph Embeddings for Data Mining</dc:title>
     <sl:creationTime>2018-01-03T16:50:08Z</sl:creationTime>
+    <dc:title>RDF2Vec: RDF Graph Embeddings for Data Mining</dc:title>
+    <sl:creationDate>2018-01-03</sl:creationDate>
+    <sl:tag rdf:resource="&tag;rdf2vec"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://fr.slideshare.net/lysander07/combining-semantics-an-deep-learning-for-intelligent-information-services">
-    <sl:tag rdf:resource="&tag;nn_symbolic_ai_hybridation"/>
-    <sl:creationDate>2018-01-03</sl:creationDate>
-    <sl:creationTime>2018-01-03T17:15:17Z</sl:creationTime>
-    <dc:title xml:lang="en">Combining semantics and deep learning for intelligent information services</dc:title>
-    <sl:tag rdf:resource="&tag;slideshare"/>
     <sl:tag rdf:resource="&tag;rdf_embeddings"/>
+    <sl:tag rdf:resource="&tag;slideshare"/>
+    <dc:title xml:lang="en">Combining semantics and deep learning for intelligent information services</dc:title>
+    <sl:creationTime>2018-01-03T17:15:17Z</sl:creationTime>
+    <sl:creationDate>2018-01-03</sl:creationDate>
+    <sl:tag rdf:resource="&tag;nn_symbolic_ai_hybridation"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://www2018.thewebconf.org/program/tutorials-track/tutorial-225/">
-    <sl:creationTime>2018-01-27T15:18:02Z</sl:creationTime>
-    <sl:creationDate>2018-01-27</sl:creationDate>
-    <dc:title xml:lang="en">TUTORIAL: Representation Learning on Networks - TheWebConf 2018</dc:title>
-    <sl:tag rdf:resource="&tag;representation_learning"/>
-    <sl:tag rdf:resource="&tag;thewebconf_2018"/>
     <sl:tag rdf:resource="&tag;graph_embeddings"/>
+    <sl:tag rdf:resource="&tag;thewebconf_2018"/>
+    <sl:tag rdf:resource="&tag;representation_learning"/>
+    <dc:title xml:lang="en">TUTORIAL: Representation Learning on Networks - TheWebConf 2018</dc:title>
+    <sl:creationDate>2018-01-27</sl:creationDate>
+    <sl:creationTime>2018-01-27T15:18:02Z</sl:creationTime>
   </rdf:Description>
   <rdf:Description rdf:about="https://www.theguardian.com/politics/2018/jan/21/capitalism-new-crisis-can-private-sector-be-trusted-carillion-privatisation?CMP=Share_iOSApp_Other">
-    <sl:tag rdf:resource="&tag;services_publics"/>
-    <sl:tag rdf:resource="&tag;royaume_uni"/>
-    <sl:creationDate>2018-01-22</sl:creationDate>
-    <dc:title>Capitalism’s new crisis: after Carillion, can the private sector ever be trusted? | Politics | The Guardian</dc:title>
-    <sl:creationTime>2018-01-22T18:22:52Z</sl:creationTime>
     <sl:tag rdf:resource="&tag;capitalisme"/>
+    <sl:creationTime>2018-01-22T18:22:52Z</sl:creationTime>
+    <dc:title>Capitalism’s new crisis: after Carillion, can the private sector ever be trusted? | Politics | The Guardian</dc:title>
+    <sl:creationDate>2018-01-22</sl:creationDate>
+    <sl:tag rdf:resource="&tag;royaume_uni"/>
+    <sl:tag rdf:resource="&tag;services_publics"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://cims.nyu.edu/~brenden/LakeEtAl2015Science.pdf">
-    <sl:comment xml:lang="en">&gt; People learning new concepts can often generalize successfully from just a single example, yet machine learning algorithms typically require tens or hundreds of examples to perform with similar accuracy... We present a computational model that captures these human learning abilities for a large class of simple visual concepts: handwritten characters from the world’s alphabets</sl:comment>
-    <sl:tag rdf:resource="&tag;concept_learning"/>
-    <dc:title>Human-level concept learning through probabilistic program induction (2015)</dc:title>
-    <sl:creationTime>2018-01-04T14:56:17Z</sl:creationTime>
-    <sl:creationDate>2018-01-04</sl:creationDate>
-    <sl:tag rdf:resource="&tag;ruslan_salakhutdinov"/>
     <sl:tag rdf:resource="&tag;one_shot_generalization"/>
+    <sl:tag rdf:resource="&tag;ruslan_salakhutdinov"/>
+    <sl:creationDate>2018-01-04</sl:creationDate>
+    <sl:creationTime>2018-01-04T14:56:17Z</sl:creationTime>
+    <dc:title>Human-level concept learning through probabilistic program induction (2015)</dc:title>
+    <sl:tag rdf:resource="&tag;concept_learning"/>
+    <sl:comment xml:lang="en">&gt; People learning new concepts can often generalize successfully from just a single example, yet machine learning algorithms typically require tens or hundreds of examples to perform with similar accuracy... We present a computational model that captures these human learning abilities for a large class of simple visual concepts: handwritten characters from the world’s alphabets</sl:comment>
   </rdf:Description>
   <rdf:Description rdf:about="https://selfdrivingcars.mit.edu/">
-    <sl:creationTime>2018-01-09T13:43:25Z</sl:creationTime>
-    <sl:creationDate>2018-01-09</sl:creationDate>
-    <dc:title>MIT 6.S094: Deep Learning for Self-Driving Cars</dc:title>
-    <sl:tag rdf:resource="&tag;deep_learning"/>
     <sl:tag rdf:resource="&tag;driverless_car"/>
+    <sl:tag rdf:resource="&tag;deep_learning"/>
+    <dc:title>MIT 6.S094: Deep Learning for Self-Driving Cars</dc:title>
+    <sl:creationDate>2018-01-09</sl:creationDate>
+    <sl:creationTime>2018-01-09T13:43:25Z</sl:creationTime>
   </rdf:Description>
   <rdf:Description rdf:about="https://www2018.thewebconf.org/program/web-content-analysis/">
-    <dc:title xml:lang="en">RESEARCH TRACK: Web Content Analysis, Semantics and Knowledge</dc:title>
-    <sl:tag rdf:resource="&tag;nlp_hierarchical_text_classification"/>
-    <sl:creationTime>2018-01-27T15:36:02Z</sl:creationTime>
-    <sl:tag rdf:resource="&tag;thewebconf_2018"/>
-    <sl:tag rdf:resource="&tag;word_embedding"/>
-    <sl:creationDate>2018-01-27</sl:creationDate>
-    <sl:tag rdf:resource="&tag;topic_modeling_over_short_texts"/>
     <sl:comment xml:lang="en">[CFP](https://www2018.thewebconf.org/call-for-papers/research-tracks-cfp/web-content-analysis/)&#xD;
 &#xD;
 &gt; In previous years, ‘content analysis’ and ‘semantic and knowledge’ were in separate track. This year, we combined these tracks to emphasize the close relationship between these topics; **the use of content to curate knowledge and the use of knowledge to guide content analysis and intelligent usage**.&#xD;
@@ -161,42 +154,49 @@ Topic modeling for short texts, leveraging the word-context semantic correlation
 &#xD;
 &#xD;
 </sl:comment>
+    <sl:tag rdf:resource="&tag;topic_modeling_over_short_texts"/>
+    <sl:creationDate>2018-01-27</sl:creationDate>
+    <sl:tag rdf:resource="&tag;word_embedding"/>
+    <sl:tag rdf:resource="&tag;thewebconf_2018"/>
+    <sl:creationTime>2018-01-27T15:36:02Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;nlp_hierarchical_text_classification"/>
+    <dc:title xml:lang="en">RESEARCH TRACK: Web Content Analysis, Semantics and Knowledge</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="https://www.zbw.eu/fileadmin/pdf/forschung/2017-colloquium-galke-word-embeddings.pdf">
-    <sl:tag rdf:resource="&tag;text_similarity"/>
-    <sl:tag rdf:resource="&tag;using_word_embedding"/>
-    <sl:creationDate>2018-01-28</sl:creationDate>
-    <sl:creationTime>2018-01-28T17:19:03Z</sl:creationTime>
-    <dc:title>Evaluating the Impact of Word Embeddings on Similarity Scoring in Practical Information Retrieval (2017)</dc:title>
-    <sl:tag rdf:resource="&tag;embeddings_in_ir"/>
     <sl:comment xml:lang="en">&gt; Transferring the success of word embeddings to Information Retrieval (IR) task is currently an active research topic. While embedding-based retrieval models could tackle the vocabulary mismatch problem by making use of the embedding’s inherent similarity between distinct words, most of them struggle to compete with the prevalent strong baselines such as TF-IDF and BM25.&#xD;
 &#xD;
 Considering a practical ad-hoc IR task composed of two steps, matching and scoring, compares the performance of several techniques that leverage word embeddings in the retrieval models to compute the similarity between the query and the documents (namely word centroid similarity, paragraph vectors, Word Mover’s distance, as well as a novel inverse document frequency (IDF) re-weighted word centroid similarity).&#xD;
 &#xD;
 &gt; We confirm that word embeddings can be successfully employed in a practical information retrieval setting. The proposed cosine similarity of IDF re-weighted, aggregated word vectors is competitive to the TF-IDF baseline.</sl:comment>
+    <sl:tag rdf:resource="&tag;embeddings_in_ir"/>
+    <dc:title>Evaluating the Impact of Word Embeddings on Similarity Scoring in Practical Information Retrieval (2017)</dc:title>
+    <sl:creationTime>2018-01-28T17:19:03Z</sl:creationTime>
+    <sl:creationDate>2018-01-28</sl:creationDate>
+    <sl:tag rdf:resource="&tag;using_word_embedding"/>
+    <sl:tag rdf:resource="&tag;text_similarity"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://blog.openai.com/evolution-strategies/">
-    <sl:tag rdf:resource="&tag;reinforcement_learning"/>
-    <dc:title>Evolution Strategies as a Scalable Alternative to Reinforcement Learning</dc:title>
-    <sl:creationDate>2018-01-06</sl:creationDate>
-    <sl:creationTime>2018-01-06T15:11:28Z</sl:creationTime>
     <sl:tag rdf:resource="&tag;neuroevolution"/>
+    <sl:creationTime>2018-01-06T15:11:28Z</sl:creationTime>
+    <sl:creationDate>2018-01-06</sl:creationDate>
+    <dc:title>Evolution Strategies as a Scalable Alternative to Reinforcement Learning</dc:title>
+    <sl:tag rdf:resource="&tag;reinforcement_learning"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://scholar.google.com/citations?view_op=list_works&amp;hl=fr&amp;user=WNFqgy8AAAAJ">
-    <sl:tag rdf:resource="&tag;fps"/>
-    <sl:creationDate>2018-01-05</sl:creationDate>
-    <sl:creationTime>2018-01-05T14:37:38Z</sl:creationTime>
     <dc:title>François-Paul Servant - Citations Google Scholar</dc:title>
+    <sl:creationTime>2018-01-05T14:37:38Z</sl:creationTime>
+    <sl:creationDate>2018-01-05</sl:creationDate>
+    <sl:tag rdf:resource="&tag;fps"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://www.technologyreview.com/the-download/609857/while-us-workers-fear-automation-swedish-employees-welcome-it/">
-    <sl:comment xml:lang="en">&gt;  We won’t protect jobs. But we will protect workers</sl:comment>
-    <sl:tag rdf:resource="&tag;travail"/>
-    <sl:creationTime>2018-01-04T01:35:20Z</sl:creationTime>
-    <dc:title>While U.S. Workers Fear Automation, Swedish Employees Welcome It - MIT Technology Review</dc:title>
-    <sl:creationDate>2018-01-04</sl:creationDate>
-    <sl:tag rdf:resource="&tag;suede"/>
-    <sl:tag rdf:resource="&tag;robotisation"/>
     <sl:tag rdf:resource="&tag;jobbotization"/>
+    <sl:tag rdf:resource="&tag;robotisation"/>
+    <sl:tag rdf:resource="&tag;suede"/>
+    <sl:creationDate>2018-01-04</sl:creationDate>
+    <dc:title>While U.S. Workers Fear Automation, Swedish Employees Welcome It - MIT Technology Review</dc:title>
+    <sl:creationTime>2018-01-04T01:35:20Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;travail"/>
+    <sl:comment xml:lang="en">&gt;  We won’t protect jobs. But we will protect workers</sl:comment>
   </rdf:Description>
   <rdf:Description rdf:about="https://hal.archives-ouvertes.fr/hal-01517094">
     <sl:creationDate>2018-01-03</sl:creationDate>
@@ -214,84 +214,140 @@ Considering a practical ad-hoc IR task composed of two steps, matching and scori
     <sl:tag rdf:resource="&tag;combining_word_and_entity_embeddings"/>
     <sl:tag rdf:resource="&tag;these_irit_renault_biblio_initiale"/>
     <sl:tag rdf:resource="&tag;laure_soulier"/>
-    <sl:tag rdf:resource="&tag;irit"/>
     <sl:tag rdf:resource="&tag;document_embeddings"/>
+    <sl:tag rdf:resource="&tag;irit"/>
     <sl:tag rdf:resource="&tag;medical_data"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://ds9a.nl/amazing-dna/">
-    <sl:tag rdf:resource="&tag;programming"/>
-    <dc:title>DNA seen through the eyes of a coder</dc:title>
-    <sl:creationTime>2018-01-26T15:01:21Z</sl:creationTime>
-    <sl:creationDate>2018-01-26</sl:creationDate>
     <sl:tag rdf:resource="&tag;adn"/>
+    <sl:creationDate>2018-01-26</sl:creationDate>
+    <sl:creationTime>2018-01-26T15:01:21Z</sl:creationTime>
+    <dc:title>DNA seen through the eyes of a coder</dc:title>
+    <sl:tag rdf:resource="&tag;programming"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.wired.co.uk/article/chinese-government-social-credit-score-privacy-invasion">
-    <sl:tag rdf:resource="&tag;china_s_social_credit_system"/>
-    <dc:title>Big data meets Big Brother as China moves to rate its citizens | WIRED UK</dc:title>
-    <sl:creationDate>2018-01-03</sl:creationDate>
     <sl:creationTime>2018-01-03T17:42:44Z</sl:creationTime>
+    <sl:creationDate>2018-01-03</sl:creationDate>
+    <dc:title>Big data meets Big Brother as China moves to rate its citizens | WIRED UK</dc:title>
+    <sl:tag rdf:resource="&tag;china_s_social_credit_system"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://robohub.org/engineers-design-artificial-synapse-for-brain-on-a-chip-hardware/">
-    <sl:creationDate>2018-01-23</sl:creationDate>
-    <sl:creationTime>2018-01-23T01:50:22Z</sl:creationTime>
-    <dc:title>Engineers design artificial synapse for “brain-on-a-chip” hardware | Robohub</dc:title>
     <sl:tag rdf:resource="&tag;brains_in_silicon"/>
+    <dc:title>Engineers design artificial synapse for “brain-on-a-chip” hardware | Robohub</dc:title>
+    <sl:creationTime>2018-01-23T01:50:22Z</sl:creationTime>
+    <sl:creationDate>2018-01-23</sl:creationDate>
   </rdf:Description>
   <rdf:Description rdf:about="http://ohshitgit.com/">
-    <sl:tag rdf:resource="&tag;git"/>
-    <dc:title>Oh, shit, git!</dc:title>
-    <sl:creationTime>2018-01-06T14:46:32Z</sl:creationTime>
     <sl:creationDate>2018-01-06</sl:creationDate>
+    <sl:creationTime>2018-01-06T14:46:32Z</sl:creationTime>
+    <dc:title>Oh, shit, git!</dc:title>
+    <sl:tag rdf:resource="&tag;git"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://arxiv.org/abs/1103.0398">
+  <sl:ArxivDoc rdf:about="https://arxiv.org/abs/1103.0398">
     <sl:tag rdf:resource="&tag;ronan_collobert"/>
-    <dc:title xml:lang="en">Natural Language Processing (almost) from Scratch - Collobert and Weston (2011)</dc:title>
+    <dc:title xml:lang="en">[1103.0398] Natural Language Processing (almost) from Scratch</dc:title>
     <sl:tag rdf:resource="&tag;nlp"/>
+    <sl:arxiv_author>Jason Weston</sl:arxiv_author>
+    <sl:arxiv_author>Michael Karlen</sl:arxiv_author>
     <sl:tag rdf:resource="&tag;multi_task_learning"/>
     <sl:tag rdf:resource="&tag;frequently_cited_paper"/>
+    <sl:arxiv_author>Ronan Collobert</sl:arxiv_author>
     <sl:tag rdf:resource="&tag;deep_nlp"/>
+    <sl:arxiv_title xml:lang="en">Natural Language Processing (almost) from Scratch</sl:arxiv_title>
+    <sl:arxiv_author>Koray Kavukcuoglu</sl:arxiv_author>
     <sl:creationDate>2018-01-17</sl:creationDate>
     <sl:creationTime>2018-01-17T18:40:10Z</sl:creationTime>
+    <sl:arxiv_firstAuthor>Ronan Collobert</sl:arxiv_firstAuthor>
+    <sl:arxiv_published>2011-03-02T11:34:50Z</sl:arxiv_published>
+    <sl:arxiv_author>Pavel Kuksa</sl:arxiv_author>
+    <sl:arxiv_summary xml:lang="en">We propose a unified neural network architecture and learning algorithm that
+can be applied to various natural language processing tasks including:
+part-of-speech tagging, chunking, named entity recognition, and semantic role
+labeling. This versatility is achieved by trying to avoid task-specific
+engineering and therefore disregarding a lot of prior knowledge. Instead of
+exploiting man-made input features carefully optimized for each task, our
+system learns internal representations on the basis of vast amounts of mostly
+unlabeled training data. This work is then used as a basis for building a
+freely available tagging system with good performance and minimal computational
+requirements.</sl:arxiv_summary>
     <sl:tag rdf:resource="&tag;multitask_learning_in_nlp"/>
+    <sl:arxiv_updated>2011-03-02T11:34:50Z</sl:arxiv_updated>
+    <sl:arxiv_author>Leon Bottou</sl:arxiv_author>
     <sl:comment xml:lang="en">seminal work&#xD;
 &#xD;
 Abstract:&#xD;
 &#xD;
 &gt; a unified neural network architecture and learning algorithm that can be applied to various natural language processing tasks including: part-of-speech tagging, chunking, named entity recognition, and semantic role labeling. This versatility is achieved by trying to avoid task-specific engineering and therefore disregarding a lot of prior knowledge. Instead of exploiting man-made input features carefully optimized for each task, our system learns internal representations on the basis of vast amounts of mostly unlabeled training data. This work is then used as a basis for building a freely available tagging system with good performance and minimal computational requirements&#xD;
 </sl:comment>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://arxiv.org/abs/1412.6623">
+    <sl:arxiv_num>1103.0398</sl:arxiv_num>
+  </sl:ArxivDoc>
+  <sl:ArxivDoc rdf:about="https://arxiv.org/abs/1412.6623">
+    <sl:tag rdf:resource="&tag;gaussian_embedding"/>
+    <sl:arxiv_summary xml:lang="en">Current work in lexical distributed representations maps each word to a point
+vector in low-dimensional space. Mapping instead to a density provides many
+interesting advantages, including better capturing uncertainty about a
+representation and its relationships, expressing asymmetries more naturally
+than dot product or cosine similarity, and enabling more expressive
+parameterization of decision boundaries. This paper advocates for density-based
+distributed embeddings and presents a method for learning representations in
+the space of Gaussian distributions. We compare performance on various word
+embedding benchmarks, investigate the ability of these embeddings to model
+entailment and other asymmetric relationships, and explore novel properties of
+the representation.</sl:arxiv_summary>
+    <dc:title xml:lang="en">[1412.6623] Word Representations via Gaussian Embedding</dc:title>
+    <sl:arxiv_num>1412.6623</sl:arxiv_num>
+    <sl:arxiv_updated>2015-05-01T10:14:58Z</sl:arxiv_updated>
+    <sl:creationDate>2018-01-28</sl:creationDate>
+    <sl:arxiv_author>Luke Vilnis</sl:arxiv_author>
+    <sl:arxiv_published>2014-12-20T07:42:40Z</sl:arxiv_published>
     <sl:comment xml:lang="en">&gt; Current work in lexical distributed representations maps each word to a point vector in low-dimensional space. Mapping instead to a density provides many interesting advantages&#xD;
 &#xD;
 &gt; Novel word embedding algorithms that embed words directly as Gaussian distributional potential functions in an infinite dimensional function space. This allows us to map word types not only to vectors but to soft regions in space, modeling uncertainty, inclusion, and entailment, as well as providing a rich geometry of the latent space.</sl:comment>
-    <sl:creationDate>2018-01-28</sl:creationDate>
-    <sl:creationTime>2018-01-28T17:27:24Z</sl:creationTime>
-    <dc:title>Word Representations via Gaussian Embedding (2014)</dc:title>
+    <sl:arxiv_title xml:lang="en">Word Representations via Gaussian Embedding</sl:arxiv_title>
     <sl:tag rdf:resource="&tag;word_embedding"/>
-    <sl:tag rdf:resource="&tag;gaussian_embedding"/>
-  </rdf:Description>
+    <sl:creationTime>2018-01-28T17:27:24Z</sl:creationTime>
+    <sl:arxiv_author>Andrew McCallum</sl:arxiv_author>
+    <sl:arxiv_firstAuthor>Luke Vilnis</sl:arxiv_firstAuthor>
+  </sl:ArxivDoc>
   <rdf:Description rdf:about="https://towardsdatascience.com/gradient-descent-vs-neuroevolution-f907dace010f">
-    <dc:title xml:lang="en">Gradient descent vs. neuroevolution</dc:title>
-    <sl:tag rdf:resource="&tag;gradient_descent"/>
-    <sl:tag rdf:resource="&tag;neuroevolution"/>
-    <sl:creationDate>2018-01-06</sl:creationDate>
     <sl:creationTime>2018-01-06T15:24:23Z</sl:creationTime>
+    <sl:creationDate>2018-01-06</sl:creationDate>
+    <sl:tag rdf:resource="&tag;neuroevolution"/>
+    <sl:tag rdf:resource="&tag;gradient_descent"/>
+    <dc:title xml:lang="en">Gradient descent vs. neuroevolution</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="https://jyx.jyu.fi/dspace/handle/123456789/56299">
-    <sl:creationDate>2018-01-03</sl:creationDate>
-    <sl:creationTime>2018-01-03T17:06:57Z</sl:creationTime>
-    <dc:title>Global RDF Vector Space Embeddings</dc:title>
     <sl:tag rdf:resource="&tag;rdf_embeddings"/>
+    <dc:title>Global RDF Vector Space Embeddings</dc:title>
+    <sl:creationTime>2018-01-03T17:06:57Z</sl:creationTime>
+    <sl:creationDate>2018-01-03</sl:creationDate>
   </rdf:Description>
-  <rdf:Description rdf:about="https://arxiv.org/abs/1801.06146">
+  <sl:ArxivDoc rdf:about="https://arxiv.org/abs/1801.06146">
+    <sl:arxiv_updated>2018-05-23T09:23:47Z</sl:arxiv_updated>
+    <sl:arxiv_title xml:lang="en">Universal Language Model Fine-tuning for Text Classification</sl:arxiv_title>
     <sl:creationDate>2018-01-19</sl:creationDate>
+    <dc:title xml:lang="en">[1801.06146] Universal Language Model Fine-tuning for Text Classification</dc:title>
+    <sl:arxiv_firstAuthor>Jeremy Howard</sl:arxiv_firstAuthor>
     <sl:tag rdf:resource="&tag;nlp_text_classification"/>
+    <sl:arxiv_author>Sebastian Ruder</sl:arxiv_author>
     <sl:tag rdf:resource="&tag;good"/>
+    <sl:arxiv_author>Jeremy Howard</sl:arxiv_author>
+    <sl:arxiv_num>1801.06146</sl:arxiv_num>
     <sl:tag rdf:resource="&tag;transfer_learning"/>
     <sl:tag rdf:resource="&tag;transfer_learning_in_nlp"/>
     <sl:creationTime>2018-01-19T11:31:32Z</sl:creationTime>
     <sl:tag rdf:resource="&tag;jeremy_howard"/>
     <sl:tag rdf:resource="&tag;ulmfit"/>
+    <sl:arxiv_summary xml:lang="en">Inductive transfer learning has greatly impacted computer vision, but
+existing approaches in NLP still require task-specific modifications and
+training from scratch. We propose Universal Language Model Fine-tuning
+(ULMFiT), an effective transfer learning method that can be applied to any task
+in NLP, and introduce techniques that are key for fine-tuning a language model.
+Our method significantly outperforms the state-of-the-art on six text
+classification tasks, reducing the error by 18-24% on the majority of datasets.
+Furthermore, with only 100 labeled examples, it matches the performance of
+training from scratch on 100x more data. We open-source our pretrained models
+and code.</sl:arxiv_summary>
     <sl:comment>code is available in the fastai lib&#xD;
 &#xD;
 [blog post](http://nlp.fast.ai/classification/2018/05/15/introducting-ulmfit.html)&#xD;
@@ -303,125 +359,125 @@ Abstract:&#xD;
 &#xD;
 &#xD;
 </sl:comment>
-    <dc:title>Fine-tuned Language Models for Text Classification (arxiv 2018)</dc:title>
+    <sl:arxiv_published>2018-01-18T17:54:52Z</sl:arxiv_published>
     <sl:tag rdf:resource="&tag;sebastian_ruder"/>
-  </rdf:Description>
+  </sl:ArxivDoc>
   <rdf:Description rdf:about="https://www.edge.org/response-detail/26794">
-    <sl:tag rdf:resource="&tag;functional_programming"/>
-    <dc:title>Differentiable Programming</dc:title>
-    <sl:creationTime>2018-01-14T19:20:20Z</sl:creationTime>
-    <sl:creationDate>2018-01-14</sl:creationDate>
-    <sl:tag rdf:resource="&tag;differentiable_programming"/>
     <sl:tag rdf:resource="&tag;deep_learning"/>
+    <sl:tag rdf:resource="&tag;differentiable_programming"/>
+    <sl:creationDate>2018-01-14</sl:creationDate>
+    <sl:creationTime>2018-01-14T19:20:20Z</sl:creationTime>
+    <dc:title>Differentiable Programming</dc:title>
+    <sl:tag rdf:resource="&tag;functional_programming"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://www.edge.org/response-detail/26693">
-    <sl:creationDate>2018-01-14</sl:creationDate>
-    <sl:creationTime>2018-01-14T19:19:51Z</sl:creationTime>
-    <dc:title>We May All Die Horribly</dc:title>
     <sl:tag rdf:resource="&tag;ebola"/>
+    <dc:title>We May All Die Horribly</dc:title>
+    <sl:creationTime>2018-01-14T19:19:51Z</sl:creationTime>
+    <sl:creationDate>2018-01-14</sl:creationDate>
   </rdf:Description>
   <rdf:Description rdf:about="https://www.theguardian.com/technology/2017/feb/05/artificial-intelligence-ethics-poker-libratus-texas-holdem-ai-deepstack">
-    <sl:creationTime>2018-01-28T17:02:23Z</sl:creationTime>
-    <sl:creationDate>2018-01-28</sl:creationDate>
-    <sl:comment>Imagine a smartphone that’s able to negotiate the best price on a new car for you</sl:comment>
-    <sl:tag rdf:resource="&tag;poker"/>
-    <dc:title>AI can win at poker: but as computers get smarter, who keeps tabs on their ethics? | Technology | The Guardian</dc:title>
     <sl:tag rdf:resource="&tag;artificial_intelligence"/>
+    <dc:title>AI can win at poker: but as computers get smarter, who keeps tabs on their ethics? | Technology | The Guardian</dc:title>
+    <sl:tag rdf:resource="&tag;poker"/>
+    <sl:comment>Imagine a smartphone that’s able to negotiate the best price on a new car for you</sl:comment>
+    <sl:creationDate>2018-01-28</sl:creationDate>
+    <sl:creationTime>2018-01-28T17:02:23Z</sl:creationTime>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.lemonde.fr/afrique/article/2018/01/19/la-classe-africaine-notre-serie-consacree-a-l-education_5243976_3212.html">
-    <dc:title>La classe africaine</dc:title>
-    <sl:creationTime>2018-01-21T19:41:14Z</sl:creationTime>
-    <sl:creationDate>2018-01-21</sl:creationDate>
     <sl:tag rdf:resource="&tag;enseignement_en_afrique"/>
+    <sl:creationDate>2018-01-21</sl:creationDate>
+    <sl:creationTime>2018-01-21T19:41:14Z</sl:creationTime>
+    <dc:title>La classe africaine</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="https://medium.com/@yoav.goldberg/an-adversarial-review-of-adversarial-generation-of-natural-language-409ac3378bd7">
-    <sl:tag rdf:resource="&tag;rant"/>
-    <sl:tag rdf:resource="&tag;yoav_goldberg"/>
-    <dc:title>An Adversarial Review of “Adversarial Generation of Natural Language”</dc:title>
-    <sl:creationTime>2018-01-01T12:39:30Z</sl:creationTime>
-    <sl:creationDate>2018-01-01</sl:creationDate>
-    <sl:tag rdf:resource="&tag;natural_language_generation"/>
     <sl:tag rdf:resource="&tag;generative_adversarial_network"/>
+    <sl:tag rdf:resource="&tag;natural_language_generation"/>
+    <sl:creationDate>2018-01-01</sl:creationDate>
+    <sl:creationTime>2018-01-01T12:39:30Z</sl:creationTime>
+    <dc:title>An Adversarial Review of “Adversarial Generation of Natural Language”</dc:title>
+    <sl:tag rdf:resource="&tag;yoav_goldberg"/>
+    <sl:tag rdf:resource="&tag;rant"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://www.bbvaopenmind.com/en/brain-implants-and-the-brain-initiative-lights-and-shadows/?utm_source=twitter&amp;utm_medium=techreview&amp;utm_campaign=MITcompany&amp;utm_content=ImplantesBRAIN">
-    <sl:comment>Last November, researchers from the University of Southern California announced the successful results achieved with brain implants to improve memory</sl:comment>
-    <sl:creationDate>2018-01-03</sl:creationDate>
-    <sl:creationTime>2018-01-03T00:55:29Z</sl:creationTime>
-    <dc:title>Brain Implants and the BRAIN Initiative: lights and Shadows - OpenMind</dc:title>
-    <sl:tag rdf:resource="&tag;brain_implants"/>
     <sl:tag rdf:resource="&tag;brain_initiative"/>
+    <sl:tag rdf:resource="&tag;brain_implants"/>
+    <dc:title>Brain Implants and the BRAIN Initiative: lights and Shadows - OpenMind</dc:title>
+    <sl:creationTime>2018-01-03T00:55:29Z</sl:creationTime>
+    <sl:creationDate>2018-01-03</sl:creationDate>
+    <sl:comment>Last November, researchers from the University of Southern California announced the successful results achieved with brain implants to improve memory</sl:comment>
   </rdf:Description>
   <rdf:Description rdf:about="https://www.wikitribune.com/story/2018/01/05/free_speech/qa-edward-snowden-on-rights-privacy-secrets-and-leaks-in-conversation-with-jimmy-wales/26810/">
+    <sl:creationTime>2018-01-05T21:07:14Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;edward_snowden"/>
+    <dc:title>Q&amp;A: Edward Snowden on rights, privacy, secrets and leaks in conversation with Jimmy Wales – Wikitribune</dc:title>
+    <sl:creationDate>2018-01-05</sl:creationDate>
     <sl:comment xml:lang="en">&gt; 'Rights are for the powerless. They’re for the minority. They’re for the different. They’re for the weak’&#xD;
 &#xD;
 </sl:comment>
-    <sl:creationDate>2018-01-05</sl:creationDate>
-    <dc:title>Q&amp;A: Edward Snowden on rights, privacy, secrets and leaks in conversation with Jimmy Wales – Wikitribune</dc:title>
-    <sl:tag rdf:resource="&tag;edward_snowden"/>
-    <sl:creationTime>2018-01-05T21:07:14Z</sl:creationTime>
   </rdf:Description>
   <rdf:Description rdf:about="https://pdfs.semanticscholar.org/2a3f/862199883ceff5e3c74126f0c80770653e05.pdf">
-    <sl:creationDate>2018-01-30</sl:creationDate>
-    <dc:title>Knowledge Graph Embedding by Translating on Hyperplanes (2014)</dc:title>
-    <sl:tag rdf:resource="&tag;knowledge_graph_embeddings"/>
-    <sl:creationTime>2018-01-30T13:35:21Z</sl:creationTime>
-    <sl:tag rdf:resource="&tag;transe"/>
     <sl:comment xml:lang="en">&gt; we start by analyzing the problems of TransE on reflexive/one-to-many/many-to-one/many-to-many relations. Accordingly we propose a method named translation on hyperplanes (TransH) which interprets a relation as a translating operation on a hyperplane</sl:comment>
+    <sl:tag rdf:resource="&tag;transe"/>
+    <sl:creationTime>2018-01-30T13:35:21Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;knowledge_graph_embeddings"/>
+    <dc:title>Knowledge Graph Embedding by Translating on Hyperplanes (2014)</dc:title>
+    <sl:creationDate>2018-01-30</sl:creationDate>
   </rdf:Description>
   <rdf:Description rdf:about="http://www-connex.lip6.fr/~denoyer/wordpress/wp-content/uploads/2014/09/criteo_2017.pdf">
-    <sl:tag rdf:resource="&tag;patrick_gallinari"/>
-    <sl:tag rdf:resource="&tag;knowledge_graph_embeddings"/>
-    <sl:creationDate>2018-01-23</sl:creationDate>
-    <sl:tag rdf:resource="&tag;gaussian_embedding"/>
-    <sl:tag rdf:resource="&tag;embeddings"/>
-    <sl:creationTime>2018-01-23T14:42:50Z</sl:creationTime>
-    <sl:tag rdf:resource="&tag;lip6"/>
     <dc:title xml:lang="en">LEARNING GRAPH EMBEDDINGS FOR NODE LABELING AND INFORMATION DIFFUSION IN SOCIAL NETWORKS (2017)</dc:title>
+    <sl:tag rdf:resource="&tag;lip6"/>
+    <sl:creationTime>2018-01-23T14:42:50Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;embeddings"/>
+    <sl:tag rdf:resource="&tag;gaussian_embedding"/>
+    <sl:creationDate>2018-01-23</sl:creationDate>
+    <sl:tag rdf:resource="&tag;knowledge_graph_embeddings"/>
+    <sl:tag rdf:resource="&tag;patrick_gallinari"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.marekrei.com/blog/paper-summaries/">
-    <sl:tag rdf:resource="&tag;survey"/>
-    <sl:tag rdf:resource="&tag;nlp"/>
-    <sl:tag rdf:resource="&tag;machine_learning"/>
-    <sl:creationDate>2018-01-17</sl:creationDate>
-    <sl:creationTime>2018-01-17T21:02:46Z</sl:creationTime>
     <dc:title>57 Summaries of Machine Learning and NLP Research - Marek Rei</dc:title>
+    <sl:creationTime>2018-01-17T21:02:46Z</sl:creationTime>
+    <sl:creationDate>2018-01-17</sl:creationDate>
+    <sl:tag rdf:resource="&tag;machine_learning"/>
+    <sl:tag rdf:resource="&tag;nlp"/>
+    <sl:tag rdf:resource="&tag;survey"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://www.youtube.com/watch?v=VIRCybGgHts">
-    <sl:tag rdf:resource="&tag;neuroscience_and_machine_learning"/>
-    <sl:tag rdf:resource="&tag;backpropagation_vs_biology"/>
-    <sl:tag rdf:resource="&tag;youtube_video"/>
-    <sl:creationDate>2018-01-22</sl:creationDate>
-    <sl:creationTime>2018-01-22T11:16:36Z</sl:creationTime>
-    <dc:title>Stanford Seminar - "Can the brain do back-propagation?" -  Geoffrey Hinton</dc:title>
     <sl:tag rdf:resource="&tag;geoffrey_hinton"/>
+    <dc:title>Stanford Seminar - "Can the brain do back-propagation?" -  Geoffrey Hinton</dc:title>
+    <sl:creationTime>2018-01-22T11:16:36Z</sl:creationTime>
+    <sl:creationDate>2018-01-22</sl:creationDate>
+    <sl:tag rdf:resource="&tag;youtube_video"/>
+    <sl:tag rdf:resource="&tag;backpropagation_vs_biology"/>
+    <sl:tag rdf:resource="&tag;neuroscience_and_machine_learning"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://nymag.com/daily/intelligencer/2017/11/daniel-ellsberg-on-the-doomsday-machine.html">
-    <sl:tag rdf:resource="&tag;nuclear_war"/>
-    <sl:creationDate>2018-01-14</sl:creationDate>
-    <sl:creationTime>2018-01-14T19:18:13Z</sl:creationTime>
-    <dc:title>Daniel Ellsberg on ‘The Doomsday Machine’</dc:title>
     <sl:tag rdf:resource="&tag;whistleblower"/>
+    <dc:title>Daniel Ellsberg on ‘The Doomsday Machine’</dc:title>
+    <sl:creationTime>2018-01-14T19:18:13Z</sl:creationTime>
+    <sl:creationDate>2018-01-14</sl:creationDate>
+    <sl:tag rdf:resource="&tag;nuclear_war"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://blog.novatec-gmbh.de/the-problems-with-swagger/">
+    <sl:creationTime>2018-01-05T21:22:22Z</sl:creationTime>
+    <sl:creationDate>2018-01-05</sl:creationDate>
+    <dc:title>The problems with Swagger - NovaTec Blog</dc:title>
     <sl:comment xml:lang="en">Swagger imposes some constraints, like the lack of hypermedia... if you are using swagger, you are probably giving up one of the most powerful feature of RESTful APIs. You are giving up evolvability!&#xD;
 </sl:comment>
-    <dc:title>The problems with Swagger - NovaTec Blog</dc:title>
-    <sl:creationDate>2018-01-05</sl:creationDate>
-    <sl:creationTime>2018-01-05T21:22:22Z</sl:creationTime>
   </rdf:Description>
   <rdf:Description rdf:about="https://www.wired.com/story/how-dirt-could-save-humanity-from-an-infectious-apocalypse/">
-    <sl:tag rdf:resource="&tag;antibiotic_resistance"/>
-    <dc:title>How Dirt Could Save Us From Antibiotic-Resistant Superbugs | WIRED</dc:title>
-    <sl:creationTime>2018-01-15T10:26:08Z</sl:creationTime>
-    <sl:creationDate>2018-01-15</sl:creationDate>
     <sl:tag rdf:resource="&tag;metagenomics"/>
+    <sl:creationDate>2018-01-15</sl:creationDate>
+    <sl:creationTime>2018-01-15T10:26:08Z</sl:creationTime>
+    <dc:title>How Dirt Could Save Us From Antibiotic-Resistant Superbugs | WIRED</dc:title>
+    <sl:tag rdf:resource="&tag;antibiotic_resistance"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://www.reddit.com/r/Bitcoin/comments/1lfobc/i_am_a_timetraveler_from_the_future_here_to_beg/">
-    <sl:tag rdf:resource="&tag;bitcoin"/>
-    <dc:title>I am a time-traveler from the future, here to beg you to stop what you are doing. : Bitcoin</dc:title>
-    <sl:creationTime>2018-01-21T23:37:53Z</sl:creationTime>
-    <sl:creationDate>2018-01-21</sl:creationDate>
     <sl:tag rdf:resource="&tag;anticipation"/>
+    <sl:creationDate>2018-01-21</sl:creationDate>
+    <sl:creationTime>2018-01-21T23:37:53Z</sl:creationTime>
+    <dc:title>I am a time-traveler from the future, here to beg you to stop what you are doing. : Bitcoin</dc:title>
+    <sl:tag rdf:resource="&tag;bitcoin"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://emnlp2014.org/papers/pdf/EMNLP2014167.pdf">
     <sl:tag rdf:resource="&tag;combining_word_and_entity_embeddings"/>
@@ -442,76 +498,124 @@ Promising improvement in the accuracy of predicting facts, compared to separatel
     <sl:tag rdf:resource="&tag;nlp_microsoft"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://link.springer.com/article/10.1007/s10618-015-0430-1">
-    <sl:tag rdf:resource="&tag;patrick_gallinari"/>
-    <sl:creationDate>2018-01-27</sl:creationDate>
-    <sl:creationTime>2018-01-27T13:21:31Z</sl:creationTime>
-    <sl:tag rdf:resource="&tag;lip6"/>
-    <sl:tag rdf:resource="&tag;knowledge_graph_embeddings"/>
+    <sl:tag rdf:resource="&tag;knowledge_graph_completion"/>
+    <dc:title xml:lang="en">Knowledge base completion by learning pairwise-interaction differentiated embeddings | SpringerLink (2015)</dc:title>
     <sl:comment xml:lang="en">Embedding entities and relations in the knowledge base to low dimensional vector representations and then predict the possible truth of additional facts to extend the knowledge base&#xD;
 </sl:comment>
-    <dc:title xml:lang="en">Knowledge base completion by learning pairwise-interaction differentiated embeddings | SpringerLink (2015)</dc:title>
-    <sl:tag rdf:resource="&tag;knowledge_graph_completion"/>
+    <sl:tag rdf:resource="&tag;knowledge_graph_embeddings"/>
+    <sl:tag rdf:resource="&tag;lip6"/>
+    <sl:creationTime>2018-01-27T13:21:31Z</sl:creationTime>
+    <sl:creationDate>2018-01-27</sl:creationDate>
+    <sl:tag rdf:resource="&tag;patrick_gallinari"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://en.wikipedia.org/wiki/Letters_from_Iwo_Jima">
-    <sl:tag rdf:resource="http://www.semanlink.net/tag/2eme_guerre_mondiale"/>
-    <sl:tag rdf:resource="&tag;film"/>
-    <dc:title>Letters from Iwo Jima</dc:title>
-    <sl:creationTime>2018-01-15T23:03:20Z</sl:creationTime>
-    <sl:creationDate>2018-01-15</sl:creationDate>
-    <sl:comment>film de Clint Eastwood</sl:comment>
-    <sl:tag rdf:resource="&tag;clint_eastwood"/>
     <sl:tag rdf:resource="&tag;japon"/>
+    <sl:tag rdf:resource="&tag;clint_eastwood"/>
+    <sl:comment>film de Clint Eastwood</sl:comment>
+    <sl:creationDate>2018-01-15</sl:creationDate>
+    <sl:creationTime>2018-01-15T23:03:20Z</sl:creationTime>
+    <dc:title>Letters from Iwo Jima</dc:title>
+    <sl:tag rdf:resource="&tag;film"/>
+    <sl:tag rdf:resource="http://www.semanlink.net/tag/2eme_guerre_mondiale"/>
   </rdf:Description>
-  <rdf:Description rdf:about="https://arxiv.org/abs/1801.00631">
+  <sl:ArxivDoc rdf:about="https://arxiv.org/abs/1801.00631">
     <sl:tag rdf:resource="&tag;nn_symbolic_ai_hybridation"/>
-    <sl:tag rdf:resource="&tag;ia_limites"/>
-    <sl:tag rdf:resource="&tag;deep_learning"/>
-    <dc:title>Deep Learning: A Critical Appraisal (arxiv)</dc:title>
-    <sl:creationTime>2018-01-03T11:33:53Z</sl:creationTime>
     <sl:creationDate>2018-01-03</sl:creationDate>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.arxiv-sanity.com/">
-    <sl:tag rdf:resource="&tag;tools"/>
-    <dc:title>Arxiv Sanity Preserver</dc:title>
-    <sl:creationTime>2018-01-22T18:07:05Z</sl:creationTime>
-    <sl:creationDate>2018-01-22</sl:creationDate>
-    <sl:tag rdf:resource="&tag;arxiv"/>
-    <sl:tag rdf:resource="&tag;andrej_karpathy"/>
-  </rdf:Description>
-  <rdf:Description rdf:about="https://arxiv.org/abs/1801.01586">
-    <sl:tag rdf:resource="&tag;autoencoder"/>
-    <sl:tag rdf:resource="&tag;tutorial"/>
-    <dc:title>A practical tutorial on autoencoders for nonlinear feature fusion: Taxonomy, models, software and guidelines</dc:title>
-    <sl:creationTime>2018-01-09T14:05:31Z</sl:creationTime>
-    <sl:creationDate>2018-01-09</sl:creationDate>
-  </rdf:Description>
-  <rdf:Description rdf:about="http://www.wildml.com/2017/12/ai-and-deep-learning-in-2017-a-year-in-review/">
-    <sl:creationDate>2018-01-01</sl:creationDate>
-    <sl:creationTime>2018-01-01T12:41:36Z</sl:creationTime>
-    <dc:title>AI and Deep Learning in 2017 – A Year in Review – WildML</dc:title>
-    <sl:tag rdf:resource="&tag;artificial_intelligence"/>
+    <sl:tag rdf:resource="&tag;ia_limites"/>
+    <sl:creationTime>2018-01-03T11:33:53Z</sl:creationTime>
+    <sl:arxiv_summary xml:lang="en">Although deep learning has historical roots going back decades, neither the
+term "deep learning" nor the approach was popular just over five years ago,
+when the field was reignited by papers such as Krizhevsky, Sutskever and
+Hinton's now classic (2012) deep network model of Imagenet. What has the field
+discovered in the five subsequent years? Against a background of considerable
+progress in areas such as speech recognition, image recognition, and game
+playing, and considerable enthusiasm in the popular press, I present ten
+concerns for deep learning, and suggest that deep learning must be supplemented
+by other techniques if we are to reach artificial general intelligence.</sl:arxiv_summary>
+    <sl:arxiv_published>2018-01-02T12:49:35Z</sl:arxiv_published>
     <sl:tag rdf:resource="&tag;deep_learning"/>
+    <sl:arxiv_firstAuthor>Gary Marcus</sl:arxiv_firstAuthor>
+    <sl:arxiv_author>Gary Marcus</sl:arxiv_author>
+    <sl:arxiv_title xml:lang="en">Deep Learning: A Critical Appraisal</sl:arxiv_title>
+    <sl:arxiv_num>1801.00631</sl:arxiv_num>
+    <sl:arxiv_updated>2018-01-02T12:49:35Z</sl:arxiv_updated>
+    <dc:title xml:lang="en">[1801.00631] Deep Learning: A Critical Appraisal</dc:title>
+  </sl:ArxivDoc>
+  <rdf:Description rdf:about="http://www.arxiv-sanity.com/">
+    <sl:tag rdf:resource="&tag;andrej_karpathy"/>
+    <sl:tag rdf:resource="&tag;arxiv"/>
+    <sl:creationDate>2018-01-22</sl:creationDate>
+    <sl:creationTime>2018-01-22T18:07:05Z</sl:creationTime>
+    <dc:title>Arxiv Sanity Preserver</dc:title>
+    <sl:tag rdf:resource="&tag;tools"/>
+  </rdf:Description>
+  <sl:ArxivDoc rdf:about="https://arxiv.org/abs/1801.01586">
+    <sl:arxiv_title xml:lang="en">A practical tutorial on autoencoders for nonlinear feature fusion: Taxonomy, models, software and guidelines</sl:arxiv_title>
+    <sl:arxiv_author>David Charte</sl:arxiv_author>
+    <sl:creationTime>2018-01-09T14:05:31Z</sl:creationTime>
+    <sl:arxiv_num>1801.01586</sl:arxiv_num>
+    <sl:arxiv_author>María J. del Jesus</sl:arxiv_author>
+    <sl:arxiv_summary xml:lang="en">Many of the existing machine learning algorithms, both supervised and
+unsupervised, depend on the quality of the input characteristics to generate a
+good model. The amount of these variables is also important, since performance
+tends to decline as the input dimensionality increases, hence the interest in
+using feature fusion techniques, able to produce feature sets that are more
+compact and higher level. A plethora of procedures to fuse original variables
+for producing new ones has been developed in the past decades. The most basic
+ones use linear combinations of the original variables, such as PCA (Principal
+Component Analysis) and LDA (Linear Discriminant Analysis), while others find
+manifold embeddings of lower dimensionality based on non-linear combinations,
+such as Isomap or LLE (Linear Locally Embedding) techniques.
+More recently, autoencoders (AEs) have emerged as an alternative to manifold
+learning for conducting nonlinear feature fusion. Dozens of AE models have been
+proposed lately, each with its own specific traits. Although many of them can
+be used to generate reduced feature sets through the fusion of the original
+ones, there also AEs designed with other applications in mind.
+The goal of this paper is to provide the reader with a broad view of what an
+AE is, how they are used for feature fusion, a taxonomy gathering a broad range
+of models, and how they relate to other classical techniques. In addition, a
+set of didactic guidelines on how to choose the proper AE for a given task is
+supplied, together with a discussion of the software tools available. Finally,
+two case studies illustrate the usage of AEs with datasets of handwritten
+digits and breast cancer.</sl:arxiv_summary>
+    <sl:arxiv_author>Salvador García</sl:arxiv_author>
+    <sl:creationDate>2018-01-09</sl:creationDate>
+    <dc:title xml:lang="en">[1801.01586] A practical tutorial on autoencoders for nonlinear feature fusion: Taxonomy, models, software and guidelines</dc:title>
+    <sl:tag rdf:resource="&tag;tutorial"/>
+    <sl:arxiv_author>Francisco Herrera</sl:arxiv_author>
+    <sl:arxiv_updated>2018-01-04T23:51:05Z</sl:arxiv_updated>
+    <sl:arxiv_author>Francisco Charte</sl:arxiv_author>
+    <sl:arxiv_published>2018-01-04T23:51:05Z</sl:arxiv_published>
+    <sl:tag rdf:resource="&tag;autoencoder"/>
+    <sl:arxiv_firstAuthor>David Charte</sl:arxiv_firstAuthor>
+  </sl:ArxivDoc>
+  <rdf:Description rdf:about="http://www.wildml.com/2017/12/ai-and-deep-learning-in-2017-a-year-in-review/">
     <sl:tag rdf:resource="&tag;denny_britz"/>
+    <sl:tag rdf:resource="&tag;deep_learning"/>
+    <sl:tag rdf:resource="&tag;artificial_intelligence"/>
+    <dc:title>AI and Deep Learning in 2017 – A Year in Review – WildML</dc:title>
+    <sl:creationTime>2018-01-01T12:41:36Z</sl:creationTime>
+    <sl:creationDate>2018-01-01</sl:creationDate>
   </rdf:Description>
   <rdf:Description rdf:about="http://blog.sparna.fr/2018/01/23/vocabulaires-thesaurus-web-donnees-skos-open-source/">
-    <sl:tag rdf:resource="&tag;tools"/>
-    <sl:tag rdf:resource="&tag;skos"/>
-    <sl:creationTime>2018-01-23T18:20:31Z</sl:creationTime>
-    <sl:creationDate>2018-01-23</sl:creationDate>
-    <dc:title>Vocabulaires dans le web de données : quels outils open-source ? - Sparna Blog</dc:title>
     <sl:tag rdf:resource="&tag;skos_editor"/>
+    <dc:title>Vocabulaires dans le web de données : quels outils open-source ? - Sparna Blog</dc:title>
+    <sl:creationDate>2018-01-23</sl:creationDate>
+    <sl:creationTime>2018-01-23T18:20:31Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;skos"/>
+    <sl:tag rdf:resource="&tag;tools"/>
   </rdf:Description>
   <rdf:Description rdf:about="https://www.nytimes.com/2018/01/02/science/donkeys-africa-china-ejiao.html">
-    <sl:tag rdf:resource="&tag;chine_afrique"/>
-    <sl:creationTime>2018-01-02T19:19:30Z</sl:creationTime>
-    <dc:title>To Sate China’s Demand, African Donkeys Are Stolen and Skinned - The New York Times</dc:title>
-    <sl:creationDate>2018-01-02</sl:creationDate>
     <sl:tag rdf:resource="&tag;ane"/>
+    <sl:creationDate>2018-01-02</sl:creationDate>
+    <dc:title>To Sate China’s Demand, African Donkeys Are Stolen and Skinned - The New York Times</dc:title>
+    <sl:creationTime>2018-01-02T19:19:30Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;chine_afrique"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://archeo.blog.lemonde.fr/2018/01/23/lhistoire-du-femur-de-toumai/">
-    <sl:creationTime>2018-01-23T13:44:20Z</sl:creationTime>
-    <dc:title>L’histoire du fémur de Toumaï | Dans les pas des archéologues</dc:title>
-    <sl:creationDate>2018-01-23</sl:creationDate>
     <sl:tag rdf:resource="&tag;toumai"/>
+    <sl:creationDate>2018-01-23</sl:creationDate>
+    <dc:title>L’histoire du fémur de Toumaï | Dans les pas des archéologues</dc:title>
+    <sl:creationTime>2018-01-23T13:44:20Z</sl:creationTime>
   </rdf:Description>
 </rdf:RDF>
