@@ -123,6 +123,17 @@ private String lastWord(String firstAuthor) {
 //			sb.append("\n" + arxiv_summary);
 //		}
 //	}
+	
+	// add the authors, in order to link them to tags, when a tag exist
+	vals = doc.getPropertyAsStrings(ARXIV_PROP_DEB + "author");
+	if ((vals != null) & (vals.size() > 0)) {
+		for (int i = 0 ; i < vals.size(); i++) {
+			String author = (String) vals.get(i);
+			sb.append(" ; ");
+			sb.append(author);
+		}
+	}
+	
 	return sb.toString();
 }
 
