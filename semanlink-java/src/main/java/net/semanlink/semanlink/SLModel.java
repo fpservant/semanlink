@@ -367,7 +367,19 @@ public String doc2markdownHref(String contextUrl, String docUri) throws IOExcept
  *  @see kwExists(String)
  *  @see resolveAlias(String) 
  *  Ne créée rien du tout */
-abstract public SLKeyword getKeyword(String uri);
+public abstract SLKeyword getKeyword(String uri);
+public abstract boolean kwExists(String uri);
+//public abstract boolean docExists(String docUri);
+public abstract SLKeyword getKeywordIfExists(String uri);
+
+public SLKeyword getKeywordCreatingItIfNecessary(String uri, String kwLabel, Locale locale) throws Exception {
+	SLKeyword x = getKeywordIfExists(uri);
+	if (x == null) {
+		x = doCreateKeyword(uri, kwLabel, locale);
+	}
+	return x;
+}
+
 
 //
 //
@@ -882,9 +894,6 @@ public void addFriend(SLKeyword kw, SLKeyword friend) {
 	addKwProperty(kw.getURI(), HAS_FRIEND_PROPERTY, friend.getURI());
 }
 
-public abstract boolean kwExists(String kwUri);
-// public abstract boolean docExists(String docUri);
-
 //
 // PASSER D'UN LABEL A UN KEYWORD
 //
@@ -963,7 +972,7 @@ public String kwLabel2ExistingKwUri(String kwLabel, String thesaurusUri, Locale 
 
 /**
  * Retourne la forme à utiliser pour l'uri d'un keyword qu'on souhaite créer à partir de son libellé.
- * @param thesaurusUri doit être non null.
+ * @param thesaurusUri doit être non null (and not / terminated)
  * @see kwLabel2KwCreatingItIfNecessary
  */
 public String kwLabel2UriQuick(String kwLabel, String thesaurusUri, Locale locale) {
@@ -971,11 +980,12 @@ public String kwLabel2UriQuick(String kwLabel, String thesaurusUri, Locale local
 	// return thesaurusUri + "#" + kwLabel2ShortUri(kwLabel, locale); // #thing
 	return thesaurusUri + "/" + kwLabel2ShortUri(kwLabel, locale); // #thing
 }
+
 /**
  * Retourne la forme courte à utiliser pour l'uri d'un keyword qu'on souhaite créer à partir de son libellé.
  * Les mots dont les diacritiques ont été remplacées, séparés par "_"
  * If you want to change that after having already created keywords,
- * voir ds SLServelt.initSL ((JModel) mod).correctOldKwUris();
+ * voir ds SLServlet.initSL ((JModel) mod).correctOldKwUris();
  */
 public String kwLabel2ShortUri(String kwLabel, Locale locale) {
 	ArrayList<String> al = (wordsInString).words(kwLabel , locale);
@@ -996,13 +1006,16 @@ public String kwLabel2Uri(String kwLabel, String thesaurusUri) {
 	return kwLabel2Uri (kwLabel, thesaurusUri, null);
 }
 
-/** Modifie le modèle pour y ajouter les statements nécessaires à la création du mot clé, censé ne pas exister. 
+/**
+ * Modifie le modèle pour y ajouter les statements nécessaires à la création du mot clé, 
+ * censé ne pas exister. 
  * Attention, ce qu'il faut utiliser, c'est doCreateKeyword, qui met aussi à jour l'index du thésaurus. 
  */
 protected abstract void createKw(String uri, String label, Locale locale) throws Exception;
 
 /**
- * Modifie le modèle pour y ajouter les statements nécessaires à la création du mot clé, sensé ne pas exister.
+ * Modifie le modèle pour y ajouter les statements nécessaires à la création du mot clé, 
+ * censé ne pas exister.
  * met à jour le thesaurus
  * retourne le kw créé (censé ne pas exister avant) 
  * @param thesaurusUri not null
@@ -1014,7 +1027,9 @@ public SLKeyword doCreateKeyword(String uri, String kwLabel, Locale locale) thro
 	return kw;
 }
 
-/** retourne null et ne fait rien si l'uri qui serait créée à partir du label existe déjà.
+
+/** 
+ * retourne null et ne fait rien si l'uri qui serait créée à partir du label existe déjà.
  * @param thesaurusUri non null
  * @param locale
  * @return

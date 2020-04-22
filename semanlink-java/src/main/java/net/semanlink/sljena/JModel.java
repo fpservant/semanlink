@@ -210,14 +210,33 @@ public boolean hasSLCreationDate(SLDocument doc) {
 	return false;
 }
 
+//
+//
+//
 
-
-
-/**
- * attention, ajout rapide en 2003-07-01 pour servlet
- */
-public SLKeyword getKeyword(String uri) throws JenaException {
+// attention, ajout rapide en 2003-07-01 pour servlet
+@Override public SLKeyword getKeyword(String uri) {
 	return new JKeyword(this, this.kwsModel.getResource(uri));
+}
+
+@Override public boolean kwExists(String kwUri) {
+	Resource res = this.kwsModel.getResource(kwUri);
+	StmtIterator ite = this.kwsModel.listStatements(res, (Property) null, (RDFNode) null);
+	for (;ite.hasNext();) {
+		ite.close();
+		return true;
+	}
+	return false;
+}
+
+@Override public SLKeyword getKeywordIfExists(String uri) {
+	Resource res = this.kwsModel.getResource(uri);
+	StmtIterator ite = this.kwsModel.listStatements(res, (Property) null, (RDFNode) null);
+	for (;ite.hasNext();) {
+		ite.close();
+		return new JKeyword(this, res);
+	}
+	return null;
 }
 
 //
@@ -785,16 +804,6 @@ private JFileBiModel getJFileBiModel4Kws(String kwUri) throws JenaException, IOE
  * Attention, selon cette implémentation, vérifie juste s'il existe ds this.kwsModell un statement
  * au sujet de uri. Et donc, par ex, retourne true si kwUri est un alias
  */
-public boolean kwExists(String kwUri) {
-	Resource res = this.kwsModel.getResource(kwUri);
-	StmtIterator ite = this.kwsModel.listStatements(res, (Property) null, (RDFNode) null);
-	for (;ite.hasNext();) {
-		ite.close();
-		return true;
-	}
-	return false;
-}
-
 
 /** Le kw est censé ne pas exister.
  * @throws URISyntaxException */

@@ -10,8 +10,9 @@
     xmlns:skos="&skos;"
     xmlns:sl="&sl;"
     xmlns:tag="&tag;">
-  <sl:ArxivDoc rdf:about="_1909_03193_kg_bert_bert_for_">
+  <rdf:Description rdf:about="_1909_03193_kg_bert_bert_for_">
     <sl:arxiv_num>1909.03193</sl:arxiv_num>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:creationTime>2020-03-22T18:56:43Z</sl:creationTime>
     <sl:arxiv_published>2019-09-07T06:09:25Z</sl:arxiv_published>
     <sl:arxiv_author>Liang Yao</sl:arxiv_author>
@@ -39,7 +40,7 @@ in triple classification, link prediction and relation prediction tasks.</sl:arx
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1909.03193"/>
     <sl:arxiv_author>Chengsheng Mao</sl:arxiv_author>
     <sl:arxiv_updated>2019-09-11T06:03:30Z</sl:arxiv_updated>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="bert_elmo_gpt_2_how_contex">
     <sl:tag rdf:resource="&tag;bertology"/>
     <sl:tag rdf:resource="&tag;nlp_stanford"/>
@@ -65,7 +66,7 @@ in triple classification, link prediction and relation prediction tasks.</sl:arx
     <sl:tag rdf:resource="&tag;coronavirus"/>
     <dc:title>Coronavirus: Why You Must Act Now - Tomas Pueyo - Medium</dc:title>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_2003_03384_automl_zero_evolv">
+  <rdf:Description rdf:about="_2003_03384_automl_zero_evolv">
     <sl:comment>&gt; Fun AutoML-Zero experiments: Evolutionary search discovers fundamental ML algorithms from scratch, e.g., small neural nets with backprop.&#xD;
 &gt; Can evolution be the “Master Algorithm”? ;)</sl:comment>
     <sl:tag rdf:resource="&tag;evolutionary_algorithm"/>
@@ -79,6 +80,7 @@ in triple classification, link prediction and relation prediction tasks.</sl:arx
     <sl:arxiv_updated>2020-03-06T19:00:04Z</sl:arxiv_updated>
     <sl:tag rdf:resource="&tag;automl"/>
     <sl:creationTime>2020-03-17T21:57:40Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:arxiv_num>2003.03384</sl:arxiv_num>
     <sl:arxiv_published>2020-03-06T19:00:04Z</sl:arxiv_published>
     <dc:title xml:lang="en">[2003.03384] AutoML-Zero: Evolving Machine Learning Algorithms From Scratch</dc:title>
@@ -104,7 +106,7 @@ available. We believe these preliminary successes in discovering machine
 learning algorithms from scratch indicate a promising new direction for the
 field.</sl:arxiv_summary>
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2003.03384"/>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="au_kenya_l%E2%80%99unique_girafe_blanc">
     <sl:tag rdf:resource="&tag;l_humanite_merite_de_disparaitre"/>
     <sl:tag rdf:resource="&tag;girafe"/>
@@ -138,9 +140,10 @@ field.</sl:arxiv_summary>
 &#xD;
 http://127.0.0.1:8080/semanlink/tag/graph_neural_networks.html</sl:comment>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_2003_02320_knowledge_graphs">
+  <rdf:Description rdf:about="_2003_02320_knowledge_graphs">
     <sl:arxiv_author>Lukas Schmelzeisen</sl:arxiv_author>
     <sl:arxiv_author>Claudia d'Amato</sl:arxiv_author>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:comment xml:lang="en">Draws together many topics &amp; perspectives regarding Knowledge Graphs. 18 co-authors, lead by Aidan Hogan. (Regarding language models for embedding, they refer to [Wang et al. Knowledge Graph Embedding: A Survey of Approaches and Applications](/doc/2019/05/knowledge_graph_embedding_a_su))</sl:comment>
     <sl:arxiv_published>2020-03-04T20:20:32Z</sl:arxiv_published>
     <sl:tag rdf:resource="&tag;survey"/>
@@ -184,7 +187,7 @@ directions for knowledge graphs.</sl:arxiv_summary>
     <sl:arxiv_author>Aidan Hogan</sl:arxiv_author>
     <sl:arxiv_author>Michael Cochez</sl:arxiv_author>
     <sl:arxiv_author>Sabrina Kirrane</sl:arxiv_author>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="mapper_annotated_text_plugin_%7C_">
     <sl:comment xml:lang="en">The doc about annotated text fields. See also elastic list:&#xD;
 &#xD;
@@ -196,7 +199,7 @@ directions for knowledge graphs.</sl:arxiv_summary>
     <dc:title>Mapper Annotated Text Plugin | Elastic</dc:title>
     <sl:tag rdf:resource="&tag;elasticsearch_annotated_text_field"/>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_1909_07606_k_bert_enabling_l">
+  <rdf:Description rdf:about="_1909_07606_k_bert_enabling_l">
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1909.07606"/>
     <sl:arxiv_author>Haotang Deng</sl:arxiv_author>
     <sl:arxiv_summary xml:lang="en">Pre-trained language representation models, such as BERT, capture a general
@@ -229,12 +232,13 @@ knowledge-driven problems that require experts.</sl:arxiv_summary>
     <sl:tag rdf:resource="&tag;nlp_using_knowledge_graphs"/>
     <sl:arxiv_author>Weijie Liu</sl:arxiv_author>
     <dc:title xml:lang="en">[1909.07606] K-BERT: Enabling Language Representation with Knowledge Graph</dc:title>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:arxiv_author>Ping Wang</sl:arxiv_author>
     <sl:creationTime>2020-03-08T22:54:15Z</sl:creationTime>
     <sl:arxiv_published>2019-09-17T06:16:04Z</sl:arxiv_published>
     <sl:arxiv_author>Qi Ju</sl:arxiv_author>
     <sl:arxiv_firstAuthor>Weijie Liu</sl:arxiv_firstAuthor>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="how_taiwan_fended_off_the_coron">
     <sl:tag rdf:resource="&tag;taiwan"/>
     <sl:tag rdf:resource="&tag;coronavirus"/>
@@ -254,7 +258,7 @@ knowledge-driven problems that require experts.</sl:arxiv_summary>
     <sl:tag rdf:resource="&tag;concept_extraction"/>
     <sl:tag rdf:resource="&tag;nlp_tools"/>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_1905_06088_neural_symbolic_co">
+  <rdf:Description rdf:about="_1905_06088_neural_symbolic_co">
     <sl:arxiv_author>Artur d'Avila Garcez</sl:arxiv_author>
     <sl:arxiv_published>2019-05-15T11:00:48Z</sl:arxiv_published>
     <sl:arxiv_num>1905.06088</sl:arxiv_num>
@@ -286,13 +290,14 @@ interpretable and accountable AI systems.</sl:arxiv_summary>
     <sl:arxiv_author>Luis C. Lamb</sl:arxiv_author>
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1905.06088"/>
     <sl:arxiv_author>Marco Gori</sl:arxiv_author>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:arxiv_firstAuthor>Artur d'Avila Garcez</sl:arxiv_firstAuthor>
     <sl:creationDate>2020-03-15</sl:creationDate>
     <sl:arxiv_author>Son N. Tran</sl:arxiv_author>
     <sl:arxiv_author>Luciano Serafini</sl:arxiv_author>
     <dc:title xml:lang="en">[1905.06088] Neural-Symbolic Computing: An Effective Methodology for Principled Integration of Machine Learning and Reasoning</dc:title>
     <sl:arxiv_updated>2019-05-15T11:00:48Z</sl:arxiv_updated>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="max_little_sur_twitter_causa">
     <sl:creationTime>2020-03-08T11:36:48Z</sl:creationTime>
     <sl:creationDate>2020-03-08</sl:creationDate>
@@ -314,17 +319,18 @@ interpretable and accountable AI systems.</sl:arxiv_summary>
     <sl:bookmarkOf rdf:resource="https://twitter.com/Chengkai_Li/status/1243342637089898496"/>
     <sl:tag rdf:resource="&tag;knowledge_graph_embeddings"/>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_1902_10197_rotate_knowledge_">
+  <rdf:Description rdf:about="_1902_10197_rotate_knowledge_">
     <sl:arxiv_published>2019-02-26T20:15:09Z</sl:arxiv_published>
     <sl:creationTime>2020-03-03T13:27:48Z</sl:creationTime>
     <sl:arxiv_title xml:lang="en">RotatE: Knowledge Graph Embedding by Relational Rotation in Complex Space</sl:arxiv_title>
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1902.10197?"/>
     <sl:tag rdf:resource="&tag;knowledge_graph_completion"/>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:arxiv_num>1902.10197</sl:arxiv_num>
     <sl:creationDate>2020-03-03</sl:creationDate>
     <sl:tag rdf:resource="&tag;knowledge_graph_embeddings"/>
-    <sl:comment>&gt; We study the problem of learning representations of entities and relations in knowledge graphs for predicting missing links.</sl:comment>
     <dc:title xml:lang="en">[1902.10197] RotatE: Knowledge Graph Embedding by Relational Rotation in Complex Space</dc:title>
+    <sl:comment>&gt; We study the problem of learning representations of entities and relations in knowledge graphs for predicting missing links.</sl:comment>
     <sl:arxiv_summary xml:lang="en">We study the problem of learning representations of entities and relations in
 knowledge graphs for predicting missing links. The success of such a task
 heavily relies on the ability of modeling and inferring the patterns of (or
@@ -344,8 +350,8 @@ significantly outperform existing state-of-the-art models for link prediction.</
     <sl:arxiv_author>Jian Tang</sl:arxiv_author>
     <sl:arxiv_updated>2019-02-26T20:15:09Z</sl:arxiv_updated>
     <sl:arxiv_author>Zhi-Hong Deng</sl:arxiv_author>
-  </sl:ArxivDoc>
-  <sl:ArxivDoc rdf:about="_1911_02168_coke_contextualiz">
+  </rdf:Description>
+  <rdf:Description rdf:about="_1911_02168_coke_contextualiz">
     <sl:creationDate>2020-03-22</sl:creationDate>
     <sl:arxiv_author>Pingping Huang</sl:arxiv_author>
     <sl:arxiv_author>Yajuan Lyu</sl:arxiv_author>
@@ -360,6 +366,7 @@ significantly outperform existing state-of-the-art models for link prediction.</
     <sl:tag rdf:resource="&tag;baidu"/>
     <sl:arxiv_firstAuthor>Quan Wang</sl:arxiv_firstAuthor>
     <sl:tag rdf:resource="&tag;attention_knowledge_graphs"/>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:arxiv_author>Haifeng Wang</sl:arxiv_author>
     <sl:arxiv_num>1911.02168</sl:arxiv_num>
     <sl:creationTime>2020-03-22T17:34:10Z</sl:creationTime>
@@ -386,7 +393,7 @@ performs consistently better than, or at least equally well as current
 state-of-the-art in almost every case, in particular offering an absolute
 improvement of 21.0% in H@10 on path query answering. Our code is available at
 \url{https://github.com/PaddlePaddle/Research/tree/master/KG/CoKE}.</sl:arxiv_summary>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="cs294_158_sp20_deep_unsupervise">
     <sl:tag rdf:resource="&tag;machine_learning_course"/>
     <sl:creationDate>2020-03-08</sl:creationDate>
@@ -413,7 +420,7 @@ improvement of 21.0% in H@10 on path query answering. Our code is available at
     <sl:creationDate>2020-03-22</sl:creationDate>
     <dc:title>Gilda</dc:title>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_2003_00330_graph_neural_netwo">
+  <rdf:Description rdf:about="_2003_00330_graph_neural_netwo">
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2003.00330"/>
     <sl:tag rdf:resource="&tag;survey"/>
     <sl:arxiv_title xml:lang="en">Graph Neural Networks Meet Neural-Symbolic Computing: A Survey and Perspective</sl:arxiv_title>
@@ -422,6 +429,7 @@ improvement of 21.0% in H@10 on path query answering. Our code is available at
     <sl:arxiv_author>Marcelo Prates</sl:arxiv_author>
     <sl:tag rdf:resource="&tag;graph_neural_networks"/>
     <sl:comment xml:lang="en">reviews the state-of-the-art on the use of GNNs as a model of neural-symbolic computing.</sl:comment>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:arxiv_author>Pedro Avelar</sl:arxiv_author>
     <sl:creationTime>2020-03-15T10:39:59Z</sl:creationTime>
     <sl:arxiv_num>2003.00330</sl:arxiv_num>
@@ -444,7 +452,7 @@ paper, we review the state-of-the-art on the use of GNNs as a model of
 neural-symbolic computing. This includes the application of GNNs in several
 domains as well as its relationship to current developments in neural-symbolic
 computing.</sl:arxiv_summary>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="chaitanya_joshi_sur_twitter_">
     <sl:creationDate>2020-03-01</sl:creationDate>
     <sl:tag rdf:resource="&tag;graph_attention_networks"/>
@@ -540,7 +548,8 @@ computing.</sl:arxiv_summary>
     <sl:creationTime>2020-03-01T12:15:45Z</sl:creationTime>
     <sl:bookmarkOf rdf:resource="https://www.sciencesetavenir.fr/espace/univers/un-trou-noir-responsable-de-la-plus-grosse-explosion-jamais-observee-dans-l-espace-depuis-le-big-bang_142029"/>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_2003_08271_pre_trained_models">
+  <rdf:Description rdf:about="_2003_08271_pre_trained_models">
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:arxiv_num>2003.08271</sl:arxiv_num>
     <sl:arxiv_author>Ning Dai</sl:arxiv_author>
     <sl:arxiv_author>Yunfan Shao</sl:arxiv_author>
@@ -567,5 +576,5 @@ is purposed to be a hands-on guide for understanding, using, and developing
 PTMs for various NLP tasks.</sl:arxiv_summary>
     <sl:creationTime>2020-03-19T13:34:50Z</sl:creationTime>
     <sl:creationDate>2020-03-19</sl:creationDate>
-  </sl:ArxivDoc>
+  </rdf:Description>
 </rdf:RDF>

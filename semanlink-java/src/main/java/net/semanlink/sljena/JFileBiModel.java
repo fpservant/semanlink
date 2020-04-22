@@ -69,6 +69,13 @@ void remove(String uri, String propertyUri, String objectUri) {
 	JenaUtils.remove(this.small, uri, propertyUri, objectUri);
 }
 
+
+void remove(String uri, String propertyUri, String propertyValue, String lang) { // 2020-04
+	JenaUtils.remove(this.big, uri, propertyUri, propertyValue, lang);
+	JenaUtils.remove(this.small, uri, propertyUri, propertyValue, lang);
+}
+
+
 void delete(String uri) {
 	// delete all statements involving uri
 	JenaUtils.delete(this.big, uri);

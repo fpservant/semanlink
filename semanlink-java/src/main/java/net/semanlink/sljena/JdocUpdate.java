@@ -180,6 +180,14 @@ class JDocUpdate extends SLDocUpdate {
 		} catch (Exception e) { throw new SLRuntimeException(e); }
 	}
 
+	@Override public void removeStatement(String propertyUri, String propertyValue, String lang) {
+		bi.remove(doc.getURI(), propertyUri, propertyValue, lang);
+	}
+	
+	@Override public void removeStatement(String propertyUri, String objectUri) {
+		bi.remove(doc.getURI(), propertyUri, objectUri);
+	}
+
 	// 2020-03 
 //	private void creationDateCase(String yyyy_mm_dd) throws JenaException, IOException, URISyntaxException {
 //		if (existsAsSubject(doc)) {

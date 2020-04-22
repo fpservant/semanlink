@@ -16,6 +16,7 @@ import net.semanlink.metadataextraction.Extractor;
 import net.semanlink.metadataextraction.ExtractorData;
 import net.semanlink.semanlink.SLDocUpdate;
 import net.semanlink.semanlink.SLDocument;
+import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLModel;
 import net.semanlink.semanlink.SLSchema;
 
@@ -25,6 +26,13 @@ final static String ARXIV_PROP_DEB = SLSchema.NS + "arxiv_";
 /** Retourne true ssi cet extractor traite le document passé en argument. */
 @Override public boolean dealWith(ExtractorData data) {
 	return (Arxiv.sldoc2arxivNum(data.getSLDocument(), data.getSLModel()) != null);	
+}
+
+/** creating it if necessary */
+private SLKeyword arxivDocTag(SLModel mod) throws Exception {
+	String label = "Arxiv Doc";
+	String uri = mod.kwLabel2UriQuick(label, mod.getDefaultThesaurus().getURI(), Locale.ENGLISH);	
+	return mod.getKeywordCreatingItIfNecessary(uri, label, Locale.ENGLISH);
 }
 
 // mal branlé cette histoire de ExtractorData - ici, me conduit à calculer sldoc2arxivNum() une 2eme fois // TODO
@@ -39,8 +47,10 @@ final static String ARXIV_PROP_DEB = SLSchema.NS + "arxiv_";
 	ArxivEntry arxiv = ArxivEntry.newArxivEntry(num, client, factory);
 	
 	try (SLDocUpdate du = mod.newSLDocUpdate(sldoc)) {
-		du.addDocProperty(RDF.type.getURI(), SLSchema.NS + "ArxivDoc");
-				
+		// du.addDocProperty(RDF.type.getURI(), SLSchema.NS + "ArxivDoc");
+		SLKeyword arxivDocTag = arxivDocTag(mod);
+		du.addKeyword(arxivDocTag);
+		
 		du.setDocProperty(ARXIV_PROP_DEB + "num", num, "");
 		du.setDocProperty(ARXIV_PROP_DEB + "title", arxiv.getTitle(), "en");
 		du.setDocProperty(ARXIV_PROP_DEB + "summary", arxiv.getSummary(), "en");

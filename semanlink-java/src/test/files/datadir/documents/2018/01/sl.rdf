@@ -243,10 +243,11 @@ Considering a practical ad-hoc IR task composed of two steps, matching and scori
     <dc:title>Oh, shit, git!</dc:title>
     <sl:tag rdf:resource="&tag;git"/>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="https://arxiv.org/abs/1103.0398">
+  <rdf:Description rdf:about="https://arxiv.org/abs/1103.0398">
     <sl:tag rdf:resource="&tag;ronan_collobert"/>
     <dc:title xml:lang="en">[1103.0398] Natural Language Processing (almost) from Scratch</dc:title>
     <sl:tag rdf:resource="&tag;nlp"/>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:arxiv_author>Jason Weston</sl:arxiv_author>
     <sl:arxiv_author>Michael Karlen</sl:arxiv_author>
     <sl:tag rdf:resource="&tag;multi_task_learning"/>
@@ -280,8 +281,8 @@ Abstract:&#xD;
 &gt; a unified neural network architecture and learning algorithm that can be applied to various natural language processing tasks including: part-of-speech tagging, chunking, named entity recognition, and semantic role labeling. This versatility is achieved by trying to avoid task-specific engineering and therefore disregarding a lot of prior knowledge. Instead of exploiting man-made input features carefully optimized for each task, our system learns internal representations on the basis of vast amounts of mostly unlabeled training data. This work is then used as a basis for building a freely available tagging system with good performance and minimal computational requirements&#xD;
 </sl:comment>
     <sl:arxiv_num>1103.0398</sl:arxiv_num>
-  </sl:ArxivDoc>
-  <sl:ArxivDoc rdf:about="https://arxiv.org/abs/1412.6623">
+  </rdf:Description>
+  <rdf:Description rdf:about="https://arxiv.org/abs/1412.6623">
     <sl:tag rdf:resource="&tag;gaussian_embedding"/>
     <sl:arxiv_summary xml:lang="en">Current work in lexical distributed representations maps each word to a point
 vector in low-dimensional space. Mapping instead to a density provides many
@@ -296,6 +297,7 @@ entailment and other asymmetric relationships, and explore novel properties of
 the representation.</sl:arxiv_summary>
     <dc:title xml:lang="en">[1412.6623] Word Representations via Gaussian Embedding</dc:title>
     <sl:arxiv_num>1412.6623</sl:arxiv_num>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:arxiv_updated>2015-05-01T10:14:58Z</sl:arxiv_updated>
     <sl:creationDate>2018-01-28</sl:creationDate>
     <sl:arxiv_author>Luke Vilnis</sl:arxiv_author>
@@ -308,7 +310,7 @@ the representation.</sl:arxiv_summary>
     <sl:creationTime>2018-01-28T17:27:24Z</sl:creationTime>
     <sl:arxiv_author>Andrew McCallum</sl:arxiv_author>
     <sl:arxiv_firstAuthor>Luke Vilnis</sl:arxiv_firstAuthor>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="https://towardsdatascience.com/gradient-descent-vs-neuroevolution-f907dace010f">
     <sl:creationTime>2018-01-06T15:24:23Z</sl:creationTime>
     <sl:creationDate>2018-01-06</sl:creationDate>
@@ -322,9 +324,10 @@ the representation.</sl:arxiv_summary>
     <sl:creationTime>2018-01-03T17:06:57Z</sl:creationTime>
     <sl:creationDate>2018-01-03</sl:creationDate>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="https://arxiv.org/abs/1801.06146">
+  <rdf:Description rdf:about="https://arxiv.org/abs/1801.06146">
     <sl:arxiv_updated>2018-05-23T09:23:47Z</sl:arxiv_updated>
     <sl:arxiv_title xml:lang="en">Universal Language Model Fine-tuning for Text Classification</sl:arxiv_title>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:creationDate>2018-01-19</sl:creationDate>
     <dc:title xml:lang="en">[1801.06146] Universal Language Model Fine-tuning for Text Classification</dc:title>
     <sl:arxiv_firstAuthor>Jeremy Howard</sl:arxiv_firstAuthor>
@@ -361,7 +364,7 @@ and code.</sl:arxiv_summary>
 </sl:comment>
     <sl:arxiv_published>2018-01-18T17:54:52Z</sl:arxiv_published>
     <sl:tag rdf:resource="&tag;sebastian_ruder"/>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="https://www.edge.org/response-detail/26794">
     <sl:tag rdf:resource="&tag;deep_learning"/>
     <sl:tag rdf:resource="&tag;differentiable_programming"/>
@@ -518,11 +521,10 @@ Promising improvement in the accuracy of predicting facts, compared to separatel
     <sl:tag rdf:resource="&tag;film"/>
     <sl:tag rdf:resource="http://www.semanlink.net/tag/2eme_guerre_mondiale"/>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="https://arxiv.org/abs/1801.00631">
+  <rdf:Description rdf:about="https://arxiv.org/abs/1801.00631">
     <sl:tag rdf:resource="&tag;nn_symbolic_ai_hybridation"/>
     <sl:creationDate>2018-01-03</sl:creationDate>
     <sl:tag rdf:resource="&tag;ia_limites"/>
-    <sl:creationTime>2018-01-03T11:33:53Z</sl:creationTime>
     <sl:arxiv_summary xml:lang="en">Although deep learning has historical roots going back decades, neither the
 term "deep learning" nor the approach was popular just over five years ago,
 when the field was reignited by papers such as Krizhevsky, Sutskever and
@@ -532,15 +534,17 @@ progress in areas such as speech recognition, image recognition, and game
 playing, and considerable enthusiasm in the popular press, I present ten
 concerns for deep learning, and suggest that deep learning must be supplemented
 by other techniques if we are to reach artificial general intelligence.</sl:arxiv_summary>
+    <sl:creationTime>2018-01-03T11:33:53Z</sl:creationTime>
     <sl:arxiv_published>2018-01-02T12:49:35Z</sl:arxiv_published>
     <sl:tag rdf:resource="&tag;deep_learning"/>
     <sl:arxiv_firstAuthor>Gary Marcus</sl:arxiv_firstAuthor>
     <sl:arxiv_author>Gary Marcus</sl:arxiv_author>
     <sl:arxiv_title xml:lang="en">Deep Learning: A Critical Appraisal</sl:arxiv_title>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:arxiv_num>1801.00631</sl:arxiv_num>
     <sl:arxiv_updated>2018-01-02T12:49:35Z</sl:arxiv_updated>
     <dc:title xml:lang="en">[1801.00631] Deep Learning: A Critical Appraisal</dc:title>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="http://www.arxiv-sanity.com/">
     <sl:tag rdf:resource="&tag;andrej_karpathy"/>
     <sl:tag rdf:resource="&tag;arxiv"/>
@@ -549,12 +553,13 @@ by other techniques if we are to reach artificial general intelligence.</sl:arxi
     <dc:title>Arxiv Sanity Preserver</dc:title>
     <sl:tag rdf:resource="&tag;tools"/>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="https://arxiv.org/abs/1801.01586">
+  <rdf:Description rdf:about="https://arxiv.org/abs/1801.01586">
     <sl:arxiv_title xml:lang="en">A practical tutorial on autoencoders for nonlinear feature fusion: Taxonomy, models, software and guidelines</sl:arxiv_title>
     <sl:arxiv_author>David Charte</sl:arxiv_author>
     <sl:creationTime>2018-01-09T14:05:31Z</sl:creationTime>
     <sl:arxiv_num>1801.01586</sl:arxiv_num>
     <sl:arxiv_author>María J. del Jesus</sl:arxiv_author>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:arxiv_summary xml:lang="en">Many of the existing machine learning algorithms, both supervised and
 unsupervised, depend on the quality of the input characteristics to generate a
 good model. The amount of these variables is also important, since performance
@@ -588,7 +593,7 @@ digits and breast cancer.</sl:arxiv_summary>
     <sl:arxiv_published>2018-01-04T23:51:05Z</sl:arxiv_published>
     <sl:tag rdf:resource="&tag;autoencoder"/>
     <sl:arxiv_firstAuthor>David Charte</sl:arxiv_firstAuthor>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="http://www.wildml.com/2017/12/ai-and-deep-learning-in-2017-a-year-in-review/">
     <sl:tag rdf:resource="&tag;denny_britz"/>
     <sl:tag rdf:resource="&tag;deep_learning"/>

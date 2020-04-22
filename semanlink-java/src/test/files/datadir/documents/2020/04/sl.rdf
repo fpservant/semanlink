@@ -70,7 +70,7 @@
     <dc:title>pdf2table: A Method to Extract Table Information from PDF Files</dc:title>
     <sl:bookmarkOf rdf:resource="http://ieg.ifs.tuwien.ac.at/projects/pdf2table/yildiz_iicai05.pdf"/>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="2004_06842_layered_graph_embe">
+  <rdf:Description rdf:about="2004_06842_layered_graph_embe">
     <sl:tag rdf:resource="&tag;graph_embeddings"/>
     <sl:tag rdf:resource="&tag;brad_pitt"/>
     <sl:arxiv_summary xml:lang="en">In this paper, we describe an embedding-based entity recommendation framework
@@ -92,14 +92,15 @@ languages in the Yahoo! Knowledge Graph, which Wikipedia is a core subset of.</s
     <sl:arxiv_firstAuthor>Chien-Chun Ni</sl:arxiv_firstAuthor>
     <sl:arxiv_published>2020-04-15T00:49:27Z</sl:arxiv_published>
     <sl:creationDate>2020-04-17</sl:creationDate>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <dc:title xml:lang="en">[2004.06842] Layered Graph Embedding for Entity Recommendation using Wikipedia in the Yahoo! Knowledge Graph</dc:title>
     <sl:creationTime>2020-04-17T19:14:01Z</sl:creationTime>
     <sl:arxiv_author>Nicolas Torzec</sl:arxiv_author>
     <sl:arxiv_author>Kin Sum Liu</sl:arxiv_author>
     <sl:arxiv_updated>2020-04-15T00:49:27Z</sl:arxiv_updated>
     <sl:arxiv_num>2004.06842</sl:arxiv_num>
-  </sl:ArxivDoc>
-  <sl:ArxivDoc rdf:about="1904_01947_extracting_tables_">
+  </rdf:Description>
+  <rdf:Description rdf:about="1904_01947_extracting_tables_">
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1904.01947"/>
     <sl:arxiv_author>Nataliya Le Vine</sl:arxiv_author>
     <sl:tag rdf:resource="&tag;pdf_extract"/>
@@ -121,8 +122,9 @@ a distance measure optimised by a genetic algorithm.</sl:arxiv_summary>
     <sl:arxiv_published>2019-04-03T12:12:03Z</sl:arxiv_published>
     <sl:arxiv_num>1904.01947</sl:arxiv_num>
     <sl:arxiv_author>Matthew Zeigenfuse</sl:arxiv_author>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:creationDate>2020-04-02</sl:creationDate>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="projota_a_rezadeira_video_of">
     <sl:tag rdf:resource="&tag;musique_bresilienne"/>
     <sl:creationTime>2020-04-10T19:30:37Z</sl:creationTime>
@@ -139,9 +141,10 @@ a distance measure optimised by a genetic algorithm.</sl:arxiv_summary>
     <sl:creationTime>2020-04-14T23:49:35Z</sl:creationTime>
     <sl:tag rdf:resource="&tag;minting_uris"/>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="1503_02531_distilling_the_kno">
+  <rdf:Description rdf:about="1503_02531_distilling_the_kno">
     <sl:comment xml:lang="en">&gt; Caruana and his collaborators have shown that it is possible to compress the knowledge in an [#ensemble](/tag/ensemble_learning.html) into a single model which is much easier to deploy and we develop this approach further using a different compression technique. We achieve some surprising results on MNIST.</sl:comment>
     <sl:arxiv_num>1503.02531</sl:arxiv_num>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:creationDate>2020-04-16</sl:creationDate>
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1503.02531"/>
     <sl:arxiv_author>Jeff Dean</sl:arxiv_author>
@@ -170,7 +173,7 @@ specialist models can be trained rapidly and in parallel.</sl:arxiv_summary>
     <dc:title xml:lang="en">[1503.02531] Distilling the Knowledge in a Neural Network</dc:title>
     <sl:arxiv_updated>2015-03-09T15:44:49Z</sl:arxiv_updated>
     <sl:arxiv_author>Geoffrey Hinton</sl:arxiv_author>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="coronavirus_la_seine_saint_de">
     <sl:comment xml:lang="fr">« Les infirmières, les caissières, les aides-soignantes, les agents d’entretien, les intérimaires, les agents de sécurité, les livreurs… bref, **tous ceux qui font tenir la France debout aujourd’hui, tous ceux qui vont au front et se mettent en danger**, ils viennent des quartiers populaires, ce sont des habitants du 93 ! »</sl:comment>
     <dc:title>Coronavirus : la Seine-Saint-Denis confrontée à une inquiétante surmortalité</dc:title>
@@ -252,7 +255,7 @@ specialist models can be trained rapidly and in parallel.</sl:arxiv_summary>
     <sl:tag rdf:resource="&tag;langage"/>
     <sl:tag rdf:resource="&tag;dictionnaire"/>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="2004_05150_longformer_the_lo">
+  <rdf:Description rdf:about="2004_05150_longformer_the_lo">
     <sl:arxiv_author>Arman Cohan</sl:arxiv_author>
     <sl:arxiv_summary xml:lang="en">Transformer-based models are unable to process long sequences due to their
 self-attention operation, which scales quadratically with the sequence length.
@@ -272,6 +275,7 @@ and TriviaQA.</sl:arxiv_summary>
     <sl:arxiv_author>Matthew E. Peters</sl:arxiv_author>
     <sl:comment xml:lang="en">&gt; **Transformer-based models are unable to process long sequences due to their self-attention operation, which scales quadratically with the sequence length**. To address this limitation, we introduce the Longformer with an attention mechanism that scales linearly with sequence length. Longformer's attention mechanism is a **drop-in replacement** for the standard self-attention and **combines a local windowed attention with a task motivated global attention**.</sl:comment>
     <sl:creationTime>2020-04-13T11:06:40Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:creationDate>2020-04-13</sl:creationDate>
     <sl:arxiv_firstAuthor>Iz Beltagy</sl:arxiv_firstAuthor>
     <sl:tag rdf:resource="&tag;nlp_long_documents"/>
@@ -281,8 +285,8 @@ and TriviaQA.</sl:arxiv_summary>
     <sl:arxiv_title xml:lang="en">Longformer: The Long-Document Transformer</sl:arxiv_title>
     <sl:arxiv_author>Iz Beltagy</sl:arxiv_author>
     <dc:title xml:lang="en">[2004.05150] Longformer: The Long-Document Transformer</dc:title>
-  </sl:ArxivDoc>
-  <sl:ArxivDoc rdf:about="1903_04197_structured_knowled">
+  </rdf:Description>
+  <rdf:Description rdf:about="1903_04197_structured_knowled">
     <sl:arxiv_firstAuthor>Yifan Liu</sl:arxiv_firstAuthor>
     <sl:arxiv_author>Chunhua Shen</sl:arxiv_author>
     <sl:arxiv_updated>2020-02-20T23:52:50Z</sl:arxiv_updated>
@@ -292,6 +296,7 @@ and TriviaQA.</sl:arxiv_summary>
     <sl:arxiv_published>2019-03-11T10:05:09Z</sl:arxiv_published>
     <sl:arxiv_title xml:lang="en">Structured Knowledge Distillation for Dense Prediction</sl:arxiv_title>
     <sl:arxiv_num>1903.04197</sl:arxiv_num>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:arxiv_author>Yifan Liu</sl:arxiv_author>
     <sl:creationDate>2020-04-16</sl:creationDate>
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1903.04197"/>
@@ -310,7 +315,7 @@ approaches is demonstrated by extensive experiments on three dense prediction
 tasks: semantic segmentation, depth estimation, and object detection.</sl:arxiv_summary>
     <sl:arxiv_author>Jingdong Wang</sl:arxiv_author>
     <sl:arxiv_author>Changyong Shun</sl:arxiv_author>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="lee_moses_bad_girl_full_song">
     <sl:tag rdf:resource="&tag;musique"/>
     <sl:creationTime>2020-04-13T15:02:28Z</sl:creationTime>

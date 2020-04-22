@@ -36,7 +36,7 @@
     <sl:creationTime>2020-02-20T22:27:40Z</sl:creationTime>
     <sl:creationDate>2020-02-20</sl:creationDate>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_1703_07464_no_fuss_distance_m">
+  <rdf:Description rdf:about="_1703_07464_no_fuss_distance_m">
     <sl:creationDate>2020-02-09</sl:creationDate>
     <sl:arxiv_author>Thomas K. Leung</sl:arxiv_author>
     <sl:comment xml:lang="en">&gt; We address the problem of distance metric learning (DML), defined as learning a distance consistent with a notion of semantic similarity...&#xD;
@@ -66,6 +66,7 @@ state of the art in zero-shot learning, but also offers an explanation&#xD;
 to the effectiveness of the standard trick of training&#xD;
 a classifier, and using its penultimate layer’s output as the&#xD;
 embedding.**</sl:comment>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:arxiv_published>2017-03-21T23:11:56Z</sl:arxiv_published>
     <sl:arxiv_firstAuthor>Yair Movshovitz-Attias</sl:arxiv_firstAuthor>
     <sl:arxiv_author>Alexander Toshev</sl:arxiv_author>
@@ -102,7 +103,7 @@ triplet-based losses.</sl:arxiv_summary>
     <sl:arxiv_title xml:lang="en">No Fuss Distance Metric Learning using Proxies</sl:arxiv_title>
     <sl:arxiv_author>Saurabh Singh</sl:arxiv_author>
     <sl:arxiv_updated>2017-08-01T19:52:13Z</sl:arxiv_updated>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="jeremy_howard_sur_twitter_th">
     <dc:title>Jeremy Howard sur Twitter : "The fastai paper (with @GuggerSylvain) covers v2..."</dc:title>
     <sl:creationDate>2020-02-13</sl:creationDate>
@@ -112,7 +113,7 @@ triplet-based losses.</sl:arxiv_summary>
     <sl:tag rdf:resource="&tag;jeremy_howard"/>
     <sl:tag rdf:resource="&tag;tweet"/>
     <sl:mainDoc>
-      <sl:ArxivDoc rdf:about="_2002_04688_fastai_a_layered_">
+      <rdf:Description rdf:about="_2002_04688_fastai_a_layered_">
         <dc:title xml:lang="en">[2002.04688] fastai: A Layered API for Deep Learning</dc:title>
         <sl:tag rdf:resource="&tag;jeremy_howard"/>
         <sl:creationTime>2020-02-13T21:07:29Z</sl:creationTime>
@@ -146,11 +147,12 @@ http://dev.fast.ai/</sl:arxiv_summary>
         <sl:arxiv_published>2020-02-11T21:16:48Z</sl:arxiv_published>
         <sl:arxiv_title xml:lang="en">fastai: A Layered API for Deep Learning</sl:arxiv_title>
         <sl:tag rdf:resource="&tag;api"/>
+        <sl:tag rdf:resource="&tag;arxiv_doc"/>
         <sl:tag rdf:resource="&tag;fast_ai"/>
         <sl:arxiv_updated>2020-02-16T18:17:51Z</sl:arxiv_updated>
         <sl:arxiv_author>Sylvain Gugger</sl:arxiv_author>
         <sl:arxiv_author>Jeremy Howard</sl:arxiv_author>
-      </sl:ArxivDoc>
+      </rdf:Description>
     </sl:mainDoc>
   </rdf:Description>
   <rdf:Description rdf:about="extractive_text_summarization_u">
@@ -303,7 +305,7 @@ fixed-size blocks&#xD;
     <sl:tag rdf:resource="&tag;hugo"/>
     <dc:title xml:lang="fr">« Le Mariage de Roland », Victor Hugo, La Légende des Siècles, 1859.</dc:title>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_2002_02925_bert_of_theseus_c">
+  <rdf:Description rdf:about="_2002_02925_bert_of_theseus_c">
     <sl:comment xml:lang="en">approach to compress BERT by progressive module replacing.&#xD;
 &#xD;
 &gt; Compared to the previous knowledge distillation approaches for BERT compression, our approach leverages only one loss function and one hyper-parameter&#xD;
@@ -338,9 +340,10 @@ hyper-parameter tuning. Our approach outperforms existing knowledge
 distillation approaches on GLUE benchmark, showing a new perspective of model
 compression.</sl:arxiv_summary>
     <sl:arxiv_author>Wangchunshu Zhou</sl:arxiv_author>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:tag rdf:resource="&tag;nlp_microsoft"/>
-  </sl:ArxivDoc>
-  <sl:ArxivDoc rdf:about="_2002_12327_a_primer_in_bertol">
+  </rdf:Description>
+  <rdf:Description rdf:about="_2002_12327_a_primer_in_bertol">
     <sl:tag rdf:resource="&tag;bert"/>
     <sl:arxiv_published>2020-02-27T18:46:42Z</sl:arxiv_published>
     <sl:comment xml:lang="en">(article praised on [twitter](https://twitter.com/dennybritz/status/1233343170596917248?s=20) by D Britz and Y. Goldberg)</sl:comment>
@@ -361,9 +364,10 @@ analysis studies. We also provide an overview of the proposed modifications to
 the model and its training regime. We then outline the directions for further
 research.</sl:arxiv_summary>
     <sl:tag rdf:resource="&tag;bertology"/>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:creationTime>2020-02-28T13:25:30Z</sl:creationTime>
     <sl:arxiv_author>Anna Rogers</sl:arxiv_author>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="online_speech_recognition_with_">
     <sl:tag rdf:resource="&tag;ai_facebook"/>
     <dc:title>Online speech recognition with wav2letter@anywhere</dc:title>
@@ -372,8 +376,9 @@ research.</sl:arxiv_summary>
     <sl:bookmarkOf rdf:resource="https://ai.facebook.com/blog/online-speech-recognition-with-wav2letteranywhere/"/>
     <sl:tag rdf:resource="&tag;speech_recognition"/>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_1911_05507_compressive_transf">
+  <rdf:Description rdf:about="_1911_05507_compressive_transf">
     <sl:tag rdf:resource="&tag;nlp_long_documents"/>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <dc:title xml:lang="en">[1911.05507] Compressive Transformers for Long-Range Sequence Modelling</dc:title>
     <sl:tag rdf:resource="&tag;sequence_to_sequence_learning"/>
     <sl:comment xml:lang="en">&gt; the Compressive Transformer, an attentive sequence model which compresses past memories for long-range sequence learning.&#xD;
@@ -402,7 +407,7 @@ open-vocabulary language modelling benchmark derived from books, PG-19.</sl:arxi
     <sl:tag rdf:resource="&tag;attention_is_all_you_need"/>
     <sl:arxiv_author>Siddhant M. Jayakumar</sl:arxiv_author>
     <sl:arxiv_author>Timothy P. Lillicrap</sl:arxiv_author>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="canwen_xu_sur_twitter_wtf_w">
     <sl:tag rdf:resource="&tag;nlp_microsoft"/>
     <sl:comment>[paper](/doc/2020/02/_2002_02925_bert_of_theseus_c)</sl:comment>
@@ -421,13 +426,14 @@ open-vocabulary language modelling benchmark derived from books, PG-19.</sl:arxi
     <sl:tag rdf:resource="&tag;fast_ai"/>
     <sl:tag rdf:resource="&tag;blog_software"/>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_2002_11402_detecting_potentia">
+  <rdf:Description rdf:about="_2002_11402_detecting_potentia">
     <sl:arxiv_title xml:lang="en">Detecting Potential Topics In News Using BERT, CRF and Wikipedia</sl:arxiv_title>
     <sl:arxiv_author>Swapnil Ashok Jadhav</sl:arxiv_author>
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2002.11402"/>
     <sl:creationDate>2020-02-27</sl:creationDate>
     <sl:arxiv_updated>2020-02-28T18:44:07Z</sl:arxiv_updated>
     <sl:tag rdf:resource="&tag;bert"/>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:tag rdf:resource="&tag;wikipedia"/>
     <sl:arxiv_num>2002.11402</sl:arxiv_num>
     <sl:creationTime>2020-02-27T23:36:54Z</sl:creationTime>
@@ -449,7 +455,7 @@ compared with industry best Flair, Spacy and Stanford-caseless-NER in terms of
 F1 and especially Recall.</sl:arxiv_summary>
     <sl:arxiv_firstAuthor>Swapnil Ashok Jadhav</sl:arxiv_firstAuthor>
     <sl:tag rdf:resource="&tag;conditional_random_field"/>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="machine_learning_at_the_vu_univ">
     <sl:creationTime>2020-02-18T13:52:09Z</sl:creationTime>
     <sl:bookmarkOf rdf:resource="https://mlvu.github.io/"/>
@@ -515,7 +521,7 @@ score(f(x), f(x+)) &gt;&gt; score(f(x), f(x-))&#xD;
 &#xD;
 &gt; comment différentes techniques de NLP peuvent être appliquées pour calculer un score de matching entre un profil et une offre, en comparant leur performance sur une métrique de ranking dédiée.</sl:comment>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_2002_05867v1_transformers_as_">
+  <rdf:Description rdf:about="_2002_05867v1_transformers_as_">
     <sl:arxiv_author>Kyle Richardson</sl:arxiv_author>
     <sl:arxiv_num>2002.05867</sl:arxiv_num>
     <sl:arxiv_title xml:lang="en">Transformers as Soft Reasoners over Language</sl:arxiv_title>
@@ -548,11 +554,12 @@ are available at http://rule-reasoning.apps.allenai.org/</sl:arxiv_summary>
     <sl:creationDate>2020-02-17</sl:creationDate>
     <sl:creationTime>2020-02-17T09:06:44Z</sl:creationTime>
     <sl:tag rdf:resource="&tag;allen_institute_for_ai_a2i"/>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <dc:title xml:lang="en">[2002.05867] Transformers as Soft Reasoners over Language</dc:title>
     <sl:arxiv_author>Oyvind Tafjord</sl:arxiv_author>
     <sl:tag rdf:resource="&tag;knowledge_representation"/>
     <sl:tag rdf:resource="&tag;reasoning"/>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="yoshua_bengio">
     <sl:comment xml:lang="en">[Yoshua Bengio’s blog – first words](https://yoshuabengio.org/2020/02/10/fusce-risus/)</sl:comment>
     <sl:tag rdf:resource="&tag;yoshua_bengio"/>
@@ -561,7 +568,7 @@ are available at http://rule-reasoning.apps.allenai.org/</sl:arxiv_summary>
     <sl:creationDate>2020-02-12</sl:creationDate>
     <dc:title>Yoshua Bengio</dc:title>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_1802_01528_the_matrix_calculu">
+  <rdf:Description rdf:about="_1802_01528_the_matrix_calculu">
     <sl:arxiv_num>1802.01528</sl:arxiv_num>
     <sl:tag rdf:resource="&tag;jeremy_howard"/>
     <sl:tag rdf:resource="&tag;matrix_calculus"/>
@@ -587,9 +594,10 @@ terminology discussed here. See related articles at http://explained.ai</sl:arxi
     <sl:arxiv_author>Jeremy Howard</sl:arxiv_author>
     <sl:creationDate>2020-02-19</sl:creationDate>
     <sl:arxiv_updated>2018-07-02T17:36:34Z</sl:arxiv_updated>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:creationTime>2020-02-19T21:52:12Z</sl:creationTime>
     <sl:arxiv_author>Terence Parr</sl:arxiv_author>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="machine_learning_crash_course_">
     <sl:tag rdf:resource="&tag;doc_by_google"/>
     <sl:tag rdf:resource="&tag;machine_learning_course"/>
@@ -665,7 +673,8 @@ So, what the point? To be compared with this [IBM's paper](/doc/2019/09/_1909_04
     <sl:tag rdf:resource="&tag;nlp_sample_code"/>
     <sl:tag rdf:resource="&tag;attention_is_all_you_need"/>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_1503_08677_label_embedding_fo">
+  <rdf:Description rdf:about="_1503_08677_label_embedding_fo">
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:arxiv_published>2015-03-30T14:04:34Z</sl:arxiv_published>
     <sl:arxiv_updated>2015-10-01T10:48:38Z</sl:arxiv_updated>
     <sl:tag rdf:resource="&tag;image_classification"/>
@@ -696,7 +705,7 @@ labeled examples.</sl:arxiv_summary>
     <dc:title xml:lang="en">[1503.08677] Label-Embedding for Image Classification</dc:title>
     <sl:arxiv_author>Zeynep Akata</sl:arxiv_author>
     <sl:arxiv_author>Cordelia Schmid</sl:arxiv_author>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="caraa_sur_twitter_probably_t">
     <sl:tag rdf:resource="&tag;tweet"/>
     <sl:bookmarkOf rdf:resource="https://twitter.com/CARAA_Center/status/1228220123854458888"/>
@@ -717,7 +726,7 @@ labeled examples.</sl:arxiv_summary>
 &#xD;
 &gt; Confidentiels, les tests réglementaires ne peuvent généralement pas être consultés par la communauté scientifique,</sl:comment>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_1910_04126_scalable_nearest_n">
+  <rdf:Description rdf:about="_1910_04126_scalable_nearest_n">
     <sl:arxiv_updated>2020-02-14T14:54:37Z</sl:arxiv_updated>
     <sl:creationTime>2020-02-20T09:11:40Z</sl:creationTime>
     <sl:arxiv_author>Arturs Backurs</sl:arxiv_author>
@@ -734,6 +743,7 @@ labeled examples.</sl:arxiv_summary>
     <sl:arxiv_author>Yihe Dong</sl:arxiv_author>
     <sl:arxiv_author>Ilya Razenshteyn</sl:arxiv_author>
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1910.04126"/>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:arxiv_summary xml:lang="en">The Optimal Transport (a.k.a. Wasserstein) distance is an increasingly
 popular similarity measure for rich data domains, such as images or text
 documents. This raises the necessity for fast nearest neighbor search with
@@ -748,7 +758,7 @@ real-world text and image datasets, show that Flowtree improves over various
 baselines and existing methods in either running time or accuracy. In
 particular, its quality of approximation is in line with previous high-accuracy
 methods, while its running time is much faster.</sl:arxiv_summary>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="ivan_maisky_wikipedia">
     <sl:comment xml:lang="fr">Diplomate soviétique - si les Anglais et les Français l'avaient écouté, la 2eme guerre mondiale aurait peut-être été évitée</sl:comment>
     <dc:title>Ivan Maisky</dc:title>

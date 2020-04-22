@@ -23,6 +23,10 @@ public interface SLThesaurus extends SLResource {
 		return uri;
 	}
 	
+//	default public String uri(String localName) {
+//		return getBase() + localName;
+//	}
+	
 	//
 	//
 	//

@@ -143,7 +143,7 @@ generate queries to the KB</sl:comment>
     <sl:bookmarkOf rdf:resource="http://minimizedistraction.com/"/>
     <sl:tag rdf:resource="&tag;weapon_of_mass_distraction"/>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_1711_00046_replace_or_retriev">
+  <rdf:Description rdf:about="_1711_00046_replace_or_retriev">
     <sl:arxiv_title xml:lang="en">Replace or Retrieve Keywords In Documents at Scale</sl:arxiv_title>
     <sl:creationTime>2020-01-09T16:26:49Z</sl:creationTime>
     <sl:tag rdf:resource="&tag;regex"/>
@@ -174,8 +174,9 @@ under the permissive MIT License.</sl:arxiv_summary>
     <sl:arxiv_author>Vikash Singh</sl:arxiv_author>
     <sl:arxiv_updated>2017-11-09T18:56:44Z</sl:arxiv_updated>
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1711.00046"/>
-  </sl:ArxivDoc>
-  <sl:ArxivDoc rdf:about="_1503_03832_facenet_a_unified">
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="_1503_03832_facenet_a_unified">
     <sl:arxiv_published>2015-03-12T18:10:53Z</sl:arxiv_published>
     <sl:arxiv_author>Dmitry Kalenichenko</sl:arxiv_author>
     <sl:tag rdf:resource="&tag;siamese_network"/>
@@ -202,6 +203,7 @@ We also introduce the concept of harmonic embeddings, and a harmonic triplet
 loss, which describe different versions of face embeddings (produced by
 different networks) that are compatible to each other and allow for direct
 comparison between each other.</sl:arxiv_summary>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1503.03832"/>
     <sl:arxiv_title xml:lang="en">FaceNet: A Unified Embedding for Face Recognition and Clustering</sl:arxiv_title>
     <sl:creationTime>2020-01-25T01:03:31Z</sl:creationTime>
@@ -221,7 +223,7 @@ comparison between each other.</sl:arxiv_summary>
     <sl:arxiv_author>Florian Schroff</sl:arxiv_author>
     <sl:tag rdf:resource="&tag;face_recognition"/>
     <sl:arxiv_updated>2015-06-17T23:35:47Z</sl:arxiv_updated>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="natural_language_understanding_">
     <sl:tag rdf:resource="&tag;slot_filling"/>
     <sl:tag rdf:resource="&tag;nlu"/>
@@ -251,7 +253,7 @@ comparison between each other.</sl:arxiv_summary>
     <dc:title>Scraping Data - UHack Guide</dc:title>
     <sl:tag rdf:resource="&tag;scraping"/>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_1902_10909_bert_for_joint_int">
+  <rdf:Description rdf:about="_1902_10909_bert_for_joint_int">
     <sl:arxiv_updated>2019-02-28T05:54:16Z</sl:arxiv_updated>
     <sl:tag rdf:resource="&tag;alibaba"/>
     <sl:tag rdf:resource="&tag;intent_classification_and_slot_filling"/>
@@ -274,6 +276,7 @@ attention-based recurrent neural network models and slot-gated models.</sl:arxiv
     <sl:tag rdf:resource="&tag;bert"/>
     <sl:arxiv_title xml:lang="en">BERT for Joint Intent Classification and Slot Filling</sl:arxiv_title>
     <sl:creationDate>2020-01-09</sl:creationDate>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:comment xml:lang="en">&gt; Experimental results show that our&#xD;
 proposed joint BERT model outperforms BERT&#xD;
 models modeling intent classification and slot filling&#xD;
@@ -288,7 +291,7 @@ Adding a CRF on top of the model doesn't improve the results.</sl:comment>
     <sl:creationTime>2020-01-09T01:13:39Z</sl:creationTime>
     <sl:arxiv_num>1902.10909</sl:arxiv_num>
     <sl:arxiv_author>Wen Wang</sl:arxiv_author>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="lecture_14_contextual_vectors">
     <sl:mainDoc>
       <rdf:Description rdf:about="cs224u_natural_language_unders">
@@ -392,7 +395,7 @@ Regarding NLP: silos, incomplete data, small data, changing environment.&#xD;
     <dc:title>Interpretable Named entity recognition with keras and LIME – Depends on the definition</dc:title>
     <sl:tag rdf:resource="&tag;named_entity_recognition"/>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_2001_01447v1_improving_entity">
+  <rdf:Description rdf:about="_2001_01447v1_improving_entity">
     <dc:title xml:lang="en">[2001.01447] Improving Entity Linking by Modeling Latent Entity Type Information</dc:title>
     <sl:tag rdf:resource="&tag;nlp_microsoft"/>
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2001.01447"/>
@@ -404,6 +407,7 @@ Regarding NLP: silos, incomplete data, small data, changing environment.&#xD;
     <sl:creationTime>2020-01-09T02:37:01Z</sl:creationTime>
     <sl:arxiv_author>Jinpeng Wang</sl:arxiv_author>
     <sl:arxiv_author>Feng Jiang</sl:arxiv_author>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:arxiv_author>Chin-Yew Lin</sl:arxiv_author>
     <sl:arxiv_author>Shuang Chen</sl:arxiv_author>
     <sl:arxiv_published>2020-01-06T09:18:29Z</sl:arxiv_published>
@@ -421,7 +425,7 @@ linking models on standard benchmark (AIDA-CoNLL). Detailed experiment analysis
 demonstrates that our model corrects most of the type errors produced by the
 direct baseline.</sl:arxiv_summary>
     <sl:arxiv_num>2001.01447</sl:arxiv_num>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="how_to_build_deep_neural_networ">
     <sl:tag rdf:resource="&tag;named_entity_recognition"/>
     <dc:title>How to build deep neural network for custom NER with Keras</dc:title>
@@ -613,7 +617,7 @@ Current limitation of vector similarity in Elasticsearch: vectors can be used fo
     <sl:creationDate>2020-01-10</sl:creationDate>
     <sl:tag rdf:resource="&tag;using_word_embedding"/>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_2001_07685_fixmatch_simplify">
+  <rdf:Description rdf:about="_2001_07685_fixmatch_simplify">
     <sl:tag rdf:resource="&tag;semi_supervised_learning"/>
     <sl:comment xml:lang="en">[github](https://github.com/google-research/fixmatch)&#xD;
 &#xD;
@@ -628,6 +632,7 @@ produces a high-confidence prediction. &#xD;
 2. The model is then&#xD;
 trained to predict the pseudo-label when fed a strongly augmented&#xD;
 version of the same image.</sl:comment>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:arxiv_author>Ekin D. Cubuk</sl:arxiv_author>
     <sl:arxiv_author>Colin Raffel</sl:arxiv_author>
     <sl:arxiv_author>Kihyuk Sohn</sl:arxiv_author>
@@ -663,11 +668,12 @@ https://github.com/google-research/fixmatch.</sl:arxiv_summary>
     <sl:arxiv_author>Zizhao Zhang</sl:arxiv_author>
     <sl:tag rdf:resource="&tag;google_research"/>
     <sl:arxiv_published>2020-01-21T18:32:27Z</sl:arxiv_published>
-  </sl:ArxivDoc>
-  <sl:ArxivDoc rdf:about="_1912_08904_macaw_an_extensib">
+  </rdf:Description>
+  <rdf:Description rdf:about="_1912_08904_macaw_an_extensib">
     <sl:tag rdf:resource="&tag;chatbot"/>
     <sl:arxiv_num>1912.08904</sl:arxiv_num>
     <sl:tag rdf:resource="&tag;nlp_tools"/>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:creationDate>2020-01-01</sl:creationDate>
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1912.08904#clicktoread"/>
     <sl:arxiv_author>Nick Craswell</sl:arxiv_author>
@@ -693,7 +699,7 @@ be evaluated in batch mode. It can also integrate with a user interface, which
 allows user studies and data collection in an interactive mode, where the back
 end can be fully algorithmic or a wizard of oz setup. Macaw is distributed
 under the MIT License.</sl:arxiv_summary>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="github_opennmt_opennmt_py_op">
     <dc:title>GitHub - OpenNMT/OpenNMT-py: Open Source Neural Machine Translation in PyTorch</dc:title>
     <sl:creationDate>2020-01-17</sl:creationDate>
@@ -848,10 +854,11 @@ after each network update.&#xD;
     <sl:creationDate>2020-01-06</sl:creationDate>
     <dc:title>Richer Sentence Embeddings using Sentence-BERT — Part I</dc:title>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_1802_07569_continual_lifelong">
+  <rdf:Description rdf:about="_1802_07569_continual_lifelong">
     <sl:arxiv_title xml:lang="en">Continual Lifelong Learning with Neural Networks: A Review</sl:arxiv_title>
     <dc:title xml:lang="en">[1802.07569] Continual Lifelong Learning with Neural Networks: A Review</dc:title>
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1802.07569"/>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:arxiv_author>German I. Parisi</sl:arxiv_author>
     <sl:tag rdf:resource="&tag;continual_learning"/>
     <sl:arxiv_author>Ronald Kemker</sl:arxiv_author>
@@ -885,7 +892,7 @@ intrinsic motivation, and multisensory integration.</sl:arxiv_summary>
     <sl:arxiv_author>Stefan Wermter</sl:arxiv_author>
     <sl:arxiv_num>1802.07569</sl:arxiv_num>
     <sl:arxiv_author>Christopher Kanan</sl:arxiv_author>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="crossing_divides_how_a_social_">
     <sl:tag rdf:resource="&tag;taiwan"/>
     <sl:tag rdf:resource="&tag;consensus"/>
@@ -915,9 +922,10 @@ intrinsic motivation, and multisensory integration.</sl:arxiv_summary>
     <dc:title>NLP Year in Review — 2019 - dair.ai - Medium</dc:title>
     <sl:tag rdf:resource="&tag;survey"/>
   </rdf:Description>
-  <sl:ArxivDoc rdf:about="_1912_12510_detecting_out_of_d">
+  <rdf:Description rdf:about="_1912_12510_detecting_out_of_d">
     <sl:arxiv_author>Sageev Oore</sl:arxiv_author>
     <sl:arxiv_title xml:lang="en">Detecting Out-of-Distribution Examples with In-distribution Examples and Gram Matrices</sl:arxiv_title>
+    <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:arxiv_summary xml:lang="en">When presented with Out-of-Distribution (OOD) examples, deep neural networks
 yield confident, incorrect predictions. Detecting OOD examples is challenging,
 and the potential risks are high. In this paper, we propose to detect OOD
@@ -945,7 +953,7 @@ methods (including those that do assume access to OOD examples).</sl:arxiv_summa
     <sl:creationTime>2020-01-15T13:04:14Z</sl:creationTime>
     <sl:comment>&gt; we propose to detect OOD examples by identifying inconsistencies between activity patterns and class predicted... &#xD;
 &gt; Unlike many approaches, this can be used with any pre-trained softmax classifier and does not require access to OOD data</sl:comment>
-  </sl:ArxivDoc>
+  </rdf:Description>
   <rdf:Description rdf:about="hits_at_tac_kbp_2015_entity_dis">
     <sl:tag rdf:resource="&tag;benjamin_heinzerling"/>
     <sl:tag rdf:resource="&tag;entity_discovery_and_linking"/>

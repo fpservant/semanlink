@@ -7,6 +7,9 @@ abstract public void addDocProperty(String propertyUri, String[] objectUris);
 abstract public void setDocProperty(String propertyUri, String propertyValue, String lang);
 abstract public void setDocProperty(String propertyUri, String objectUri);
 
+abstract public void removeStatement(String propertyUri, String propertyValue, String lang);
+abstract public void removeStatement(String propertyUri, String objectUri);
+
 public void addKeyword(SLKeyword kw) {
 	addDocProperty(SLModel.HAS_KEYWORD_PROPERTY, kw.getURI());
 }
