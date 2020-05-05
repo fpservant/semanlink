@@ -11,64 +11,64 @@
     xmlns:sl="&sl;"
     xmlns:tag="&tag;">
   <rdf:Description rdf:about="covid_19_lessons_from_three_mil">
-    <sl:tag rdf:resource="&tag;mensonge_d_etat"/>
-    <sl:tag rdf:resource="&tag;three_mile_island"/>
-    <sl:tag rdf:resource="&tag;cringely"/>
-    <dc:title>COVID-19 Lessons from Three Mile Island #2 — the NRC | I, Cringely</dc:title>
-    <sl:creationTime>2020-04-18T13:33:29Z</sl:creationTime>
-    <sl:creationDate>2020-04-18</sl:creationDate>
     <sl:bookmarkOf rdf:resource="https://www.cringely.com/2020/04/17/covid-19-lessons-from-three-mile-island-2-the-nrc/"/>
+    <sl:creationDate>2020-04-18</sl:creationDate>
+    <sl:creationTime>2020-04-18T13:33:29Z</sl:creationTime>
+    <dc:title>COVID-19 Lessons from Three Mile Island #2 — the NRC | I, Cringely</dc:title>
+    <sl:tag rdf:resource="&tag;cringely"/>
+    <sl:tag rdf:resource="&tag;three_mile_island"/>
+    <sl:tag rdf:resource="&tag;mensonge_d_etat"/>
   </rdf:Description>
   <rdf:Description rdf:about="lainey_doyle_sur_twitter_basi">
-    <sl:tag rdf:resource="&tag;irlande"/>
-    <dc:title>Lainey Doyle sur Twitter : Basic things: Ireland and the UK started this pandemic with roughly the same..."</dc:title>
-    <sl:bookmarkOf rdf:resource="https://twitter.com/laineydoyle/status/1249127908876128259?s=20"/>
-    <sl:creationDate>2020-04-12</sl:creationDate>
-    <sl:creationTime>2020-04-12T11:38:36Z</sl:creationTime>
-    <sl:tag rdf:resource="&tag;coronavirus"/>
     <sl:tag rdf:resource="&tag;covid19_conneries_gouvernementales"/>
+    <sl:tag rdf:resource="&tag;coronavirus"/>
+    <sl:creationTime>2020-04-12T11:38:36Z</sl:creationTime>
+    <sl:creationDate>2020-04-12</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="https://twitter.com/laineydoyle/status/1249127908876128259?s=20"/>
+    <dc:title>Lainey Doyle sur Twitter : Basic things: Ireland and the UK started this pandemic with roughly the same..."</dc:title>
+    <sl:tag rdf:resource="&tag;irlande"/>
   </rdf:Description>
   <rdf:Description rdf:about="les_lecons_de_wuhan_pour_enraye">
-    <sl:tag rdf:resource="&tag;coronavirus"/>
-    <dc:title>Les leçons de Wuhan pour enrayer l’épidémie</dc:title>
-    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/planete/article/2020/04/11/les-lecons-de-wuhan-pour-enrayer-l-epidemie_6036318_3244.html"/>
-    <sl:creationDate>2020-04-11</sl:creationDate>
-    <sl:creationTime>2020-04-11T14:47:15Z</sl:creationTime>
     <sl:tag rdf:resource="&tag;wuhan"/>
+    <sl:creationTime>2020-04-11T14:47:15Z</sl:creationTime>
+    <sl:creationDate>2020-04-11</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/planete/article/2020/04/11/les-lecons-de-wuhan-pour-enrayer-l-epidemie_6036318_3244.html"/>
+    <dc:title>Les leçons de Wuhan pour enrayer l’épidémie</dc:title>
+    <sl:tag rdf:resource="&tag;coronavirus"/>
   </rdf:Description>
   <rdf:Description rdf:about="retail_graph_walmart%E2%80%99s_produc">
-    <sl:tag rdf:resource="&tag;walmart"/>
-    <sl:tag rdf:resource="&tag;product_knowledge_graph"/>
-    <sl:creationTime>2020-04-09T21:18:53Z</sl:creationTime>
-    <sl:creationDate>2020-04-09</sl:creationDate>
-    <sl:bookmarkOf rdf:resource="https://medium.com/walmartlabs/retail-graph-walmarts-product-knowledge-graph-6ef7357963bc"/>
-    <dc:title>Retail Graph — Walmart’s Product Knowledge Graph</dc:title>
     <sl:tag rdf:resource="&tag;knowledge_graph"/>
+    <dc:title>Retail Graph — Walmart’s Product Knowledge Graph</dc:title>
+    <sl:bookmarkOf rdf:resource="https://medium.com/walmartlabs/retail-graph-walmarts-product-knowledge-graph-6ef7357963bc"/>
+    <sl:creationDate>2020-04-09</sl:creationDate>
+    <sl:creationTime>2020-04-09T21:18:53Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;product_knowledge_graph"/>
+    <sl:tag rdf:resource="&tag;walmart"/>
   </rdf:Description>
   <rdf:Description rdf:about="finally_we_may_have_a_path_to_t">
-    <sl:tag rdf:resource="&tag;computational_universe"/>
-    <dc:title>Finally We May Have a Path to the Fundamental Theory of Physics… and It’s Beautiful—Stephen Wolfram Writings</dc:title>
-    <sl:bookmarkOf rdf:resource="https://writings.stephenwolfram.com/2020/04/finally-we-may-have-a-path-to-the-fundamental-theory-of-physics-and-its-beautiful/"/>
-    <sl:creationDate>2020-04-15</sl:creationDate>
-    <sl:creationTime>2020-04-15T00:50:04Z</sl:creationTime>
     <sl:tag rdf:resource="&tag;wolfram"/>
+    <sl:creationTime>2020-04-15T00:50:04Z</sl:creationTime>
+    <sl:creationDate>2020-04-15</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="https://writings.stephenwolfram.com/2020/04/finally-we-may-have-a-path-to-the-fundamental-theory-of-physics-and-its-beautiful/"/>
+    <dc:title>Finally We May Have a Path to the Fundamental Theory of Physics… and It’s Beautiful—Stephen Wolfram Writings</dc:title>
+    <sl:tag rdf:resource="&tag;computational_universe"/>
   </rdf:Description>
   <rdf:Description rdf:about="curiosites_animales_une_vie_s">
-    <sl:tag rdf:resource="&tag;parthenogenese"/>
-    <dc:title>Curiosités animales - Une vie sans sexe : le dragon de Komodo et le puceron | ARTE</dc:title>
-    <sl:bookmarkOf rdf:resource="https://www.arte.tv/fr/videos/052739-004-A/curiosites-animales/"/>
-    <sl:creationDate>2020-04-08</sl:creationDate>
-    <sl:creationTime>2020-04-08T21:08:07Z</sl:creationTime>
-    <sl:tag rdf:resource="&tag;curiosite_naturelle"/>
     <sl:tag rdf:resource="&tag;documentaire_tv"/>
+    <sl:tag rdf:resource="&tag;curiosite_naturelle"/>
+    <sl:creationTime>2020-04-08T21:08:07Z</sl:creationTime>
+    <sl:creationDate>2020-04-08</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="https://www.arte.tv/fr/videos/052739-004-A/curiosites-animales/"/>
+    <dc:title>Curiosités animales - Une vie sans sexe : le dragon de Komodo et le puceron | ARTE</dc:title>
+    <sl:tag rdf:resource="&tag;parthenogenese"/>
   </rdf:Description>
   <rdf:Description rdf:about="pdf2table_a_method_to_extract_">
-    <sl:creationTime>2020-04-02T15:35:47Z</sl:creationTime>
-    <sl:creationDate>2020-04-02</sl:creationDate>
-    <sl:tag rdf:resource="&tag;pdf_format"/>
-    <sl:tag rdf:resource="&tag;pdf_extract"/>
-    <dc:title>pdf2table: A Method to Extract Table Information from PDF Files</dc:title>
     <sl:bookmarkOf rdf:resource="http://ieg.ifs.tuwien.ac.at/projects/pdf2table/yildiz_iicai05.pdf"/>
+    <dc:title>pdf2table: A Method to Extract Table Information from PDF Files</dc:title>
+    <sl:tag rdf:resource="&tag;pdf_extract"/>
+    <sl:tag rdf:resource="&tag;pdf_format"/>
+    <sl:creationDate>2020-04-02</sl:creationDate>
+    <sl:creationTime>2020-04-02T15:35:47Z</sl:creationTime>
   </rdf:Description>
   <rdf:Description rdf:about="2004_06842_layered_graph_embe">
     <sl:tag rdf:resource="&tag;graph_embeddings"/>
@@ -126,20 +126,20 @@ a distance measure optimised by a genetic algorithm.</sl:arxiv_summary>
     <sl:creationDate>2020-04-02</sl:creationDate>
   </rdf:Description>
   <rdf:Description rdf:about="projota_a_rezadeira_video_of">
-    <sl:tag rdf:resource="&tag;musique_bresilienne"/>
-    <sl:creationTime>2020-04-10T19:30:37Z</sl:creationTime>
-    <sl:creationDate>2020-04-10</sl:creationDate>
-    <sl:bookmarkOf rdf:resource="https://www.youtube.com/watch?v=LYDESzzeeT4"/>
-    <dc:title>Projota - A Rezadeira (Video Oficial) - YouTube</dc:title>
     <sl:tag rdf:resource="&tag;robert"/>
+    <dc:title>Projota - A Rezadeira (Video Oficial) - YouTube</dc:title>
+    <sl:bookmarkOf rdf:resource="https://www.youtube.com/watch?v=LYDESzzeeT4"/>
+    <sl:creationDate>2020-04-10</sl:creationDate>
+    <sl:creationTime>2020-04-10T19:30:37Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;musique_bresilienne"/>
   </rdf:Description>
   <rdf:Description rdf:about="how_do_different_communities_cr">
-    <sl:comment>so old a question</sl:comment>
-    <dc:title>How do different communities create unique identifiers? – Lost Boy</dc:title>
-    <sl:bookmarkOf rdf:resource="https://blog.ldodds.com/2020/04/14/how-do-different-communities-create-unique-identifiers/"/>
-    <sl:creationDate>2020-04-14</sl:creationDate>
-    <sl:creationTime>2020-04-14T23:49:35Z</sl:creationTime>
     <sl:tag rdf:resource="&tag;minting_uris"/>
+    <sl:creationTime>2020-04-14T23:49:35Z</sl:creationTime>
+    <sl:creationDate>2020-04-14</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="https://blog.ldodds.com/2020/04/14/how-do-different-communities-create-unique-identifiers/"/>
+    <dc:title>How do different communities create unique identifiers? – Lost Boy</dc:title>
+    <sl:comment>so old a question</sl:comment>
   </rdf:Description>
   <rdf:Description rdf:about="1503_02531_distilling_the_kno">
     <sl:comment xml:lang="en">&gt; Caruana and his collaborators have shown that it is possible to compress the knowledge in an [#ensemble](/tag/ensemble_learning.html) into a single model which is much easier to deploy and we develop this approach further using a different compression technique. We achieve some surprising results on MNIST.</sl:comment>
@@ -175,85 +175,85 @@ specialist models can be trained rapidly and in parallel.</sl:arxiv_summary>
     <sl:arxiv_author>Geoffrey Hinton</sl:arxiv_author>
   </rdf:Description>
   <rdf:Description rdf:about="coronavirus_la_seine_saint_de">
-    <sl:comment xml:lang="fr">« Les infirmières, les caissières, les aides-soignantes, les agents d’entretien, les intérimaires, les agents de sécurité, les livreurs… bref, **tous ceux qui font tenir la France debout aujourd’hui, tous ceux qui vont au front et se mettent en danger**, ils viennent des quartiers populaires, ce sont des habitants du 93 ! »</sl:comment>
-    <dc:title>Coronavirus : la Seine-Saint-Denis confrontée à une inquiétante surmortalité</dc:title>
-    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/planete/article/2020/04/04/coronavirus-la-seine-saint-denis-confrontee-a-une-inquietante-surmortalite_6035555_3244.html"/>
-    <sl:creationDate>2020-04-04</sl:creationDate>
-    <sl:creationTime>2020-04-04T14:39:01Z</sl:creationTime>
-    <sl:tag rdf:resource="&tag;coronavirus"/>
     <sl:tag rdf:resource="http://www.semanlink.net/tag/9_3"/>
+    <sl:tag rdf:resource="&tag;coronavirus"/>
+    <sl:creationTime>2020-04-04T14:39:01Z</sl:creationTime>
+    <sl:creationDate>2020-04-04</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/planete/article/2020/04/04/coronavirus-la-seine-saint-denis-confrontee-a-une-inquietante-surmortalite_6035555_3244.html"/>
+    <dc:title>Coronavirus : la Seine-Saint-Denis confrontée à une inquiétante surmortalité</dc:title>
+    <sl:comment xml:lang="fr">« Les infirmières, les caissières, les aides-soignantes, les agents d’entretien, les intérimaires, les agents de sécurité, les livreurs… bref, **tous ceux qui font tenir la France debout aujourd’hui, tous ceux qui vont au front et se mettent en danger**, ils viennent des quartiers populaires, ce sont des habitants du 93 ! »</sl:comment>
   </rdf:Description>
   <rdf:Description rdf:about="dans_les_quartiers_populaires_">
-    <sl:tag rdf:resource="&tag;inegalites"/>
-    <sl:tag rdf:resource="&tag;coronavirus"/>
-    <sl:comment>&gt; Les quartiers populaires entament leur deuxième mois de confinement à bout de souffle</sl:comment>
-    <dc:title>Dans les quartiers populaires, « si on remplit le frigo, on chope le corona »</dc:title>
-    <sl:creationTime>2020-04-18T16:00:15Z</sl:creationTime>
-    <sl:creationDate>2020-04-18</sl:creationDate>
     <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/societe/article/2020/04/18/dans-les-quartiers-populaires-si-on-remplit-le-frigo-on-chope-le-corona_6036998_3224.html"/>
+    <sl:creationDate>2020-04-18</sl:creationDate>
+    <sl:creationTime>2020-04-18T16:00:15Z</sl:creationTime>
+    <dc:title>Dans les quartiers populaires, « si on remplit le frigo, on chope le corona »</dc:title>
+    <sl:comment>&gt; Les quartiers populaires entament leur deuxième mois de confinement à bout de souffle</sl:comment>
+    <sl:tag rdf:resource="&tag;coronavirus"/>
+    <sl:tag rdf:resource="&tag;inegalites"/>
   </rdf:Description>
   <rdf:Description rdf:about="pdf_to_excel_pdftables">
-    <dc:title xml:lang="en">pdftables.com: PDF to Excel converter - PDFTables</dc:title>
-    <sl:tag rdf:resource="&tag;tools"/>
-    <sl:bookmarkOf rdf:resource="https://pdftables.com/"/>
-    <sl:tag rdf:resource="&tag;pdf_extract"/>
-    <sl:creationTime>2020-04-02T15:38:47Z</sl:creationTime>
     <sl:creationDate>2020-04-02</sl:creationDate>
+    <sl:creationTime>2020-04-02T15:38:47Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;pdf_extract"/>
+    <sl:bookmarkOf rdf:resource="https://pdftables.com/"/>
+    <sl:tag rdf:resource="&tag;tools"/>
+    <dc:title xml:lang="en">pdftables.com: PDF to Excel converter - PDFTables</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="chasse_a_la_mouche_pour_eradiqu">
-    <sl:tag rdf:resource="&tag;lucilie_bouchere"/>
-    <sl:creationTime>2020-04-03T19:20:18Z</sl:creationTime>
-    <sl:creationDate>2020-04-03</sl:creationDate>
-    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/archives/article/1991/01/23/chasse-a-la-mouche-pour-eradiquer-la-lucilie-bouchere-en-libye-des-mouches-males-steriles-sont-lachees-vers-les-femelles-dont-les-larves-devorent-le-betail_4014411_1819218.html"/>
-    <dc:title xml:lang="fr">Pour éradiquer la lucilie bouchère en Libye, des mouches mâles stériles sont lâchées vers les femelles dont les larves dévorent le bétail (1991)</dc:title>
     <sl:tag rdf:resource="&tag;technique_de_l_insecte_sterile"/>
+    <dc:title xml:lang="fr">Pour éradiquer la lucilie bouchère en Libye, des mouches mâles stériles sont lâchées vers les femelles dont les larves dévorent le bétail (1991)</dc:title>
+    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/archives/article/1991/01/23/chasse-a-la-mouche-pour-eradiquer-la-lucilie-bouchere-en-libye-des-mouches-males-steriles-sont-lachees-vers-les-femelles-dont-les-larves-devorent-le-betail_4014411_1819218.html"/>
+    <sl:creationDate>2020-04-03</sl:creationDate>
+    <sl:creationTime>2020-04-03T19:20:18Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;lucilie_bouchere"/>
   </rdf:Description>
   <rdf:Description rdf:about="roam_research_a_note_taking_t">
-    <sl:tag rdf:resource="&tag;semanlink_related"/>
-    <sl:creationTime>2020-04-17T13:54:47Z</sl:creationTime>
-    <sl:creationDate>2020-04-17</sl:creationDate>
-    <sl:bookmarkOf rdf:resource="https://roamresearch.com/"/>
     <dc:title>Roam Research – A note taking tool for networked thought.</dc:title>
+    <sl:bookmarkOf rdf:resource="https://roamresearch.com/"/>
+    <sl:creationDate>2020-04-17</sl:creationDate>
+    <sl:creationTime>2020-04-17T13:54:47Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;semanlink_related"/>
   </rdf:Description>
   <rdf:Description rdf:about="barbara_stiegler_%C2%AB_la_crise_d">
-    <dc:title>Barbara Stiegler : « La crise due au coronavirus reflète la vision néolibérale de la santé publique »</dc:title>
-    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/idees/article/2020/04/09/barbara-stiegler-la-crise-due-au-coronavirus-reflete-la-vision-neoliberale-de-la-sante-publique_6036059_3232.html"/>
-    <sl:creationDate>2020-04-10</sl:creationDate>
-    <sl:creationTime>2020-04-10T15:27:25Z</sl:creationTime>
     <sl:tag rdf:resource="&tag;coronavirus"/>
+    <sl:creationTime>2020-04-10T15:27:25Z</sl:creationTime>
+    <sl:creationDate>2020-04-10</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/idees/article/2020/04/09/barbara-stiegler-la-crise-due-au-coronavirus-reflete-la-vision-neoliberale-de-la-sante-publique_6036059_3232.html"/>
+    <dc:title>Barbara Stiegler : « La crise due au coronavirus reflète la vision néolibérale de la santé publique »</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="brunorb_ahocorasick_aho_corasi">
-    <sl:tag rdf:resource="&tag;github_project"/>
-    <sl:creationTime>2020-04-18T00:37:31Z</sl:creationTime>
-    <sl:creationDate>2020-04-18</sl:creationDate>
-    <sl:bookmarkOf rdf:resource="https://github.com/BrunoRB/ahocorasick"/>
-    <dc:title>BrunoRB/ahocorasick: Aho-corasick for javascript.</dc:title>
     <sl:tag rdf:resource="&tag;aho_corasick_algorithm"/>
+    <dc:title>BrunoRB/ahocorasick: Aho-corasick for javascript.</dc:title>
+    <sl:bookmarkOf rdf:resource="https://github.com/BrunoRB/ahocorasick"/>
+    <sl:creationDate>2020-04-18</sl:creationDate>
+    <sl:creationTime>2020-04-18T00:37:31Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;github_project"/>
   </rdf:Description>
   <rdf:Description rdf:about="arundhati_roy_%C2%AB_en_inde_le_c">
-    <sl:tag rdf:resource="&tag;arundhati_roy"/>
-    <sl:creationTime>2020-04-06T19:31:38Z</sl:creationTime>
-    <sl:creationDate>2020-04-06</sl:creationDate>
-    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/livres/article/2020/04/06/arundhati-roy-en-inde-le-confinement-le-plus-gigantesque-et-le-plus-punitif-de-la-planete_6035741_3260.html"/>
-    <dc:title>Arundhati Roy : « En Inde, le confinement le plus gigantesque et le plus punitif de la planète »</dc:title>
     <sl:tag rdf:resource="&tag;coronavirus"/>
+    <dc:title>Arundhati Roy : « En Inde, le confinement le plus gigantesque et le plus punitif de la planète »</dc:title>
+    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/livres/article/2020/04/06/arundhati-roy-en-inde-le-confinement-le-plus-gigantesque-et-le-plus-punitif-de-la-planete_6035741_3260.html"/>
+    <sl:creationDate>2020-04-06</sl:creationDate>
+    <sl:creationTime>2020-04-06T19:31:38Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;arundhati_roy"/>
   </rdf:Description>
   <rdf:Description rdf:about="%C2%AB_les_cas_de_covid_se_multiplie">
-    <sl:creationTime>2020-04-06T14:29:57Z</sl:creationTime>
-    <sl:creationDate>2020-04-06</sl:creationDate>
-    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/sante/article/2020/04/06/les-cas-de-covid-se-multiplient-ca-tombe-ca-tombe-jusqu-ou-la-course-a-la-vie-d-une-reanimatrice_6035677_1651302.html"/>
-    <dc:title>« Les cas de Covid se multiplient. Ça tombe, ça tombe. Jusqu’où ? » : la course à la vie d’une réanimatrice</dc:title>
     <sl:tag rdf:resource="&tag;coronavirus"/>
+    <dc:title>« Les cas de Covid se multiplient. Ça tombe, ça tombe. Jusqu’où ? » : la course à la vie d’une réanimatrice</dc:title>
+    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/sante/article/2020/04/06/les-cas-de-covid-se-multiplient-ca-tombe-ca-tombe-jusqu-ou-la-course-a-la-vie-d-une-reanimatrice_6035677_1651302.html"/>
+    <sl:creationDate>2020-04-06</sl:creationDate>
+    <sl:creationTime>2020-04-06T14:29:57Z</sl:creationTime>
   </rdf:Description>
   <rdf:Description rdf:about="the_latent_structure_of_diction">
-    <dc:title xml:lang="en">The Latent Structure of Dictionaries - Vincent‐Lamarre - 2016</dc:title>
-    <sl:comment>How many words—and which ones—are sufficient to define all other words?</sl:comment>
-    <sl:creationTime>2020-04-16T19:15:38Z</sl:creationTime>
-    <sl:creationDate>2020-04-16</sl:creationDate>
-    <sl:bookmarkOf rdf:resource="https://onlinelibrary.wiley.com/doi/full/10.1111/tops.12211"/>
-    <sl:tag rdf:resource="&tag;how_much_information_in_a_language"/>
-    <sl:tag rdf:resource="&tag;langage"/>
     <sl:tag rdf:resource="&tag;dictionnaire"/>
+    <sl:tag rdf:resource="&tag;langage"/>
+    <sl:tag rdf:resource="&tag;how_much_information_in_a_language"/>
+    <sl:bookmarkOf rdf:resource="https://onlinelibrary.wiley.com/doi/full/10.1111/tops.12211"/>
+    <sl:creationDate>2020-04-16</sl:creationDate>
+    <sl:creationTime>2020-04-16T19:15:38Z</sl:creationTime>
+    <sl:comment>How many words—and which ones—are sufficient to define all other words?</sl:comment>
+    <dc:title xml:lang="en">The Latent Structure of Dictionaries - Vincent‐Lamarre - 2016</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="2004_05150_longformer_the_lo">
     <sl:arxiv_author>Arman Cohan</sl:arxiv_author>
@@ -289,7 +289,6 @@ and TriviaQA.</sl:arxiv_summary>
   <rdf:Description rdf:about="1903_04197_structured_knowled">
     <sl:arxiv_firstAuthor>Yifan Liu</sl:arxiv_firstAuthor>
     <sl:arxiv_author>Chunhua Shen</sl:arxiv_author>
-    <sl:arxiv_updated>2020-02-20T23:52:50Z</sl:arxiv_updated>
     <sl:tag rdf:resource="&tag;pixelwise_dense_prediction"/>
     <dc:title xml:lang="en">[1903.04197] Structured Knowledge Distillation for Dense Prediction</dc:title>
     <sl:creationTime>2020-04-16T14:13:03Z</sl:creationTime>
@@ -314,76 +313,77 @@ distill holistic knowledge. The effectiveness of our knowledge distillation
 approaches is demonstrated by extensive experiments on three dense prediction
 tasks: semantic segmentation, depth estimation, and object detection.</sl:arxiv_summary>
     <sl:arxiv_author>Jingdong Wang</sl:arxiv_author>
+    <sl:arxiv_updated>2020-04-30T10:25:50Z</sl:arxiv_updated>
     <sl:arxiv_author>Changyong Shun</sl:arxiv_author>
   </rdf:Description>
   <rdf:Description rdf:about="lee_moses_bad_girl_full_song">
-    <sl:tag rdf:resource="&tag;musique"/>
-    <sl:creationTime>2020-04-13T15:02:28Z</sl:creationTime>
-    <sl:creationDate>2020-04-13</sl:creationDate>
-    <sl:bookmarkOf rdf:resource="https://www.youtube.com/watch?v=3lxp7WVXiXU&amp;list=RD3lxp7WVXiXU&amp;start_radio=1"/>
-    <dc:title>Lee Moses - Bad Girl (full song, no break) - YouTube</dc:title>
     <sl:tag rdf:resource="&tag;youtube_video"/>
+    <dc:title>Lee Moses - Bad Girl (full song, no break) - YouTube</dc:title>
+    <sl:bookmarkOf rdf:resource="https://www.youtube.com/watch?v=3lxp7WVXiXU&amp;list=RD3lxp7WVXiXU&amp;start_radio=1"/>
+    <sl:creationDate>2020-04-13</sl:creationDate>
+    <sl:creationTime>2020-04-13T15:02:28Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;musique"/>
   </rdf:Description>
   <rdf:Description rdf:about="camel_express_news_april_2020">
-    <sl:tag rdf:resource="&tag;peace_corps"/>
-    <dc:title>Camel Express News April 2020</dc:title>
-    <sl:bookmarkOf rdf:resource="https://mailchi.mp/9122c6c9823c/camel-express-news-augsept2019-12286398?e=4618733398"/>
-    <sl:creationDate>2020-04-14</sl:creationDate>
-    <sl:creationTime>2020-04-14T21:22:47Z</sl:creationTime>
     <sl:tag rdf:resource="&tag;niger"/>
+    <sl:creationTime>2020-04-14T21:22:47Z</sl:creationTime>
+    <sl:creationDate>2020-04-14</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="https://mailchi.mp/9122c6c9823c/camel-express-news-augsept2019-12286398?e=4618733398"/>
+    <dc:title>Camel Express News April 2020</dc:title>
+    <sl:tag rdf:resource="&tag;peace_corps"/>
   </rdf:Description>
   <rdf:Description rdf:about="damien_henry_sur_twitter_thi">
-    <sl:tag rdf:resource="&tag;coronavirus"/>
-    <sl:tag rdf:resource="&tag;andrej_karpathy"/>
-    <dc:title>Damien Henry sur Twitter : "This code is so beautifully written, it almost hurts."</dc:title>
-    <sl:bookmarkOf rdf:resource="https://twitter.com/dh7net/status/1246060429681532931?s=20"/>
-    <sl:creationDate>2020-04-04</sl:creationDate>
-    <sl:creationTime>2020-04-04T11:02:50Z</sl:creationTime>
-    <sl:tag rdf:resource="&tag;tweet"/>
     <sl:tag rdf:resource="&tag;arxiv"/>
+    <sl:tag rdf:resource="&tag;tweet"/>
+    <sl:creationTime>2020-04-04T11:02:50Z</sl:creationTime>
+    <sl:creationDate>2020-04-04</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="https://twitter.com/dh7net/status/1246060429681532931?s=20"/>
+    <dc:title>Damien Henry sur Twitter : "This code is so beautifully written, it almost hurts."</dc:title>
+    <sl:tag rdf:resource="&tag;andrej_karpathy"/>
+    <sl:tag rdf:resource="&tag;coronavirus"/>
   </rdf:Description>
   <rdf:Description rdf:about="coronavirus_en_france_%C2%AB_en_ma">
-    <sl:tag rdf:resource="&tag;covid19_impreparation"/>
-    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/planete/article/2020/04/11/en-matiere-de-prevention-nous-ne-sommes-pas-a-la-hauteur-de-l-epidemie_6036316_3244.html"/>
-    <sl:creationDate>2020-04-11</sl:creationDate>
-    <sl:creationTime>2020-04-11T14:45:02Z</sl:creationTime>
-    <dc:title>Coronavirus en France : « En matière de prévention, nous ne sommes pas à la hauteur de l’épidémie »</dc:title>
     <sl:tag rdf:resource="&tag;coronavirus"/>
+    <dc:title>Coronavirus en France : « En matière de prévention, nous ne sommes pas à la hauteur de l’épidémie »</dc:title>
+    <sl:creationTime>2020-04-11T14:45:02Z</sl:creationTime>
+    <sl:creationDate>2020-04-11</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/planete/article/2020/04/11/en-matiere-de-prevention-nous-ne-sommes-pas-a-la-hauteur-de-l-epidemie_6036316_3244.html"/>
+    <sl:tag rdf:resource="&tag;covid19_impreparation"/>
   </rdf:Description>
   <rdf:Description rdf:about="rdflib_rdflib_a_python_library">
-    <sl:creationTime>2020-04-09T01:56:54Z</sl:creationTime>
-    <sl:creationDate>2020-04-09</sl:creationDate>
-    <sl:bookmarkOf rdf:resource="https://github.com/RDFLib/rdflib"/>
-    <dc:title>RDFLib/rdflib: a Python library for working with RDF</dc:title>
     <sl:tag rdf:resource="&tag;rdflib"/>
+    <dc:title>RDFLib/rdflib: a Python library for working with RDF</dc:title>
+    <sl:bookmarkOf rdf:resource="https://github.com/RDFLib/rdflib"/>
+    <sl:creationDate>2020-04-09</sl:creationDate>
+    <sl:creationTime>2020-04-09T01:56:54Z</sl:creationTime>
   </rdf:Description>
   <rdf:Description rdf:about="en_pleine_crise_sanitaire_le_g">
-    <sl:tag rdf:resource="&tag;medical_data"/>
-    <dc:title>En pleine crise sanitaire, le géant américain Palantir lorgne les données des hôpitaux français</dc:title>
-    <sl:bookmarkOf rdf:resource="https://www.bfmtv.com/tech/en-pleine-crise-sanitaire-le-geant-americain-palantir-lorgne-les-donnees-des-hopitaux-francais-1887043.html#"/>
-    <sl:creationDate>2020-04-04</sl:creationDate>
     <sl:creationTime>2020-04-04T10:57:29Z</sl:creationTime>
+    <sl:creationDate>2020-04-04</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="https://www.bfmtv.com/tech/en-pleine-crise-sanitaire-le-geant-americain-palantir-lorgne-les-donnees-des-hopitaux-francais-1887043.html#"/>
+    <dc:title>En pleine crise sanitaire, le géant américain Palantir lorgne les données des hôpitaux français</dc:title>
+    <sl:tag rdf:resource="&tag;medical_data"/>
   </rdf:Description>
   <rdf:Description rdf:about="copier_le_fonctionnement_du_cer">
-    <sl:creationTime>2020-04-05T11:14:51Z</sl:creationTime>
-    <sl:creationDate>2020-04-05</sl:creationDate>
-    <sl:bookmarkOf rdf:resource="https://www.techniques-ingenieur.fr/actualite/articles/consommation-energetique-intelligence-artificielle-74940/"/>
-    <dc:title>Copier le fonctionnement du cerveau pour économiser de l'énergie | Techniques de l'Ingénieur</dc:title>
     <sl:tag rdf:resource="&tag;brains_in_silicon"/>
+    <dc:title>Copier le fonctionnement du cerveau pour économiser de l'énergie | Techniques de l'Ingénieur</dc:title>
+    <sl:bookmarkOf rdf:resource="https://www.techniques-ingenieur.fr/actualite/articles/consommation-energetique-intelligence-artificielle-74940/"/>
+    <sl:creationDate>2020-04-05</sl:creationDate>
+    <sl:creationTime>2020-04-05T11:14:51Z</sl:creationTime>
   </rdf:Description>
   <rdf:Description rdf:about="julian_eisenschlos_sur_twitter_">
-    <sl:tag rdf:resource="&tag;structured_data_embedding"/>
-    <sl:creationTime>2020-04-11T17:55:37Z</sl:creationTime>
-    <sl:creationDate>2020-04-11</sl:creationDate>
-    <sl:bookmarkOf rdf:resource="https://twitter.com/eisenjulian/status/1248698516924399616"/>
     <dc:title>Julian Eisenschlos sur Twitter : "Ever wondered how to pre-train models that understand tables and do QA?"</dc:title>
+    <sl:bookmarkOf rdf:resource="https://twitter.com/eisenjulian/status/1248698516924399616"/>
+    <sl:creationDate>2020-04-11</sl:creationDate>
+    <sl:creationTime>2020-04-11T17:55:37Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;structured_data_embedding"/>
   </rdf:Description>
   <rdf:Description rdf:about="raphaelsty_kdmkr">
-    <sl:tag rdf:resource="&tag;github_project"/>
-    <sl:creationTime>2020-04-16T11:56:38Z</sl:creationTime>
-    <sl:creationDate>2020-04-16</sl:creationDate>
-    <sl:bookmarkOf rdf:resource="https://github.com/raphaelsty/kdmkr"/>
-    <dc:title>raphaelsty/kdmkr</dc:title>
     <sl:tag rdf:resource="&tag;raphaelsty"/>
+    <dc:title>raphaelsty/kdmkr</dc:title>
+    <sl:bookmarkOf rdf:resource="https://github.com/raphaelsty/kdmkr"/>
+    <sl:creationDate>2020-04-16</sl:creationDate>
+    <sl:creationTime>2020-04-16T11:56:38Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;github_project"/>
   </rdf:Description>
 </rdf:RDF>

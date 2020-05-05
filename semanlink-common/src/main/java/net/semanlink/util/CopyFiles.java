@@ -229,4 +229,29 @@ public static boolean deleteFolder(File dir) throws SecurityException {
 	}
 	return dir.delete();
 }
+
+//
+//
+//
+
+// 2020-05 quick
+
+public void copy(File sourceLocation, File targetLocation) throws IOException {
+  if (sourceLocation.isDirectory()) {
+      copyDirectory(sourceLocation, targetLocation);
+  } else {
+      copyFile(sourceLocation, targetLocation);
+  }
+}
+
+private void copyDirectory(File source, File target) throws IOException {
+  if (!target.exists()) {
+      target.mkdir();
+  }
+
+  for (String f : source.list()) {
+      copy(new File(source, f), new File(target, f));
+  }
+}
+
 }

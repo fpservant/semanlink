@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import net.semanlink.sljena.JModel;
 import net.semanlink.sljena.ModelFileIOManager;
+import net.semanlink.util.Directory;
 
 /** To load data for tests */
 public class DataLoader {
@@ -21,6 +22,29 @@ static public SLModel getSLModel() throws Exception {
 	// String base = "http://www.semanlink.net/tag/";
 
 	return getSLModel(servletUri, thUri, thFile, docDir);
+}
+
+// BEWARE WITH THIS !!! -- THIS DELETE FILES
+static public void cleanTestDir() throws Exception {
+	Directory.Action cleaning = new Directory.Action() {
+		@Override
+		public void handleFile(File f) throws Exception {
+			String fn = f.getName();
+			if (fn.endsWith(".rdf")) {
+				if (fn.equals("sl.rdf")) return;
+				if (fn.equals("slkws.rdf")) return;
+				System.out.println("DELETING " + f);
+				f.delete();
+			}
+		}	
+	};
+	File docDir = new File("src/test/files/datadir/documents/");
+	Directory dir = new Directory(docDir);
+	dir.doIt(cleaning, true);
+	
+	docDir = new File("src/test/files/datadir/tags/");
+	dir = new Directory(docDir);
+	dir.doIt(cleaning, true);
 }
 
 static public SLModel getSLModel(String servletUri,

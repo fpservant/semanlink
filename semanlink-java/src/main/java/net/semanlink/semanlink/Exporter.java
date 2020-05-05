@@ -258,6 +258,7 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 			base = base.replace("/" + BOOKMARKS_SUB_FOLDER + "/", "/" + DOC_SUB_PATH + "/");
 			bookmarksJFileModel = new JFileModel(slDotRdfFile.getPath(), base);
 			// System.out.println("Exporter base bookmarksJFileModel:" + base);
+			bookmarksJFileModel.setBackUpOnSave(false); // 2020-05
 			bookmarksMod = bookmarksJFileModel.getModel(); // les docs pour ce jour
 		}
 		
@@ -268,6 +269,7 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 			String base = this.dataFolder.getBase(slDotRdfFile);
 			notesJFileModel = new JFileModel(slDotRdfFile.getPath(), base);
 			// System.out.println("Exporter base notesJFileModel:" + base);
+			notesJFileModel.setBackUpOnSave(false);
 			notesMod = notesJFileModel.getModel(); // les docs pour ce jour
 		}
 		
@@ -280,6 +282,7 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 			destDir4Docs = slDotRdfFile.getParentFile();
 			base4docs = this.dataFolder.getBase(slDotRdfFile);
 			docsJFileModel = new JFileModel(slDotRdfFile.getPath(), base4docs);
+			docsJFileModel.setBackUpOnSave(false);
 			// System.out.println("Exporter base docsJFileModel:" + base4docs);
 			docsMod = docsJFileModel.getModel(); // les docs pour ce jour
 		}

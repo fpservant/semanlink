@@ -23,6 +23,8 @@ public class JFileModel {
 private Model model;
 private String longFileName;
 private String base;
+/** if false, don't save a backup */
+private boolean backupOnSave = true; // 2020-05
 
 // CONSTRUCTION
 
@@ -31,6 +33,14 @@ private String base;
  */
 public JFileModel(String longFileName, String base) throws JenaException, IOException {
 	this(loadModel(longFileName, base), longFileName, base);
+}
+
+public void setBackUpOnSave(boolean b) {
+	backupOnSave = b;
+}
+
+private boolean isBackUpOnSave() {
+	return backupOnSave;
 }
 
 /**
@@ -69,39 +79,43 @@ public File getFile() {
 public void save() throws JenaException, IOException, URISyntaxException {
 	//System.out.println("JFileModel.save " + longFileName + " base : " + base);
 	File file = new File(this.longFileName);
-	// on garde un backup par jour - le 1er de la journ�e (parce qu'il y a plein de maj
-	// successives, il y aurait trop de risques d'�craser une svg ok par un fichier qui ne l'est pas.)
+	// on garde un backup par jour - le 1er de la journée (parce qu'il y a plein de maj
+	// successives, il y aurait trop de risques d'écraser une svg ok par un fichier qui ne l'est pas.)
 	String svgFilename = backupFilename(this.longFileName);
 	File svgFile = new File(svgFilename);
 	if (file.exists()) {
-		if (!svgFile.exists()) {
-			// suppression des anciennes sauvegardes
-			String shortName = file.getName();
-			String shortNameWithoutExtension = Util.getWithoutExtension(shortName);
-			File dir = file.getParentFile();
-			String[] list = dir.list();
-			Arrays.sort(list);
-			ArrayList al = new ArrayList();
-			for (int i = 0; i < list.length; i++) {
-				String sf = list[i];
-				if (!(sf.startsWith(shortNameWithoutExtension))) continue;
-				if (!(sf.endsWith(".rdf"))) continue;
-				if (sf.equals(shortName)) continue;
-				al.add(sf);
+		if (isBackUpOnSave()) {
+			if (!svgFile.exists()) {
+				// suppression des anciennes sauvegardes
+				String shortName = file.getName();
+				String shortNameWithoutExtension = Util.getWithoutExtension(shortName);
+				File dir = file.getParentFile();
+				String[] list = dir.list();
+				Arrays.sort(list);
+				ArrayList<String> al = new ArrayList<>();
+				for (int i = 0; i < list.length; i++) {
+					String sf = list[i];
+					if (!(sf.startsWith(shortNameWithoutExtension))) continue;
+					if (!(sf.endsWith(".rdf"))) continue;
+					if (sf.equals(shortName)) continue;
+					al.add(sf);
+				}
+				// on en garde 2
+				for (int i = 0; i < al.size() - 1; i++) {
+					String sf = al.get(i);
+					File f = new File(dir, sf);
+					f.delete();
+				}
+				boolean success = file.renameTo(svgFile);
+				if (!success) {
+					throw new IOException("Unable to rename: " + file + " to svgFile: " + svgFile);
+				}
 			}
-			// on en garde 2
-			for (int i = 0; i < al.size() - 1; i++) {
-				String sf = (String) al.get(i);
-				File f = new File(dir, sf);
-				f.delete();
-			}
-			boolean success = file.renameTo (svgFile);
-			if (!success) {
-				throw new IOException("Unable to rename: " + file + " to svgFile: " + svgFile);
-			}
+		} else {
+			file.delete();
 		}
 	} else {
-		// make sure the directory exists, else writing will fail
+		// make sure the directory exists, else write will fail
 		File dir = file.getParentFile();
 		if (!dir.exists()) {
 			dir.mkdirs();

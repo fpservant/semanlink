@@ -41,6 +41,7 @@ public class ArxivLoopUpdateTest {
 		// (we do  not want to recompute them)
 		extractor.doIt(extractorData);
 	}
+	DataLoader.cleanTestDir();
 }
 
 // @Test 

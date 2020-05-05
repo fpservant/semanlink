@@ -20,8 +20,8 @@
     <sl:arxiv_author>Yuan Luo</sl:arxiv_author>
     <dc:title xml:lang="en">[1909.03193] KG-BERT: BERT for Knowledge Graph Completion</dc:title>
     <sl:tag rdf:resource="&tag;attention_is_all_you_need"/>
-    <sl:tag rdf:resource="&tag;bert"/>
     <sl:tag rdf:resource="&tag;pre_trained_language_models"/>
+    <sl:tag rdf:resource="&tag;bert"/>
     <sl:tag rdf:resource="&tag;knowledge_graph"/>
     <sl:arxiv_summary xml:lang="en">Knowledge graphs are important resources for many artificial intelligence
 tasks but often suffer from incompleteness. In this work, we propose to use
@@ -42,29 +42,29 @@ in triple classification, link prediction and relation prediction tasks.</sl:arx
     <sl:arxiv_updated>2019-09-11T06:03:30Z</sl:arxiv_updated>
   </rdf:Description>
   <rdf:Description rdf:about="bert_elmo_gpt_2_how_contex">
-    <sl:tag rdf:resource="&tag;bertology"/>
-    <sl:tag rdf:resource="&tag;nlp_stanford"/>
-    <sl:tag rdf:resource="&tag;contextualised_word_representations"/>
-    <dc:title>BERT, ELMo, &amp; GPT-2: How Contextual are Contextualized Word Representations? | SAIL Blog</dc:title>
-    <sl:bookmarkOf rdf:resource="http://ai.stanford.edu/blog/contextual/"/>
-    <sl:creationTime>2020-03-28T10:33:17Z</sl:creationTime>
-    <sl:creationDate>2020-03-28</sl:creationDate>
     <sl:tag rdf:resource="&tag;emnlp_2019"/>
+    <sl:creationDate>2020-03-28</sl:creationDate>
+    <sl:creationTime>2020-03-28T10:33:17Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="http://ai.stanford.edu/blog/contextual/"/>
+    <dc:title>BERT, ELMo, &amp; GPT-2: How Contextual are Contextualized Word Representations? | SAIL Blog</dc:title>
+    <sl:tag rdf:resource="&tag;contextualised_word_representations"/>
+    <sl:tag rdf:resource="&tag;nlp_stanford"/>
+    <sl:tag rdf:resource="&tag;bertology"/>
   </rdf:Description>
   <rdf:Description rdf:about="linkeddatahub_atomgraph_s_ope">
-    <sl:bookmarkOf rdf:resource="https://atomgraph.com/blog/finally-a-knowledge-graph-management-system/"/>
-    <sl:comment>&gt; It is as easy to use for graph data as WordPress is for web content</sl:comment>
-    <sl:creationTime>2020-03-05T13:08:32Z</sl:creationTime>
-    <sl:creationDate>2020-03-05</sl:creationDate>
-    <sl:tag rdf:resource="&tag;knowledge_graph"/>
     <dc:title>LinkedDataHub - AtomGraph's open-source Knowledge Graph management system</dc:title>
+    <sl:tag rdf:resource="&tag;knowledge_graph"/>
+    <sl:creationDate>2020-03-05</sl:creationDate>
+    <sl:creationTime>2020-03-05T13:08:32Z</sl:creationTime>
+    <sl:comment>&gt; It is as easy to use for graph data as WordPress is for web content</sl:comment>
+    <sl:bookmarkOf rdf:resource="https://atomgraph.com/blog/finally-a-knowledge-graph-management-system/"/>
   </rdf:Description>
   <rdf:Description rdf:about="coronavirus_why_you_must_act_n">
-    <sl:creationDate>2020-03-11</sl:creationDate>
-    <sl:creationTime>2020-03-11T00:43:20Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://medium.com/@tomaspueyo/coronavirus-act-today-or-people-will-die-f4d3d9cd99ca"/>
-    <sl:tag rdf:resource="&tag;coronavirus"/>
     <dc:title>Coronavirus: Why You Must Act Now - Tomas Pueyo - Medium</dc:title>
+    <sl:tag rdf:resource="&tag;coronavirus"/>
+    <sl:bookmarkOf rdf:resource="https://medium.com/@tomaspueyo/coronavirus-act-today-or-people-will-die-f4d3d9cd99ca"/>
+    <sl:creationTime>2020-03-11T00:43:20Z</sl:creationTime>
+    <sl:creationDate>2020-03-11</sl:creationDate>
   </rdf:Description>
   <rdf:Description rdf:about="_2003_03384_automl_zero_evolv">
     <sl:comment>&gt; Fun AutoML-Zero experiments: Evolutionary search discovers fundamental ML algorithms from scratch, e.g., small neural nets with backprop.&#xD;
@@ -79,8 +79,8 @@ in triple classification, link prediction and relation prediction tasks.</sl:arx
     <sl:tag rdf:resource="&tag;backpropagation_vs_biology"/>
     <sl:arxiv_updated>2020-03-06T19:00:04Z</sl:arxiv_updated>
     <sl:tag rdf:resource="&tag;automl"/>
-    <sl:creationTime>2020-03-17T21:57:40Z</sl:creationTime>
     <sl:tag rdf:resource="&tag;arxiv_doc"/>
+    <sl:creationTime>2020-03-17T21:57:40Z</sl:creationTime>
     <sl:arxiv_num>2003.03384</sl:arxiv_num>
     <sl:arxiv_published>2020-03-06T19:00:04Z</sl:arxiv_published>
     <dc:title xml:lang="en">[2003.03384] AutoML-Zero: Evolving Machine Learning Algorithms From Scratch</dc:title>
@@ -108,21 +108,21 @@ field.</sl:arxiv_summary>
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2003.03384"/>
   </rdf:Description>
   <rdf:Description rdf:about="au_kenya_l%E2%80%99unique_girafe_blanc">
-    <sl:tag rdf:resource="&tag;l_humanite_merite_de_disparaitre"/>
-    <sl:tag rdf:resource="&tag;girafe"/>
-    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/afrique/article/2020/03/11/au-kenya-l-unique-girafe-blanche-femelle-et-son-petit-tues-par-des-braconniers_6032601_3212.html"/>
-    <sl:creationTime>2020-03-11T16:33:15Z</sl:creationTime>
-    <sl:creationDate>2020-03-11</sl:creationDate>
-    <dc:title>Au Kenya, l’unique girafe blanche femelle et son petit tués par des braconniers</dc:title>
     <sl:tag rdf:resource="&tag;kenya"/>
+    <dc:title>Au Kenya, l’unique girafe blanche femelle et son petit tués par des braconniers</dc:title>
+    <sl:creationDate>2020-03-11</sl:creationDate>
+    <sl:creationTime>2020-03-11T16:33:15Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/afrique/article/2020/03/11/au-kenya-l-unique-girafe-blanche-femelle-et-son-petit-tues-par-des-braconniers_6032601_3212.html"/>
+    <sl:tag rdf:resource="&tag;girafe"/>
+    <sl:tag rdf:resource="&tag;l_humanite_merite_de_disparaitre"/>
   </rdf:Description>
   <rdf:Description rdf:about="one_track_minds_using_ai_for_m">
-    <sl:tag rdf:resource="&tag;music_source_separation"/>
-    <sl:tag rdf:resource="&tag;ai_facebook"/>
-    <dc:title>One-track minds: Using AI for music source separation</dc:title>
-    <sl:creationDate>2020-03-08</sl:creationDate>
-    <sl:creationTime>2020-03-08T12:11:37Z</sl:creationTime>
     <sl:bookmarkOf rdf:resource="https://tech.fb.com/one-track-minds-using-ai-for-music-source-separation/"/>
+    <sl:creationTime>2020-03-08T12:11:37Z</sl:creationTime>
+    <sl:creationDate>2020-03-08</sl:creationDate>
+    <dc:title>One-track minds: Using AI for music source separation</dc:title>
+    <sl:tag rdf:resource="&tag;ai_facebook"/>
+    <sl:tag rdf:resource="&tag;music_source_separation"/>
   </rdf:Description>
   <rdf:Description rdf:about="combining_knowledge_graphs_qui">
     <sl:tag rdf:resource="&tag;entity_alignment"/>
@@ -189,15 +189,15 @@ directions for knowledge graphs.</sl:arxiv_summary>
     <sl:arxiv_author>Sabrina Kirrane</sl:arxiv_author>
   </rdf:Description>
   <rdf:Description rdf:about="mapper_annotated_text_plugin_%7C_">
+    <sl:tag rdf:resource="&tag;elasticsearch_annotated_text_field"/>
+    <dc:title>Mapper Annotated Text Plugin | Elastic</dc:title>
+    <sl:bookmarkOf rdf:resource="https://www.elastic.co/guide/en/elasticsearch/plugins/current/mapper-annotated-text.html"/>
+    <sl:creationTime>2020-03-14T11:47:52Z</sl:creationTime>
+    <sl:creationDate>2020-03-14</sl:creationDate>
     <sl:comment xml:lang="en">The doc about annotated text fields. See also elastic list:&#xD;
 &#xD;
 -  &lt;https://discuss.elastic.co/t/can-elasticsearch-handle-long-text/173991/2&gt;&#xD;
 - &lt;https://discuss.elastic.co/t/continued-support-for-annotated-text-plugin/218688&gt;</sl:comment>
-    <sl:creationDate>2020-03-14</sl:creationDate>
-    <sl:creationTime>2020-03-14T11:47:52Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://www.elastic.co/guide/en/elasticsearch/plugins/current/mapper-annotated-text.html"/>
-    <dc:title>Mapper Annotated Text Plugin | Elastic</dc:title>
-    <sl:tag rdf:resource="&tag;elasticsearch_annotated_text_field"/>
   </rdf:Description>
   <rdf:Description rdf:about="_1909_07606_k_bert_enabling_l">
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1909.07606"/>
@@ -240,23 +240,23 @@ knowledge-driven problems that require experts.</sl:arxiv_summary>
     <sl:arxiv_firstAuthor>Weijie Liu</sl:arxiv_firstAuthor>
   </rdf:Description>
   <rdf:Description rdf:about="how_taiwan_fended_off_the_coron">
-    <sl:tag rdf:resource="&tag;taiwan"/>
-    <sl:tag rdf:resource="&tag;coronavirus"/>
-    <sl:bookmarkOf rdf:resource="https://world.wng.org/2020/03/how_taiwan_fended_off_the_coronavirus"/>
-    <sl:creationTime>2020-03-29T16:02:11Z</sl:creationTime>
-    <sl:creationDate>2020-03-29</sl:creationDate>
     <dc:title>How Taiwan fended off the coronavirus | WORLD News Group</dc:title>
+    <sl:creationDate>2020-03-29</sl:creationDate>
+    <sl:creationTime>2020-03-29T16:02:11Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://world.wng.org/2020/03/how_taiwan_fended_off_the_coronavirus"/>
+    <sl:tag rdf:resource="&tag;coronavirus"/>
+    <sl:tag rdf:resource="&tag;taiwan"/>
   </rdf:Description>
   <rdf:Description rdf:about="ambiversenlu_a_natural_languag">
-    <sl:tag rdf:resource="&tag;github_project"/>
-    <dc:title>AmbiverseNLU: A Natural Language Understanding suite by Max Planck Institute for Informatics</dc:title>
-    <sl:creationDate>2020-03-13</sl:creationDate>
-    <sl:creationTime>2020-03-13T10:30:41Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://github.com/ambiverse-nlu/ambiverse-nlu"/>
-    <sl:tag rdf:resource="&tag;entity_linking"/>
-    <sl:tag rdf:resource="&tag;nlp_using_knowledge_graphs"/>
-    <sl:tag rdf:resource="&tag;concept_extraction"/>
     <sl:tag rdf:resource="&tag;nlp_tools"/>
+    <sl:tag rdf:resource="&tag;concept_extraction"/>
+    <sl:tag rdf:resource="&tag;nlp_using_knowledge_graphs"/>
+    <sl:tag rdf:resource="&tag;entity_linking"/>
+    <sl:bookmarkOf rdf:resource="https://github.com/ambiverse-nlu/ambiverse-nlu"/>
+    <sl:creationTime>2020-03-13T10:30:41Z</sl:creationTime>
+    <sl:creationDate>2020-03-13</sl:creationDate>
+    <dc:title>AmbiverseNLU: A Natural Language Understanding suite by Max Planck Institute for Informatics</dc:title>
+    <sl:tag rdf:resource="&tag;github_project"/>
   </rdf:Description>
   <rdf:Description rdf:about="_1905_06088_neural_symbolic_co">
     <sl:arxiv_author>Artur d'Avila Garcez</sl:arxiv_author>
@@ -299,25 +299,25 @@ interpretable and accountable AI systems.</sl:arxiv_summary>
     <sl:arxiv_updated>2019-05-15T11:00:48Z</sl:arxiv_updated>
   </rdf:Description>
   <rdf:Description rdf:about="max_little_sur_twitter_causa">
-    <sl:creationTime>2020-03-08T11:36:48Z</sl:creationTime>
-    <sl:creationDate>2020-03-08</sl:creationDate>
-    <sl:tag rdf:resource="&tag;machine_learning"/>
-    <sl:tag rdf:resource="&tag;bayesian_deep_learning"/>
-    <sl:comment xml:lang="en">&gt; Techniques from causal inference, such as probabilistic causal diagrams and do-calculus, provide powerful (nonparametric) tools for drawing causal inferences from such observational data. However, these techniques are often incompatible with modern, nonparametric machine learning algorithms since they typically require explicit probabilistic models. Here, we develop causal bootstrapping for augmenting classical nonparametric bootstrap resampling with information on the causal relationship between variables</sl:comment>
-    <sl:bookmarkOf rdf:resource="https://twitter.com/MaxALittle/status/1236234054405627905?s=20"/>
-    <sl:tag rdf:resource="&tag;nn_symbolic_ai_hybridation"/>
-    <dc:title>Max Little sur Twitter : "Causal bootstrapping - a simple way of doing causal inference using arbitrary machine learning algo..."</dc:title>
     <sl:tag rdf:resource="&tag;causal_inference"/>
+    <dc:title>Max Little sur Twitter : "Causal bootstrapping - a simple way of doing causal inference using arbitrary machine learning algo..."</dc:title>
+    <sl:tag rdf:resource="&tag;nn_symbolic_ai_hybridation"/>
+    <sl:bookmarkOf rdf:resource="https://twitter.com/MaxALittle/status/1236234054405627905?s=20"/>
+    <sl:comment xml:lang="en">&gt; Techniques from causal inference, such as probabilistic causal diagrams and do-calculus, provide powerful (nonparametric) tools for drawing causal inferences from such observational data. However, these techniques are often incompatible with modern, nonparametric machine learning algorithms since they typically require explicit probabilistic models. Here, we develop causal bootstrapping for augmenting classical nonparametric bootstrap resampling with information on the causal relationship between variables</sl:comment>
+    <sl:tag rdf:resource="&tag;bayesian_deep_learning"/>
+    <sl:tag rdf:resource="&tag;machine_learning"/>
+    <sl:creationDate>2020-03-08</sl:creationDate>
+    <sl:creationTime>2020-03-08T11:36:48Z</sl:creationTime>
   </rdf:Description>
   <rdf:Description rdf:about="chengkai_li_sur_twitter_link">
-    <sl:tag rdf:resource="&tag;tweet"/>
-    <sl:tag rdf:resource="&tag;knowledge_graph_completion"/>
-    <dc:title>Chengkai Li sur Twitter : "Link prediction methods on knowledge graphs don't work..."</dc:title>
-    <sl:creationTime>2020-03-29T11:40:20Z</sl:creationTime>
-    <sl:tag rdf:resource="&tag;link_prediction"/>
-    <sl:creationDate>2020-03-29</sl:creationDate>
-    <sl:bookmarkOf rdf:resource="https://twitter.com/Chengkai_Li/status/1243342637089898496"/>
     <sl:tag rdf:resource="&tag;knowledge_graph_embeddings"/>
+    <sl:bookmarkOf rdf:resource="https://twitter.com/Chengkai_Li/status/1243342637089898496"/>
+    <sl:creationDate>2020-03-29</sl:creationDate>
+    <sl:tag rdf:resource="&tag;link_prediction"/>
+    <sl:creationTime>2020-03-29T11:40:20Z</sl:creationTime>
+    <dc:title>Chengkai Li sur Twitter : "Link prediction methods on knowledge graphs don't work..."</dc:title>
+    <sl:tag rdf:resource="&tag;knowledge_graph_completion"/>
+    <sl:tag rdf:resource="&tag;tweet"/>
   </rdf:Description>
   <rdf:Description rdf:about="_1902_10197_rotate_knowledge_">
     <sl:arxiv_published>2019-02-26T20:15:09Z</sl:arxiv_published>
@@ -328,9 +328,9 @@ interpretable and accountable AI systems.</sl:arxiv_summary>
     <sl:tag rdf:resource="&tag;arxiv_doc"/>
     <sl:arxiv_num>1902.10197</sl:arxiv_num>
     <sl:creationDate>2020-03-03</sl:creationDate>
-    <sl:tag rdf:resource="&tag;knowledge_graph_embeddings"/>
-    <dc:title xml:lang="en">[1902.10197] RotatE: Knowledge Graph Embedding by Relational Rotation in Complex Space</dc:title>
     <sl:comment>&gt; We study the problem of learning representations of entities and relations in knowledge graphs for predicting missing links.</sl:comment>
+    <dc:title xml:lang="en">[1902.10197] RotatE: Knowledge Graph Embedding by Relational Rotation in Complex Space</dc:title>
+    <sl:tag rdf:resource="&tag;knowledge_graph_embeddings"/>
     <sl:arxiv_summary xml:lang="en">We study the problem of learning representations of entities and relations in
 knowledge graphs for predicting missing links. The success of such a task
 heavily relies on the ability of modeling and inferring the patterns of (or
@@ -395,30 +395,30 @@ improvement of 21.0% in H@10 on path query answering. Our code is available at
 \url{https://github.com/PaddlePaddle/Research/tree/master/KG/CoKE}.</sl:arxiv_summary>
   </rdf:Description>
   <rdf:Description rdf:about="cs294_158_sp20_deep_unsupervise">
-    <sl:tag rdf:resource="&tag;machine_learning_course"/>
-    <sl:creationDate>2020-03-08</sl:creationDate>
-    <dc:title>CS294-158-SP20 Deep Unsupervised Learning Spring 2020</dc:title>
-    <sl:comment>cover two areas of deep learning in which labeled data is not required: Deep Generative Models and Self-supervised Learning</sl:comment>
-    <sl:bookmarkOf rdf:resource="https://sites.google.com/view/berkeley-cs294-158-sp20/home"/>
-    <sl:creationTime>2020-03-08T11:45:16Z</sl:creationTime>
-    <sl:tag rdf:resource="&tag;berkeley"/>
-    <sl:tag rdf:resource="&tag;deep_unsupervised_learning"/>
     <sl:tag rdf:resource="&tag;generative_model"/>
+    <sl:tag rdf:resource="&tag;deep_unsupervised_learning"/>
+    <sl:tag rdf:resource="&tag;berkeley"/>
+    <sl:creationTime>2020-03-08T11:45:16Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://sites.google.com/view/berkeley-cs294-158-sp20/home"/>
+    <sl:comment>cover two areas of deep learning in which labeled data is not required: Deep Generative Models and Self-supervised Learning</sl:comment>
+    <dc:title>CS294-158-SP20 Deep Unsupervised Learning Spring 2020</dc:title>
+    <sl:creationDate>2020-03-08</sl:creationDate>
+    <sl:tag rdf:resource="&tag;machine_learning_course"/>
   </rdf:Description>
   <rdf:Description rdf:about="unsupervised_ner_using_bert_h">
-    <sl:bookmarkOf rdf:resource="https://www.quora.com/q/idpysofgzpanjxuh/Unsupervised-NER-using-BERT?ch=10&amp;share=7b4a15bb"/>
-    <sl:creationTime>2020-03-06T00:12:06Z</sl:creationTime>
-    <sl:creationDate>2020-03-06</sl:creationDate>
-    <dc:title>Unsupervised NER using BERT - Hands-on NLP model review - Quora</dc:title>
-    <sl:tag rdf:resource="&tag;bert"/>
     <sl:tag rdf:resource="&tag;named_entity_recognition"/>
+    <sl:tag rdf:resource="&tag;bert"/>
+    <dc:title>Unsupervised NER using BERT - Hands-on NLP model review - Quora</dc:title>
+    <sl:creationDate>2020-03-06</sl:creationDate>
+    <sl:creationTime>2020-03-06T00:12:06Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://www.quora.com/q/idpysofgzpanjxuh/Unsupervised-NER-using-BERT?ch=10&amp;share=7b4a15bb"/>
   </rdf:Description>
   <rdf:Description rdf:about="gilda">
-    <sl:tag rdf:resource="&tag;film_americain"/>
-    <sl:bookmarkOf rdf:resource="https://en.wikipedia.org/wiki/Gilda"/>
-    <sl:creationTime>2020-03-22T19:08:11Z</sl:creationTime>
-    <sl:creationDate>2020-03-22</sl:creationDate>
     <dc:title>Gilda</dc:title>
+    <sl:creationDate>2020-03-22</sl:creationDate>
+    <sl:creationTime>2020-03-22T19:08:11Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://en.wikipedia.org/wiki/Gilda"/>
+    <sl:tag rdf:resource="&tag;film_americain"/>
   </rdf:Description>
   <rdf:Description rdf:about="_2003_00330_graph_neural_netwo">
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2003.00330"/>
@@ -465,88 +465,88 @@ computing.</sl:arxiv_summary>
     <dc:title>Chaitanya Joshi sur Twitter : "Excited to share a blog post on the connection between #Transformers for NLP and #GraphNeuralNetworks"</dc:title>
     <sl:mainDoc>
       <rdf:Description rdf:about="transformers_are_graph_neural_n">
-        <sl:bookmarkOf rdf:resource="https://graphdeeplearning.github.io/post/transformers-are-gnns/"/>
+        <sl:tag rdf:resource="&tag;attention_is_all_you_need"/>
+        <sl:tag rdf:resource="&tag;graph_neural_networks"/>
+        <sl:tag rdf:resource="&tag;graph_attention_networks"/>
+        <sl:creationTime>2020-03-01T02:28:59Z</sl:creationTime>
+        <dc:title>Transformers are Graph Neural Networks | NTU Graph Deep Learning Lab</dc:title>
+        <sl:creationDate>2020-03-01</sl:creationDate>
         <sl:comment xml:lang="en">&gt; The key idea: Sentences are fully-connected graphs of words, and Transformers are very similar to Graph Attention Networks (GATs) which use multi-head attention to aggregate features from their neighborhood nodes (i.e., words).&#xD;
 [ twitter](https://twitter.com/chaitjo/status/1233220586358181888)</sl:comment>
-        <sl:creationDate>2020-03-01</sl:creationDate>
-        <dc:title>Transformers are Graph Neural Networks | NTU Graph Deep Learning Lab</dc:title>
-        <sl:creationTime>2020-03-01T02:28:59Z</sl:creationTime>
-        <sl:tag rdf:resource="&tag;graph_attention_networks"/>
-        <sl:tag rdf:resource="&tag;graph_neural_networks"/>
-        <sl:tag rdf:resource="&tag;attention_is_all_you_need"/>
+        <sl:bookmarkOf rdf:resource="https://graphdeeplearning.github.io/post/transformers-are-gnns/"/>
       </rdf:Description>
     </sl:mainDoc>
   </rdf:Description>
   <rdf:Description rdf:about="martynas_jusevicius_sur_twitter">
-    <sl:tag rdf:resource="&tag;martynas_jusevicius"/>
-    <sl:tag rdf:resource="&tag;tweet"/>
-    <sl:bookmarkOf rdf:resource="https://twitter.com/namedgraph/status/1238387782944460802?s=20"/>
-    <dc:title>Martynas Jusevicius sur Twitter : "Is there a solution for entity recognition that would use a local #KnowledgeGraph to look for matches? Ideally any SPARQL datasource..."</dc:title>
-    <sl:creationDate>2020-03-13</sl:creationDate>
-    <sl:creationTime>2020-03-13T10:38:03Z</sl:creationTime>
-    <sl:tag rdf:resource="&tag;entity_linking"/>
     <sl:tag rdf:resource="&tag;nlp_using_knowledge_graphs"/>
+    <sl:tag rdf:resource="&tag;entity_linking"/>
+    <sl:creationTime>2020-03-13T10:38:03Z</sl:creationTime>
+    <sl:creationDate>2020-03-13</sl:creationDate>
+    <dc:title>Martynas Jusevicius sur Twitter : "Is there a solution for entity recognition that would use a local #KnowledgeGraph to look for matches? Ideally any SPARQL datasource..."</dc:title>
+    <sl:bookmarkOf rdf:resource="https://twitter.com/namedgraph/status/1238387782944460802?s=20"/>
+    <sl:tag rdf:resource="&tag;tweet"/>
+    <sl:tag rdf:resource="&tag;martynas_jusevicius"/>
   </rdf:Description>
   <rdf:Description rdf:about="diy_masks_for_all_could_help_st">
-    <sl:tag rdf:resource="&tag;coronavirus"/>
-    <dc:title>DIY masks for all could help stop coronavirus - The Washington Post</dc:title>
-    <sl:creationDate>2020-03-29</sl:creationDate>
-    <sl:creationTime>2020-03-29T10:47:45Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://www.washingtonpost.com/outlook/2020/03/28/masks-all-coronavirus/"/>
-    <sl:tag rdf:resource="&tag;diy"/>
     <sl:tag rdf:resource="&tag;jeremy_howard"/>
+    <sl:tag rdf:resource="&tag;diy"/>
+    <sl:bookmarkOf rdf:resource="https://www.washingtonpost.com/outlook/2020/03/28/masks-all-coronavirus/"/>
+    <sl:creationTime>2020-03-29T10:47:45Z</sl:creationTime>
+    <sl:creationDate>2020-03-29</sl:creationDate>
+    <dc:title>DIY masks for all could help stop coronavirus - The Washington Post</dc:title>
+    <sl:tag rdf:resource="&tag;coronavirus"/>
   </rdf:Description>
   <rdf:Description rdf:about="adrian_gschwend_sur_twitter_">
-    <sl:bookmarkOf rdf:resource="https://twitter.com/linkedktk/status/1238031736522620928?s=20"/>
-    <sl:tag rdf:resource="&tag;javascript_rdf"/>
-    <dc:title>Adrian Gschwend sur Twitter : "getting started with RDF and JavaScript!..."</dc:title>
-    <sl:creationDate>2020-03-12</sl:creationDate>
     <sl:creationTime>2020-03-12T12:38:34Z</sl:creationTime>
+    <sl:creationDate>2020-03-12</sl:creationDate>
+    <dc:title>Adrian Gschwend sur Twitter : "getting started with RDF and JavaScript!..."</dc:title>
+    <sl:tag rdf:resource="&tag;javascript_rdf"/>
+    <sl:bookmarkOf rdf:resource="https://twitter.com/linkedktk/status/1238031736522620928?s=20"/>
   </rdf:Description>
   <rdf:Description rdf:about="taiwan_un_modele_dans_la_lutte">
-    <sl:tag rdf:resource="&tag;taiwan"/>
-    <sl:tag rdf:resource="&tag;coronavirus"/>
-    <sl:creationDate>2020-03-29</sl:creationDate>
-    <sl:creationTime>2020-03-29T15:48:59Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="http://www.rfi.fr/fr/asie-pacifique/20200311-ta%C3%AFwan-bonne-gestion-crise-coronavirus"/>
     <dc:title xml:lang="fr">Taïwan, un modèle dans la lutte contre le coronavirus (RFI - 12/03/2020)</dc:title>
+    <sl:bookmarkOf rdf:resource="http://www.rfi.fr/fr/asie-pacifique/20200311-ta%C3%AFwan-bonne-gestion-crise-coronavirus"/>
+    <sl:creationTime>2020-03-29T15:48:59Z</sl:creationTime>
+    <sl:creationDate>2020-03-29</sl:creationDate>
+    <sl:tag rdf:resource="&tag;coronavirus"/>
+    <sl:tag rdf:resource="&tag;taiwan"/>
   </rdf:Description>
   <rdf:Description rdf:about="au_gabon_une_grotte_pourrait_r">
-    <sl:tag rdf:resource="&tag;antiquite_africaine"/>
-    <sl:tag rdf:resource="&tag;gabon"/>
-    <dc:title>Au Gabon, une grotte pourrait révéler des secrets vieux de 700 ans</dc:title>
-    <sl:creationDate>2020-03-09</sl:creationDate>
-    <sl:creationTime>2020-03-09T17:21:00Z</sl:creationTime>
     <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/afrique/article/2020/03/09/au-gabon-une-grotte-pourrait-reveler-des-secrets-vieux-de-700-ans_6032355_3212.html"/>
+    <sl:creationTime>2020-03-09T17:21:00Z</sl:creationTime>
+    <sl:creationDate>2020-03-09</sl:creationDate>
+    <dc:title>Au Gabon, une grotte pourrait révéler des secrets vieux de 700 ans</dc:title>
+    <sl:tag rdf:resource="&tag;gabon"/>
+    <sl:tag rdf:resource="&tag;antiquite_africaine"/>
   </rdf:Description>
   <rdf:Description rdf:about="google_and_http">
-    <sl:tag rdf:resource="&tag;dave_winer"/>
-    <dc:title>Google and HTTP</dc:title>
-    <sl:creationDate>2020-03-08</sl:creationDate>
-    <sl:creationTime>2020-03-08T22:48:47Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="http://this.how/googleAndHttp/"/>
-    <sl:comment>&gt; Google’s not secure message means this: “Google tried to take control of the open web and this site said no.”</sl:comment>
-    <sl:tag rdf:resource="&tag;google"/>
-    <sl:tag rdf:resource="&tag;http"/>
     <sl:tag rdf:resource="&tag;abuse_of_power"/>
+    <sl:tag rdf:resource="&tag;http"/>
+    <sl:tag rdf:resource="&tag;google"/>
+    <sl:comment>&gt; Google’s not secure message means this: “Google tried to take control of the open web and this site said no.”</sl:comment>
+    <sl:bookmarkOf rdf:resource="http://this.how/googleAndHttp/"/>
+    <sl:creationTime>2020-03-08T22:48:47Z</sl:creationTime>
+    <sl:creationDate>2020-03-08</sl:creationDate>
+    <dc:title>Google and HTTP</dc:title>
+    <sl:tag rdf:resource="&tag;dave_winer"/>
   </rdf:Description>
   <rdf:Description rdf:about="neuromorphic_spintronics_%7C_natu">
-    <sl:tag rdf:resource="&tag;julie_grollier"/>
-    <sl:bookmarkOf rdf:resource="https://www.nature.com/articles/s41928-019-0360-9.epdf?author_access_token=jtNeSAhVDL6lK9Q0yunEtdRgN0jAjWel9jnR3ZoTv0PgNbthozMob-1_2TKB9x_fHQcXMtfnbJHqU8V34xrEFK_D8iG774ueRc9x-R_k0v1d-2Pjco0iE67uXMbZ8pklVwMI2YTodu1XqKlKXwInjw%3D%3D"/>
-    <dc:title>Neuromorphic spintronics | Nature Electronics</dc:title>
-    <sl:creationDate>2020-03-02</sl:creationDate>
-    <sl:creationTime>2020-03-02T19:55:39Z</sl:creationTime>
     <sl:tag rdf:resource="&tag;brains_in_silicon"/>
+    <sl:creationTime>2020-03-02T19:55:39Z</sl:creationTime>
+    <sl:creationDate>2020-03-02</sl:creationDate>
+    <dc:title>Neuromorphic spintronics | Nature Electronics</dc:title>
+    <sl:bookmarkOf rdf:resource="https://www.nature.com/articles/s41928-019-0360-9.epdf?author_access_token=jtNeSAhVDL6lK9Q0yunEtdRgN0jAjWel9jnR3ZoTv0PgNbthozMob-1_2TKB9x_fHQcXMtfnbJHqU8V34xrEFK_D8iG774ueRc9x-R_k0v1d-2Pjco0iE67uXMbZ8pklVwMI2YTodu1XqKlKXwInjw%3D%3D"/>
+    <sl:tag rdf:resource="&tag;julie_grollier"/>
   </rdf:Description>
   <rdf:Description rdf:about="la_plus_grosse_explosion_jamais">
-    <sl:tag rdf:resource="&tag;astrophysique"/>
+    <sl:bookmarkOf rdf:resource="https://www.sciencesetavenir.fr/espace/univers/un-trou-noir-responsable-de-la-plus-grosse-explosion-jamais-observee-dans-l-espace-depuis-le-big-bang_142029"/>
+    <sl:creationTime>2020-03-01T12:15:45Z</sl:creationTime>
+    <sl:creationDate>2020-03-01</sl:creationDate>
+    <dc:title>La plus grosse explosion jamais observée depuis le Big Bang</dc:title>
     <sl:comment>L'événement fut si puissant qu'il aurait créé une brèche de la taille de 15 Voies lactées réunies dans le plasma environnant. &#xD;
 &#xD;
 &gt; L'Univers est un endroit étrange.</sl:comment>
-    <dc:title>La plus grosse explosion jamais observée depuis le Big Bang</dc:title>
-    <sl:creationDate>2020-03-01</sl:creationDate>
-    <sl:creationTime>2020-03-01T12:15:45Z</sl:creationTime>
-    <sl:bookmarkOf rdf:resource="https://www.sciencesetavenir.fr/espace/univers/un-trou-noir-responsable-de-la-plus-grosse-explosion-jamais-observee-dans-l-espace-depuis-le-big-bang_142029"/>
+    <sl:tag rdf:resource="&tag;astrophysique"/>
   </rdf:Description>
   <rdf:Description rdf:about="_2003_08271_pre_trained_models">
     <sl:tag rdf:resource="&tag;arxiv_doc"/>
@@ -556,9 +556,9 @@ computing.</sl:arxiv_summary>
     <sl:arxiv_title xml:lang="en">Pre-trained Models for Natural Language Processing: A Survey</sl:arxiv_title>
     <sl:arxiv_firstAuthor>Xipeng Qiu</sl:arxiv_firstAuthor>
     <sl:arxiv_author>Yige Xu</sl:arxiv_author>
+    <sl:arxiv_updated>2020-04-24T15:16:59Z</sl:arxiv_updated>
     <sl:tag rdf:resource="&tag;survey"/>
     <sl:arxiv_published>2020-03-18T15:22:51Z</sl:arxiv_published>
-    <sl:arxiv_updated>2020-03-24T10:32:40Z</sl:arxiv_updated>
     <sl:arxiv_author>Xuanjing Huang</sl:arxiv_author>
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2003.08271"/>
     <dc:title xml:lang="en">[2003.08271] Pre-trained Models for Natural Language Processing: A Survey</dc:title>
