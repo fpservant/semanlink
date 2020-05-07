@@ -525,31 +525,31 @@ score(f(x), f(x+)) &gt;&gt; score(f(x), f(x-))&#xD;
     <sl:arxiv_author>Kyle Richardson</sl:arxiv_author>
     <sl:arxiv_num>2002.05867</sl:arxiv_num>
     <sl:arxiv_title xml:lang="en">Transformers as Soft Reasoners over Language</sl:arxiv_title>
-    <sl:tag rdf:resource="&tag;rules"/>
     <sl:arxiv_published>2020-02-14T04:23:28Z</sl:arxiv_published>
-    <sl:arxiv_updated>2020-02-14T04:23:28Z</sl:arxiv_updated>
+    <sl:tag rdf:resource="&tag;rules"/>
+    <sl:arxiv_updated>2020-05-05T17:33:38Z</sl:arxiv_updated>
     <sl:arxiv_firstAuthor>Peter Clark</sl:arxiv_firstAuthor>
     <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2002.05867"/>
     <sl:tag rdf:resource="&tag;attention_is_all_you_need"/>
     <sl:arxiv_author>Peter Clark</sl:arxiv_author>
-    <sl:arxiv_summary xml:lang="en">AI has long pursued the goal of having systems reason over *explicitly
-provided* knowledge, but building suitable representations has proved
-challenging. Here we explore whether transformers can similarly learn to reason
-(or emulate reasoning), but using rules expressed in language, thus bypassing a
-formal representation. We provide the first demonstration that this is
-possible, and characterize the extent of this capability. To do this, we use a
-collection of synthetic datasets that test increasing levels of reasoning
-complexity (number of rules, presence of negation, and depth of chaining). We
-find transformers appear to learn rule-based reasoning with high (99%) accuracy
-on these datasets, and in a way that generalizes to test data requiring
-substantially deeper chaining than in the training data (95%+ scores). We also
-demonstrate that the models transfer well to two hand-authored rulebases, and
-to rulebases paraphrased into more natural language. These findings are
-significant as it suggests a new role for transformers, namely as a limited
-"soft theorem prover" operating over explicit theories in language. This in
-turn suggests new possibilities for explainability, correctability, and
-counterfactual reasoning in question-answering. All datasets and a live demo
-are available at http://rule-reasoning.apps.allenai.org/</sl:arxiv_summary>
+    <sl:arxiv_summary xml:lang="en">Beginning with McCarthy's Advice Taker (1959), AI has pursued the goal of
+providing a system with explicit, general knowledge and having the system
+reason over that knowledge. However, expressing the knowledge in a formal
+(logical or probabilistic) representation has been a major obstacle to this
+research. This paper investigates a modern approach to this problem where the
+facts and rules are provided as natural language sentences, thus bypassing a
+formal representation. We train transformers to reason (or emulate reasoning)
+over these sentences using synthetically generated data. Our models, that we
+call RuleTakers, provide the first empirical demonstration that this kind of
+soft reasoning over language is learnable, can achieve high (99%) accuracy, and
+generalizes to test data requiring substantially deeper chaining than seen
+during training (95%+ scores). We also demonstrate that the models transfer
+well to two hand-authored rulebases, and to rulebases paraphrased into more
+natural language. These findings are significant as it suggests a new role for
+transformers, namely as limited "soft theorem provers" operating over explicit
+theories in language. This in turn suggests new possibilities for
+explainability, correctability, and counterfactual reasoning in
+question-answering.</sl:arxiv_summary>
     <sl:comment xml:lang="en">&gt; AI has long pursued the goal of having systems reason over *explicitly provided* knowledge, but building suitable representations has proved challenging. Here we explore whether transformers can similarly learn to reason (or emulate reasoning), but **using rules expressed in language, thus bypassing a formal representation**.</sl:comment>
     <sl:creationDate>2020-02-17</sl:creationDate>
     <sl:creationTime>2020-02-17T09:06:44Z</sl:creationTime>

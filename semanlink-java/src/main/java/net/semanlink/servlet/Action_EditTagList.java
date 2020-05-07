@@ -9,6 +9,7 @@ import net.semanlink.semanlink.SLDocument;
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLModel;
 import net.semanlink.semanlink.SLThesaurus;
+import net.semanlink.util.servlet.BasicServlet;
 import net.semanlink.semanlink.SLModel.Label2KeywordMatching;
 
 import org.apache.struts.action.ActionForm;
@@ -21,6 +22,8 @@ import org.apache.struts.action.ActionMapping;
 public class Action_EditTagList extends BaseAction {
 public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
   try {
+  	System.out.println("Action_EditTagList");
+  	BasicServlet.printRequestInfo(request); // TODO REMOVE
   	if (!getSessionEditState(request)) {
   		throw new RuntimeException("Action forbidden when not in edit mode");
   	} else {
