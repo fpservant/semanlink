@@ -36,8 +36,8 @@ import net.semanlink.util.servlet.BasicServlet;
  */
 public class Action_GoKeyword extends BaseAction {
 public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	System.out.println("Action_GoKeyword");
-	BasicServlet.printRequestInfo(request); // TODO REMOVE
+//	System.out.println("Action_GoKeyword");
+//	BasicServlet.printRequestInfo(request); // TODO REMOVE
 	ActionForward x = null;
 	SLKeyword kw = null;
 	boolean edit = getSessionEditState(request);
