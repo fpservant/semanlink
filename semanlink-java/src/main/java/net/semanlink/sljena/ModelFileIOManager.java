@@ -249,11 +249,15 @@ public static void readModel(Model model, String longFilename, String base) thro
 	// Ceci permet de lire de l'utf-8 :
 	RDFFile rdfFile = getRDFFile(longFilename);
 	synchronized(rdfFile) {
-		InputStream in = new BufferedInputStream(new FileInputStream(longFilename));
-		model.read(in,base);
-		// A VIRER 
-		model.removeNsPrefix("j.0");
-		model.removeNsPrefix("j.1");
+		try {
+			InputStream in = new BufferedInputStream(new FileInputStream(longFilename));
+			model.read(in,base);
+			// A VIRER 
+			model.removeNsPrefix("j.0");
+			model.removeNsPrefix("j.1");
+		} catch (Exception e) {
+			System.err.println("Exception reading model " + longFilename);
+		}
 	}
 } // readModel
 }
