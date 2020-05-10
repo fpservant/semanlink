@@ -5,6 +5,11 @@
 <h1>Release notes</h1>
 <div class="graybox">
 
+<h2>0.7.3 2020-05-xx</h2>
+<ul>
+<li>Drag & drop from tag search list to comment's markdown, to list of tags</li>
+</ul>
+
 <h2>0.7.2 2020-04-11</h2>
 <ul>
 <li>Arxiv docs, specific metadata</li>
