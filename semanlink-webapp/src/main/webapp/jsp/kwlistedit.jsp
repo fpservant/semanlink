@@ -41,30 +41,25 @@ String contextPath = request.getContextPath();
 		// BOF BOF ci dessous, pour les add, utilisait jsp.getUriFormValue() ???????
 		// Beware, no background-color to have aqua buttons in safari // @find aquaform: safari 3
 		%>
-		<html:form action="edittaglist">
-			<html:hidden property="<%=docorkwuri%>" value="<%=truc.getUri()%>" />
-			<html:hidden property="field" value="<%=field%>" />
-			<p>
-				<input name="kwlabel" type="text" size="20" tabindex="<%=tabindex%>" onKeyPress="if(event.keyCode==13) {document.getElementById('add<%=field%>').click(); return false;}" />
-				<input type="submit" name="add" tabindex="<%=tabindex+1%>" id = "add<%=field%>" value="<%=jsp.i18l("x.add")%>" />
-				<input type="submit" name="paste" tabindex="<%=tabindex+2%>" value="<%=jsp.i18l("x.paste")%>" />
-			</p>
-			<%int n = list.size();
-			if (n > 0) {
-				%><ul><%
-					for (int i = 0; i < n; i++) {
-						SLKeyword ke = (SLKeyword) list.get(i);
-						String value = java.net.URLEncoder.encode(ke.getURI(),"UTF-8");
-						%>
-						<li><html:multibox property="kwuris" value="<%=value%>"/><a href="<%=response.encodeURL(truc.getHREF(contextPath, i))%>"><%=ke.getLabel()%></a></li>
-						<%
-	
-					} // for
-				%></ul>
-				<p>
-					<input type="submit" name="cut" tabindex="<%=tabindex+3%>" value="<%=jsp.i18l("x.cut")%>" />
-					<input type="submit" name="remove" tabindex="<%=tabindex+4%>" value="<%=jsp.i18l("x.remove")%>" />
-				</p>
-			<%} // (n > 0) %>
-		</html:form>
+		<p></p>
+        <html:form action="edittaglist">
+            <html:hidden property="<%=docorkwuri%>" value="<%=truc.getUri()%>" />
+            <html:hidden property="field" value="<%=field%>" />
+            <%int n = list.size();
+            if (n > 0) {
+                %><ul><%
+                    for (int i = 0; i < n; i++) {
+                        SLKeyword ke = (SLKeyword) list.get(i);
+                        String value = java.net.URLEncoder.encode(ke.getURI(),"UTF-8");
+                        %>
+                        <li><html:multibox property="kwuris" value="<%=value%>"/><a href="<%=response.encodeURL(truc.getHREF(contextPath, i))%>"><%=ke.getLabel()%></a></li>
+                        <%
+    
+                    } // for
+                %><p></p></ul>
+                    <input type="submit" name="cut" tabindex="<%=tabindex+3%>" value="<%=jsp.i18l("x.cut")%>" />
+                    <input type="submit" name="remove" tabindex="<%=tabindex+4%>" value="<%=jsp.i18l("x.remove")%>" />
+                    <input type="submit" name="paste" tabindex="<%=tabindex+2%>" value="<%=jsp.i18l("x.paste")%>" />
+            <%} // (n > 0) %>
+        </html:form>
 <!--kwlistedit.jsp-->
