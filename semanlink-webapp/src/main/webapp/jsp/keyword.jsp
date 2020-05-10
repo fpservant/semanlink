@@ -5,7 +5,7 @@ boolean new_showTreeExpanded = false;
 boolean new_showTree = new_showTreeNotExpanded || new_showTreeExpanded;
 // SLKeyword kw = (SLKeyword) request.getAttribute("net.semanlink.servlet.SLKeyword");Jsp_Keyword jsp = (Jsp_Keyword) request.getAttribute("net.semanlink.servlet.jsp");SLKeyword kw = (SLKeyword) jsp.getSLResource();boolean edit = (Boolean.TRUE.equals(session.getAttribute("net.semanlink.servlet.edit")));request.setAttribute("displayedKW", kw);Boolean imagesOnlyB = (Boolean) session.getAttribute("net.semanlink.servlet.imagesonly");boolean imagesOnly = false;if (imagesOnlyB != null) {	imagesOnly = imagesOnlyB.booleanValue();}//2020-02// request.setAttribute("displayedKW", kw.getURI());// 2019-09 snipString context = null;String snip = request.getParameter("snip");if (snip != null) {    context = SLServlet.getServletUrl();    } else {	context = request.getContextPath();}
 %><% /////////////////////////////////////////// PARENTS %><%
-if (jsp.isDisplayParents()) {	jsp.prepareParentsList();	// 2020-05 dragndrop2%> 			<%if (edit) {%>    <div id="tag_parents" class="graybox" ondrop="dropToParents(event)" ondragover="allowDrop(event)">				<div class="what"><%=jsp.i18l("tag.parents")%></div>				<div class="horizEnumeration">				<jsp:include page="/jsp/kwlistedit.jsp" flush="true" />				</div>			<%} else {				request.setAttribute("net.semanlink.servlet.rdfa.property",SLVocab.HAS_PARENT_PROPERTY); // 2013-08 RDFa				%>    <div id="tag_parents" class="graybox">				<div class="horizEnumeration">				<div class="horizEnumerationTitle"><%=jsp.i18l("tag.parents")%></div>
+if (jsp.isDisplayParents()) {	jsp.prepareParentsList();	//2020-05 dragndrop2%> 			<%if (edit) {%>    <div id="tag_parents" class="graybox" ondrop="dropToTagList(event)" ondragover="dragOver(event)"        ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondragstart="dragStart(event)" ondragend="dragEnd(event)">				<div class="what"><%=jsp.i18l("tag.parents")%></div>				<div class="horizEnumeration">				<jsp:include page="/jsp/kwlistedit.jsp" flush="true" />				</div>			<%} else {				request.setAttribute("net.semanlink.servlet.rdfa.property",SLVocab.HAS_PARENT_PROPERTY); // 2013-08 RDFa				%>    <div id="tag_parents" class="graybox">				<div class="horizEnumeration">				<div class="horizEnumerationTitle"><%=jsp.i18l("tag.parents")%></div>
 				<jsp:include page="/jsp/kwlist.jsp" flush="true" />				</div>			<%} // if edit or not%>		<div class="clearboth"></div>	</div>
 <%}// if isDisplayParents %>
 
@@ -33,13 +33,12 @@ if (!(jsp.isDisplaySnipOnly())) {
 	<% /////////////////// COMMENT		 %>							 
 	<jsp:include page="comment.jsp"/>
 	<% /////////////////// COMMENT       %>	<%if (false) { %>                        	    <jsp:include page="markdownof.jsp"/>	<%}%>
-<%}//  if (!(jsp.isDisplaySnipOnly())) %><%	Bean_KwList truc = new Bean_KwList();	truc.setUri(kw.getURI());	request.setAttribute("net.semanlink.servlet.Bean_KwList", truc);
+<%}//  if (!(jsp.isDisplaySnipOnly())) %><%	Bean_KwList truc = new Bean_KwList();	truc.setUri(kw.getURI());	request.setAttribute("net.semanlink.servlet.Bean_KwList", truc);		/*    <div id="tag_friends" class="graybox" ondrop="dropToTagList(event)" ondragover="dragOver(event)"        ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondragstart="dragStart(event)" ondragend="dragEnd(event)">*/
 %>
 
 
 
-<%if (!(jsp.isDisplaySnipOnly())) {%>
-<div class="graybox"><%
+<%if (!(jsp.isDisplaySnipOnly())) {
 	////// FRIENDS
 	truc.setList(kw.getFriends());
 	truc.setContainerAttr(null);
@@ -49,7 +48,7 @@ if (!(jsp.isDisplaySnipOnly())) {
 		<%
 			truc.setField("friends");
 		%>
-		<div class="what"><%=jsp.i18l("tag.friends")%></div>
+    <div id="tag_friends" class="graybox" ondrop="dropToTagList(event)" ondragover="dragOver(event)"        ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondragstart="dragStart(event)" ondragend="dragEnd(event)">		<div class="what"><%=jsp.i18l("tag.friends")%></div>
 		<div class="horizEnumeration">
 			<jsp:include page="/jsp/kwlistedit.jsp" flush="true" />
 		</div>
@@ -57,7 +56,7 @@ if (!(jsp.isDisplaySnipOnly())) {
 		<%
 	} else {
 		request.setAttribute("net.semanlink.servlet.rdfa.property",SLVocab.HAS_FRIEND_PROPERTY); // 2013-08 RDFa		%>
-		<div class="horizEnumeration">
+    <div id="tag_friends" class="graybox">		<div class="horizEnumeration">
 			<div class="horizEnumerationTitle"><%=jsp.i18l("tag.friends")%></div>
 			<jsp:include page="/jsp/kwlist.jsp" flush="true" />
 		</div>
@@ -73,16 +72,12 @@ if (!(jsp.isDisplaySnipOnly())) {
 <% /////////////////////////////// CHILDREN ////////////////////////// %>
 
 
-
-
-<div class="graybox">
 <%
-	boolean displayChildren = true; // to know whether they must be displayed later (set to false if tree displayed or...)		if (edit) {%>		<% /////////////////////////////////////////// EDIT CHILDREEN %>		<%
+//2020-05 dragndrop2	boolean displayChildren = true; // to know whether they must be displayed later (set to false if tree displayed or...)		if (edit) {%>    <div id="tag_children" class="graybox" ondrop="dropToTagList(event)" ondragover="dragOver(event)"        ondragenter="dragEnter(event)" ondragleave="dragLeave(event)" ondragstart="dragStart(event)" ondragend="dragEnd(event)">		<% /////////////////////////////////////////// EDIT CHILDREEN %>		<%
 			truc.setList(kw.getChildren());			truc.setContainerAttr(null);			truc.setUlCssClass(null);
 			truc.setField("children");		%>		<div class="what"><%=jsp.i18l("tag.children")%></div>		<div class="horizEnumeration">			<jsp:include page="/jsp/kwlistedit.jsp" flush="true" />		</div>		<div class="clearboth"></div>		<%		displayChildren = false;
 
-	} else {
-		// NOT EDIT
+	} else {	   %>	   <div id="tag_children" class="graybox">	   <%		// NOT EDIT
 		// tree, ou bien enfants (sauf ci ceux-ci édités, car déjà affichés ci-dessus)
 		DisplayMode displayMode = jsp.getDisplayMode();												// 2013-04 change display of children list		String changeChildrenDisplay = context+jsp.computelinkToThis();		if (changeChildrenDisplay.indexOf("?") > -1) changeChildrenDisplay += "&childrenAs=";		else changeChildrenDisplay += "?childrenAs=";		String displayChildrenAs = null;									if (displayMode.isChildrenAsTree()) {			changeChildrenDisplay += DisplayMode.DESCENDANTS_EXPANDED_TREE; // 2013-04			displayChildrenAs = "Expand"; // jsp.i18l("docList.firstLevelDocs");			if (!imagesOnly) { // on ne met pas l'arbre si on affiche les images				request.setAttribute("kw", kw);				request.setAttribute("divid", "kwtree");				request.setAttribute("withdocs", Boolean.TRUE);
 				request.setAttribute("withdocs_notonfirstlevel", Boolean.TRUE);				%>
@@ -116,5 +111,4 @@ if (!(jsp.isDisplaySnipOnly())) {
 			<jsp:include page="properties.jsp"/>
 			<%if (SLServlet.isProto()) { %>
 				<jsp:include page="tagOutsideLinks.jsp"/>
-			<%}%><%}//  if (!(jsp.isDisplaySnipOnly())) %>
-<!--/keyword.jsp-->
+			<%}%><%}//  if (!(jsp.isDisplaySnipOnly())) %><!--/keyword.jsp-->

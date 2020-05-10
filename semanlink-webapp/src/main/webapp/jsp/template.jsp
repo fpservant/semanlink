@@ -45,7 +45,7 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Semanlink - <%=jsp.getTitle()%></title>
     <link rel="stylesheet" href="<%=contextPath%>/css/sidemenu.css" type="text/css" />
-    <link rel="stylesheet" href="<%=contextPath%>/css/slstyles.css?v=0.7.1" type="text/css" />
+    <link rel="stylesheet" href="<%=contextPath%>/css/slstyles.css?v=0.7.2.d" type="text/css" />
     
     <script src="<%=contextPath%>/scripts/markdown-it.min.910.js"></script>   
     <script src="<%=contextPath%>/scripts/markdown-it-replace-link.min.js"></script>   
@@ -221,11 +221,11 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
     // Add a script element as a child of the body %>
     function downloadJS() {
          var element = document.createElement("script");
-         element.src = "<%=contextPath%>/scripts/livesearch.js?v=0.7.2";
+         element.src = "<%=contextPath%>/scripts/livesearch.js?v=0.7.2.d";
          document.body.appendChild(element);
          
          element = document.createElement("script");
-         element.src = "<%=contextPath%>/scripts/trees.js?v=0.7.2";
+         element.src = "<%=contextPath%>/scripts/trees.js?v=0.7.2.d";
          document.body.appendChild(element);
     }
     </script>
@@ -435,12 +435,27 @@ if (jsp instanceof Jsp_Keyword) { // 2013-08 RDFa added typeof
             // throw new RuntimeException(e);
         }
     } // error or not
+
+//
+// 2020-05 dragndrop
+//
+
+// have to add a form , because posting directly from js or 
+// creating one from js doesn't seem to work from firefox 
+// see tree.js post_usingExistingForm
+// see CoolUriServlet action2020
 %>
-
-
+<form id="tag_parents_form" action="" method="POST">
+  <input id="tag_parents_form_action2020" type="hidden" name="action2020" value="add2parents">
+  <input id="tag_parents_form_uri" type="hidden" name="uri" value="">
+</form>
 
 
 </div> <!-- middle -->
+
+
+
+
 </body>
 
 <% // put at the end, in order to allow included .jsp to add events to jsp (it is the case of document.jsp, for the markdown) // ??? %>
