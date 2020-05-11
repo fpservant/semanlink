@@ -45,11 +45,11 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Semanlink - <%=jsp.getTitle()%></title>
     <link rel="stylesheet" href="<%=contextPath%>/css/sidemenu.css" type="text/css" />
-    <link rel="stylesheet" href="<%=contextPath%>/css/slstyles.css?v=0.7.2.f" type="text/css" />
+    <link rel="stylesheet" href="<%=contextPath%>/css/slstyles.css?v=0.7.2.h" type="text/css" />
     
     <script src="<%=contextPath%>/scripts/markdown-it.min.910.js"></script>   
     <script src="<%=contextPath%>/scripts/markdown-it-replace-link.min.js"></script>   
-    <script src="<%=contextPath%>/scripts/markdown-sl.js?v=071"></script>   
+    <script src="<%=contextPath%>/scripts/markdown-sl.js?v=0.7.2.a"></script>   
     
     <%    
     if ((jsp instanceof Jsp_Keyword) || (jsp instanceof Jsp_ThisMonth)) { // 2007-03 remplace 2007-01
@@ -445,9 +445,9 @@ if (jsp instanceof Jsp_Keyword) { // 2013-08 RDFa added typeof
 // see tree.js post_usingExistingForm
 // see CoolUriServlet action2020
 %>
-<form id="tag_parents_form" action="" method="POST">
-  <input id="tag_parents_form_action2020" type="hidden" name="action2020" value="add2parents">
-  <input id="tag_parents_form_uri" type="hidden" name="uri" value="">
+<form id="tags_form" action="" method="POST">
+  <input id="tags_form_action2020" type="hidden" name="action2020" value="add2parents">
+  <input id="tags_form_uri" type="hidden" name="uri" value="">
 </form>
 
 
