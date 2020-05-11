@@ -45,7 +45,7 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Semanlink - <%=jsp.getTitle()%></title>
     <link rel="stylesheet" href="<%=contextPath%>/css/sidemenu.css" type="text/css" />
-    <link rel="stylesheet" href="<%=contextPath%>/css/slstyles.css?v=0.7.2.e" type="text/css" />
+    <link rel="stylesheet" href="<%=contextPath%>/css/slstyles.css?v=0.7.2.f" type="text/css" />
     
     <script src="<%=contextPath%>/scripts/markdown-it.min.910.js"></script>   
     <script src="<%=contextPath%>/scripts/markdown-it-replace-link.min.js"></script>   
@@ -221,11 +221,11 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
     // Add a script element as a child of the body %>
     function downloadJS() {
          var element = document.createElement("script");
-         element.src = "<%=contextPath%>/scripts/livesearch.js?v=0.7.2.e";
+         element.src = "<%=contextPath%>/scripts/livesearch.js?v=0.7.2.f";
          document.body.appendChild(element);
          
          element = document.createElement("script");
-         element.src = "<%=contextPath%>/scripts/trees.js?v=0.7.2.e";
+         element.src = "<%=contextPath%>/scripts/trees.js?v=0.7.2.f";
          document.body.appendChild(element);
     }
     </script>
