@@ -59,7 +59,11 @@ String contextPath = request.getContextPath();
                 %><p></p></ul>
                     <input type="submit" name="cut" tabindex="<%=tabindex+3%>" value="<%=jsp.i18l("x.cut")%>" />
                     <input type="submit" name="remove" tabindex="<%=tabindex+4%>" value="<%=jsp.i18l("x.remove")%>" />
+            <%} // (n > 0) 
+            SLKeyword[] clipboardKws = (SLKeyword[]) session.getAttribute("net.semanlink.servlet.ClipboardKeyword");
+            if (clipboardKws != null) {
+            %>
                     <input type="submit" name="paste" tabindex="<%=tabindex+2%>" value="<%=jsp.i18l("x.paste")%>" />
-            <%} // (n > 0) %>
+            <%}%>
         </html:form>
 <!--kwlistedit.jsp-->
