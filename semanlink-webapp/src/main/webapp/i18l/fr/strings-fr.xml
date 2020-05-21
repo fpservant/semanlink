@@ -114,12 +114,12 @@
 <!--  2008/02 -->
 <entry key="x.lang">Langue</entry>
 <!--  2008/04 -->
-<entry key="found">{0} {2} {1}.</entry>
-<entry key="found.during1">dans le dernier mois</entry>
-<entry key="found.during2">dans la dernière semaine</entry>
-<entry key="found.during3">dans les deux dernières semaines</entry>
-<entry key="found.during4">dans les {0} derniers jours</entry>
-<entry key="found.documents">documents</entry>
+<entry key="found">{0} {2} {1}</entry>
+<entry key="found.during1">(mois dernier)</entry>
+<entry key="found.during2">(semaine dernière)</entry>
+<entry key="found.during3">(deux dernières semaines)</entry>
+<entry key="found.during4">({0} derniers jours)</entry>
+<entry key="found.documents">Documents</entry>
 <entry key="found.domains">domaines</entry>
 <!--  2008/09 -->
 <entry key="doc.source">Source</entry>

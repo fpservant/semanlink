@@ -16,7 +16,7 @@ public class Jsp_ThisMonth extends Jsp_DocumentList {
 protected String dateProp;
 public int nbOfDays = 31;
 // use getter
-private List KWs;
+private List<SLKeyword> KWs;
 public Jsp_ThisMonth(HttpServletRequest request) throws Exception {
 	this(null, request);
 }
@@ -40,7 +40,7 @@ public List computeDocs() throws Exception {
 	return mod.getRecentDocs(this.nbOfDays, this.dateProp);
 }
 
-public List getKWs() throws Exception {
+public List<SLKeyword> getKWs() throws Exception {
 	if (this.KWs == null) computeKWs();
 	return this.KWs;
 }
@@ -57,7 +57,12 @@ protected void computeKWs() throws Exception {
 public String getTitle() {
 	// String x = "New Entries (" + this.getDocs().size() + " documents in the last " + nbOfDays + " days)";
 	String x = i18l("topmenu.newEntries");
-	if (this.kws == null) return x;
+	if (this.kws == null) {
+		return x; // + " " + lastNdaysString();
+	}
+	
+	// ça arrive ça ?
+	
 	StringBuffer sb2 = new StringBuffer(x);
 	for (int i = 0; i < this.kws.length; i++) {
 		sb2.append(" AND ");
@@ -95,8 +100,12 @@ public int nbOfDocs() throws Exception { return this.getDocs().size(); }
 	return messageFormat.format(args);
 } */
 
-public String aboutList() throws Exception {
+public String aboutDocList() throws Exception {
 	return aboutList(i18l("found.documents"), this.getDocs().size());
+}
+
+public String aboutTagList() throws Exception {
+	return aboutList(i18l("found.tags"), this.getKWs().size());
 }
 
 
@@ -122,10 +131,24 @@ public String aboutList(String what, int nb) throws Exception {
 	}
 	args[0] = nb;
 	args[2] = what;
-	
-	
 	return messageFormat.format(args);
 }
+
+private String lastNdaysString() {
+	if ((nbOfDays == 30) || (nbOfDays == 31)) {
+		return i18l("found.during1");
+	} else if (nbOfDays == 7) {
+		return i18l("found.during2");
+	} else if ((nbOfDays == 14) || (nbOfDays == 15)) {
+		return i18l("found.during3");
+	} else {
+		// sb.append("during the last " + nbOfDays + " days");
+		MessageFormat mf = new MessageFormat(i18l("found.during4"));
+		String[] args = new String[1]; args[0] = Integer.toString(nbOfDays);
+		return mf.format(args);
+	}
+}
+
 
 
 public HTML_Link linkToThisAndKw(SLKeyword otherKw) throws IOException {
@@ -151,12 +174,27 @@ public String getContent() throws Exception {
 }
 
 
-public List  prepareNewKWsList() throws Exception {
-	List x = getKWs();
+// to be used to display new tags vertically, tree like
+public List<SLKeyword>  prepareNewKWsList_asTree() throws Exception {
+	List<SLKeyword> x = getKWs();
 	request.setAttribute("livetreelist", x);
 	request.setAttribute("divid", "intersectkws");
 	request.setAttribute("withdocs", Boolean.TRUE);
 	request.setAttribute("resolveAlias", Boolean.FALSE);
+	return x;
+}
+
+public List<SLKeyword>  prepareNewKWsList_asHorizontalList() throws Exception {
+	List<SLKeyword> x = getKWs();
+	request.setAttribute("resolveAlias", Boolean.FALSE);
+	Collections.sort(x);
+	
+	Bean_KwList truc = new Bean_KwList();
+	request.setAttribute("net.semanlink.servlet.Bean_KwList", truc);
+	truc.setList(x);
+	truc.setContainerAttr(null);
+	truc.setUlCssClass(null);
+
 	return x;
 }
 
