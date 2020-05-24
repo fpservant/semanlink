@@ -23,7 +23,8 @@ import net.semanlink.semanlink.SLModel;
 
 public class ArxivLoopUpdateTest {
 
-@Test public final void test() throws Exception {
+// @Test viré parce que met à jour les sl.rdf: ennuyeux pour git. TODO
+public final void test() throws Exception {
 	SLModel m = DataLoader.getSLModel();
 	Client client = ClientBuilder.newClient();
 	ArxivMetadataExtractor extractor = new ArxivMetadataExtractor();
