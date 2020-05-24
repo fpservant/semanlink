@@ -1,5 +1,8 @@
 package net.semanlink.servlet;
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.HashMap;
+import java.util.List;
 
 import net.semanlink.semanlink.*;
 import net.semanlink.util.Util;
@@ -75,5 +78,37 @@ public String bookmarkletJavascript() throws MalformedURLException {
 	x.append("/bookmarkform.do?docuri='+encodeURIComponent(encodeURIComponent(s))+'&title='+encodeURIComponent(encodeURIComponent(document.title))+'&comment='+encodeURIComponent(encodeURIComponent(q))+'&lang='+encodeURIComponent(l)"); // +'&via='+encodeURIComponent(r);");
 	return x.toString();
 }
+
+//
+// 2020-05 all this to display tag cloud on home page
+//
+
+
+public HashMap getLinkedKeywords2NbHashMap() throws Exception {
+	List docs = getDocs();
+	return SLUtils.getLinkedKeywords2NbHashMap(docs);
+}
+
+public List getDocs() throws Exception {
+	return computeDocs();
+}
+
+public List computeDocs() throws Exception {
+	SLModel mod = SLServlet.getSLModel();
+	return mod.getRecentDocs(30, SLServlet.getJspParams().getDateProperty(request));
+}
+
+public HTML_Link linkToThisAndKw(SLKeyword otherKw) throws IOException {
+	return HTML_Link.getHTML_Link(otherKw);
+}
+
+//
+// all this to display tag cloud on home page END
+//
+
+
+//
+//
+//
 
 } // class Jsp_Welcome
