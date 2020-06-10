@@ -19,6 +19,7 @@ import net.semanlink.semanlink.SLDocument;
 import net.semanlink.semanlink.SLFastTree;
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLModel;
+import net.semanlink.semanlink.SLResource;
 import net.semanlink.semanlink.SLUtils;
 import net.semanlink.semanlink.SLVocab;
 import net.semanlink.util.URLUTF8Encoder;
@@ -794,4 +795,38 @@ public I18l getI18l() {
 	}
 	return this.i18l;
 }
+
+//
+//
+//
+
+public String sortPropValue4Display(SLResource doc) {
+  String prop = getSortProperty();
+  // prop = "http://www.semanlink.net/2001/00/semanlink-schema#creationTime";
+  // TODO  change
+  if (prop != null) {
+      String x = null;
+      if (!prop.equals(SLVocab.HAS_KEYWORD_PROPERTY)) {
+          // 2012-12: better to display the date than the time
+          HashMap hm = doc.getPropertiesAsStrings();
+          if (prop.equals(SLVocab.SL_CREATION_TIME_PROPERTY)) prop = SLVocab.SL_CREATION_DATE_PROPERTY;
+          java.util.List al = (java.util.List) hm.get(prop);
+          if (al != null) {
+              x = al.get(0).toString();
+          } else {
+              if (prop.equals(SLVocab.DATE_PARUTION_PROPERTY)) { // if not set, take creation date instead
+                  al = (java.util.List) hm.get(SLVocab.SL_CREATION_DATE_PROPERTY);
+                  if (al != null) {
+                     x = al.get(0).toString();
+                  }
+              }
+          }
+      }
+      if (x != null) {
+      	return x;
+      }
+  }
+	return null;
+}
+
 }
