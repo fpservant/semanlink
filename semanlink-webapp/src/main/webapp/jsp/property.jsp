@@ -14,5 +14,4 @@
 
 
 
-<% /////////////////////////////////////////// DOCUMENTS AND/OR THUMBNAILS %><%if (imagesOnly) { %>	<jsp:include page="imagelist.jsp"/><%} else { // !imagesOnly	request.setAttribute("net.semanlink.servlet.Bean_DocList", jsp.getDocList());	%>	<% /////////////////////////////////////////// IMAGE EVENTUELLE %>	<jsp:include page="/jsp/image.jsp" flush="true" />	<% /////////////////////////////////////////// DOC LIST %>	<jsp:include page="doclist.jsp"/>					<div class="clearboth"></div> <%//ceci est nécessaire pour que la "graybox" contienne entièrement l'éventuelle image%>
-<% } %></div></div> <!--keyword--><% /////////////////////////////////////////// %><!--/property.jsp-->
+<% /////////////////////////////////////////// DOCUMENTS AND/OR THUMBNAILS %><%if (imagesOnly) { %>	<jsp:include page="imagelist.jsp"/><%} else { // !imagesOnly	request.setAttribute("net.semanlink.servlet.Bean_DocList", jsp.getDocList());	%>	<% /////////////////////////////////////////// DOC LIST %>	<jsp:include page="doclist.jsp"/><% } %></div></div> <!--keyword--><% /////////////////////////////////////////// %><!--/property.jsp-->

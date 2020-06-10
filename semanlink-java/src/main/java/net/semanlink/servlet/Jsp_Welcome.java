@@ -83,10 +83,16 @@ public String bookmarkletJavascript() throws MalformedURLException {
 // 2020-05 all this to display tag cloud on home page
 //
 
+// deactivated actually, see getLinkedKeywords2NbHashMap
 
 public HashMap getLinkedKeywords2NbHashMap() throws Exception {
-	List docs = getDocs();
-	return SLUtils.getLinkedKeywords2NbHashMap(docs);
+	boolean displayTagCloudOnHonePage = false;
+	if (displayTagCloudOnHonePage) {
+		List docs = getDocs();
+		return SLUtils.getLinkedKeywords2NbHashMap(docs);
+	} else {
+		return null;
+	}
 }
 
 public List getDocs() throws Exception {

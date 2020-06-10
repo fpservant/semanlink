@@ -225,7 +225,7 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
          document.body.appendChild(element);
          
          element = document.createElement("script");
-         element.src = "<%=contextPath%>/scripts/trees.js?v=0.7.2.f";
+         element.src = "<%=contextPath%>/scripts/trees.js?v=0.7.2.r";
          document.body.appendChild(element);
     }
     </script>
