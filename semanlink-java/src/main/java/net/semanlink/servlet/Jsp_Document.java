@@ -316,7 +316,7 @@ public SLDocumentStuff getSLDocumentStuff() {
 // 2020-07 : add local copy
 //
 
-public SLDocument localCopyCandidate() throws Exception { // 2020-07
+public SLDocumentStuff localCopyCandidate() throws Exception { // 2020-07
   SLModel mod = SLServlet.getSLModel();
   File currentDir = mod.goodDirToSaveAFile();	            
   File[] files = currentDir.listFiles();
@@ -327,18 +327,28 @@ public SLDocument localCopyCandidate() throws Exception { // 2020-07
     } 
   });
   for (File f : files) { // we only are interested with the most recent, so not really a loop
+  	
+  	// hum, le plus récent, ce n'est pas forcément génial :
+  	// ne marche pas si on a copié-collé un fichier à partir du disque
+  	// (le fichier garde son last-modified à sa valeur originale).
+  	// Mais ca devient compliqué pour faire mieux : garder un état de l'activ folder
+  	// et voir ses changeemnts.
+  	
   	// est-ce que c un pdf ou html (pas sl.rdf !)
   	String nam = f.getName();
   	if ("sl.rdf".equals(nam)) continue;
   	if ((nam.startsWith("sl-")) && (nam.endsWith(".rdf"))) continue;
+  	// est-ce que ce n'est pas déjà un doc (local)?
+  	SLDocument sldoc = mod.smarterGetDocument(mod.filenameToUri(f.getPath()));
+  	if (mod.existsAsSubject(sldoc)) { // todo check si c bien le bon test à faire
+  		return null;
+  	}
+    SLDocumentStuff docStuff = new SLDocumentStuff(sldoc, mod, getContextURL());
   	// est-ce qu'il n'est pas déjà source de qlqu'un?
-  	SLDocument x = mod.smarterGetDocument(mod.filenameToUri(f.getPath()));
-    SLDocumentStuff docStuff = new SLDocumentStuff(x, mod, getContextURL());	
     if (docStuff.getSource() != null) {
     	return null;
-    } else {
-    	return x;
     }
+    return docStuff;
   }
   return null;
 }

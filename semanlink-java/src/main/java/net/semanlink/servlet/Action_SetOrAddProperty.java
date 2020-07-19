@@ -196,7 +196,16 @@ protected void setOrAddProp(String propertyUri, String propertyValue, HttpServle
 		}
 		// POST REDIRECT 
 		// getJsp_Document(doc, request);
-		redirectURL = Util.getContextURL(request) + HTML_Link.docLink(doc.getURI());
+		
+		// 2020-07 to be able to redirect to doc, not local copy, when quick ad of local copy
+		// new param given the redirect url
+		
+		String redirect = request.getParameter("redirect_uri"); // 2020-07
+		if (redirect != null) {
+			redirectURL = Util.getContextURL(request) + HTML_Link.docLink(redirect);
+		} else {
+			redirectURL = Util.getContextURL(request) + HTML_Link.docLink(doc.getURI());
+		}
 
 	}
 	// POST REDIRECT 

@@ -55,6 +55,9 @@ public SLDocumentStuff(SLDocument doc, SLModel mod, String contextURL) {
 	this.contextURL = contextURL;
 }
 
+public SLDocument getSLDocument() { return this.doc ; }
+public String getURI() { return this.doc.getURI() ; }
+
 //
 //
 //
