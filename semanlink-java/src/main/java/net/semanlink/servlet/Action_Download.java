@@ -206,45 +206,6 @@ public static boolean isHTML(String downloadFromUri, Response res) {
   return isHTML;
 }
 
-//public static File downloadFile_SVG(String downloadFromUri, String title, boolean overwrite, SLModel mod) throws IOException {
-//	// if (!downloadFromUri.startsWith("http:")) throw new RuntimeException("Not an http uri"); // TODO : on pourrait vouloir faire une copie d'un file
-//	
-//	Client simpleHttpClient = SLServlet.getSimpleHttpClient();
-//	// String contentType = null; //  = simpleHttpClient.getContentType(downloadFromUri, false);
-//	
-//  WebTarget webTarget = simpleHttpClient.target(downloadFromUri);
-//  Response res = webTarget.request(MediaType.WILDCARD_TYPE).get();
-//	boolean isHTML = false;
-//  if ((res.getMediaType() != null) && (res.getMediaType().isCompatible(MediaType.TEXT_HTML_TYPE))) {
-//  	isHTML = true;
-//  } else {
-//		if ((downloadFromUri.endsWith(".html"))||(downloadFromUri.endsWith(".htm"))) isHTML = true;
-//	}
-//	
-//	File dir = mod.goodDirToSaveAFile(); ////// !!!
-//	String sfn = getShortFilename(title, downloadFromUri, isHTML);
-//	File saveAs = new File(dir, sfn);
-//	if (saveAs.exists()) {
-//		if (!overwrite) throw new RuntimeException ("A file " + saveAs.toString() + " already exists.");
-//	}
-//
-//	// if ("text/html".equals(contentType)) {
-//	if (isHTML) {
-//		HTMLPageDownload download = new HTMLPageDownload(new URL(downloadFromUri), res);
-//		if (HTMLPageDownload.isLeMondePrintPage(downloadFromUri)) {
-//			// remplacer le titre ds le html
-//			if (title != null) {
-//				download.replaceTitle(title);
-//			}
-//		}
-//		download.save(saveAs);						
-//	} else {
-//		save(res, saveAs);
-//	}
-//	return saveAs;
-//}
-
-
 static private void save(Response res, File saveAsFile) throws IOException {	
   	File dir = new File(saveAsFile.getParent());
   	if (!dir.exists()) dir.mkdirs();
@@ -275,7 +236,6 @@ public static void setSource(String docUri, File file, SLModel mod) throws Malfo
 	 String localUri = mod.fileToUri(file);
 	 SLDocument localDoc = mod.getDocument(localUri);
 	 mod.addDocProperty(localDoc, SLVocab.SOURCE_PROPERTY, docUri);
-
 }
 	
 } // end Action

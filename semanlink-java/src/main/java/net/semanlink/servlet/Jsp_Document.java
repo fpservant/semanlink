@@ -247,9 +247,10 @@ public String getContent() throws Exception {
 //
 //
 
-public SLDocument getLocalCopy() throws Exception {
-	return SLServlet.getSLModel().getLocalCopy(this.slDoc);
-}
+// 2020-07 doens't seem to be used
+//public SLDocument getLocalCopy() throws Exception {
+//	return SLServlet.getSLModel().getLocalCopy(this.slDoc);
+//}
 
 //
 //
@@ -312,7 +313,33 @@ public SLDocumentStuff getSLDocumentStuff() {
 }
 
 //
-// 2019-05 sl:mainDoc: docs main point to a "main doc"
-// On the page of the "Main Doc", we want to list such documents
+// 2020-07 : add local copy
 //
+
+public SLDocument localCopyCandidate() throws Exception { // 2020-07
+  SLModel mod = SLServlet.getSLModel();
+  File currentDir = mod.goodDirToSaveAFile();	            
+  File[] files = currentDir.listFiles();
+  // sort by date, newest first
+  Arrays.sort(files, new Comparator<File>(){
+    public int compare(File f1, File f2) {
+        return Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
+    } 
+  });
+  for (File f : files) { // we only are interested with the most recent, so not really a loop
+  	// est-ce que c un pdf ou html (pas sl.rdf !)
+  	String nam = f.getName();
+  	if ("sl.rdf".equals(nam)) continue;
+  	if ((nam.startsWith("sl-")) && (nam.endsWith(".rdf"))) continue;
+  	// est-ce qu'il n'est pas déjà source de qlqu'un?
+  	SLDocument x = mod.smarterGetDocument(mod.filenameToUri(f.getPath()));
+    SLDocumentStuff docStuff = new SLDocumentStuff(x, mod, getContextURL());	
+    if (docStuff.getSource() != null) {
+    	return null;
+    } else {
+    	return x;
+    }
+  }
+  return null;
+}
 }

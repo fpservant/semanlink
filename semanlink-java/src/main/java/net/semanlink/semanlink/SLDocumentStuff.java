@@ -319,19 +319,9 @@ public SLDocument getLocalCopy() throws Exception {
 	
 	// this was OK when docs (bookmarks created for an internet url) had that internet url as uri
 	// if (getFile() != null) return null; // si doc local, pas de local copy
-	// return SLServlet.getSLModel().source2LocalCopy(this.slDoc.getURI());
+	// return SLServlet.getSLModel().source2LocalCopy(this.slDoc.getURI());	
 	
-	
-	
-	// TODO REVOIR LA SUITE
-	//
-	// EN DEFINITIVE, CE QUI PASSE C LE 3
-	// (comme avant MAIS IL A FALLU VIRER LE TEST getFile() != null)
-	//
-	// VOIR AUSSI CE QUI SE PASSE DS docline.jsp
-	
-	
-  // But now: the local copy may still be linked to the internet url
+  // the local copy may still be linked to the internet url
 	String bookmarkOf = getBookmarkOf();
 	if (bookmarkOf != null) {
 		localCopy = mod.source2LocalCopy(bookmarkOf);
@@ -347,7 +337,6 @@ public SLDocument getLocalCopy() throws Exception {
 	// if (getFile() != null) return null; // si doc local, pas de local copy // ATTENTION, ce test retourne qlq chose si servi par webserver - donc pas à mettre plu shat
 
 	localCopy = mod.source2LocalCopy(doc.getURI()); // recherche basée sur inv(dc:source)
-	// System.out.println("getLocalCopy 3 " + slDoc.getURI());
 	if (localCopy != null) {
 		return localCopy;
 	}

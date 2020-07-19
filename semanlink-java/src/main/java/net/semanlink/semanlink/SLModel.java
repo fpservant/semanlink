@@ -268,63 +268,67 @@ public SLDocument source2LocalCopy(String sourceUri) throws Exception {
 		}
 	}
 	if ((al == null) || (al.size() == 0)) return null;
-	return (SLDocument) al.get(0);
+	return (SLDocument) al.get(0); // 2020-07: only one is returned. TODO?
 }
 
 
-/** @since 2019-03 uris for bookmark */ // was in Jsp_Document
-public SLDocument getLocalCopy(SLDocument slDoc) throws Exception {
-
-	// 2019-03 uris for bookmarks
-	
-	// THIS IS VERSION B4 2019-03
-	
-	// this was OK when docs (bookmarks created for an internet url) had that internet url as uri
-	// if (getFile() != null) return null; // si doc local, pas de local copy
-	// return SLServlet.getSLModel().source2LocalCopy(this.slDoc.getURI());
-	
-	
-	
-	// TODO REVOIR LA SUITE
-	//
-	// EN DEFINITIVE, CE QUI PASSE C LE 3
-	// (comme avant MAIS IL A FALLU VIRER LE TEST getFile() != null)
-	//
-	// VOIR AUSSI CE QUI SE PASSE DS docline.jsp
-	
-	
-  // But now: the local copy may be linked to the internet url
-	SLDocument x = null;
-	String url = slDoc.bookmarkOf();
-	if (url != null) {
-		x = source2LocalCopy(url);
-		// System.out.println("getLocalCopy 1 " + url); // TODO REMOVE
-		if (x != null) {
-			return x;
-		}
-	}
-	
-	// not a post 2019-03 bkm, or local copy linked to 2019-03 bkm
-	
-//	x = SLServlet.getSLModel().doc2Source(this.slDoc.getURI());
-//	System.out.println("Jsp_Document getLocalCopy 2 " + this.slDoc.getURI()); // TODO REMOVE
+// 2020-07 doesn't seem to be used - same thing in SLDocumentStuff
+/*
+ * @since 2019-03 uris for bookmark 
+ * @deprecated use SLDocumentStuff.getLocalCopy() instead
+ * */ // was in Jsp_Document
+// public SLDocument getLocalCopy(SLDocument slDoc) throws Exception {
+//
+//	// 2019-03 uris for bookmarks
+//	
+//	// THIS IS VERSION B4 2019-03
+//	
+//	// this was OK when docs (bookmarks created for an internet url) had that internet url as uri
+//	// if (getFile() != null) return null; // si doc local, pas de local copy
+//	// return SLServlet.getSLModel().source2LocalCopy(this.slDoc.getURI());
+//	
+//	
+//	
+//	// TODO REVOIR LA SUITE
+//	//
+//	// EN DEFINITIVE, CE QUI PASSE C LE 3
+//	// (comme avant MAIS IL A FALLU VIRER LE TEST getFile() != null)
+//	//
+//	// VOIR AUSSI CE QUI SE PASSE DS docline.jsp
+//	
+//	
+//  // But now: the local copy may be linked to the internet url
+//	SLDocument x = null;
+//	String url = slDoc.bookmarkOf();
+//	if (url != null) {
+//		x = source2LocalCopy(url);
+//		// System.out.println("getLocalCopy 1 " + url); // TODO REMOVE
+//		if (x != null) {
+//			return x;
+//		}
+//	}
+//	
+//	// not a post 2019-03 bkm, or local copy linked to 2019-03 bkm
+//	
+////	x = SLServlet.getSLModel().doc2Source(this.slDoc.getURI());
+////	System.out.println("Jsp_Document getLocalCopy 2 " + this.slDoc.getURI()); // TODO REMOVE
+////	if (x != null) {
+////		return x;
+////	}
+//	
+//	// pre 2019-03
+//	
+//	// 2019-03 en fait, faut virer ce test
+//	// if (getFile() != null) return null; // si doc local, pas de local copy // ATTENTION, ce test retourne qlq chose si servi par webserver - donc pas à mettre plu shat
+//
+//	x = source2LocalCopy(slDoc.getURI());
+//	// System.out.println("getLocalCopy 3 " + slDoc.getURI()); // TODO REMOVE
 //	if (x != null) {
 //		return x;
 //	}
-	
-	// pre 2019-03
-	
-	// 2019-03 en fait, faut virer ce test
-	// if (getFile() != null) return null; // si doc local, pas de local copy // ATTENTION, ce test retourne qlq chose si servi par webserver - donc pas à mettre plu shat
-
-	x = source2LocalCopy(slDoc.getURI());
-	// System.out.println("getLocalCopy 3 " + slDoc.getURI()); // TODO REMOVE
-	if (x != null) {
-		return x;
-	}
-	// System.out.println("getLocalCopy NOT FOUND"); // TODO REMOVE
-	return null;
-}
+//	// System.out.println("getLocalCopy NOT FOUND"); // TODO REMOVE
+//	return null;
+// }
 
 
 
@@ -724,20 +728,13 @@ public static class LoadingMode {
 
 // EDITING DOCUMENTS
 
-/**Voir la discussion sur mise en cache de liste des kws ds doc :
+/*Voir la discussion sur mise en cache de liste des kws ds doc :
  * ne faut-il pas ici faire une simple "convenience method :
 public void addDocProperty(SLDocument doc, String propertyUri, String propertyValue, String lang) {
 	doc.addProperty(String propertyUri, String propertyValue, String lang);
 }
 ou bien mettre ici la version avec uri au lieu de doc ? 
  */
-/*
-abstract public void addDocProperty(SLDocument doc, String propertyUri, String propertyValue, String lang);
-abstract public void addDocProperty(SLDocument doc, String propertyUri, String objectUri);
-abstract public void addDocProperty(SLDocument doc, String propertyUri, String[] objectUris);
-abstract public void setDocProperty(SLDocument doc, String propertyUri, String propertyValue, String lang);
-abstract public void setDocProperty(SLDocument doc, String propertyUri, String objectUri);
-*/
 
 public void addDocProperty(SLDocument doc, String propertyUri, String propertyValue, String lang) {
 	try (SLDocUpdate du = newSLDocUpdate(doc)) {
@@ -773,12 +770,6 @@ abstract public SLDocUpdate newSLDocUpdate(SLDocument doc); // 2020-03
 
 /** Supprimer l'affectation d'un kw a un doc. */
 abstract public void removeKeywords(SLDocument doc, SLKeyword[] kw);
-
-
-
-
-
-
 
 
 
@@ -946,7 +937,7 @@ public String kwLabel2ExistingKwUri(String kwLabel, Locale locale) {
 	}
 	if (this.thesauri != null) {
 		for (int i = 0; i < thesauri.size(); i++) {
-			uri = kwLabel2UriQuick(kwLabel, ((SLThesaurus) thesauri.get(i)).getURI(), locale);
+			uri = kwLabel2UriQuick(kwLabel, thesauri.get(i).getURI(), locale);
 			if (kwExists(uri)) return uri;
 		}
 	}
@@ -1391,7 +1382,7 @@ public SLThesaurus getThesaurus(String thesaurusURI) {
 	return null;
 }
 
-public List<SLDocument> getActivFiles(SLThesaurus th) throws IOException, URISyntaxException { // 911 //////////////////
+public List<SLDocument> getActivFiles(SLThesaurus th) throws IOException, URISyntaxException {
 	ArrayList<SLDocument> al = new ArrayList<>();
 	List<SLDocument> docs = getActivFolder().getDocuments();
 	for (int i = 0; i < docs.size(); i++) {
@@ -1715,7 +1706,7 @@ public class DocMetadataFile {
 			}
 		} else { // ni file protocol url, ni servie par notre webserver
 			// Dans le cas d'une url genre www.hypersolutions.fr,
-			// et bien on ne sait pas dans quel fichier l'écrire,
+			// on ne sait pas dans quel fichier l'écrire,
 			// sauf peut-etre si elle a déjà été écrite !
 			
 			//
