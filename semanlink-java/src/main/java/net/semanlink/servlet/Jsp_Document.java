@@ -316,7 +316,7 @@ public SLDocumentStuff getSLDocumentStuff() {
 // 2020-07 : add local copy
 //
 
-public SLDocumentStuff localCopyCandidate() throws Exception { // 2020-07
+static public SLDocumentStuff localCopyCandidate(String contextUrl) throws Exception { // 2020-07
   SLModel mod = SLServlet.getSLModel();
   File currentDir = mod.goodDirToSaveAFile();	            
   File[] files = currentDir.listFiles();
@@ -343,7 +343,7 @@ public SLDocumentStuff localCopyCandidate() throws Exception { // 2020-07
   	if (mod.existsAsSubject(sldoc)) { // todo check si c bien le bon test à faire
   		return null;
   	}
-    SLDocumentStuff docStuff = new SLDocumentStuff(sldoc, mod, getContextURL());
+    SLDocumentStuff docStuff = new SLDocumentStuff(sldoc, mod, contextUrl);
   	// est-ce qu'il n'est pas déjà source de qlqu'un?
     if (docStuff.getSource() != null) {
     	return null;
