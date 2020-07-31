@@ -9,6 +9,7 @@
 <ul>
 <li>Drag'n drop from tag search list to comment markdown, to list of tags</li>
 <li>Comments: now use "tag:" and "doc:" for links to tags and docs in markdown</li>
+<li>Trying to make it easier to link a bookmark to a local copy: "Auto-link" on new bookmark</li>
 <li>Export: as 2 files</li>
 </ul>
 
