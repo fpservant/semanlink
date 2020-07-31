@@ -1,9 +1,13 @@
 /* Created on 3 déc. 06 */
 package net.semanlink.semanlink;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URISyntaxException;
+import java.io.OutputStream;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -11,15 +15,19 @@ import java.util.Set;
 
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.ResIterator;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
+import org.apache.jena.riot.RDFDataMgr;
+import org.apache.jena.riot.RDFFormat;
 
 import net.semanlink.graph.Graph;
 import net.semanlink.graph.GraphTraversal;
+import net.semanlink.servlet.CoolUriServlet;
 import net.semanlink.servlet.SLServlet;
 import net.semanlink.servlet.SemanlinkConfig;
 import net.semanlink.sljena.JDocument;
@@ -170,8 +178,10 @@ public void export(int nbOfDays) throws Exception {
 				iteAliasProps.close();
 			}
 		}
-	}
+	} // for tags
 	jFileModel.save();
+	
+	saveTagsAsTtl(jFileModel.getModel()); // 2020-07
 }
 
 class ParentTagsGraph implements Graph {
@@ -225,6 +235,8 @@ private boolean isSicg() {
  * @param nbOfDays if < 0, all things after 2000-00-00
  */
 private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
+	
+	Model m = ModelFactory.createDefaultModel(); // 2020-07: put everything (about all docs) into one model
 	
 	if (isSicg()) {
 		purgeDates();
@@ -437,10 +449,21 @@ private void exportDocuments(int nbOfDays, HashSet tagHS) throws Exception {
 			
 			
 		}		
-		if (!emptyBookmarksModel) bookmarksJFileModel.save();
-		if (!emptyNotesModel) notesJFileModel.save();
-		if (!emptyDocsModel) docsJFileModel.save();
+		if (!emptyBookmarksModel) {
+			bookmarksJFileModel.save();
+			m.add(bookmarksJFileModel.getModel()); // 2020-07
+		}
+		if (!emptyNotesModel) {
+			notesJFileModel.save();
+			m.add(notesJFileModel.getModel()); // 2020-07
+		}
+		if (!emptyDocsModel) {
+			docsJFileModel.save();
+			m.add(docsJFileModel.getModel()); // 2020-07
+		}
 	}
+	saveDocsAsTtl(m); // 2020-07
+	
 	// tagHS contient tous les kws directement attaché à un doc.
 	// On va maintenant ramasser tous leurs parents, (et leurs related (?) ?)
 }
@@ -558,6 +581,49 @@ private void purgeDates() {
 		// Mettre une date de creation à la date de publication
 		docsModel.addLiteral(doc, slCreationDateProp, dcDate);
 	}
+}
+
+//
+// 2020-07
+//
+
+private void saveTagsAsTtl(Model m) throws FileNotFoundException { // since 2020-07
+	File f = new File(this.dataFolder.getFile(), "sltags.ttl");
+	if (f.exists()) f.delete();
+	OutputStream out = new BufferedOutputStream(new FileOutputStream(f));
+	m.setNsPrefix("tag", this.slMod.getDefaultThesaurus().getBase());
+	m.write(out, "TTL");
+}
+
+// hum, pas bon : url des docs en 127.0.0.1:8080
+private void saveDocsAsTtl(Model m) throws IOException { // since 2020-07
+	File f = new File(this.dataFolder.getFile(), "sldocs.ttl");
+	if (f.exists()) f.delete();
+	OutputStream out = new BufferedOutputStream(new FileOutputStream(f));
+	m.setNsPrefix("tag", this.slMod.getDefaultThesaurus().getBase());
+	String docBaseUri =  SLServlet.getServletUrl() + CoolUriServlet.DOC_SERVLET_PATH;
+	if (!docBaseUri.endsWith("/")) docBaseUri += "/";
+	m.setNsPrefix("doc", docBaseUri); // marche pas. Pkoi ???
+	// m.write(out, "TTL");
+	writeModelConvertingUris(out, m, RDFFormat.TURTLE_PRETTY);
+}
+
+protected void writeModelConvertingUris(OutputStream out, Model m, RDFFormat jenaLang) throws IOException {
+	ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+	String oldns = SLServlet.getServletUrl();
+	String newns = "http://www.semanlink.net";
+
+	m.setNsPrefix("doc", oldns + CoolUriServlet.DOC_SERVLET_PATH + "/"); // marche pas. pkoi ?
+	// m.setNsPrefix("doc", newns + CoolUriServlet.DOC_SERVLET_PATH + "/"); // juste pour écrire le prefix
+	RDFDataMgr.write(new BufferedOutputStream(bos), m, jenaLang);
+
+	String s = bos.toString("UTF-8");
+	s = s.replaceAll(oldns, newns); 
+	// s = s.replaceAll(oldns + CoolUriServlet.DOC_SERVLET_PATH, "doc:");
+	
+	out.write(s.getBytes("UTF-8"));
+
 }
 
 }

@@ -9,6 +9,7 @@
 <ul>
 <li>Drag'n drop from tag search list to comment markdown, to list of tags</li>
 <li>Comments: now use "tag:" and "doc:" for links to tags and docs in markdown</li>
+<li>Export: as 2 files</li>
 </ul>
 
 <h2>0.7.2 2020-04-11</h2>
