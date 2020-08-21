@@ -611,6 +611,7 @@ YYYYMM doc2YYYYMM(SLDocument doc) {
 // that doesn't take into account the case of bookmarks pointing to a file out of the datafolder
 // for this, see SLDOcumentStuff.getFile(), and
 // find "2020-01 localFilesOutOfDatafolders" in CoolUriServlet for an example
+// 2020-08 not ok for files inside a bookmarked file folder - hum ou plutôt, l'uri pasée n'est pas la bonne // TODO REMOVE
 public File getFile(String uri) throws IOException, URISyntaxException { // HUM TODO identique à getFileIfLocal(String docUri)
 	// System.out.println("SLModel.getFile: " + uri);
 	if (uri.startsWith("file:")) {

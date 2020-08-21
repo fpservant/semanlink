@@ -241,8 +241,8 @@ private void createBookmark(Foo foo, ActionMapping mapping, ActionForm form, Htt
 		
 		
 		
-		// 2020-07
-		SLDocumentStuff localCopyCandidate = Jsp_Document.localCopyCandidate(Util.getContextURL(request));
+		
+		SLDocumentStuff localCopyCandidate = Jsp_Document.localCopyCandidate(Util.getContextURL(request)); // 2020-07
 		if (localCopyCandidate != null) {
 			foo.mod.addDocProperty(localCopyCandidate.getSLDocument(), SLVocab.SOURCE_PROPERTY, doc.getURI());
 		}

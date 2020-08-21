@@ -167,7 +167,15 @@ public List getDocsInFolder() throws IOException, URISyntaxException {
 
 public List getDocsInFolder(boolean sort) throws IOException, URISyntaxException {
 	if (this.docsInFolder == null) {
+		// 2020-08: KO for dirs outside of a data folder (at least when sl:bookmarkO,
+		// because uri is not a file:///. We should pass the bookmarkOf, I think)
 		SLFolder fol = new SLFolder(getFile(), this.uri, SLServlet.getSLModel());
+//		String folderUri = uri;
+//		String bof = docStuff.getBookmarkOf();
+//		if ((bof != null) && (bof.startsWith("file:///"))) {
+//			folderUri = bof;
+//		}
+//		SLFolder fol = new SLFolder(getFile(), folderUri, SLServlet.getSLModel());
 		this.docsInFolder = fol.getDocList();
 	}
 	if (sort) {

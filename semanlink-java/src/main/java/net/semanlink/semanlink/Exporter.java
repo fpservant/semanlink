@@ -603,7 +603,7 @@ private void saveDocsAsTtl(Model m) throws IOException { // since 2020-07
 	m.setNsPrefix("tag", this.slMod.getDefaultThesaurus().getBase());
 	String docBaseUri =  SLServlet.getServletUrl() + CoolUriServlet.DOC_SERVLET_PATH;
 	if (!docBaseUri.endsWith("/")) docBaseUri += "/";
-	m.setNsPrefix("doc", docBaseUri); // marche pas. Pkoi ???
+	m.setNsPrefix("doc", docBaseUri); // doesn't work, why??? LOL, because localNames doesn't support "/" inside of them. f*ck!
 	// m.write(out, "TTL");
 	writeModelConvertingUris(out, m, RDFFormat.TURTLE_PRETTY);
 }
