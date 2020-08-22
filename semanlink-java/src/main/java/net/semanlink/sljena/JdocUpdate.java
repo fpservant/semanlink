@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.StmtIterator;
@@ -17,16 +19,20 @@ import net.semanlink.semanlink.SLVocab;
 import net.semanlink.servlet.SLServlet;
 import net.semanlink.util.YearMonthDay;
 
-class JDocUpdate extends SLDocUpdate {
+class JDocUpdate extends SLDocUpdate { // 2020-03
 	JModel mod;
 	SLDocument doc;
 	JFileBiModel bi;
+	boolean alreadyExists; // 2020-08
 	JDocUpdate(JModel mod, SLDocument doc) {
 		this.mod = mod;
 		this.doc = doc;
 		String docUri = doc.getURI();
 		try {
 			bi = mod.getJFileBiModel4Docs(docUri);
+			
+			alreadyExists = mod.existsAsSubject(doc); // 2020-08
+			
 		} catch (Exception e) { throw new RuntimeException(e) ; }
 	}
 
@@ -40,6 +46,7 @@ class JDocUpdate extends SLDocUpdate {
 		// if it's a new doc, add creation date and time
 		// unless...
 		boolean addCreationDate;
+		
 		if (!mod.hasSLCreationDate(doc)) {
 			// first,
 			// if this is a destruction (no more statement about doc): 
@@ -76,14 +83,22 @@ class JDocUpdate extends SLDocUpdate {
 			} else {
 				addCreationDate = true;
 			}
-		} else {
+		} else { // mod.hasSLCreationDate(doc)
 			addCreationDate = false;
 		}
 			
 		if (addCreationDate) {
-			newDocEvent();
+			// 2020-08: if it's one of my old documents, which do not have creation date (before 2004),
+			// we were here adding a creation date equals to today, which is not good
+			// (when adding stuff to the doc, we were setting its creation date to today)
+			if (alreadyExists) { // 2020-08
+				// try to find a creation date that matches the filename
+				missingCreationDate();
+				
+			} else {
+				newDocEvent();
+			}
 		}
-		
 		//
 		//
 		//
@@ -93,15 +108,16 @@ class JDocUpdate extends SLDocUpdate {
 	}
 	
 	private void newDocEvent() throws IOException, URISyntaxException {
-		// it's better to set the SL_CREATION_DATE first,
-		// in order to choose the right file to write new doc to
-		// (cf case where propertyUri is SL-CREATION_DATE: this happens with import from delicious:
-		// we want to set the creation date (which has to be the first prop to be set for the doc)
-		String today = (new YearMonthDay()).getYearMonthDay("-");
+		YearMonthDay ymd = new YearMonthDay();
+		String today = ymd.getYearMonthDay("-");
 		addDocProperty(SLVocab.SL_CREATION_DATE_PROPERTY, today, null);
 
-		//autres trucs à faire au on new doc (à part la sl creation date). 
-		addDocProperty(SLVocab.SL_CREATION_TIME_PROPERTY,(new YearMonthDay()).getTimeString(), null);
+		// autres trucs à faire au on new doc (à part la sl creation date). 
+		addDocProperty(SLVocab.SL_CREATION_TIME_PROPERTY, ymd.getTimeString(), null);
+		
+		
+		
+		
 		if (SLVocab.DATE_PARUTION_PROPERTY.equals(SLServlet.getDefaultSortProperty())) { // 2019-09 for sicg
 			addDocProperty(SLVocab.DATE_PARUTION_PROPERTY, today, null);		
 		} else {
@@ -120,6 +136,20 @@ class JDocUpdate extends SLDocUpdate {
 				}
 			}
 		}
+	}
+	
+	// trying to set a creation date to a doc that has not one, but is an old fps' doc
+	// quick and dirty hack
+	private void missingCreationDate() throws IOException, URISyntaxException { // 2020-08
+		String uri = doc.getURI();
+		
+		String regex = "\\/(20|19)\\d{2}\\/\\d{2}\\/";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(uri);
+		if (!matcher.find()) return;
+		int k = matcher.start();
+		String d = uri.substring(k+1,k+5) + "-" + uri.substring(k+6,k+8) + "-21";
+		addDocProperty(SLVocab.SL_CREATION_DATE_PROPERTY, d, null);
 	}
 
 	@Override

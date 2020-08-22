@@ -1793,7 +1793,7 @@ SLDataFolder getDataFolderFromLoadingList(File f) {
 	// on les prend en sens inverse de façon à se comporter correctement
 	// si on a des éléments de dataFolderList inclus ds un autre
 	for (int i = dataFolderList.size() - 1; i > -1; i--) {
-		SLDataFolder dataFolder = (SLDataFolder) dataFolderList.get(i);
+		SLDataFolder dataFolder = dataFolderList.get(i);
 		String dataFolderName = dataFolder.getFile().getAbsolutePath();
 		// if (!dataFolderName.endsWith("/")) dataFolderName += "/"; NON cf windaube
 		// D'où bug potentiel ici ?
