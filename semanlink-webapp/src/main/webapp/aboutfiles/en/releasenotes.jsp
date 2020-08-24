@@ -7,10 +7,12 @@
 
 <h2>0.7.3 2020-05-xx</h2>
 <ul>
-<li>Drag'n drop from tag search list to comment markdown, to list of tags</li>
+<li>Drag'n drop from tag search list to comment markdown, to list of tags (hum: tag's page only. TODO: doc's page)</li>
 <li>Comments: now use "tag:" and "doc:" for links to tags and docs in markdown</li>
 <li>Trying to make it easier to link a bookmark to a local copy: "Auto-link" on new bookmark</li>
 <li>Export: as 2 files</li>
+<li>SPARQl page: queries to search doc metadata (eg. title) by text. (No index is used - enough however
+to find a doc by its title, which is useful)</li>
 </ul>
 
 <h2>0.7.2 2020-04-11</h2>
