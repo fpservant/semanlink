@@ -45,6 +45,10 @@
 		<servlet-name>CoolUriServlet</servlet-name>
 		<servlet-class>net.semanlink.servlet.CoolUriServlet</servlet-class>
 	</servlet>
+    <servlet>
+        <servlet-name>UploadServlet</servlet-name>
+        <servlet-class>net.semanlink.servlet.UploadServlet</servlet-class>
+    </servlet>
 
 	<servlet>
 		<servlet-name>StaticFileServlet</servlet-name>
@@ -124,6 +128,12 @@
 		<servlet-name>CoolUriServlet</servlet-name>
 		<url-pattern>/sl/about/*</url-pattern>
 	</servlet-mapping>
+
+    <!-- 2020-09 file upload -->
+    <servlet-mapping>
+        <servlet-name>UploadServlet</servlet-name>
+        <url-pattern>/sl/upload</url-pattern>
+    </servlet-mapping>
 
 	<servlet-mapping>
 		<servlet-name>SemanticSemanticWebServlet</servlet-name>
