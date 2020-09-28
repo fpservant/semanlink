@@ -1,4 +1,4 @@
-/* Created on Sep 2, 2020 */
+/* 2020-09 */
 package net.semanlink.servlet;
 
 import java.io.BufferedOutputStream;
@@ -6,11 +6,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.net.URISyntaxException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,14 +27,34 @@ public class UploadServlet extends HttpServlet {
       String filename = getFilename(file);
       InputStream filecontent = file.getInputStream();
       // ... Do your file saving job here.
-      File dir = SLServlet.getSLModel().goodDirToSaveAFile();
+      
+      // dir to upload to. Either a param of request, or goodDirToSaveAFile
+      File dir = null;
+      String uploadDirUri = request.getParameter("uploadDirUri");
+      if ((uploadDirUri != null) && (!"".equals(uploadDirUri))) {
+      	try {
+					dir = SLServlet.getSLModel().getFile(uploadDirUri);
+					System.out.println("uploadDir: " + dir);
+					if (!dir.exists()) {
+						throw new RuntimeException("no such dir " + uploadDirUri);
+					}
+				} catch (URISyntaxException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					dir = null;
+				}
+      }
+      if (dir == null) {
+      	dir = SLServlet.getSLModel().goodDirToSaveAFile();
+      }
+
       File f = new File(dir, filename);
       if (f.exists()) {
       	// throw new RuntimeException("file already exists, no overwrite"); // TODO
       }
       CopyFiles.writeIn2Out(filecontent, new BufferedOutputStream(new FileOutputStream(f)), new byte[5000]);
       
-      System.out.println("filename " + filename + "sub_dir:" + request.getParameter("sub_dir"));
+      // System.out.println("filename " + filename + "sub_dir:" + request.getParameter("sub_dir")); // 2020-09 TODO
       response.setContentType("text/plain");
       response.setCharacterEncoding("UTF-8");
       response.getWriter().write("File " + filename + " successfully uploaded");

@@ -197,7 +197,7 @@ protected void setOrAddProp(String propertyUri, String propertyValue, HttpServle
 		// POST REDIRECT 
 		// getJsp_Document(doc, request);
 		
-		// 2020-07 to be able to redirect to doc, not local copy, when quick ad of local copy
+		// 2020-07 to be able to redirect to doc, not local copy, when quick adding of local copy
 		// new param given the redirect url
 		
 		String redirect = request.getParameter("redirect_uri"); // 2020-07

@@ -110,7 +110,7 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 
 
 
-static String getShortFilename(String title, String docuri, boolean isHTML) {
+public static String getShortFilename(String title, String docuri, boolean isHTML) {
 	String dotExtension = null;
 	if (docuri != null) {
 		if (!docuri.endsWith(".")) {
