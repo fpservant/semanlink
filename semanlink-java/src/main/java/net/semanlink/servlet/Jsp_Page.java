@@ -16,6 +16,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import net.semanlink.semanlink.SLDocument;
+import net.semanlink.semanlink.SLDocumentStuff;
 import net.semanlink.semanlink.SLFastTree;
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLModel;
@@ -829,4 +830,22 @@ public String sortPropValue4Display(SLResource doc) {
 	return null;
 }
 
+//
+// 2020-09 
+//
+
+public String activFolderLinkPage() throws URISyntaxException, IOException {
+	SLModel mod = SLServlet.getSLModel();
+	SLDocument currentFolder = mod.smarterGetDocument(mod.filenameToUri(mod.goodDirToSaveAFile().getPath()));
+
+  // String currentFolderUri = currentFolder.getURI();
+  // if (!currentFolderUri.endsWith("/")) currentFolderUri+="/"; // hack pour que le titre présente bien (url complète et non short name)
+  // linkPage = HTML_Link.docLink(currentFolderUri);
+	String con = getContextURL();
+  SLDocumentStuff docStuff = new SLDocumentStuff(currentFolder, mod, con);
+  String href = docStuff.getHref();
+  if (!href.endsWith("/")) href+="/"; // hack pour que le titre présente bien (url complète et non short name)
+  // href = response.encodeURL(href);
+  return HTML_Link.removeContext(href, con);
+}
 }
