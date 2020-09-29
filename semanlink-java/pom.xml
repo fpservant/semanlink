@@ -5,13 +5,13 @@
 	<parent>
         <groupId>net.semanlink</groupId>
         <artifactId>semanlink-parent</artifactId>
-        <version>0.7.2</version>
+        <version>0.7.3</version>
         <relativePath>../semanlink-parent</relativePath>
     </parent>
 
 	
 	<artifactId>semanlink-java</artifactId>
-	<version>0.7.2</version>
+	<version>0.7.3</version>
 	<packaging>jar</packaging>
 	<name>semanlink-java</name>
 
@@ -19,13 +19,13 @@
 		<dependency>
 			<groupId>net.semanlink</groupId>
 			<artifactId>semanlink-common</artifactId>
-			<version>0.7.2</version>
+			<version>0.7.3</version>
 		</dependency>
 
 		<dependency>
 			<groupId>net.semanlink</groupId>
 			<artifactId>semanlink-lod-java</artifactId>
-			<version>0.7.2</version>
+			<version>0.7.3</version>
 		</dependency>
 
 

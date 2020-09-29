@@ -11,8 +11,9 @@
 <li>Comments: now use "tag:" and "doc:" for links to tags and docs in markdown</li>
 <li>Trying to make it easier to link a bookmark to a local copy: "Auto-link" on new bookmark</li>
 <li>Export: as 2 files</li>
-<li>SPARQl page: queries to search text in doc metadata (eg. title). (No index is used - enough however
+<li>SPARQL page: queries to search text in doc metadata (eg. title). (No index is used - enough however
 to find a doc by its title, which is useful)</li>
+<li>Upload</li>
 </ul>
 
 <h2>0.7.2 2020-04-11</h2>
