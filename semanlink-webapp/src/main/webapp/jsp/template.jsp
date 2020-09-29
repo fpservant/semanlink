@@ -168,10 +168,11 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
         if (d) {
             d.style.display = disp;
         }
-//      d = document.getElementById("navcontainer");
-//      if (d) {
-//          d.style.display = disp;
-//      }
+        // and also the topbar
+	    d = document.getElementById("navcontainer");
+	    if (d) {
+	         d.style.display = disp;
+	    }
         // hide logo
 //      d = document.getElementById("logo");
 //      if (d) {
