@@ -44,7 +44,7 @@ cf https://stackoverflow.com/questions/26436463/getdispatchertype-is-undefined-f
  -->
         <version.servlet.api>3.1.0</version.servlet.api>
 		<version.jsp.api>2.1</version.jsp.api>
-		<version.junit>4.11</version.junit>
+		<version.junit>4.13.1</version.junit>
 	</properties>
 
 	<dependencies>
