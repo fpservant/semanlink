@@ -2,9 +2,12 @@ package net.semanlink.sljena;
 import net.semanlink.semanlink.SLDocument;
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLVocab;
+import net.semanlink.servlet.SLServlet;
 import net.semanlink.semanlink.SLRuntimeException;
+import net.semanlink.semanlink.SLTree;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 import org.apache.jena.rdf.model.*;
 import org.apache.jena.vocabulary.*;
@@ -13,12 +16,18 @@ public class JDocument extends JResource implements SLDocument {
 private boolean dateComputed = false;
 private String date;
 
-// private List<SLKeyword> keywords; // 2020-04 not updated - but generally we don't need updates...
+// 2020-11: all cached attributes must be rest when updating (cf. onCloseUpdate)
+private List<SLKeyword> keywords; // use getter // 2020-04 not updated - but generally we don't need updates...
 
 // CONSTRUCTION
 
 public JDocument(JModel jModel, Resource res) {
   super(jModel, res);
+}
+
+/** reset cached attributes when updating */
+void onCloseUpdate() { // 2020-11
+	this.keywords = null;
 }
 
 // GETS
@@ -31,11 +40,18 @@ public String getURI() { return this.res.getURI(); } // ca va pas
 public int hashCode() { return this.res.hashCode(); }
 
 public List<SLKeyword> getKeywords() {
-//	if (this.keywords == null) this.keywords = computeKeywords();
-//	return this.keywords;
-  try {
-  	return this.jModel.getKeywordsList(this.res);
-  } catch (Exception ex) { throw new SLRuntimeException(ex); }
+	// 2020-11
+////	if (this.keywords == null) this.keywords = computeKeywords();
+////	return this.keywords;
+//  try {
+//  	return this.jModel.getKeywordsList(this.res);
+//  } catch (Exception ex) { throw new SLRuntimeException(ex); }
+	if (this.keywords == null) {
+		try {
+			this.keywords = this.jModel.getKeywordsList(this.res);
+		} catch (Exception ex) { throw new SLRuntimeException(ex); }
+	}
+	return this.keywords;
 }
 
 //public List<SLKeyword> computeKeywords() {
@@ -125,8 +141,60 @@ public HashMap getProperties() {
 	return JenaUtils.getProperties(this.res);
 }
 
-public List<SLDocument> mainDocOf() {
+@Override public List<SLDocument> mainDocOf() {
 	return this.jModel.mainDocOf(this.res);
+}
+
+//
+//
+//
+
+/** docs with similar tags */
+@Override public List<SLDocument> relatedDocs() { // 2020-11
+	HashMap<SLDocument, Integer> m = new HashMap<>();
+	List<SLKeyword> kws = getKeywords(); // only exact match
+	int max = 0;
+	for (SLKeyword kw : kws) {
+		// List<SLDocument> docs = kw.getDocuments(); // only exact match
+		List<SLDocument> docs = longDocs(kw); // match on descendants
+		for (SLDocument doc : docs) {
+			if (doc.getURI().equals(this.getURI())) continue;
+			Integer ii = m.get(doc);
+			if (ii == null) {
+				ii = new Integer(1);
+				// m.put(doc, ii);
+			} else {
+				ii += 1;
+			}
+			m.put(doc, ii);
+			if (ii > max) max = ii.intValue();
+		}
+	}
+	List<SLDocument> x = new ArrayList<>();
+	for (Entry<SLDocument, Integer> d_i : m.entrySet()) {
+		if (isSimilar(d_i.getValue().intValue(), max)) {
+			x.add(d_i.getKey());
+		}
+	}
+	return x;
+}
+
+private List<SLDocument> longDocs(SLKeyword kw) {
+	SLTree tree = new SLTree(kw, "children", null, SLServlet.getSLModel());
+	try {
+		return Arrays.asList(tree.getDocs());
+	} catch (Exception e) {
+		throw new RuntimeException(e);
+	}
+}
+
+/*
+ new SLTree(this.slKw, "children", sortProperty, SLServlet.getSLModel())
+ */
+private boolean isSimilar(int i, int max) {
+	if (i > 2) return true;
+	if (i == max) return true;
+	return false;
 }
 
 }

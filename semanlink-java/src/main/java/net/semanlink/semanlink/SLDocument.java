@@ -23,4 +23,7 @@ default String bookmarkOf() { // 2019-03 uris for bookmarks -- quick'n dirty
 }
 
 public List<SLDocument> mainDocOf();
+
+// 2020-11
+public List<SLDocument> relatedDocs();
 }

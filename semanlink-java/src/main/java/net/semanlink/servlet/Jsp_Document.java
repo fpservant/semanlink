@@ -17,7 +17,7 @@ private SLDocument slDoc;
 /** uri of containing folder. (temp var, must be accessed through its getter) */
 private String folderHREF;
 /** si c'est un dossier, liste des docs. (must be accessed through its getter) */
-private List docsInFolder;
+private List<SLDocument> docsInFolder;
 /** see CoolUriServlet.goPage */
 private String pagePathInfo;
 
@@ -165,7 +165,7 @@ public List getDocsInFolder() throws IOException, URISyntaxException {
 	return getDocsInFolder(true);
 }
 
-public List getDocsInFolder(boolean sort) throws IOException, URISyntaxException {
+public List<SLDocument> getDocsInFolder(boolean sort) throws IOException, URISyntaxException {
 	if (this.docsInFolder == null) {
 		// 2020-08: KO for dirs outside of a data folder (at least when sl:bookmarkO,
 		// because uri is not a file:///. We should pass the bookmarkOf, I think)
@@ -211,18 +211,18 @@ protected Bean_DocList computeDocList() throws IOException {
 /** pertinent seulement au cas ou on a affaire a un dossier. */
 public SLKeyword[] getLinkedKeywords() throws IOException, URISyntaxException {
 	if (isDirectory()) {
-		List docs = getDocsInFolder(false);
+		List<SLDocument> docs = getDocsInFolder(false);
 		int n = docs.size();
 		if (n == 0) return new SLKeyword[0];
-		HashSet hs = new HashSet();
+		HashSet<SLKeyword> hs = new HashSet<>();
 		for (int i = 0; i < n; i++) {
-			SLDocument doc = (SLDocument) docs.get(i);
-			List kws = doc.getKeywords();
+			SLDocument doc = docs.get(i);
+			List<SLKeyword> kws = doc.getKeywords();
 			for (int j = 0; j < kws.size(); j++) {
 				hs.add(kws.get(j));
 			}
 		}
-		SLKeyword[] x = (SLKeyword[]) hs.toArray(new SLKeyword[0]);
+		SLKeyword[] x = hs.toArray(new SLKeyword[0]);
 		Arrays.sort(x);
 		return x;
 	} else {
@@ -233,9 +233,9 @@ public SLKeyword[] getLinkedKeywords() throws IOException, URISyntaxException {
 
 /** clé un linked SLKeyword, data nb d'occurrences.
  *  pertinent seulement au cas ou on a affaire a un dossier. */
-public HashMap getLinkedKeywords2NbHashMap() throws Exception {
+public HashMap<SLKeyword, Integer> getLinkedKeywords2NbHashMap() throws Exception {
 	if (isDirectory()) {
-		List docs = getDocsInFolder(false);
+		List<SLDocument> docs = getDocsInFolder(false);
 		return SLUtils.getLinkedKeywords2NbHashMap(docs);
 	} else {
 		// throw new IllegalArgumentException("Méthode définie seulement ds le cas d'un dossier");
@@ -359,5 +359,16 @@ static public SLDocumentStuff localCopyCandidate(String contextUrl) throws Excep
     return docStuff;
   }
   return null;
+}
+
+//
+//
+//
+
+public Bean_DocList relatedDocs() {
+	Bean_DocList x = new Bean_DocList();
+	x.setList(this.slDoc.relatedDocs());
+	x.setShowKwsOfDocs(true, null);
+	return x;
 }
 }

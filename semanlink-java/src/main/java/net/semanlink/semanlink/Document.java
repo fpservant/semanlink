@@ -39,10 +39,14 @@ public int compareTo(Object arg0) { return this.slDoc.compareTo(arg0); }
 	return null;
 }
 
-@Override
-public List<SLDocument> mainDocOf() {
+@Override public List<SLDocument> mainDocOf() {
 	// TODO Auto-generated method stub
 	return null;
 }
 
+// 2020-11
+@Override public List<SLDocument> relatedDocs() {
+	// TODO Auto-generated method stub
+	return null;
+}
 } // class

@@ -105,6 +105,8 @@ class JDocUpdate extends SLDocUpdate { // 2020-03
 		
 		bi.setTagNS(mod.getDefaultThesaurus().getBase()); // @findTagNS
 		bi.save();
+		
+		((JDocument) doc).onCloseUpdate(); // 2020-11
 	}
 	
 	private void newDocEvent() throws IOException, URISyntaxException {

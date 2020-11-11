@@ -133,8 +133,7 @@ static void remove(Model model, String subjectUri, String propertyUri, String ob
 	model.remove(trip.getStatement());
 }
 
-// 2020-04
-static void remove(Model model, String subjectUri, String propertyUri, String propertyValue, String lang) {
+static void remove(Model model, String subjectUri, String propertyUri, String propertyValue, String lang) { // 2020-04
 	JThing trip = new JThing(model, subjectUri, propertyUri, propertyValue, lang); // trip comme triple
 	model.remove(trip.getStatement());
 }
