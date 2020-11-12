@@ -5,7 +5,12 @@
 <h1>Release notes</h1>
 <div class="graybox">
 
-<h2>0.7.3 2020-05-xx</h2>
+<h2>0.7.4 2020-11-xx</h2>
+<ul>
+<li>Doc page: list docs with similar tags</li>
+</ul>
+
+<h2>0.7.3 2020-05-30</h2>
 <ul>
 <li>Drag'n drop from tag search list to comment markdown, to list of tags (hum: tag's page only. TODO: doc's page)</li>
 <li>Comments: now use "tag:" and "doc:" for links to tags and docs in markdown</li>
