@@ -154,9 +154,16 @@ public HashMap getProperties() {
 	HashMap<SLDocument, Integer> m = new HashMap<>();
 	List<SLKeyword> kws = getKeywords(); // only exact match
 	int max = 0;
+	// We want the docs which share many of this doc's kws.
+	// So we search the docs tagged with this doc's kws
+	// and count how many times they are found (between 1 and this doc's nb of kws)
 	for (SLKeyword kw : kws) {
-		// List<SLDocument> docs = kw.getDocuments(); // only exact match
-		List<SLDocument> docs = longDocs(kw); // match on descendants
+		List<SLDocument> docs = kw.getDocuments(); // only exact match
+		// match on descendants: not good, if we have a tag such as NLP
+		// and/or NLP and a descendant of NLP.
+		// Peut-être y faire qlq chose en utilisant SLTree.getNodes
+		// et ne prendre que les descndants du plus précis ?
+		// List<SLDocument> docs = longDocs(kw); // match on descendants
 		for (SLDocument doc : docs) {
 			if (doc.getURI().equals(this.getURI())) continue;
 			Integer ii = m.get(doc);
