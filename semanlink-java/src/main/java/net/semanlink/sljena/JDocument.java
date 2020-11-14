@@ -16,7 +16,7 @@ public class JDocument extends JResource implements SLDocument {
 private boolean dateComputed = false;
 private String date;
 
-// 2020-11: all cached attributes must be rest when updating (cf. onCloseUpdate)
+// 2020-11: all cached attributes must be reset when updating (cf. onCloseUpdate)
 private List<SLKeyword> keywords; // use getter // 2020-04 not updated - but generally we don't need updates...
 
 // CONSTRUCTION
@@ -153,6 +153,8 @@ public HashMap getProperties() {
 @Override public List<SLDocument> relatedDocs() { // 2020-11
 	HashMap<SLDocument, Integer> m = new HashMap<>();
 	List<SLKeyword> kws = getKeywords(); // only exact match
+	int kwnb = kws.size();
+	if (kwnb == 0) return Collections.EMPTY_LIST;
 	int max = 0;
 	// We want the docs which share many of this doc's kws.
 	// So we search the docs tagged with this doc's kws
@@ -179,7 +181,7 @@ public HashMap getProperties() {
 	}
 	List<SLDocument> x = new ArrayList<>();
 	for (Entry<SLDocument, Integer> d_i : m.entrySet()) {
-		if (isSimilar(d_i.getValue().intValue(), max)) {
+		if (isSimilar(d_i.getValue().intValue(), max, kwnb)) {
 			x.add(d_i.getKey());
 		}
 	}
@@ -198,7 +200,18 @@ private List<SLDocument> longDocs(SLKeyword kw) {
 /*
  new SLTree(this.slKw, "children", sortProperty, SLServlet.getSLModel())
  */
-private boolean isSimilar(int i, int max) {
+/**
+ * 
+ * @param i: nb of shared kws
+ * @param max: max nb of shared kw
+ * @param kwnb: nb of kws of this doc
+ */
+private boolean isSimilar(int i, int max, int kwnb) {
+	// if (i == 0) return false; // by construction, cannot happen
+	if (max == 1) {
+		// only one in common. True iff kwnb == 1 (or 2 ?)
+		return (kwnb < 3);
+	}
 	if (i > 2) return true;
 	if (i == max) return true;
 	return false;

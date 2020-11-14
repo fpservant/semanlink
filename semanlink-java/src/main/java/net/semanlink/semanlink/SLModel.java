@@ -1608,9 +1608,15 @@ public abstract void setCorrector(ModelCorrector corrector);
 
 //peut s'optimiser (par ex en ne recalculant pas tout de YearMonthDay.daysAgo(i)
 public List<SLDocument> getRecentDocs(int nbOfDays, String dateProp) throws Exception {
-	List<SLDocument> x = getDocumentsList(dateProp, (new YearMonthDay()).getYearMonthDay("-"),null);
-	for (int i = 1; i < nbOfDays+1; i++) {
-		List<SLDocument> y = getDocumentsList(dateProp, (YearMonthDay.daysAgo(i)).getYearMonthDay("-"),null);
+//	List<SLDocument> x = getDocumentsList(dateProp, (new YearMonthDay()).getYearMonthDay("-"),null);
+//	for (int i = 1; i < nbOfDays+1; i++) {
+//		List<SLDocument> y = getDocumentsList(dateProp, (YearMonthDay.daysAgo(i)).getYearMonthDay("-"),null);
+//		SLUtils.reverseSortByProperty(y, dateProp);
+//		x.addAll(y);
+//	}
+	List<SLDocument> x = new ArrayList<>();
+	for (int i = -1; i < nbOfDays+1; i++) { // -1 for tomorrow (avoid pbs when deploying to kattare just created docs
+		List<SLDocument> y = getDocumentsList(dateProp, (YearMonthDay.daysAgo(i)).getYearMonthDay("-"), null);
 		SLUtils.reverseSortByProperty(y, dateProp);
 		x.addAll(y);
 	}
@@ -1619,8 +1625,14 @@ public List<SLDocument> getRecentDocs(int nbOfDays, String dateProp) throws Exce
 
 //peut s'optimiser (par ex en ne recalculant pas tout de YearMonthDay.daysAgo(i)
 public List<SLKeyword> getRecentKws(int nbOfDays, String dateProp) throws Exception {
-	List<SLKeyword> x = getKeywordsList(dateProp, (new YearMonthDay()).getYearMonthDay("-"),null);
-	for (int i = 1; i < nbOfDays+1; i++) {
+//	List<SLKeyword> x = getKeywordsList(dateProp, (new YearMonthDay()).getYearMonthDay("-"),null);
+//	for (int i = 1; i < nbOfDays+1; i++) {
+//		List<SLKeyword> y = getKeywordsList(dateProp, (YearMonthDay.daysAgo(i)).getYearMonthDay("-"), null);
+//		SLUtils.reverseSortByProperty(y, dateProp);
+//		x.addAll(y);
+//	}
+	List<SLKeyword> x = new ArrayList<>();
+	for (int i = -1; i < nbOfDays+1; i++) { // -1 for tomorrow (avoid pbs when deploying to kattare just created docs
 		List<SLKeyword> y = getKeywordsList(dateProp, (YearMonthDay.daysAgo(i)).getYearMonthDay("-"),null);
 		SLUtils.reverseSortByProperty(y, dateProp);
 		x.addAll(y);

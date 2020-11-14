@@ -44,8 +44,7 @@ public int compareTo(Object arg0) { return this.slDoc.compareTo(arg0); }
 	return null;
 }
 
-// 2020-11
-@Override public List<SLDocument> relatedDocs() {
+@Override public List<SLDocument> relatedDocs() { // 2020-11
 	// TODO Auto-generated method stub
 	return null;
 }
