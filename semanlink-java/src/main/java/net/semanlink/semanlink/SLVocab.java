@@ -26,6 +26,10 @@ public static final String HAS_PARENT_PROPERTY = SKOS.broader.getURI();
 // public static final String HAS_FRIEND_PROPERTY = SLSchema.related.getURI();
 public static final String HAS_FRIEND_PROPERTY = SKOS.related.getURI();
 
+public static final String SL_RELATED_DOC_PROPERTY =  SLSchema.relatedDoc.getURI(); // 2020-11
+
+
+
 public static final String HAS_ALIAS_PROPERTY = SLSchema.hasAlias.getURI(); // du kw principal vers ses syno
 public static final String COMMENT_PROPERTY = SLSchema.comment.getURI();
 public static final String SL_CREATION_DATE_PROPERTY =  SLSchema.creationDate.getURI();

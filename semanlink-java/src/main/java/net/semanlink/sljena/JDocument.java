@@ -146,11 +146,11 @@ public HashMap getProperties() {
 }
 
 //
-//
+// DOCS WITH SIMILAR TAGS
 //
 
 /** docs with similar tags */
-@Override public List<SLDocument> relatedDocs() { // 2020-11
+@Override public List<SLDocument> similarlyTaggedDocs() { // 2020-11
 	HashMap<SLDocument, Integer> m = new HashMap<>();
 	List<SLKeyword> kws = getKeywords(); // only exact match
 	int kwnb = kws.size();
@@ -197,9 +197,6 @@ private List<SLDocument> longDocs(SLKeyword kw) {
 	}
 }
 
-/*
- new SLTree(this.slKw, "children", sortProperty, SLServlet.getSLModel())
- */
 /**
  * 
  * @param i: nb of shared kws
@@ -215,6 +212,14 @@ private boolean isSimilar(int i, int max, int kwnb) {
 	if (i > 2) return true;
 	if (i == max) return true;
 	return false;
+}
+
+//
+// RELATED DOCS (== LINKED DOCS)
+//
+
+@Override public List<SLDocument> relatedDocs() { // 2020-11
+	return this.jModel.relatedDocs(this.res);
 }
 
 }

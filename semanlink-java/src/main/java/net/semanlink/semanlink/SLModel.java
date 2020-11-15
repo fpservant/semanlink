@@ -259,7 +259,7 @@ public SLDocument smarterGetDocument(String uri) throws URISyntaxException {
 public SLDocument source2LocalCopy(String sourceUri) throws Exception {
 	// 2019-03 uris for bookmarks
 	// this, OK before 2019-03, sourceUri étant l'url internet du bookmark
-	List al = getDocumentsList(SLVocab.SOURCE_PROPERTY, sourceUri);
+	List<SLDocument> al = getDocumentsList(SLVocab.SOURCE_PROPERTY, sourceUri);
 	if ((al == null) || (al.size() == 0)) {
 		// peut-être https alors qu'on avait stocké http. Cool URIs don't change, they say
 		if (sourceUri.startsWith("https://")) {
@@ -268,7 +268,7 @@ public SLDocument source2LocalCopy(String sourceUri) throws Exception {
 		}
 	}
 	if ((al == null) || (al.size() == 0)) return null;
-	return (SLDocument) al.get(0); // 2020-07: only one is returned. TODO?
+	return al.get(0); // 2020-07: only one is returned. TODO?
 }
 
 
@@ -346,9 +346,9 @@ public SLDocument source2LocalCopy(String sourceUri) throws Exception {
 
 
 public SLDocument doc2Source(String docUri) throws Exception { // pas optimisé du tout @TODO
-	List al = getDocumentsList(SLVocab.SOURCE_PROPERTY, docUri, true);
+	List<SLDocument> al = getDocumentsList(SLVocab.SOURCE_PROPERTY, docUri, true);
 	if (al.size() == 0) return null;
-	return (SLDocument) al.get(0);
+	return al.get(0);
 }
 
 
@@ -2008,8 +2008,6 @@ public void saveDocFile(String docUri, String docContent) throws IOException, UR
 //
 
 abstract public SLDocument convertOld2NewBookmark(String onlineUri) throws Exception;
-
-// DocMetadataFile doc2DocMetadataFile(String docUri)
 
 /**
  * Pour calculer l'uri à utiliser pour un new bookmark

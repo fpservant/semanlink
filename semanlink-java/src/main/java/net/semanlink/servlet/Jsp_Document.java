@@ -365,7 +365,16 @@ static public SLDocumentStuff localCopyCandidate(String contextUrl) throws Excep
 //
 //
 
-public Bean_DocList relatedDocs() {
+public Bean_DocList similarlyTaggedDocs() { // 2020-11
+	Bean_DocList x = new Bean_DocList();
+	List<SLDocument> docs = this.slDoc.similarlyTaggedDocs();
+	sort(docs);
+	x.setList(docs);
+	x.setShowKwsOfDocs(true, null);
+	return x;
+}
+
+public Bean_DocList relatedDocs() { // 2020-11
 	Bean_DocList x = new Bean_DocList();
 	List<SLDocument> docs = this.slDoc.relatedDocs();
 	sort(docs);
@@ -373,4 +382,5 @@ public Bean_DocList relatedDocs() {
 	x.setShowKwsOfDocs(true, null);
 	return x;
 }
+
 }

@@ -140,14 +140,16 @@ protected void setOrAddProp(String propertyUri, String propertyValue, HttpServle
 		if (lang == null) lang = "fr"; // todo
 	}*/
 	
-	// 2019-09
-	if (lang != null) {
+	
+	if (lang != null) { 
 		// if a date, don't set lang
-		if (SLVocab.DATE_PARUTION_PROPERTY.equals(propertyUri)) {
+		if (SLVocab.DATE_PARUTION_PROPERTY.equals(propertyUri)) { // 2019-09
+			lang = null;
+		} else if (SemanlinkConfig.PUBLISH_PROP.equals(propertyUri)) { // 2020-11
 			lang = null;
 		}
 	}
-	
+
 	if (isKwNotDoc) {
 		// kw
 		SLKeyword kw = mod.getKeyword(uri);
@@ -190,8 +192,10 @@ protected void setOrAddProp(String propertyUri, String propertyValue, HttpServle
 		} else {
 			if (valUrlString != null) {
 				mod.setDocProperty(doc, propertyUri, valUrlString);
-			} else {		
-				mod.setDocProperty(doc, propertyUri, propertyValue, lang);
+			} else {
+				// 2020-11 special things for comment property
+				// mod.setDocProperty(doc, propertyUri, propertyValue, lang);
+				setDocProperty(request, mod, doc, propertyUri, propertyValue, lang);
 			}		
 		}
 		// POST REDIRECT 
@@ -211,4 +215,10 @@ protected void setOrAddProp(String propertyUri, String propertyValue, HttpServle
 	// POST REDIRECT 
 	response.sendRedirect(response.encodeRedirectURL(redirectURL));
 }
+
+// overriden for comments in Action_SetComment
+protected void setDocProperty(HttpServletRequest request, SLModel mod, SLDocument doc, String propertyUri, String propertyValue, String lang) { // 2020-11
+	mod.setDocProperty(doc, propertyUri, propertyValue, lang);
+}
+
 } // end Action

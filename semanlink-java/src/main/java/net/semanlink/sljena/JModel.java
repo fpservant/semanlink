@@ -117,6 +117,7 @@ private Property slCreationDateProperty;
 Property sourceProperty;
 private Property hasAliasProperty;
 private Property mainDocProperty;
+private Property relatedDocProperty; // 2020-11
 
 // Resource noKeywordRes;
 // JKeyword noKeyword;
@@ -134,6 +135,7 @@ private void initStandardTerms() {
 	// this.noKeywordRes = JenaUtils.newKeyword(this.docsModel, urlVocabulaire() + "nokeyword", "(No Keyword)", null);
     // this.noKeyword = new JKeyword(this, noKeywordRes);
     this.mainDocProperty = this.docsModel.getProperty(SL_MAIN_DOC_PROPERTY);
+    this.relatedDocProperty = this.docsModel.getProperty(SL_RELATED_DOC_PROPERTY);
   } catch (Exception e) {throw new SLRuntimeException(e);}
 }
 
@@ -1735,4 +1737,47 @@ public List<SLDocument> mainDocOf(Resource mainDocRes) {
 @Override public SLDocUpdate newSLDocUpdate(SLDocument doc) {
 	return new JDocUpdate(this, doc);
 }
+
+//
+//
+//
+
+public List<SLDocument> relatedDocs(Resource docRes) {
+  Model m = this.docsModel;
+	// Hum, BEWARE: we generally want it to be a symetric property
+	// (but store only one triple)
+
+//  ResIterator ite = model.listSubjectsWithProperty(this.relatedDocProperty, docRes);
+//  ArrayList<SLDocument> x = new ArrayList<>();
+//  for (;ite.hasNext();) {
+//  	x.add(new JDocument(this, ite.nextResource()));
+//  }
+//  ite.close();
+//  return x;
+
+  HashSet<Resource> hs = new HashSet<>();
+  StmtIterator stmtIt = docRes.listProperties(this.relatedDocProperty);
+  for (;stmtIt.hasNext();) {
+		Statement sta = stmtIt.nextStatement();
+		Object o = sta.getObject();
+		if (o instanceof Resource) {
+			hs.add((Resource) o);
+		}
+  }
+  stmtIt = m.listStatements(null, this.relatedDocProperty, docRes);
+  for (;stmtIt.hasNext();) {
+		Statement sta = stmtIt.nextStatement();
+		hs.add(sta.getSubject());
+  }
+  ArrayList<SLDocument> x = new ArrayList<>(hs.size());
+  Iterator<Resource> it = hs.iterator();
+  for(;it.hasNext();) {
+  	x.add(new JDocument(this, it.next()));
+  }
+  
+  Collections.sort(x);
+  return x;
+}
+
+
 } // class JModel
