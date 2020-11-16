@@ -767,6 +767,11 @@ public void setDocProperty(SLDocument doc, String propertyUri, String objectUri)
 	} catch (Exception e) { throw new RuntimeException(e) ; }
 }
 
+/** also updates also relatedDoc props extracted from comment */
+public void setDocComment(SLDocument doc, String comment, String lang, String contextUrl) { // 2020-11
+	SLDocCommentUpdate.changeComment(this, doc, comment, lang, contextUrl);
+}
+
 abstract public SLDocUpdate newSLDocUpdate(SLDocument doc); // 2020-03
 
 /** Supprimer l'affectation d'un kw a un doc. */
