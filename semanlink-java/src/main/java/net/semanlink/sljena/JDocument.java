@@ -151,7 +151,7 @@ public HashMap getProperties() {
 
 /** docs with similar tags */
 @Override public List<SLDocument> similarlyTaggedDocs() { // 2020-11
-	HashMap<SLDocument, Integer> m = new HashMap<>();
+	HashMap<SLDocument, Integer> m = new HashMap<>(); // docs that share kws with this -> nb of shared kws
 	List<SLKeyword> kws = getKeywords(); // only exact match
 	int kwnb = kws.size();
 	if (kwnb == 0) return Collections.EMPTY_LIST;
@@ -207,7 +207,8 @@ private boolean isSimilar(int i, int max, int kwnb) {
 	// if (i == 0) return false; // by construction, cannot happen
 	if (max == 1) {
 		// only one in common. True iff kwnb == 1 (or 2 ?)
-		return (kwnb < 3);
+		// TODO probablement : tester aussi s'il n'y a pas beaucoup de kws affectés au soc en question
+		return (kwnb == 1);
 	}
 	if (i > 2) return true;
 	if (i == max) return true;
