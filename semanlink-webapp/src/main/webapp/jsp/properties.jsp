@@ -17,24 +17,24 @@ String[] propUris = new String[hm.size()];
 hm.keySet().toArray(propUris);
 Arrays.sort(propUris);for (int iprop=0;iprop<propUris.length;iprop++) {	String propUri = propUris[iprop];	// if (propUri.startsWith(SLVocab.SEMANLINK_SCHEMA)) continue; // ne pas afficher les ressources semanlink, sensées être par ailleurs ds cette page	if (SLVocab.HAS_KEYWORD_PROPERTY.equals(propUri)) continue;	if (SLVocab.HAS_PARENT_PROPERTY.equals(propUri)) continue;	if (SLVocab.HAS_ALIAS_PROPERTY.equals(propUri)) continue;	if (SLVocab.HAS_FRIEND_PROPERTY.equals(propUri)) continue;
 	// if (SLVocab.SL_CREATION_DATE_PROPERTY.equals(propUri)) continue;	// if (propUri.endsWith("rdf-syntax-ns#type")) continue;	if (SLVocab.COMMENT_PROPERTY.equals(propUri)) continue;	if (SLVocab.TITLE_PROPERTY.equals(propUri)) continue;	if ("http://www.w3.org/2000/01/rdf-schema#label".equals(propUri)) continue;		if (!inited) { // 2019-02		%><div class="graybox" id="aboutThisDoc"><%		if (writeTitle) {%>			<%=title%>		<%} // if (writeTitle) %>		<ul>		<%		inited = true;	}	PropertyValues props = (PropertyValues) hm.get(propUri);	int n = props.size();	HTML_Link link = null;
-	String propUriDisplay = jsp.displayUri(propUri);	if (n < 2) { // only one value			String objUri = props.getUri(0);			if (objUri != null) {				if ("rdf:type".equals(propUriDisplay)) {					link = HTML_Link.linkToProp("/showprop.do", propUri, objUri, null);			        %>			        <li><%=propUriDisplay%> : <html:link page="<%=link.getPage()%>"><%=Jsp_Resource.displayUri(props.getString(0))%></html:link></a></li>			        <%				} else {					// uri http: on l'affiche
-					%>					<li><%=propUriDisplay%> : <a href="<%=objUri%>"><%=Jsp_Resource.displayUri(props.getString(0))%></a></li>					<%				}
-			} else {				// la prop est une string. On met un lien seulement si pas trop longue (genre date)				// Pas sur un label				String tex = props.getString(0);				if ((tex.length() < 32) && (!propUriDisplay.toLowerCase().contains("label"))) {					link = HTML_Link.linkToProp(propUri, props, 0, "find");									%>					<li><%=propUriDisplay%> : <html:link page="<%=link.getPage()%>"><%=tex%></html:link></li>					<%				} else {					%>					<li><%=propUriDisplay%> : <%=tex%></li>					<%				}			}	} else {			%>			<li><%=propUriDisplay%> : <ul>				<%				for (int i = 0; i < n; i++) {					String objUri = props.getUri(i);					if (objUri != null) {						// uri http: on l'affiche - avec un cas spécial des tags ayant pour type le type objUri						if (!propUri.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) {
+	String propUriDisplay = jsp.displayUri(propUri);	if (n < 2) { // only one value		String objUri = props.getUri(0);		if (objUri != null) {			if ("rdf:type".equals(propUriDisplay)) {				link = HTML_Link.linkToProp("/showprop.do", propUri, objUri, null);		        %>		        <li><%=propUriDisplay%> : <html:link page="<%=link.getPage()%>"><%=Jsp_Resource.displayUri(props.getString(0))%></html:link></a></li>		        <%			} else {				// uri http: on l'affiche
+				%>				<li><%=propUriDisplay%> : <a href="<%=objUri%>"><%=Jsp_Resource.displayUri(props.getString(0))%></a></li>				<%			}
+		} else {			// la prop est une string. On met un lien seulement si pas trop longue (genre date)			// Pas sur un label			String tex = props.getString(0);			if ((tex.length() < 32) && (!propUriDisplay.toLowerCase().contains("label"))) {				link = HTML_Link.linkToProp(propUri, props, 0, "find");								%>				<li><%=propUriDisplay%> : <html:link page="<%=link.getPage()%>"><%=tex%></html:link></li>				<%			} else {				%>				<li><%=propUriDisplay%> : <%=tex%></li>				<%			}		}	} else {		%>		<li><%=propUriDisplay%> : <ul>			<%			for (int i = 0; i < n; i++) {				String objUri = props.getUri(i);				if (objUri != null) {					// uri http: on l'affiche - avec un cas spécial des tags ayant pour type le type objUri					if (!propUri.equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type")) {
+						%>
+						<li><a href="<%=objUri%>"><%=props.getString(i)%></a></li>
+						<%
+					} else { // ppté rdf:type: display tags with this type (except when it is the type tag!)
+						if (objUri.equals(SLVocab.KEYWORD_CLASS)) {
 							%>
-							<li><a href="<%=objUri%>"><%=props.getString(i)%></a></li>
+							<li><%=Jsp_Resource.displayUri(props.getString(i))%></li>
 							<%
-						} else { // ppté rdf:type: display tags with this type (except when it is the type tag!)
-							if (objUri.equals(SLVocab.KEYWORD_CLASS)) {
-								%>
-								<li><%=Jsp_Resource.displayUri(props.getString(i))%></li>
-								<%
-							} else {
-								link = HTML_Link.linkToProp(propUri, props, i, "find");				
-								%>
-								<li><html:link page="<%=link.getPage()%>"><%=Jsp_Resource.displayUri(props.getString(i))%></html:link></li>
-								<%
-							}
-						}					} else {			            // la prop est une string. On met un lien seulement si pas trop longue (genre date)			            // Pas sur un label			            String tex = props.getString(i);			            if ((tex.length() < 32) && (!propUriDisplay.toLowerCase().contains("label"))) {							link = HTML_Link.linkToProp(propUri, props, i, "find");											%>							<li><html:link page="<%=link.getPage()%>"><%=tex%></html:link></li>							<%						} else {							%>							<li><%=tex%></li>							<%						}					}				}				%>				</ul>			</li>			<%	}}if (inited) { %></ul><% } %><%if (edit) {	String docorkw;	if (x instanceof net.semanlink.semanlink.SLDocument) {		docorkw = "doc";	} else {		docorkw =  "kw";	}	%>	<html:form action="setoraddproperty">		<p>
+						} else {
+							link = HTML_Link.linkToProp(propUri, props, i, "find");				
+							%>
+							<li><html:link page="<%=link.getPage()%>"><%=Jsp_Resource.displayUri(props.getString(i))%></html:link></li>
+							<%
+						}
+					}				} else {		            // la prop est une string. On met un lien seulement si pas trop longue (genre date)		            // Pas sur un label		            String tex = props.getString(i);		            if ((tex.length() < 32) && (!propUriDisplay.toLowerCase().contains("label"))) {						link = HTML_Link.linkToProp(propUri, props, i, "find");										%>						<li><html:link page="<%=link.getPage()%>"><%=tex%></html:link></li>						<%					} else {						%>						<li><%=tex%></li>						<%					}				}			}			%>			</ul>		</li>		<%	}}if (inited) { %></ul><% } %><%if (edit) {	String docorkw;	if (x instanceof net.semanlink.semanlink.SLDocument) {		docorkw = "doc";	} else {		docorkw =  "kw";	}	%>	<html:form action="setoraddproperty">		<p>
 		<html:hidden property="uri" value="<%=uri%>" />		<html:hidden property="docorkw" value="<%=docorkw%>" />		<b><%=jsp.i18l("properties.editProp")%> </b><html:text styleId="property" property="property" size="40" onchange="propertyChanged()"/>		<html:select property="selectProp" styleId="selectProp" onchange="selectedPropertyChanged(this)">
 			<html:option value="-">-</html:option>
 			<%

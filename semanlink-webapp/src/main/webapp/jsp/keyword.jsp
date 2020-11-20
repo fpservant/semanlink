@@ -107,6 +107,6 @@ if (!(jsp.isDisplaySnipOnly())) {
 			<%} %>
 			<jsp:include page="aliases.jsp"/>
 			<jsp:include page="properties.jsp"/>
-			<%if (SLServlet.isProto()) { %>
+			<%if (false) { // if (SLServlet.isProto()) { %>
 				<jsp:include page="tagOutsideLinks.jsp"/>
 			<%}%><%}//  if (!(jsp.isDisplaySnipOnly())) %><!--/keyword.jsp-->

@@ -72,7 +72,7 @@ public class SLJerseyApp extends ResourceConfig {
 		// Allow reply compression
 		EncodingFilter.enableFor(this, GZipEncoder.class);
 
-		Logger.getGlobal().log(Level.INFO, "AldaApplication created");
+		Logger.getGlobal().log(Level.INFO, "SLJerseyApp created");
 	}
 
 	private static Set<Class<?>> getResourceAndProviderClasses() {
