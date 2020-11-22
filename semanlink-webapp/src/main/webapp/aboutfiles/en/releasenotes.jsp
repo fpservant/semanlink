@@ -7,6 +7,7 @@
 
 <h2>0.7.4 2020-11-xx</h2>
 <ul>
+<li>Related docs (computed from doc's comment)
 <li>Doc page: list docs with similar tags</li>
 </ul>
 

@@ -115,12 +115,20 @@ static private String link2slUri(String link, SLModel mod, String contextUrl) th
 			if (d != null) {
 				return d.getURI();
 			} else {
-				// not a known bookmark");
-				return link;
+				// not a known bookmark
+				
+				// WE COULD TAKE THE link AS IS (a link to the outside world)
+				// could be interesting (for instance to know whta do clink to a given page of the web
+				// eg. if it is a github page)
+				// BUT
+				// pb if creation of doc from linked page (in ?docuri=...)
+				// return link;
+				return null;
 			}
 		}
+	} else {
+		return null;
 	}
-	return link;
 }
 
 /**
