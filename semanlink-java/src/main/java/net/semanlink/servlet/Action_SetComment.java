@@ -30,7 +30,7 @@ protected String getPropValue(HttpServletRequest request) {
 		contextUrl = Util.getContextURL(request);
 	} catch (MalformedURLException e) { throw new RuntimeException(e); }
 	
-	SLDocCommentUpdate.changeComment(mod, doc, propertyValue, lang, contextUrl);
+	SLDocCommentUpdate.changeComment(mod, doc, propertyValue, lang, contextUrl); // 2020-11
 }
 
 //static public void changeComment(SLModel mod, SLDocument doc, String newComment, String lang, String contextUrl) { // 2020-11

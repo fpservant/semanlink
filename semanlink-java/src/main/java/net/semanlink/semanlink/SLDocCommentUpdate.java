@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SLDocCommentUpdate {
+public class SLDocCommentUpdate { // 2020-11
 
 static public void changeComment(SLModel mod, SLDocument doc, String newComment, String lang, String contextUrl) { // 2020-11
 	String oldComment = doc.getComment();
@@ -148,7 +148,6 @@ https://stackoverflow.com/questions/17779744/regular-expression-to-get-a-string-
     \) : match closing parentheses
 
 
-
 likewise:
 \[([^\]]+)\]
 to catch [xxx]
@@ -156,10 +155,21 @@ to catch [xxx]
 and this for [xxx](yyy)
 \[([^\]]+)\]\(([^)]+)\)
 
+// OUAIS SAUF QUE CA NE MARCHE PAS pour [[aaa] bla bla](http://xxx)
+
+This is better :
+
+\[([^()]*)\]\(([^()]*)\)
+
+but not perfect: doesn't match [aaa (bbb) ccc](http://xxx) 
+
+// TODO
+
 /..../g to catch all occurrences
 */
 public static String markdownLinkRegex() {
-	return "\\[([^\\]]+)\\]\\(([^)]+)\\)";
+	// return "\\[([^\\]]+)\\]\\(([^)]+)\\)";
+	return "\\[([^()]*)\\]\\(([^()]*)\\)";
 }
 
 /**
