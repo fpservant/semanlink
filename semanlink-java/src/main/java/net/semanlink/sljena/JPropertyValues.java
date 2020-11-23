@@ -43,7 +43,15 @@ public String getLang(int index) {
 /** Retourne la 1ere des valeurs sous forme de String. */
 public String getFirstAsString() {
 	if (al.size() > 0) {
-		return al.get(0).toString() ;
+		Object o = al.get(0);
+		if (al instanceof Literal) {
+			try {
+				return ((Literal) o).getString();
+			} catch (Exception e) {
+				return o.toString();
+			}
+		}
+		return o.toString();
 	}
 	return null;
 }
