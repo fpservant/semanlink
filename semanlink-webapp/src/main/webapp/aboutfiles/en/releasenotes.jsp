@@ -7,7 +7,9 @@
 
 <h2>0.7.4 2020-11-xx</h2>
 <ul>
-<li>Related docs (computed from doc's comment)
+<li>Copy-Paste of doc or tag uri into comment field</li>
+<li>Getting a given property of a doc or tag</li>
+<li>Related docs (computed from doc's comment)</li>
 <li>Doc page: list docs with similar tags</li>
 </ul>
 
