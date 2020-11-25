@@ -15,7 +15,10 @@
 		- default to false if request.getAttribute("livetreelist") == null		- request.getParameter("divid") identifies the id of parent (for instance 1_2)	- OU BIEN request.getAttribute("divid");	- OU BIEN null
 	
 	request.getParameter("withdocs") "true" ou "false" 
-	ou request.getAttribute("withdocs") Boolean.TRUE ou autre chose pour false		STYLE DES LIGNES	jusqu'au support de l'inclusion des docs,	n'utilisait que la class "livetree" dans le ul, dont le a recopiait le style des kws.	Mais avec les docs, on a besoin d'avoir le style au niveau 	de la ligne, d'où, pour les lignes de docs, de l'ajout au sein de la li	d'un <span class="docli">.*/boolean edit = (Boolean.TRUE.equals(session.getAttribute("net.semanlink.servlet.edit")));// soit on a une liste ds un attribut "livetreelist",// soit un kw dont on prendra les children// (passer une liste est nécessaire pour le résultat du livesearch par ex -- en fait,// pour la liste de premier niveau s'il ne s'agit pas simplement d'un seul kwList children = (List)  request.getAttribute("livetreelist");boolean resolveAlias = false;
+	ou request.getAttribute("withdocs") Boolean.TRUE ou autre chose pour false		STYLE DES LIGNES	jusqu'au support de l'inclusion des docs,	n'utilisait que la class "livetree" dans le ul, dont le a recopiait le style des kws.	Mais avec les docs, on a besoin d'avoir le style au niveau 	de la ligne, d'où, pour les lignes de docs, de l'ajout au sein de la li	d'un <span class="docli">.*/
+
+// System.out.println("livetreesons.jsp targeturi" + request.getParameter("targeturi")); // DEBUG 2020
+			boolean edit = (Boolean.TRUE.equals(session.getAttribute("net.semanlink.servlet.edit")));// soit on a une liste ds un attribut "livetreelist",// soit un kw dont on prendra les children// (passer une liste est nécessaire pour le résultat du livesearch par ex -- en fait,// pour la liste de premier niveau s'il ne s'agit pas simplement d'un seul kwList children = (List)  request.getAttribute("livetreelist");boolean resolveAlias = false;
 Boolean boo = (Boolean) request.getAttribute("resolveAlias");
 if (boo != null) {
 	resolveAlias = boo.booleanValue();
@@ -61,7 +64,7 @@ if (targetUri == null) {
 	request.setAttribute("targeturi", targetUri);
 }
 
-for (int i = 0; i < children.size(); i++) {	// We check whether a son has children or not, (or eventually a doc) in order to display correctly the "open" image	// Calculating the complete grandChildren is a waste of time:	// enough to know whether there is one or not.	SLKeyword son = (SLKeyword) children.get(i);	String label = son.getLabel();	String sonUri = son.getURI();	String encodedSonUri = java.net.URLEncoder.encode(sonUri,"UTF-8");	String sonDivId = parentDivId + Integer.toString(i);									boolean canBeOpened = (son.hasChild());	if ((withDocs) && (!canBeOpened)) {		canBeOpened = son.hasDocument();	}	
+for (int i = 0; i < children.size(); i++) {	// We check whether a son has children or not, (or eventually a doc) in order to display correctly the "open" image	// Calculating the complete grandChildren is a waste of time:	// enough to know whether there is one or not.	SLKeyword son = (SLKeyword) children.get(i);	String label = son.getLabel();	String sonUri = son.getURI();	String encodedSonUri = java.net.URLEncoder.encode(sonUri,"UTF-8");	String sonDivId = parentDivId + Integer.toString(i);									boolean canBeOpened = (son.hasChild());	if ((withDocs) && (!canBeOpened)) {		canBeOpened = son.hasDocument();	}	
 	// public static HTML_Link linkToAndKws(SLKeyword firstKw, SLKeyword[] otherKws, String label) throws UnsupportedEncodingException 
 	// attention : se pose un pb avec les alias qui ne sont pas résolus.	// On ne va tout de même pas les résoudre tous : il suffit de résoudre celui sur lequel on cliquera	// String href = HTML_Link.getTagHref(request.getContextPath(), sonUri, resolveAlias); // /semanlink/tag/... 	// 2013-09 RDFa
 	// 2020-02 (?)
@@ -88,7 +91,9 @@ if (targetUri == null) {
 	boolean itsAnAndKW = false;
 	if (!edit) { // "and kws" in search // 2020-02 tagAndTag
 		if (targetUri != null) {
-			if (targetUri.contains("/tag/")) {
+			if (targetUri.contains("/tag/")
+			    || (targetUri.startsWith(SLServlet.getSLModel().getDefaultThesaurus().getURI()))) { // hum, cf sicg thesaurus // TODO(?)
+
 				itsAnAndKW = true;
 				
 				// link to AND kws // ATTENTION ICI ON SUPPOSE QUE targetUri est en tag/

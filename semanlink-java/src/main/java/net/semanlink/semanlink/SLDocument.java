@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface SLDocument extends SLLabeledResource, SLVocab, Comparable {
 /** Retourne une List de SLKeyword. */
-public List<SLKeyword> getKeywords();
+List<SLKeyword> getKeywords();
 
 
 /**
@@ -22,8 +22,8 @@ default String bookmarkOf() { // 2019-03 uris for bookmarks -- quick'n dirty
 	return pv.getFirstAsString();
 }
 
-public List<SLDocument> mainDocOf();
+List<SLDocument> mainDocOf();
 
-public List<SLDocument> similarlyTaggedDocs(); // 2020-11
-public List<SLDocument> relatedDocs(); // 2020-11
+List<SLDocument> similarlyTaggedDocs(); // 2020-11
+List<SLDocument> relatedDocs(boolean linkTo, boolean linkFrom); // 2020-11
 }

@@ -14,6 +14,8 @@ if (truc != null) {
 			// cet arg permet ds livetreesons de faire la distinction entre résultat du livesearch et arbre normal
 			request.setAttribute("livesearchxml","true");
 			request.setAttribute("livetreelist",truc.getList());
+			
+			// System.out.println("livesearchxml.jsp targeturi" + request.getParameter("targeturi")); // DEBUG 2020
 			%>
 				<ul id="LiveSearchRes" class="livetree" style="padding-left:0"><jsp:include page="/jsp/livetreesons.jsp" /></ul>
 			<%

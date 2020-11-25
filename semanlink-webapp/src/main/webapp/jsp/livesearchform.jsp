@@ -63,7 +63,7 @@
                 <input type="hidden" name="targeturi" value="<%=andTargetUri%>" />
         <%}} // if uri != null%>
         <%if (edit) {
-            if (uri != null) {%>
+            if (uri != null) {%><input type="submit" value="New">
                 <input type="hidden" name="targeturi" value="<%=uri%>" /><%//uri of this page (doc or tag)%>
                 </p><p align="center" style="padding-left:4px;padding-top:0px;padding-bottom:4px;padding-right:0px;margin:0">
                     <select name="actionprop">
@@ -77,7 +77,8 @@
                         <option value="go"><%=jsp.i18l("livesearchform.go")%></option>
                     </select>
             <%} // if uri != null%>
-        <%} // i fedit %>
+            
+        <%} // if edit %>
         </p>
     </form> 
     <div id="LSResult" style="display: none;">

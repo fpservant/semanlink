@@ -374,9 +374,9 @@ public Bean_DocList similarlyTaggedDocs() { // 2020-11
 	return x;
 }
 
-public Bean_DocList relatedDocs() { // 2020-11
+public Bean_DocList relatedDocs(boolean linkTo, boolean linkFrom) { // 2020-11
 	Bean_DocList x = new Bean_DocList();
-	List<SLDocument> docs = this.slDoc.relatedDocs();
+	List<SLDocument> docs = this.slDoc.relatedDocs(linkTo, linkFrom);
 	sort(docs);
 	x.setList(docs);
 	x.setShowKwsOfDocs(true, null);

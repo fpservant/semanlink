@@ -24,29 +24,6 @@ static public SLModel getSLModel() throws Exception {
 	return getSLModel(servletUri, thUri, thFile, docDir);
 }
 
-// BEWARE WITH THIS !!! -- THIS DELETE FILES
-static public void cleanTestDir() throws Exception {
-	Directory.Action cleaning = new Directory.Action() {
-		@Override
-		public void handleFile(File f) throws Exception {
-			String fn = f.getName();
-			if (fn.endsWith(".rdf")) {
-				if (fn.equals("sl.rdf")) return;
-				if (fn.equals("slkws.rdf")) return;
-				System.out.println("DELETING " + f);
-				f.delete();
-			}
-		}	
-	};
-	File docDir = new File("src/test/files/datadir/documents/");
-	Directory dir = new Directory(docDir);
-	dir.doIt(cleaning, true);
-	
-	docDir = new File("src/test/files/datadir/tags/");
-	dir = new Directory(docDir);
-	dir.doIt(cleaning, true);
-}
-
 static public SLModel getSLModel(String servletUri,
 		String thUri, File thFile,
 		File docDir) throws Exception {
@@ -74,4 +51,43 @@ static public SLModel getSLModel(String servletUri,
 	
 	return slModel;
 }
+
+static public SLModel fpsSLModel() throws Exception {
+	String servletUri = "http://127.0.0.1:8080/semanlink";
+	String thUri = "http://www.semanlink.net/tag"; // The thUri is *not* slash terminated
+	File thFile = new File("/Users/fps/Semanlink/semanlink-fps/tags/slkws.rdf");
+	assertTrue(thFile.exists());
+	
+	// assumed to be "yearmonth" loading mode
+	File docDir = new File("/Users/fps/Sites/fps");
+	assertTrue(docDir.exists());
+	// String base = "http://www.semanlink.net/tag/";
+
+	return getSLModel(servletUri, thUri, thFile, docDir);
+}
+
+// BEWARE WITH THIS !!! -- THIS DELETE FILES
+static public void cleanTestDir() throws Exception {
+	Directory.Action cleaning = new Directory.Action() {
+		@Override
+		public void handleFile(File f) throws Exception {
+			String fn = f.getName();
+			if (fn.endsWith(".rdf")) {
+				if (fn.equals("sl.rdf")) return;
+				if (fn.equals("slkws.rdf")) return;
+				System.out.println("DELETING " + f);
+				f.delete();
+			}
+		}	
+	};
+	File docDir = new File("src/test/files/datadir/documents/");
+	Directory dir = new Directory(docDir);
+	dir.doIt(cleaning, true);
+	
+	docDir = new File("src/test/files/datadir/tags/");
+	dir = new Directory(docDir);
+	dir.doIt(cleaning, true);
+}
+
+
 }

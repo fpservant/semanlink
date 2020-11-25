@@ -16,7 +16,7 @@
 	<%} %>
 </li>
 </ul>
-<h3>Have a look at the <a href="<%=contextUrl%><%=CoolUriServlet.ABOUT_SERVLET_PATH%>/getting_started_tutorial.htm">getting started tutorial</a>"</h3>
+<h3>Have a look at the "<a href="<%=contextUrl%><%=CoolUriServlet.ABOUT_SERVLET_PATH%>/getting_started_tutorial.htm">getting started tutorial</a>"</h3>
 <ul><li>More documentation under the "<a href="<%=contextUrl%><%=CoolUriServlet.ABOUT_SERVLET_PATH%>/help.htm">Help</a>" section in the top menu-bar...</li></ul>
 <!-- 
 <h3>Optionaly, <a href="<%=contextUrl%>/sl/delicious">import your delicious posts...</a></h3>

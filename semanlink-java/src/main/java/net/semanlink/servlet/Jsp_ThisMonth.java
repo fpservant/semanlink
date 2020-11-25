@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLModel;
+import net.semanlink.semanlink.SLVocab;
 
 
 public class Jsp_ThisMonth extends Jsp_DocumentList {
@@ -46,7 +47,9 @@ public List<SLKeyword> getKWs() throws Exception {
 }
 
 protected void computeKWs() throws Exception {
+	// Only use the creation date prop? // 2020-11 // Hum, don't know
 	this.KWs = SLServlet.getSLModel().getRecentKws(this.nbOfDays, this.dateProp);
+	// this.KWs = SLServlet.getSLModel().getRecentKws(this.nbOfDays, SLVocab.SL_CREATION_DATE_PROPERTY);
 }
 
 

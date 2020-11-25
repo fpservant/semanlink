@@ -8,18 +8,22 @@ import java.util.regex.Pattern;
 
 public class SLDocCommentUpdate { // 2020-11
 
-static public void changeComment(SLModel mod, SLDocument doc, String newComment, String lang, String contextUrl) { // 2020-11
+// set doc's comment to a newComment, and based on this new comment
+	// (and the previous value), computes and updates the sl:relatedDocs
+// return true if updated, false if no change done (and this is not the same as oldComment == newComment !)
+static public boolean changeComment(SLModel mod, SLDocument doc, String newComment, String lang, String contextUrl) { // 2020-11
 	String oldComment = doc.getComment();
 	
 	List<String> oldLinks = extractLinks(oldComment, contextUrl);
 	List<String> newLinks = extractLinks(newComment, contextUrl);
 	
-	List<SLDocument> oldRelatedDocs = doc.relatedDocs();
+	List<SLDocument> oldRelatedDocs = doc.relatedDocs(true, false);
 	
 	List<String> toBeAdded = new ArrayList<>();
 	for (String link : newLinks) {
 		try {
 			link = link2slUri(link, mod, contextUrl);
+			if (link == null) continue;
 			if (!isIn(link, oldRelatedDocs)) {
 				// verify it isn't in oldLinks? Hum non, en tout cas pas tant qu'on n'a pas récupéré l'existant
 				toBeAdded.add(link);
@@ -57,21 +61,25 @@ static public void changeComment(SLModel mod, SLDocument doc, String newComment,
 	// not done : tag:xxx (oui, mais faire quoi ?)
 	
 	
-	
-	
-	
-	try (SLDocUpdate up = mod.newSLDocUpdate(doc)) {
-		up.setDocProperty(SLVocab.COMMENT_PROPERTY, newComment, lang);
-		// links in comment
-		if (toBeAdded.size() > 0) {
-			String[] objectUris = new String[toBeAdded.size()];
-			objectUris = toBeAdded.toArray(objectUris);
-			up.addDocProperty(SLVocab.SL_RELATED_DOC_PROPERTY, objectUris);
-		}
-		for (String link : toBeRemoved) {
-			up.removeStatement(SLVocab.SL_RELATED_DOC_PROPERTY, link);
-		}
-	} catch (Exception e) { throw new RuntimeException(e); }
+	boolean somethingChanged = ((!newComment.equals(oldComment))
+			|| (toBeAdded.size() > 0)
+			|| (toBeRemoved.size() > 0));
+
+	if (somethingChanged) {
+		try (SLDocUpdate up = mod.newSLDocUpdate(doc)) {
+			up.setDocProperty(SLVocab.COMMENT_PROPERTY, newComment, lang);
+			// links in comment
+			if (toBeAdded.size() > 0) {
+				String[] objectUris = new String[toBeAdded.size()];
+				objectUris = toBeAdded.toArray(objectUris);
+				up.addDocProperty(SLVocab.SL_RELATED_DOC_PROPERTY, objectUris);
+			}
+			for (String link : toBeRemoved) {
+				up.removeStatement(SLVocab.SL_RELATED_DOC_PROPERTY, link);
+			}
+		} catch (Exception e) { throw new RuntimeException(e); }
+	}
+	return somethingChanged;
 }
 
 static private boolean isIn(String link, List<SLDocument> docs) {
@@ -81,7 +89,7 @@ static private boolean isIn(String link, List<SLDocument> docs) {
 	return false;
 }
 
-static List<String> extractLinks(String comment, String contextUrl) {
+public static List<String> extractLinks(String comment, String contextUrl) {
 	List<String> x = new ArrayList<>();
 	if (comment == null) return x;
 	String regex = markdownLinkRegex();
@@ -103,11 +111,15 @@ static List<String> extractLinks(String comment, String contextUrl) {
   return x;
 }
 
-/** to transform url of a web page to url of slbookmark */
-static private String link2slUri(String link, SLModel mod, String contextUrl) throws Exception {
+/** to transform url of a web page to url of slbookmark (it if exists) */
+static public String link2slUri(String link, SLModel mod, String contextUrl) throws Exception {
 	if ((link.startsWith("http://"))||(link.startsWith("https://"))) {
 		if (link.startsWith(contextUrl)) {
-			return link;
+			if (link.indexOf("?") > 0) { // TODO
+				return null;
+			} else {
+				return link;
+			}
 		} else {
 			// une url du web (hum : ou file // TODO)
 			// System.out.println(link + " : " + mod.smarterGetDocument(link).getURI());

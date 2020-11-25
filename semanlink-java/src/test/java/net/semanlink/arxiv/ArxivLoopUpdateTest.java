@@ -47,7 +47,7 @@ public final void test() throws Exception {
 
 // @Test 
 public final void ATTENTION_MODIF_VRAI_SEMANLINK_FPS() throws Exception {
-	SLModel m = fpsSLModel();
+	SLModel m = DataLoader.fpsSLModel();
 	Client client = ClientBuilder.newClient();
 	ArxivMetadataExtractor extractor = new ArxivMetadataExtractor();
 	Iterator<SLDocument> docs = m.documents();
@@ -76,24 +76,8 @@ public final void ATTENTION_MODIF_VRAI_SEMANLINK_FPS() throws Exception {
 	}
 }
 
-static private SLModel fpsSLModel() throws Exception {
-	String servletUri = "http://127.0.0.1:8080/semanlink";
-	String thUri = "http://www.semanlink.net/tag"; // The thUri is *not* slash terminated
-	File thFile = new File("/Users/fps/Semanlink/semanlink-fps/tags/slkws.rdf");
-	assertTrue(thFile.exists());
-	
-	// assumed to be "yearmonth" loading mode
-	File docDir = new File("/Users/fps/Sites/fps");
-	assertTrue(docDir.exists());
-	// String base = "http://www.semanlink.net/tag/";
-
-	return DataLoader.getSLModel(servletUri, thUri, thFile, docDir);
-}
-
 // voir physics/0004057 / 2019-08-15 : http://127.0.0.1:8080/semanlink/doc/2019/08/_physics_0004057_the_informati 
 // https://arxiv.org/abs/physics/0004057
-
-
 
 }
 

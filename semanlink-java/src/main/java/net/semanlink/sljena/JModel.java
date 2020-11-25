@@ -1682,6 +1682,8 @@ public SLDocument convertOld2NewBookmark(String onlineUri) throws Exception {
 	
 	// creation of the "new bookmark" res
 	// which URI? created from the title, if any
+	
+	// NON ! ne doit pas etre à la date du jour !!!
 	String title = SLUtils.getLabel(docOnline);
 	SLDocument newBookmark = new NewBookmarkCreationData(this, title).getSLDocument(); // ATTENTION NE MARCHE QUE POUR UNE RES EXTERNE
 	Resource newBookmarkRes = m.createResource(newBookmark.getURI());
@@ -1742,42 +1744,93 @@ public List<SLDocument> mainDocOf(Resource mainDocRes) {
 //
 //
 
-public List<SLDocument> relatedDocs(Resource docRes) {
+//public List<SLDocument> relatedDocs(Resource docRes) {
+//  Model m = this.docsModel;
+//	// Hum, BEWARE: we generally want it to be a symetric property
+//	// (but store only one triple)
+//
+//  HashSet<Resource> hs = new HashSet<>();
+//  StmtIterator stmtIt = docRes.listProperties(this.relatedDocProperty);
+//  for (;stmtIt.hasNext();) {
+//		Statement sta = stmtIt.nextStatement();
+//		Object o = sta.getObject();
+//		if (o instanceof Resource) {
+//			hs.add((Resource) o);
+//		}
+//  }
+//  stmtIt = m.listStatements(null, this.relatedDocProperty, docRes);
+//  for (;stmtIt.hasNext();) {
+//		Statement sta = stmtIt.nextStatement();
+//		hs.add(sta.getSubject());
+//  }
+//  ArrayList<SLDocument> x = new ArrayList<>(hs.size());
+//  Iterator<Resource> it = hs.iterator();
+//  for(;it.hasNext();) {
+//  	x.add(new JDocument(this, it.next()));
+//  }
+//  
+//  Collections.sort(x);
+//  return x;
+//}
+
+public List<SLDocument> relatedDocs(Resource docRes, boolean linkTo, boolean linkFrom) { // 2020-11
   Model m = this.docsModel;
 	// Hum, BEWARE: we generally want it to be a symetric property
 	// (but store only one triple)
 
-//  ResIterator ite = model.listSubjectsWithProperty(this.relatedDocProperty, docRes);
-//  ArrayList<SLDocument> x = new ArrayList<>();
-//  for (;ite.hasNext();) {
-//  	x.add(new JDocument(this, ite.nextResource()));
-//  }
-//  ite.close();
-//  return x;
-
-  HashSet<Resource> hs = new HashSet<>();
-  StmtIterator stmtIt = docRes.listProperties(this.relatedDocProperty);
-  for (;stmtIt.hasNext();) {
-		Statement sta = stmtIt.nextStatement();
-		Object o = sta.getObject();
-		if (o instanceof Resource) {
-			hs.add((Resource) o);
-		}
-  }
-  stmtIt = m.listStatements(null, this.relatedDocProperty, docRes);
-  for (;stmtIt.hasNext();) {
-		Statement sta = stmtIt.nextStatement();
-		hs.add(sta.getSubject());
-  }
-  ArrayList<SLDocument> x = new ArrayList<>(hs.size());
-  Iterator<Resource> it = hs.iterator();
-  for(;it.hasNext();) {
-  	x.add(new JDocument(this, it.next()));
+  ArrayList<SLDocument> x;
+  StmtIterator stmtIt;
+  
+  if (linkTo&&linkFrom) {
+    HashSet<Resource> hs = new HashSet<>();
+	  stmtIt = docRes.listProperties(this.relatedDocProperty);
+	  for (;stmtIt.hasNext();) {
+			Statement sta = stmtIt.nextStatement();
+			Object o = sta.getObject();
+			if (o instanceof Resource) {
+				hs.add((Resource) o);
+			}
+	  }
+	  
+	  stmtIt = m.listStatements(null, this.relatedDocProperty, docRes);
+	  for (;stmtIt.hasNext();) {
+			Statement sta = stmtIt.nextStatement();
+			hs.add(sta.getSubject());
+	  }
+	  
+	  x = new ArrayList<>(hs.size());
+	  Iterator<Resource> it = hs.iterator();
+	  for(;it.hasNext();) {
+	  	x.add(new JDocument(this, it.next()));
+	  }
+	  
+  } else if (linkTo) {
+  	x = new ArrayList<>();
+	  stmtIt = docRes.listProperties(this.relatedDocProperty);
+	  for (;stmtIt.hasNext();) {
+			Statement sta = stmtIt.nextStatement();
+			Object o = sta.getObject();
+			if (o instanceof Resource) {
+				x.add(new JDocument(this, (Resource) o));
+			}
+	  }
+  	
+  } else if (linkFrom) {
+  	x = new ArrayList<>();
+	  stmtIt = m.listStatements(null, this.relatedDocProperty, docRes);
+	  for (;stmtIt.hasNext();) {
+			Statement sta = stmtIt.nextStatement();
+			x.add(new JDocument(this, sta.getSubject()));
+	  }
+  	
+  } else {
+  	throw new RuntimeException("if you don't ask for anything, you'll get this");
   }
   
   Collections.sort(x);
   return x;
 }
+
 
 
 } // class JModel

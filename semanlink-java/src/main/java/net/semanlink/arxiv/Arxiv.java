@@ -76,6 +76,7 @@ static public String url2pdfUrl(String url) {
 	return PDF + num + ".pdf";
 }
 
+/** null if not an arxiv doc */
 static public String sldoc2arxivNum(SLDocument doc, SLModel mod) {
 	SLDocumentStuff docstuff = new SLDocumentStuff(doc, mod, null); // pour ce qu'on en a à faire ici, pas besoin du contexte
 	try {

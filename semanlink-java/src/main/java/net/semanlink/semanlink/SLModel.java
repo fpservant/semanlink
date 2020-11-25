@@ -185,7 +185,7 @@ abstract public SLDocument getDocument(String uri);
 abstract public boolean existsAsSubject(SLDocument doc); // pertinent en pre 2019-03 uris for bookmarks
 
 /**
- * the SLDocument corresponding to the url of a bookmark (url on the web)
+ * the SLDocument corresponding to the url of a bookmark (url on the web) // only new form of bookmarks
  * or null if it doesn't exist yet
  * @since 0.6
  */ 
@@ -1540,6 +1540,7 @@ public List getAliasUriList(SLKeyword kw) {
 public abstract void removeKWStatement(String kwUri, String propUri, String objUri);
 // reste à ajouter les autres (pour doc, pour obj sous forme de litéral)
 
+/** beware, depends on the date */
 public File goodDirToSaveAFile() {
 	// ne va pas sur mac : File.pathSeparator met des ":"
 	// return new File(getDefaultFolder() + (new YearMonthDay()).getYearMonth(File.pathSeparator) + File.pathSeparator);
@@ -1557,7 +1558,9 @@ public File dirToSaveANote() {
 	return todayYearMonthDir(getNotesFolder().getFile());
 }
 
-/** @since v0.6 */ // 2019-03 uris for bookmarks
+/**
+ * Beware, the dir, at this time 
+ * @since v0.6 */ // 2019-03 uris for bookmarks
 public File dirToSaveBookmarks() {
 	return todayYearMonthDir(getBookmarkFolder().getFile());
 }
@@ -2028,6 +2031,9 @@ public static class NewBookmarkCreationData {
 	// ATTENTION, le bkm est créé ds default datafolder : suppose que c'est pour une bkm externe
 	public NewBookmarkCreationData(SLModel mod, String title) throws MalformedURLException, URISyntaxException {
 		File bkmDir = mod.dirToSaveBookmarks();
+		
+		
+		
 		// the dir to save the file if we save a copy
 		saveAsDir = mod.goodDirToSaveAFile();
 		if (title == null) throw new RuntimeException("No title");	  

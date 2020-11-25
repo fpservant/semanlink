@@ -499,8 +499,8 @@ public static String shortFilenameFromString(String sfn) {
 	// virer les car interdits. Ceci n'est pas suffisant? TODO
 	sfn = sfn.replaceAll("/","-");
 	sfn = sfn.replaceAll(":","-");
+	sfn = sfn.replaceAll("\\+","-");
 	sfn = sfn.replaceAll("'",""); // cf pb en javascript
-	sfn = sfn.replaceAll("\"",""); // pb en javascript ?
 	sfn = sfn.replaceAll("\"",""); // cf pb en javascript
 	String replacementChar = SLModel.converter.replacementChar();
 	while (sfn.startsWith(replacementChar)) {

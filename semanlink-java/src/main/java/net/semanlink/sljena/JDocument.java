@@ -219,8 +219,12 @@ private boolean isSimilar(int i, int max, int kwnb) {
 // RELATED DOCS (== LINKED DOCS)
 //
 
-@Override public List<SLDocument> relatedDocs() { // 2020-11
-	return this.jModel.relatedDocs(this.res);
+//@Override public List<SLDocument> relatedDocs() { // 2020-11
+//	return this.jModel.relatedDocs(this.res);
+//}
+
+@Override public List<SLDocument> relatedDocs(boolean linkTo, boolean linkFrom){ // 2020-11
+	return this.jModel.relatedDocs(this.res, linkTo,  linkFrom);
 }
 
 }
