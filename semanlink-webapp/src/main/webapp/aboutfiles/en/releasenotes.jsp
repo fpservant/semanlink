@@ -11,6 +11,7 @@
 <li>Getting a given property of a doc or tag</li>
 <li>Related docs (computed from doc's comment)</li>
 <li>Doc page: list docs with similar tags</li>
+<li>Edit/Search Tag: create tag button</li>
 </ul>
 
 <h2>0.7.3 2020-05-30</h2>
