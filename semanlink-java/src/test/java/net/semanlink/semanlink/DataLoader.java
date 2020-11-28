@@ -10,7 +10,7 @@ import net.semanlink.util.Directory;
 
 /** To load data for tests */
 public class DataLoader {
-static public SLModel getSLModel() throws Exception {
+static public SLModel testSLModel() throws Exception {
 	String servletUri = "http://127.0.0.1:7080/semanlink";
 	String thUri = "http://www.semanlink.net/tag"; // The thUri is *not* slash terminated
 	File thFile = new File("src/test/files/datadir/tags/slkws.rdf");

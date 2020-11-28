@@ -37,22 +37,6 @@ import net.semanlink.util.FileUriFormat;
 
 public class Comments2RelatedDocsTest { // 2020-11
 
-@BeforeClass
-public static void setUpBeforeClass() throws Exception {
-}
-
-@AfterClass
-public static void tearDownAfterClass() throws Exception {
-}
-
-@Before
-public void setUp() throws Exception {
-}
-
-@After
-public void tearDown() throws Exception {
-}
-
 // SLUtils.title2shortFilename(title)
 
 @Test public final void title2shortFilenameTest() throws Exception {
@@ -85,10 +69,12 @@ public void tearDown() throws Exception {
 	assertTrue(x.equals("http://127.0.0.1:8080/semanlink/doc/2020/11/%C2%AB_ca_va_alle_o_j_aime_a_alors"));
 }
 
+// TODO MOVE TO SLUtils
+
 /**
- * The URI to use for a bookmark
+ * The URI to use for a bookmark with a given title
  * 
- * Attention, ne vérifie pas si existe ou pas
+ * Attention, ne vérifie pas si n'existe pas déjà
  * 
  * @param title
  * @param bkmDirUrl eg. http://127.0.0.1:8080/semanlink/doc/2020/11/ == contextUrl + "/doc/2020/11/"
@@ -117,38 +103,41 @@ public static String title2bookmarkUri(String title, String bkmDirUrl) throws UR
 
 
 
-// @Test
-public final void test() throws Exception {
-	SLModel m = DataLoader.fpsSLModel();
-
-	// OUAIS : le context qu'on passe dans plusieurs méthodes de SLModel,
-	// il semble qu'il ne soit autre chose que SLModel.getModelUrl() !!!
-	// TODO CHECK THAT, ça serait cool !
-	
-	String contextUrl = "http://127.0.0.1:8080/semanlink";
-	System.out.println(m.getModelUrl() + "\n" + contextUrl);
-	assertTrue(contextUrl.equals(m.getModelUrl()));
-
-	// ben non, c un vieux doc, son uri la page sur le web
-	// String docUri = "http://127.0.0.1:8080/semanlink/doc/?uri=https%3A%2F%2Farxiv.org%2Fabs%2F1902.09229";
-	String docUri = "https://arxiv.org/abs/1902.09229";
-	SLDocument doc = 	m.getDocument(docUri);
-	Literal lit = getComment( ((JDocument) doc).getRes());
-	String comment = lit.getString();
-	List<String> links = SLDocCommentUpdate.extractLinks(comment, contextUrl);
-	
-	for (String link : links) {
-		try {
-			String linkUri = SLDocCommentUpdate.link2slUri(link, m, contextUrl);
-			if (linkUri == null) continue;
-			System.out.println(link + " \n-> " + linkUri);
-		} catch (Exception e) {
-			System.err.println("Bad link: "+ link);
-		}	
-	}
-
-}
-
+//// @Test
+//public final void test() throws Exception {
+//	SLModel m = DataLoader.fpsSLModel();
+//
+//	// OUAIS : le context qu'on passe dans plusieurs méthodes de SLModel,
+//	// il semble qu'il ne soit autre chose que SLModel.getModelUrl() !!!
+//	// TODO CHECK THAT, ça serait cool !
+//	
+//	String contextUrl = "http://127.0.0.1:8080/semanlink";
+//	System.out.println(m.getModelUrl() + "\n" + contextUrl);
+//	assertTrue(contextUrl.equals(m.getModelUrl()));
+//
+//	// ben non, c un vieux doc, son uri la page sur le web
+//	// String docUri = "http://127.0.0.1:8080/semanlink/doc/?uri=https%3A%2F%2Farxiv.org%2Fabs%2F1902.09229";
+//	String docUri = "https://arxiv.org/abs/1902.09229";
+//	SLDocument doc = 	m.getDocument(docUri);
+//	linksInComment((JDocument) doc, m, contextUrl);
+//}
+//
+//void linksInComment(JDocument doc, SLModel m, String contextUrl) {
+//	Literal lit = getComment( ((JDocument) doc).getRes());
+//	String comment = lit.getString();
+//	List<String> links = SLDocCommentUpdate.extractLinks(comment, contextUrl);
+//	
+//	for (String link : links) {
+//		try {
+//			String linkUri = SLDocCommentUpdate.link2slUri(link, m, contextUrl);
+//			if (linkUri == null) continue;
+//			System.out.println(link + " \n-> " + linkUri);
+//		} catch (Exception e) {
+//			System.err.println("Bad link: "+ link);
+//		}	
+//	}
+//}
+//
 // @Test
 public final void ATTENTION_MODIF_VRAI_SEMANLINK_FPS() throws Exception {
 	SLModel m = DataLoader.fpsSLModel();

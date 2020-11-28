@@ -25,7 +25,7 @@ public class ArxivLoopUpdateTest {
 
 // @Test viré parce que met à jour les sl.rdf: ennuyeux pour git. TODO
 public final void test() throws Exception {
-	SLModel m = DataLoader.getSLModel();
+	SLModel m = DataLoader.testSLModel();
 	Client client = ClientBuilder.newClient();
 	ArxivMetadataExtractor extractor = new ArxivMetadataExtractor();
 	Iterator<SLDocument> docs = m.documents();

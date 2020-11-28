@@ -13,7 +13,7 @@ import org.junit.Test;
 public class LoadingDataTest {
 	
 @Test public final void test() throws Exception {
-	SLModel m = DataLoader.getSLModel();
+	SLModel m = DataLoader.testSLModel();
 	System.out.println("Nb of docs: " + m.docsSize() + " nb of kws: " + m.kwsSize());
 	
 	List<SLKeyword> kws = m.getKWsInConceptsSpaceArrayList();
@@ -39,7 +39,7 @@ public class LoadingDataTest {
 }
 
 @Test public final void loopDocs() throws Exception {
-	SLModel m = DataLoader.getSLModel();
+	SLModel m = DataLoader.testSLModel();
 	
 	// on pourrait s'en servir, boucler sur les fichiers
 	// charger le jena model, et faire des modifs directes
@@ -61,7 +61,7 @@ public class LoadingDataTest {
 }
 
 @Test public final void oneDoc() throws Exception {
-	SLModel m = DataLoader.getSLModel();
+	SLModel m = DataLoader.testSLModel();
 	
 	SLDocument doc = m.bookmarkUrl2Doc("https://github.com/raphaelsty/kdmkr");
 	System.out.println(doc.getURI() + " : " + doc);

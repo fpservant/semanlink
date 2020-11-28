@@ -1,0 +1,724 @@
+<!DOCTYPE rdf:RDF [
+  <!ENTITY skos 'http://www.w3.org/2004/02/skos/core#'>
+  <!ENTITY sl 'http://www.semanlink.net/2001/00/semanlink-schema#'>
+  <!ENTITY tag 'http://www.semanlink.net/tag/'>
+  <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+  <!ENTITY dc 'http://purl.org/dc/elements/1.1/'>]>
+<rdf:RDF
+    xmlns:rdf="&rdf;"
+    xmlns:dc="&dc;"
+    xmlns:j.0="http://www.semanlink.net/2006/09/semanlink-config-schema#"
+    xmlns:skos="&skos;"
+    xmlns:sl="&sl;"
+    xmlns:tag="&tag;">
+  <rdf:Description rdf:about="20%20French%20AI%20startups%20to%20watch%20%7C%20Sifted.pdf">
+    <dc:source>
+      <rdf:Description rdf:about="20_french_ai_startups_to_watch_">
+        <sl:tag rdf:resource="&tag;ai_startups"/>
+        <dc:title>20 French AI startups to watch | Sifted</dc:title>
+        <sl:bookmarkOf rdf:resource="https://sifted.eu/articles/ai-startups-france/"/>
+        <sl:creationDate>2020-11-20</sl:creationDate>
+        <sl:creationTime>2020-11-20T09:48:21Z</sl:creationTime>
+        <sl:tag rdf:resource="&tag;france"/>
+      </rdf:Description>
+    </dc:source>
+  </rdf:Description>
+  <rdf:Description rdf:about="ilha_das_flores_curta_metragem_">
+    <sl:tag rdf:resource="&tag;film_bresilien"/>
+    <sl:tag rdf:resource="&tag;vive_le_capitalisme"/>
+    <dc:title>Ilha das Flores (curta-metragem)</dc:title>
+    <sl:bookmarkOf rdf:resource="https://pt.wikipedia.org/wiki/Ilha_das_Flores_(curta-metragem)"/>
+    <sl:creationDate>2020-11-27</sl:creationDate>
+    <sl:creationTime>2020-11-27T00:36:52Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;inegalites"/>
+    <sl:tag rdf:resource="&tag;robert"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="evolutionary_physiological_ec">
+    <sl:tag rdf:resource="&tag;glyphosate"/>
+    <sl:tag rdf:resource="&tag;euphrasie"/>
+    <sl:creationTime>2020-11-05T00:25:22Z</sl:creationTime>
+    <sl:creationDate>2020-11-05</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="https://sites.utu.fi/ruuskanengroup/"/>
+    <dc:title>Evolutionary &amp; Physiological Ecology | Ruuskanen Group</dc:title>
+    <sl:tag rdf:resource="&tag;finlande"/>
+    <sl:tag rdf:resource="&tag;epigenetics"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="2010_03496_inductive_entity_r.pdf">
+    <dc:source>
+      <rdf:Description rdf:about="2010_03496_inductive_entity_r">
+        <sl:arxiv_summary xml:lang="en">We present a method for learning representations of entities, that uses a
+Transformer-based architecture as an entity encoder, and link prediction
+training on a knowledge graph with textual entity descriptions. We demonstrate
+that our approach can be applied effectively for link prediction in different
+inductive settings involving entities not seen during training, outperforming
+related state-of-the-art methods (22% MRR improvement on average). We provide
+evidence that the learned representations transfer to other tasks that do not
+require fine-tuning the entity encoder. In an entity classification task we
+obtain an average improvement of 16% accuracy compared with baselines that also
+employ pre-trained models. For an information retrieval task, significant
+improvements of up to 8.8% in NDCG@10 were obtained for natural language
+queries.</sl:arxiv_summary>
+        <sl:arxiv_author>Daniel Daza</sl:arxiv_author>
+        <sl:arxiv_published>2020-10-07T16:04:06Z</sl:arxiv_published>
+        <sl:creationDate>2020-11-03</sl:creationDate>
+        <sl:tag rdf:resource="&tag;text_aware_kg_embedding"/>
+        <sl:arxiv_title xml:lang="en">Inductive Entity Representations from Text via Link Prediction</sl:arxiv_title>
+        <dc:title xml:lang="en">[2010.03496] Inductive Entity Representations from Text via Link Prediction</dc:title>
+        <sl:arxiv_author>Paul Groth</sl:arxiv_author>
+        <sl:arxiv_firstAuthor>Daniel Daza</sl:arxiv_firstAuthor>
+        <sl:arxiv_author>Michael Cochez</sl:arxiv_author>
+        <sl:arxiv_updated>2020-10-07T16:04:06Z</sl:arxiv_updated>
+        <sl:tag rdf:resource="&tag;attention_knowledge_graphs"/>
+        <sl:comment xml:lang="en">Using the textual descriptions of entities when computing entity representations (hence not failing with entities unknown in training)&#xD;
+&#xD;
+&gt; a method for learning representations&#xD;
+of entities, that uses a **pre-trained Transformer** based&#xD;
+architecture as an entity encoder, and&#xD;
+**link prediction training on a knowledge graph&#xD;
+with textual entity descriptions**.&#xD;
+&#xD;
+Cites [Xie et al](doc:2020/10/representation_learning_of_know) and [Kepler](doc:2020/11/1911_06136_kepler_a_unified_). They claim that their&#xD;
+objective targeted exclusively for link prediction&#xD;
+performs better than Kepler's more complex one.</sl:comment>
+        <sl:creationTime>2020-11-03T16:38:59Z</sl:creationTime>
+        <sl:arxiv_num>2010.03496</sl:arxiv_num>
+        <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2010.03496"/>
+        <sl:tag rdf:resource="&tag;entity_embeddings"/>
+        <sl:tag rdf:resource="&tag;link_prediction"/>
+        <sl:tag rdf:resource="&tag;arxiv_doc"/>
+        <sl:tag rdf:resource="&tag;discute_avec_raphael"/>
+      </rdf:Description>
+    </dc:source>
+  </rdf:Description>
+  <rdf:Description rdf:about="kingsley_uyi_idehen_sur_twitter">
+    <sl:creationTime>2020-11-14T09:05:33Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://twitter.com/kidehen/status/1327396397721772034"/>
+    <sl:tag rdf:resource="&tag;tweet"/>
+    <sl:creationDate>2020-11-14</sl:creationDate>
+    <sl:tag rdf:resource="&tag;kingsley_idehen"/>
+    <sl:comment>[UriBurner example](https://linkeddata.uriburner.com/about/html/https://linkeddata.uriburner.com/about/id/entity/https/www.technologyreview.com/2020/11/12/1011944/artificial-intelligence-replication-crisis-science-big-tech-google-deepmind-facebook-openai/)</sl:comment>
+    <sl:tag rdf:resource="&tag;uriburner_com"/>
+    <sl:tag rdf:resource="&tag;diffbot"/>
+    <dc:title>Kingsley Uyi Idehen sur Twitter : "When I read this &amp;amp; other articles, I leverage our @datasniff browser ext. for highlighting key terms;</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="node-language-detection/">
+    <sl:tag rdf:resource="&tag;sample_code"/>
+    <dc:date>2020-11-19</dc:date>
+    <sl:creationTime>2020-11-19T16:28:15Z</sl:creationTime>
+    <sl:creationDate>2020-11-19</sl:creationDate>
+    <sl:tag rdf:resource="&tag;language_identification"/>
+    <sl:tag rdf:resource="&tag;browserify"/>
+    <sl:comment>Test d'une [solution javascript](https://github.com/FGRibreau/node-language-detect) de [#Lang Detection](tag:language_identification).&#xD;
+&#xD;
+A Nécessité de mettre en oeuvre l'arsenal [#Browserify](tag:browserify), avec solution trouvée [ici](doc:2020/11/node_js_browserify_how_to_c)&#xD;
+&#xD;
+```&#xD;
+cd /Users/fps/Sites/fps/2020/11/node-language-detection&#xD;
+&#xD;
+browserify essai.js --standalone myBundle &gt; bundle.js&#xD;
+```&#xD;
+&#xD;
+(peut-être commencer par npm init. browserify ca s'installe via ``npm install -g browserify``)</sl:comment>
+    <sl:relatedDoc rdf:resource="https://github.com/FGRibreau/node-language-detect"/>
+    <sl:relatedDoc>
+      <rdf:Description rdf:about="node_js_browserify_how_to_c">
+        <sl:tag rdf:resource="&tag;brouteur"/>
+        <sl:tag rdf:resource="&tag;stackoverflow_q"/>
+        <sl:tag rdf:resource="&tag;node_js"/>
+        <sl:creationTime>2020-11-19T16:23:32Z</sl:creationTime>
+        <sl:creationDate>2020-11-19</sl:creationDate>
+        <sl:tag rdf:resource="&tag;browserify"/>
+        <dc:title>node.js - Browserify - How to call function bundled in a file generated through browserify in browser - Stack Overflow</dc:title>
+        <sl:bookmarkOf rdf:resource="https://stackoverflow.com/questions/23296094/browserify-how-to-call-function-bundled-in-a-file-generated-through-browserify"/>
+        <sl:comment xml:lang="en">see answer by Galen Long - it works</sl:comment>
+      </rdf:Description>
+    </sl:relatedDoc>
+  </rdf:Description>
+  <rdf:Description rdf:about="jsomers_net_%7C_i_should_have_lov.html">
+    <dc:source>
+      <rdf:Description rdf:about="jsomers_net_%7C_i_should_have_lov">
+        <sl:tag rdf:resource="&tag;biologie"/>
+        <dc:title>jsomers.net | I should have loved biology</dc:title>
+        <sl:bookmarkOf rdf:resource="https://jsomers.net/i-should-have-loved-biology/"/>
+        <sl:creationDate>2020-11-19</sl:creationDate>
+        <sl:creationTime>2020-11-19T13:41:21Z</sl:creationTime>
+      </rdf:Description>
+    </dc:source>
+  </rdf:Description>
+  <rdf:Description rdf:about="this_know_it_all_ai_learns_by_r">
+    <sl:creationDate>2020-11-14</sl:creationDate>
+    <dc:title>This know-it-all AI learns by reading the entire web nonstop | MIT Technology Review</dc:title>
+    <sl:creationTime>2020-11-14T08:59:49Z</sl:creationTime>
+    <sl:bookmarkOf rdf:resource="https://www.technologyreview.com/2020/09/04/1008156/knowledge-graph-ai-reads-web-machine-learning-natural-language-processing/?utm_medium=tr_social&amp;utm_campaign=site_visitor.unpaid.engagement&amp;utm_source=Twitter#Echobox=1600097723"/>
+    <sl:tag rdf:resource="&tag;diffbot"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="As%20Europe&apos;s%20governments%20lose%20control%20of%20Covid,%20revolt%20is%20in%20the%20air%20%7C%20World%20news%20%7C%20The%20Guardian.pdf">
+    <dc:source>
+      <rdf:Description rdf:about="as_europe_s_governments_lose_co">
+        <sl:tag rdf:resource="&tag;coronavirus"/>
+        <sl:tag rdf:resource="&tag;the_guardian"/>
+        <sl:creationTime>2020-11-01T12:01:28Z</sl:creationTime>
+        <dc:title>As Europe's governments lose control of Covid, revolt is in the air | The Guardian</dc:title>
+        <sl:bookmarkOf rdf:resource="https://www.theguardian.com/world/2020/nov/01/governments-lose-control-virus-revolt-civil-unrest-continent"/>
+        <sl:creationDate>2020-11-01</sl:creationDate>
+      </rdf:Description>
+    </dc:source>
+  </rdf:Description>
+  <rdf:Description rdf:about="Match%20Markdown%20links%20with%20advanced%20regex%20features%20%7C%20by%20Micha%C3%ABl%20Perrin%20%7C%20Medium.pdf">
+    <dc:source>
+      <rdf:Description rdf:about="match_markdown_links_with_advan">
+        <dc:title>Match Markdown links with advanced regex features | by Michaël Perrin</dc:title>
+        <sl:tag rdf:resource="&tag;regex"/>
+        <sl:creationDate>2020-11-27</sl:creationDate>
+        <sl:tag rdf:resource="&tag;markdown"/>
+        <sl:creationTime>2020-11-27T12:28:32Z</sl:creationTime>
+        <sl:bookmarkOf rdf:resource="http://blog.michaelperrin.fr/2019/02/04/advanced-regular-expressions/"/>
+      </rdf:Description>
+    </dc:source>
+  </rdf:Description>
+  <rdf:Description rdf:about="Maria_Niger">
+    <dc:source>
+      <rdf:Description rdf:about="cory_doctorow_ii_google_s_mo">
+        <sl:bookmarkOf rdf:resource="https://twitter.com/doctorow/status/1329891756452634626"/>
+        <sl:creationDate>2020-11-22</sl:creationDate>
+        <sl:tag rdf:resource="&tag;tweet"/>
+        <sl:tag rdf:resource="&tag;publicite_internet"/>
+        <sl:tag rdf:resource="&tag;google"/>
+        <sl:tag rdf:resource="&tag;accelerated_mobile_pages"/>
+        <sl:creationTime>2020-11-22T00:01:54Z</sl:creationTime>
+        <sl:tag rdf:resource="&tag;monopolies"/>
+        <sl:tag rdf:resource="&tag;cory_doctorow"/>
+        <sl:tag rdf:resource="&tag;cookie"/>
+        <dc:title xml:lang="en">Cory Doctorow: "Google's moves... really ARE good for users. I'd love to find proposals to fix this stuff WITHOUT creating monopolies" / Twitter</dc:title>
+      </rdf:Description>
+    </dc:source>
+  </rdf:Description>
+  <rdf:Description rdf:about="hash_uris_%7C_w3c_blog">
+    <sl:tag rdf:resource="&tag;hash_bang_uris"/>
+    <sl:bookmarkOf rdf:resource="https://www.w3.org/blog/2011/05/hash-uris/"/>
+    <sl:creationDate>2020-11-07</sl:creationDate>
+    <sl:creationTime>2020-11-07T11:15:13Z</sl:creationTime>
+    <dc:title>Hash URIs | W3C Blog</dc:title>
+    <sl:tag rdf:resource="&tag;w3c"/>
+    <sl:tag rdf:resource="&tag;hash_uris"/>
+    <sl:tag rdf:resource="&tag;jeni_tennison"/>
+  </rdf:Description>
+  <rdf:Description rdf:about=".DS_Store">
+    <dc:source>
+      <rdf:Description rdf:about="only_angels_have_wings">
+        <sl:comment>Howard Hawks, Cary Grant Rita, Hayworth</sl:comment>
+        <dc:title>Only Angels Have Wings</dc:title>
+        <sl:bookmarkOf rdf:resource="https://en.wikipedia.org/wiki/Only_Angels_Have_Wings"/>
+        <sl:creationDate>2020-11-08</sl:creationDate>
+        <sl:creationTime>2020-11-08T19:58:06Z</sl:creationTime>
+        <sl:tag rdf:resource="&tag;film_a_voir"/>
+        <sl:tag rdf:resource="&tag;film_americain"/>
+      </rdf:Description>
+    </dc:source>
+  </rdf:Description>
+  <rdf:Description rdf:about="emicida_principia_part_pasto">
+    <j.0:publish>false</j.0:publish>
+    <sl:tag rdf:resource="&tag;youtube"/>
+    <sl:creationTime>2020-11-12T11:10:05Z</sl:creationTime>
+    <sl:creationDate>2020-11-12</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="https://www.youtube.com/watch?v=kjggvv0xM8Q&amp;list=PL_N6VL1gm0aLlr0HQ6yl2lRXdSfuxMt-s"/>
+    <dc:title>Emicida - Principia part. Pastor Henrique Vieira, Fabiana Cozza, Pastoras do Rosário (Áudio oficial) - YouTube</dc:title>
+    <sl:tag rdf:resource="&tag;sania"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="Emmanuel%20Rivi%C3%A8re-%C2%AB%C2%A0Gardons-nous%20de%20lire%20le%20r%C3%A9sultat%20de%20la%20pr%C3%A9sidentielle%20am%C3%A9ricaine%20avec%20une%20grill.pdf">
+    <dc:date>2020-11-13</dc:date>
+    <sl:creationTime>2020-11-13T08:57:31Z</sl:creationTime>
+    <sl:creationDate>2020-11-13</sl:creationDate>
+    <sl:tag rdf:resource="&tag;elections_americaines_2020"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="Le%20japonais%20Honda%20obtient%20un%20feu%20vert%20in%C3%A9dit%20pour%20un%20syst%C3%A8me%20de%20conduite%20autonome%20avanc%C3%A9,%20une%20premi%C3%A8re%20mondiale.pdf">
+    <dc:date>2020-11-11</dc:date>
+    <sl:creationTime>2020-11-11T17:24:59Z</sl:creationTime>
+    <sl:creationDate>2020-11-11</sl:creationDate>
+    <sl:tag rdf:resource="&tag;honda"/>
+    <sl:tag rdf:resource="&tag;driverless_car"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="Analyse_medicale.pdf">
+    <dc:date>2020-11-17</dc:date>
+    <sl:creationTime>2020-11-17T19:11:33Z</sl:creationTime>
+    <sl:creationDate>2020-11-17</sl:creationDate>
+    <sl:tag rdf:resource="&tag;sante_fps"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="peter_bloem_sur_twitter_large">
+    <sl:tag rdf:resource="&tag;graphs_machine_learning"/>
+    <sl:tag rdf:resource="&tag;tweet"/>
+    <dc:title>Peter Bloem sur Twitter : Large-scale network motif analysis using compression</dc:title>
+    <sl:bookmarkOf rdf:resource="https://twitter.com/pbloemesquire/status/1305468256187228166"/>
+    <sl:creationDate>2020-11-06</sl:creationDate>
+    <sl:creationTime>2020-11-06T18:10:41Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;peter_bloem"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="tl_dr_this_ai_summarizes_resea">
+    <sl:creationDate>2020-11-24</sl:creationDate>
+    <sl:relatedDoc>
+      <rdf:Description rdf:about="semantic_scholar_%7C_tldr_feature">
+        <sl:creationTime>2020-11-24T09:32:38Z</sl:creationTime>
+        <dc:title>Semantic Scholar | TLDR Feature</dc:title>
+        <sl:tag rdf:resource="&tag;automatic_summarization"/>
+        <sl:tag rdf:resource="&tag;allen_institute_for_ai_a2i"/>
+        <sl:relatedDoc>
+          <rdf:Description rdf:about="semantic_scholar_%7C_ai_powered_r">
+            <sl:tag rdf:resource="&tag;allennlp"/>
+            <sl:tag rdf:resource="&tag;research_papers"/>
+            <dc:title>Semantic Scholar | AI-Powered Research Tool</dc:title>
+            <sl:bookmarkOf rdf:resource="https://www.semanticscholar.org/"/>
+            <sl:creationDate>2020-11-24</sl:creationDate>
+            <sl:creationTime>2020-11-24T09:28:22Z</sl:creationTime>
+            <sl:comment>Semantic Scholar is a free, AI-powered research tool for scientific literature, based at the Allen Institute for AI.</sl:comment>
+            <sl:tag rdf:resource="&tag;nlp_and_search"/>
+          </rdf:Description>
+        </sl:relatedDoc>
+        <sl:tag rdf:resource="&tag;research_papers"/>
+        <sl:tag rdf:resource="&tag;scientific_information_extraction"/>
+        <sl:bookmarkOf rdf:resource="https://tldr.semanticscholar.org/"/>
+        <sl:comment>[Semantic Scholar](doc:2020/11/semantic_scholar_%7C_ai_powered_r)  | AI-Powered Research Tool</sl:comment>
+        <sl:creationDate>2020-11-24</sl:creationDate>
+      </rdf:Description>
+    </sl:relatedDoc>
+    <sl:creationTime>2020-11-24T09:30:22Z</sl:creationTime>
+    <sl:comment>Blog post about [Semantic Scholar | TLDR](doc:2020/11/semantic_scholar_%7C_tldr_feature)</sl:comment>
+    <sl:tag rdf:resource="&tag;research_papers"/>
+    <sl:tag rdf:resource="&tag;automatic_summarization"/>
+    <sl:bookmarkOf rdf:resource="https://thenextweb.com/neural/2020/11/20/tldr-this-ai-summarizes-research-papers-so-you-dont-have-to/"/>
+    <dc:title>TL;DR: This AI summarizes research papers so you don’t have to</dc:title>
+    <sl:tag rdf:resource="&tag;allen_institute_for_ai_a2i"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="Anti-IVG%20en%20Louisiane,%20victoire%20pour%20Uber%20en%20Californie,%20l%C3%A9gislations%20sur%20les%20drogues%E2%80%A6%20Les%20autres%20r%C3%A9sultats%20des%20%C3%A9lections%20am%C3%A9ricaines.pdf">
+    <sl:tag rdf:resource="&tag;elections_americaines_2020"/>
+    <sl:creationDate>2020-11-04</sl:creationDate>
+    <sl:creationTime>2020-11-04T17:49:54Z</sl:creationTime>
+    <dc:date>2020-11-04</dc:date>
+  </rdf:Description>
+  <rdf:Description rdf:about="Knowledge%20Graphs%20in%20NLP%20@%20EMNLP%202020%20%7C%20by%20Michael%20Galkin%20%7C%20Nov,%202020%20%7C%20Medium.pdf">
+    <dc:source>
+      <rdf:Description rdf:about="knowledge_graphs_in_nlp_emnlp">
+        <sl:creationTime>2020-11-24T09:46:17Z</sl:creationTime>
+        <sl:tag rdf:resource="&tag;nlp_using_knowledge_graphs"/>
+        <sl:tag rdf:resource="&tag;emnlp_2020"/>
+        <sl:tag rdf:resource="&tag;knowledge_augmented_language_models"/>
+        <dc:title>Knowledge Graphs in NLP @ EMNLP 2020 | by Michael Galkin | Nov, 2020 | Medium</dc:title>
+        <sl:bookmarkOf rdf:resource="https://mgalkin.medium.com/knowledge-graphs-in-nlp-emnlp-2020-2f98ec527738#c2ae"/>
+        <sl:creationDate>2020-11-24</sl:creationDate>
+        <sl:comment xml:lang="en">About "Entity Representations in LMs", refers to:&#xD;
+&#xD;
+- [[2010.01057] LUKE: Deep Contextualized Entity Representations with Entity-aware Self-attention](doc:2020/11/2010_01057_luke_deep_context) by [Yamada](/showprop.do?pptyuri=http%3A%2F%2Fwww.semanlink.net%2F2001%2F00%2Fsemanlink-schema%23arxiv_author&amp;pptyval=Ikuya%2BYamada)&#xD;
+- Shen et al employ a background KG in&#xD;
+their GLM (Graph-guided Masked Language Model): the graph supplies a&#xD;
+vocabulary of named entities with their connectivity patterns (reachable&#xD;
+entities in k-hops)&#xD;
+- [[2004.07202] Entities as Experts: Sparse Memory Access with Entity Supervision](doc:2020/07/2004_07202_entities_as_expert)&#xD;
+- Poerner et al make use of [Wikipedia2Vec](tag:wikipedia2vec) (by Yamada) in their E-BERT&#xD;
+&#xD;
+Autoregressive KG-augmented LMs: generation process of LMs is conditioned by or enriched with structured knowledge like small subgraphs!</sl:comment>
+        <sl:relatedDoc>
+          <rdf:Description rdf:about="2010_01057_luke_deep_context">
+            <sl:tag rdf:resource="&tag;entity_embeddings"/>
+            <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2010.01057"/>
+            <sl:arxiv_published>2020-10-02T15:38:03Z</sl:arxiv_published>
+            <sl:tag rdf:resource="&tag;emnlp_2020"/>
+            <dc:title xml:lang="en">[2010.01057] LUKE: Deep Contextualized Entity Representations with Entity-aware Self-attention</dc:title>
+            <sl:tag rdf:resource="&tag;self_attention"/>
+            <sl:tag rdf:resource="&tag;bert_kb"/>
+            <sl:comment xml:lang="en">&gt; LUKE is based on bidirectional Transformer, treats words and entities in a text as independent tokens, and outputs contextualized representations of them. The representations can be used to address downstream tasks similarly to BERT. [src](https://twitter.com/ikuyamada/status/1312947499141750786)&#xD;
+&#xD;
+&gt; LUKE is trained using a novel pretraining task that involves predicting randomly masked words (equivalent to BERT’s masked language model) and entities in an entity-annotated corpus obtained from Wikipedia.&#xD;
+&#xD;
+(Hum, ça me rappelle quelque chose // TODO find where)&#xD;
+&#xD;
+&gt; LUKE also uses a new *entity-aware* self-attention mechanism that considers the types of tokens (words or entities) when computing attention scores.&#xD;
+&#xD;
+[github](https://github.com/studio-ousia/luke)</sl:comment>
+            <sl:creationTime>2020-11-26T16:21:30Z</sl:creationTime>
+            <sl:arxiv_author>Yuji Matsumoto</sl:arxiv_author>
+            <sl:arxiv_author>Hideaki Takeda</sl:arxiv_author>
+            <sl:creationDate>2020-11-26</sl:creationDate>
+            <sl:arxiv_summary xml:lang="en">Entity representations are useful in natural language tasks involving
+entities. In this paper, we propose new pretrained contextualized
+representations of words and entities based on the bidirectional transformer.
+The proposed model treats words and entities in a given text as independent
+tokens, and outputs contextualized representations of them. Our model is
+trained using a new pretraining task based on the masked language model of
+BERT. The task involves predicting randomly masked words and entities in a
+large entity-annotated corpus retrieved from Wikipedia. We also propose an
+entity-aware self-attention mechanism that is an extension of the
+self-attention mechanism of the transformer, and considers the types of tokens
+(words or entities) when computing attention scores. The proposed model
+achieves impressive empirical performance on a wide range of entity-related
+tasks. In particular, it obtains state-of-the-art results on five well-known
+datasets: Open Entity (entity typing), TACRED (relation classification),
+CoNLL-2003 (named entity recognition), ReCoRD (cloze-style question answering),
+and SQuAD 1.1 (extractive question answering). Our source code and pretrained
+representations are available at https://github.com/studio-ousia/luke.</sl:arxiv_summary>
+            <sl:arxiv_author>Ikuya Yamada</sl:arxiv_author>
+            <sl:arxiv_author>Hiroyuki Shindo</sl:arxiv_author>
+            <sl:arxiv_author>Akari Asai</sl:arxiv_author>
+            <sl:arxiv_updated>2020-10-02T15:38:03Z</sl:arxiv_updated>
+            <sl:tag rdf:resource="&tag;arxiv_doc"/>
+            <sl:arxiv_num>2010.01057</sl:arxiv_num>
+            <sl:arxiv_title xml:lang="en">LUKE: Deep Contextualized Entity Representations with Entity-aware Self-attention</sl:arxiv_title>
+            <sl:tag rdf:resource="&tag;text_aware_kg_embedding"/>
+            <sl:arxiv_firstAuthor>Ikuya Yamada</sl:arxiv_firstAuthor>
+          </rdf:Description>
+        </sl:relatedDoc>
+        <sl:relatedDoc rdf:resource="../07/2004_07202_entities_as_expert"/>
+      </rdf:Description>
+    </dc:source>
+  </rdf:Description>
+  <rdf:Description rdf:about="knowledge_graph_ai_web_data_ex">
+    <sl:tag rdf:resource="&tag;diffbot"/>
+    <sl:tag rdf:resource="&tag;data_mining"/>
+    <sl:creationDate>2020-11-14</sl:creationDate>
+    <sl:tag rdf:resource="&tag;machine_learning"/>
+    <sl:creationTime>2020-11-14T08:52:59Z</sl:creationTime>
+    <dc:title>Knowledge Graph, AI Web Data Extraction and Crawling | Diffbot</dc:title>
+    <sl:bookmarkOf rdf:resource="https://www.diffbot.com/"/>
+    <sl:comment>No more wasted time tracking down data Search or extract anything on the web. Diffbot uses machine learning to transform the internet into accessible, structured data.</sl:comment>
+    <sl:tag rdf:resource="&tag;knowledge_graph"/>
+    <sl:tag rdf:resource="&tag;artificial_intelligence"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="La%20traque%20aux%20myst%C3%A9rieuses%20ondes%20radio%20cosmiques%20porte%20ses%20fruits.pdf">
+    <dc:date>2020-11-20</dc:date>
+    <sl:creationTime>2020-11-20T09:39:36Z</sl:creationTime>
+    <sl:creationDate>2020-11-20</sl:creationDate>
+    <sl:tag rdf:resource="&tag;astronomie"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="1911_06136_kepler_a_unified_.pdf">
+    <dc:source>
+      <rdf:Description rdf:about="1911_06136_kepler_a_unified_">
+        <sl:tag rdf:resource="&tag;text_kg_and_embeddings"/>
+        <sl:tag rdf:resource="&tag;discute_avec_raphael"/>
+        <sl:arxiv_author>Xiaozhi Wang</sl:arxiv_author>
+        <sl:arxiv_firstAuthor>Xiaozhi Wang</sl:arxiv_firstAuthor>
+        <sl:arxiv_summary xml:lang="en">Pre-trained language representation models (PLMs) cannot well capture factual
+knowledge from text. In contrast, knowledge embedding (KE) methods can
+effectively represent the relational facts in knowledge graphs (KGs) with
+informative entity embeddings, but conventional KE models do not utilize the
+rich text data. In this paper, we propose a unified model for Knowledge
+Embedding and Pre-trained LanguagE Representation (KEPLER), which can not only
+better integrate factual knowledge into PLMs but also effectively learn KE
+through the abundant information in text. In KEPLER, we encode textual
+descriptions of entities with a PLM as their embeddings, and then jointly
+optimize the KE and language modeling objectives. Experimental results show
+that KEPLER achieves state-of-the-art performance on various NLP tasks, and
+also works remarkably well as an inductive KE model on the link prediction
+task. Furthermore, for pre-training KEPLER and evaluating the KE performance,
+we construct Wikidata5M, a large-scale KG dataset with aligned entity
+descriptions, and benchmark state-of-the-art KE methods on it. It shall serve
+as a new KE benchmark and facilitate the research on large KG, inductive KE,
+and KG with text. The dataset can be obtained from
+https://deepgraphlearning.github.io/project/wikidata5m.</sl:arxiv_summary>
+        <sl:arxiv_author>Juanzi Li</sl:arxiv_author>
+        <sl:arxiv_author>Zhaocheng Zhu</sl:arxiv_author>
+        <sl:arxiv_author>Tianyu Gao</sl:arxiv_author>
+        <sl:tag rdf:resource="&tag;good"/>
+        <sl:arxiv_author>Zhiyuan Liu</sl:arxiv_author>
+        <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/1911.06136"/>
+        <sl:relatedDoc rdf:resource="../10/representation_learning_of_know"/>
+        <sl:arxiv_updated>2020-02-19T07:46:52Z</sl:arxiv_updated>
+        <sl:tag rdf:resource="&tag;arxiv_doc"/>
+        <sl:arxiv_author>Jian Tang</sl:arxiv_author>
+        <sl:creationTime>2020-11-03T16:41:30Z</sl:creationTime>
+        <sl:arxiv_title xml:lang="en">KEPLER: A Unified Model for Knowledge Embedding and Pre-trained Language Representation</sl:arxiv_title>
+        <dc:title xml:lang="en">[1911.06136] KEPLER: A Unified Model for Knowledge Embedding and Pre-trained Language Representation</dc:title>
+        <sl:creationDate>2020-11-03</sl:creationDate>
+        <sl:comment>A unified model for knowledge embedding (KE, ie relational facts) and pre-trained language representation (PLM)&#xD;
+&#xD;
+&gt; can not only better integrate&#xD;
+factual knowledge into PLMs but also&#xD;
+effectively learn KE through the abundant&#xD;
+information in text&#xD;
+&#xD;
+&gt; Inspired by [Xie et al. (2016)](doc:2020/10/representation_learning_of_know) ([DKRL](tag:dkrl)), we take **entity descriptions**&#xD;
+to bridge the gap between KE and PLM.&#xD;
+&#xD;
+&gt; We encode the texts&#xD;
+and entities into a unified semantic space with the&#xD;
+same PLM as the encoder, and jointly optimize the&#xD;
+KE and the masked language modeling (MLM) objectives&#xD;
+during pre-training. For the KE objective,&#xD;
+we encode the entity descriptions as their corresponding&#xD;
+entity embeddings, and then learn them&#xD;
+in the same way as conventional KE methods. For&#xD;
+the MLM objective, we follow the approach of existing&#xD;
+PLMs&#xD;
+&#xD;
+&#xD;
+</sl:comment>
+        <sl:arxiv_published>2019-11-13T05:21:45Z</sl:arxiv_published>
+        <sl:arxiv_num>1911.06136</sl:arxiv_num>
+      </rdf:Description>
+    </dc:source>
+  </rdf:Description>
+  <rdf:Description rdf:about="%C2%AB%C2%A0American%20Dirt%C2%A0%C2%BB,%20le%20roman%20pol%C3%A9mique%20de%20Jeanine%20Cummins.pdf">
+    <sl:tag rdf:resource="&tag;mexique"/>
+    <dc:date>2020-11-20</dc:date>
+    <sl:creationTime>2020-11-20T12:45:20Z</sl:creationTime>
+    <sl:creationDate>2020-11-20</sl:creationDate>
+    <sl:tag rdf:resource="&tag;livre"/>
+    <sl:tag rdf:resource="&tag;maria"/>
+    <sl:tag rdf:resource="&tag;immigration"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="Maria_Niger/">
+    <dc:date>2020-11-21</dc:date>
+    <sl:creationTime>2020-11-21T16:31:17Z</sl:creationTime>
+    <sl:creationDate>2020-11-21</sl:creationDate>
+    <sl:tag rdf:resource="&tag;maria"/>
+    <sl:tag rdf:resource="&tag;histoire_du_niger"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="%C2%AB_diego_maradona_c%E2%80%99est_la_rais">
+    <sl:comment>- [[2010.01057] LUKE: Deep Contextualized Entity Representations with Entity-aware Self-attention@en](doc:2020/11/2010_01057_luke_deep_context)&#xD;
+- [Un lien vers la page d'un doc](https://mgalkin.medium.com/knowledge-graphs-in-nlp-emnlp-2020-2f98ec527738#c2ae)&#xD;
+- [Lien vers un vieux doc](/doc/?uri=http%3A%2F%2Fwww.openculture.com%2F2012%2F08%2Fthe_character_of_physical_law_richard_feynmans_legendary_lecture_series_at_cornell_1964.html)&#xD;
+- [Lien vers un vieux doc bis](doc:?uri=http%3A%2F%2Fwww.openculture.com%2F2012%2F08%2FBIS_the_character_of_physical_law_richard_feynmans_legendary_lecture_series_at_cornell_1964.html)&#xD;
+- [Lien vers la page d'un vieux doc](https://gist.github.com/mommi84/07f7c044fa18aaaa7b5133230207d8d4)&#xD;
+</sl:comment>
+    <dc:title>« Diego Maradona, c’est la raison du faible qui doit jouer dans les règles et avec les règles »</dc:title>
+    <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/idees/article/2020/11/27/a-sa-maniere-maradona-epouse-merveilleusement-le-peronisme_6061391_3232.html"/>
+    <sl:creationDate>2020-11-28</sl:creationDate>
+    <sl:creationTime>2020-11-28T02:29:27Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;maradona"/>
+    <j.0:publish>false</j.0:publish>
+    <sl:relatedDoc rdf:resource="2010_01057_luke_deep_context"/>
+    <sl:relatedDoc rdf:resource="knowledge_graphs_in_nlp_emnlp"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="maria_sur_twitter_o_you_who_">
+    <sl:tag rdf:resource="&tag;tombouctou"/>
+    <sl:bookmarkOf rdf:resource="https://twitter.com/SERVANTMARIA/status/1327275715277049857?s=20"/>
+    <sl:tag rdf:resource="&tag;tweet"/>
+    <sl:tag rdf:resource="&tag;maria"/>
+    <dc:title>Maria sur Twitter : "O you who go to Gao, do so by way of Timbuktu and murmur my name to my friends. Give them ..."</dc:title>
+    <sl:tag rdf:resource="&tag;exil"/>
+    <sl:tag rdf:resource="&tag;saudade"/>
+    <sl:creationDate>2020-11-13</sl:creationDate>
+    <sl:creationTime>2020-11-13T16:45:32Z</sl:creationTime>
+    <sl:comment xml:lang="en">&gt; O you who go to Gao, do so by way of Timbuktu and murmur my name to my friends. Give them the fragrant greetings of an exile who sighs after the soil where his friends, his family and his neighbors reside.&#xD;
+&#xD;
+Ahmed Baba</sl:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="Lancement%20r%C3%A9ussi%20pour%20la%20mission%20chinoise%20qui%20vise%20%C3%A0%20d%C3%A9crocher%20un%20morceau%20de%20Lune.pdf">
+    <sl:tag rdf:resource="&tag;missions_spatiales"/>
+    <sl:tag rdf:resource="&tag;lune"/>
+    <sl:creationDate>2020-11-24</sl:creationDate>
+    <sl:creationTime>2020-11-24T10:12:23Z</sl:creationTime>
+    <dc:date>2020-11-24</dc:date>
+    <sl:tag rdf:resource="&tag;chine_technologie"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="Biotech-le%20Made%20in%20Germany%20en%20question.pdf">
+    <sl:tag rdf:resource="&tag;biotechnologies"/>
+    <dc:date>2020-11-21</dc:date>
+    <sl:creationTime>2020-11-21T12:54:38Z</sl:creationTime>
+    <sl:creationDate>2020-11-21</sl:creationDate>
+    <sl:tag rdf:resource="&tag;allemagne"/>
+    <sl:tag rdf:resource="&tag;recherche"/>
+    <sl:tag rdf:resource="&tag;biotech_industry"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="./Journal%20de%20crise%20des%20blouses%20blanches%C2%A0:%20%C2%AB%C2%A0La%20peur%20s%E2%80%99est%20d%C3%A9plac%C3%A9e.%20Ce%20n%E2%80%99est%20plus%20celle%20du%20virus%20mais%20celle%20du%20confinement%20sans%20limite%20de%20temps%C2%A0%C2%BB.pdf">
+    <sl:tag rdf:resource="&tag;fin_de_vie"/>
+    <dc:date>2020-11-22</dc:date>
+    <sl:creationTime>2020-11-22T12:01:42Z</sl:creationTime>
+    <sl:creationDate>2020-11-22</sl:creationDate>
+    <sl:tag rdf:resource="&tag;coronavirus"/>
+    <sl:comment>&gt; On en revient à l’essentiel : admettre des patients pour essayer de leur rendre une “vie vivable après” la réanimation.</sl:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="cscc_aggregation/">
+    <sl:comment>curl query (aggrégation) pour lister les valeurs du champs "Project" (attention, doit utiliser Project.keyword"). [Web tool](https://csvjson.com/json2csv) pour convertir json en csv. </sl:comment>
+    <dc:date>2020-11-24</dc:date>
+    <sl:creationTime>2020-11-24T12:46:27Z</sl:creationTime>
+    <sl:creationDate>2020-11-24</sl:creationDate>
+    <sl:tag rdf:resource="&tag;risk_management_tier_n"/>
+    <sl:tag rdf:resource="&tag;elasticsearch_tips"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="Covid-19-il%20%C3%A9tait%20%C2%AB%C2%A0extr%C3%AAmement%20difficile%20d%E2%80%99anticiper%C2%A0%C2%BB%20la%20deuxi%C3%A8me%20vague,%20assure%20Jean%20Castex%20deva.pdf">
+    <sl:tag rdf:resource="&tag;castex"/>
+    <sl:tag rdf:resource="&tag;covid19_conneries_gouvernementales"/>
+    <sl:creationDate>2020-11-19</sl:creationDate>
+    <sl:creationTime>2020-11-19T12:50:04Z</sl:creationTime>
+    <dc:date>2020-11-19</dc:date>
+  </rdf:Description>
+  <rdf:Description rdf:about="187.pdf">
+    <dc:source>
+      <rdf:Description rdf:about="text_enhanced_representation_le">
+        <sl:creationTime>2020-11-03T17:50:54Z</sl:creationTime>
+        <sl:tag rdf:resource="&tag;ijcai"/>
+        <sl:bookmarkOf rdf:resource="https://www.ijcai.org/Proceedings/16/Papers/187.pdf"/>
+        <sl:creationDate>2020-11-03</sl:creationDate>
+        <dc:title>Text-Enhanced Representation Learning for Knowledge Graph (IJCAI 2016)</dc:title>
+        <sl:tag rdf:resource="&tag;text_aware_kg_embedding"/>
+      </rdf:Description>
+    </dc:source>
+  </rdf:Description>
+  <rdf:Description rdf:about="raphaelsty_ckb_contextual_know">
+    <dc:title>raphaelsty/ckb: Contextual knowledge bases</dc:title>
+    <sl:bookmarkOf rdf:resource="https://github.com/raphaelsty/ckb"/>
+    <sl:creationDate>2020-11-09</sl:creationDate>
+    <sl:creationTime>2020-11-09T16:10:42Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;github_project"/>
+    <sl:tag rdf:resource="&tag;raphaelsty"/>
+    <sl:tag rdf:resource="&tag;text_aware_kg_embedding"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="nlp_commercial_data/">
+    <sl:creationDate>2020-11-09</sl:creationDate>
+    <sl:creationTime>2020-11-09T17:19:36Z</sl:creationTime>
+    <dc:date>2020-11-09</dc:date>
+    <sl:tag rdf:resource="&tag;corpus_textes_commerciaux_renault"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="c2g_rdf_conf/">
+    <sl:creationDate>2020-11-08</sl:creationDate>
+    <sl:comment>TO BE USED IN FIREFOX</sl:comment>
+    <sl:tag rdf:resource="&tag;c2gweb_problem"/>
+    <sl:tag rdf:resource="&tag;c2gweb_rdf"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="the_unreasonable_syntactic_expr">
+    <dc:title>The Unreasonable Syntactic Expressivity of RNNs · John Hewitt</dc:title>
+    <sl:bookmarkOf rdf:resource="https://nlp.stanford.edu/~johnhew/rnns-hierarchy.html"/>
+    <sl:creationDate>2020-11-07</sl:creationDate>
+    <sl:creationTime>2020-11-07T09:44:56Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;recurrent_neural_network"/>
+    <sl:comment>[Comments](https://news.ycombinator.com/item?id=24995696)&#xD;
+&#xD;
+cf [Karpathy](tag:andrej_karpathy)'s [Unreasonable Effectiveness of Recurrent Neural Networks](doc:?uri=http%3A%2F%2Fkarpathy.github.io%2F2015%2F05%2F21%2Frnn-effectiveness%2F)</sl:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="anyconnect">
+    <dc:source>
+      <rdf:Description rdf:about="2011_02260_graph_neural_netwo">
+        <sl:creationTime>2020-11-11T11:04:40Z</sl:creationTime>
+        <dc:title xml:lang="en">[2011.02260] Graph Neural Networks in Recommender Systems: A Survey</dc:title>
+        <sl:arxiv_author>Fei Sun</sl:arxiv_author>
+        <sl:tag rdf:resource="&tag;graph_neural_networks"/>
+        <sl:arxiv_published>2020-11-04T12:57:47Z</sl:arxiv_published>
+        <sl:tag rdf:resource="&tag;arxiv_doc"/>
+        <sl:arxiv_author>Shiwen Wu</sl:arxiv_author>
+        <sl:arxiv_title xml:lang="en">Graph Neural Networks in Recommender Systems: A Survey</sl:arxiv_title>
+        <sl:creationDate>2020-11-11</sl:creationDate>
+        <sl:arxiv_summary xml:lang="en">With the explosive growth of online information, recommender systems play a
+key role to alleviate such information overload. Due to the important
+application value of recommender system, there have always been emerging works
+in this field. In recent years, graph neural network (GNN) techniques have
+gained considerable interests which can naturally integrate node information
+and topological structure. Owing to the outperformance of GNN in learning on
+graph data, GNN methods have been widely applied in many fields. In recommender
+systems, the main challenge is to learn the efficient user/item embeddings from
+their interactions and side information if available. Since most of the
+information essentially has graph structure and GNNs have superiority in
+representation learning, the field of utilizing graph neural network in
+recommender systems is flourishing. This article aims to provide a
+comprehensive review of recent research efforts on graph neural network based
+recommender systems. Specifically, we provide a taxonomy of graph neural
+network based recommendation models and state new perspectives pertaining to
+the development of this field.</sl:arxiv_summary>
+        <sl:arxiv_author>Wentao Zhang</sl:arxiv_author>
+        <sl:arxiv_updated>2020-11-04T12:57:47Z</sl:arxiv_updated>
+        <sl:arxiv_author>Bin Cui</sl:arxiv_author>
+        <sl:arxiv_firstAuthor>Shiwen Wu</sl:arxiv_firstAuthor>
+        <sl:tag rdf:resource="&tag;survey"/>
+        <sl:tag rdf:resource="&tag;recommender_systems"/>
+        <sl:bookmarkOf rdf:resource="https://arxiv.org/abs/2011.02260"/>
+        <sl:arxiv_num>2011.02260</sl:arxiv_num>
+      </rdf:Description>
+    </dc:source>
+  </rdf:Description>
+  <rdf:Description rdf:about="semanlink_sicg_export/">
+    <dc:date>2020-11-10</dc:date>
+    <sl:creationTime>2020-11-10T02:00:43Z</sl:creationTime>
+    <sl:creationDate>2020-11-10</sl:creationDate>
+    <sl:tag rdf:resource="&tag;renault_nlp_data"/>
+    <sl:tag rdf:resource="&tag;semanlink_for_sicg"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="2010_01057_luke_deep_context.pdf">
+    <dc:source rdf:resource="2010_01057_luke_deep_context"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="Arch%C3%A9ologie-en%20Cr%C3%A8te,%20sur%20les%20traces%20des%20%C2%AB%C2%A0%C3%A2ges%20obscurs%C2%A0%C2%BB.pdf">
+    <dc:source>
+      <rdf:Description rdf:about="archeologie_en_crete_sur_les">
+        <sl:comment xml:lang="fr">&gt; le chaînon manquant, long de six&#xD;
+siècles dits « obscurs », entre la chute des palais mycéniens, à l’âge du bronze, et l’apparition des&#xD;
+cités-Etats, à l’aube de la démocratie grecque.</sl:comment>
+        <sl:tag rdf:resource="&tag;crete"/>
+        <sl:tag rdf:resource="&tag;archeologie"/>
+        <dc:title>Archéologie : en Crète, sur les traces des « âges obscurs »</dc:title>
+        <sl:bookmarkOf rdf:resource="https://www.lemonde.fr/sciences/article/2020/11/03/archeologie-en-crete-sur-les-traces-des-ages-obscurs_6058354_1650684.html"/>
+        <sl:creationDate>2020-11-14</sl:creationDate>
+        <sl:creationTime>2020-11-14T15:10:15Z</sl:creationTime>
+        <sl:tag rdf:resource="&tag;grece_mycenienne"/>
+        <sl:tag rdf:resource="&tag;late_bronze_age_collapse"/>
+      </rdf:Description>
+    </dc:source>
+  </rdf:Description>
+  <rdf:Description rdf:about="recherche_multilingue_grace_a_l">
+    <sl:tag rdf:resource="&tag;language_identification"/>
+    <sl:bookmarkOf rdf:resource="https://www.elastic.co/fr/blog/multilingual-search-using-language-identification-in-elasticsearch"/>
+    <sl:creationDate>2020-11-26</sl:creationDate>
+    <sl:creationTime>2020-11-26T18:24:50Z</sl:creationTime>
+    <sl:tag rdf:resource="&tag;elasticsearch"/>
+    <dc:title>Recherche multilingue grâce à la détection de la langue dans Elasticsearch | Elastic Blog</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="Paris%E2%80%99s%2015-Minute%20City%20Could%20Be%20Coming%20to%20an%20Urban%20Area%20Near%20You%20-%20Bloomberg.pdf">
+    <dc:source>
+      <rdf:Description rdf:about="paris%E2%80%99s_15_minute_city_could_be">
+        <sl:bookmarkOf rdf:resource="https://www.bloomberg.com/news/features/2020-11-12/paris-s-15-minute-city-could-be-coming-to-an-urban-area-near-you"/>
+        <dc:title>Paris’s 15-Minute City Could Be Coming to an Urban Area Near You - Bloomberg</dc:title>
+        <sl:creationDate>2020-11-16</sl:creationDate>
+        <sl:tag rdf:resource="&tag;portland_or"/>
+        <sl:tag rdf:resource="&tag;ville_sans_voiture"/>
+        <sl:creationTime>2020-11-16T12:07:26Z</sl:creationTime>
+        <sl:tag rdf:resource="&tag;anne_hidalgo"/>
+        <sl:tag rdf:resource="&tag;paris"/>
+      </rdf:Description>
+    </dc:source>
+  </rdf:Description>
+  <rdf:Description rdf:about="anyconnect/">
+    <sl:tag rdf:resource="&tag;token_usb_renault_ace"/>
+    <sl:tag rdf:resource="&tag;nounours"/>
+    <sl:creationDate>2020-11-10</sl:creationDate>
+    <sl:creationTime>2020-11-10T21:00:09Z</sl:creationTime>
+    <dc:date>2020-11-10</dc:date>
+    <sl:tag rdf:resource="&tag;cisco"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="how_to_allow_deep_learning_on_y">
+    <sl:tag rdf:resource="&tag;sanjeev_arora"/>
+    <sl:tag rdf:resource="&tag;encryption"/>
+    <dc:title>How to allow deep learning on your data without revealing the data – Off the convex path</dc:title>
+    <sl:tag rdf:resource="&tag;deep_learning"/>
+    <sl:creationTime>2020-11-12T00:28:44Z</sl:creationTime>
+    <sl:creationDate>2020-11-12</sl:creationDate>
+    <sl:bookmarkOf rdf:resource="http://www.offconvex.org/2020/11/11/instahide/"/>
+    <sl:comment xml:lang="en">&gt; Our InstaHide allows users and IoT devices to "encrypt" data yet allowing deep learning on it. Minor efficiency and accuracy loss. Carlini et al broke our 100-image challenge dataset in 12 too 120 GPU hrs. Does it invalidate intended use? [src](https://twitter.com/prfsanjeevarora/status/1326653490261843968?s=20)</sl:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="node.js%20-%20Browserify%20-%20How%20to%20call%20function%20bundled%20in%20a%20file%20generated%20through%20browserify%20in%20browse.pdf">
+    <dc:source rdf:resource="node_js_browserify_how_to_c"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="Regardless%20of%20the%20US%20presidential%20election%20outcome,%20Trumpism%20lives%20on%20%7C%20US%20news%20%7C%20The%20Guardian.pdf">
+    <dc:source>
+      <rdf:Description rdf:about="regardless_of_the_us_presidenti">
+        <sl:tag rdf:resource="&tag;usa"/>
+        <sl:tag rdf:resource="&tag;the_guardian"/>
+        <sl:tag rdf:resource="&tag;trump"/>
+        <sl:creationDate>2020-11-05</sl:creationDate>
+        <sl:bookmarkOf rdf:resource="https://www.theguardian.com/us-news/2020/nov/04/trumpism-us-presidential-election"/>
+        <sl:creationTime>2020-11-05T14:07:39Z</sl:creationTime>
+        <sl:comment>&gt; His victory in 2016, it turns out, was no fluke attributable to Vladimir Putin or James Comey. In 2020 his sexism, racism and lie-telling have been legitimised and emboldened.&#xD;
+&gt; When some Americans protested “This is not who we are”, Trump voters replied: “This is exactly who we are – and we’re not going anywhere.”</sl:comment>
+        <dc:title>Regardless of the US presidential election outcome, Trumpism lives on | The Guardian</dc:title>
+        <sl:tag rdf:resource="&tag;elections_americaines_2020"/>
+      </rdf:Description>
+    </dc:source>
+  </rdf:Description>
+  <rdf:Description rdf:about="L&apos;olivier%20mill%C3%A9naire%20de%20Kavousi%20en%20Cr%C3%A8te%20-%20D%C3%A9couvrez%20le%20plus%20vieil%20olivier%20du%20monde%20film%C3%A9%20par%20des%20dr.pdf">
+    <dc:source>
+      <rdf:Description rdf:about="l_olivier_millenaire_de_kavousi">
+        <sl:tag rdf:resource="&tag;arbres_remarquables"/>
+        <sl:tag rdf:resource="&tag;crete"/>
+        <dc:title>L'olivier millénaire de Kavousi en Crète</dc:title>
+        <sl:bookmarkOf rdf:resource="https://blog.tramier.fr/olivier-millenaire-kavousi-crete-3500-ans-plus-vieil-olivier-monde/"/>
+        <sl:creationDate>2020-11-14</sl:creationDate>
+        <sl:creationTime>2020-11-14T15:20:54Z</sl:creationTime>
+        <sl:tag rdf:resource="&tag;oliviers"/>
+      </rdf:Description>
+    </dc:source>
+  </rdf:Description>
+</rdf:RDF>

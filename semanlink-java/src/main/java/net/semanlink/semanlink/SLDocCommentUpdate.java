@@ -1,15 +1,20 @@
 /* Created on Nov 16, 2020 */
 package net.semanlink.semanlink;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SLDocCommentUpdate { // 2020-11
+/**
+ * Utils to handle the indexing of docs based on the comment field
+ * @since 2020-11
+ */
+public class SLDocCommentUpdate {
 
 // set doc's comment to a newComment, and based on this new comment
-	// (and the previous value), computes and updates the sl:relatedDocs
+// (and the previous value), computes and updates the sl:relatedDocs
 // return true if updated, false if no change done (and this is not the same as oldComment == newComment !)
 static public boolean changeComment(SLModel mod, SLDocument doc, String newComment, String lang, String contextUrl) { // 2020-11
 	String oldComment = doc.getComment();
@@ -22,7 +27,7 @@ static public boolean changeComment(SLModel mod, SLDocument doc, String newComme
 	List<String> toBeAdded = new ArrayList<>();
 	for (String link : newLinks) {
 		try {
-			link = link2slUri(link, mod, contextUrl);
+			link = link2UriOfLinkedDocs(link, mod, contextUrl);
 			if (link == null) continue;
 			if (!isIn(link, oldRelatedDocs)) {
 				// verify it isn't in oldLinks? Hum non, en tout cas pas tant qu'on n'a pas récupéré l'existant
@@ -39,7 +44,7 @@ static public boolean changeComment(SLModel mod, SLDocument doc, String newComme
 		try {
 			if (!newLinks.contains(link)) {
 				toBeRemoved.add(link);
-				String linkInSl = link2slUri(link, mod, contextUrl);
+				String linkInSl = link2UriOfLinkedDocs(link, mod, contextUrl);
 				if (!linkInSl.equals(link)) {
 					if (!newLinks.contains(link)) {
 						toBeRemoved.add(link);
@@ -89,6 +94,7 @@ static private boolean isIn(String link, List<SLDocument> docs) {
 	return false;
 }
 
+/** the url of the links */
 public static List<String> extractLinks(String comment, String contextUrl) {
 	List<String> x = new ArrayList<>();
 	if (comment == null) return x;
@@ -105,18 +111,37 @@ public static List<String> extractLinks(String comment, String contextUrl) {
 //	    }
     // String mdLinkText = m.group(1);
     String mdLink = m.group(2);
-    String url = mdLink2Url(mdLink, contextUrl);
+    String url = mdShortUrl2Url(mdLink, contextUrl);
     if (url != null) x.add(url);
   }
   return x;
 }
 
 /** to transform url of a web page to url of slbookmark (it if exists) */
-static public String link2slUri(String link, SLModel mod, String contextUrl) throws Exception {
+// TODO NE MERITE SUREMENT PAS D'ETRE PUBLIC
+/* link being the url of a link extracted from the comment, return 
+ * corresponding uri of sl doc (if it exists)
+ */
+static String link2UriOfLinkedDocs(String link, SLModel mod, String contextUrl) throws Exception {
 	if ((link.startsWith("http://"))||(link.startsWith("https://"))) {
 		if (link.startsWith(contextUrl)) {
 			if (link.indexOf("?") > 0) { // TODO
-				return null;
+				// return null;
+				if ((link.startsWith(contextUrl + "/doc?"))
+						|| (link.startsWith(contextUrl + "/doc/?"))) {
+					int k = link.indexOf("uri=");
+					if (k < 0) return null;
+					String x = link.substring(k+4);
+					k = x.indexOf("&");
+					if (k > -1) x = x.substring(0,k);
+					x = URLDecoder.decode(x, "UTF-8");
+					// should we verify that it exists as document?
+					// Maybe.
+					return x;
+				} else {
+					// TODO (?): tag
+					return null;
+				}
 			} else {
 				return link;
 			}
@@ -127,15 +152,22 @@ static public String link2slUri(String link, SLModel mod, String contextUrl) thr
 			if (d != null) {
 				return d.getURI();
 			} else {
-				// not a known bookmark
+				// not a known post 2019 bookmark
 				
-				// WE COULD TAKE THE link AS IS (a link to the outside world)
-				// could be interesting (for instance to know whta do clink to a given page of the web
-				// eg. if it is a github page)
-				// BUT
-				// pb if creation of doc from linked page (in ?docuri=...)
-				// return link;
-				return null;
+				d = mod.smarterGetDocument(link);
+				if (mod.existsAsSubject(d)) {
+					assert(link.equals(d.getURI()));
+					return d.getURI();
+				} else {
+
+					// WE COULD TAKE THE link AS IS (a link to the outside world)
+					// could be interesting (for instance to know whta do clink to a given page of the web
+					// eg. if it is a github page)
+					// BUT
+					// pb if creation of doc from linked page (in ?docuri=...)
+					// return link;
+					return null;
+				}
 			}
 		}
 	} else {
@@ -175,17 +207,29 @@ This is better :
 
 but not perfect: doesn't match [aaa (bbb) ccc](http://xxx) 
 
-// TODO
+\[([^\]]*|[^()]*)\]\(([^()]*)\) match [] or () within [], but not both
+
+This is not too bad
+\[([^\[]+)\]\(([^)]+)\)
+(doesn't seem to miss any link. But may be wrong on the label
+when there is an included [xxx] inside the []
+such as [aaa[xxx]bbb](http://...) : returns [xxx]bbb](http://...)
 
 /..../g to catch all occurrences
 */
 public static String markdownLinkRegex() {
-	// return "\\[([^\\]]+)\\]\\(([^)]+)\\)";
-	return "\\[([^()]*)\\]\\(([^()]*)\\)";
+	// return "\\[([^\\]]+)\\]\\(([^)]+)\\)"; // KO sur [] dans 1ere partie
+	// return "\\[([^()]*)\\]\\(([^()]*)\\)"; // KO sur () dans 1ere partie
+	// return "\\[([^\\]]*|[^()]*)\\]\\(([^()]*)\\)"; // KO sur () et [] dans 1ere partie
+	// ouais, ben ça c pas mal: s'il y a du [xxx] à l'intérieur du [], part du dernier (donc,
+	// n perd que le début du label, mais pas de lien // \[([^\[]+)\](\(.*\))
+	// return "\\[([^\\[]+)\\](\\(.*\\))"; // mais merde parfois (quand ?) lié au ()
+	// à peu près pareil \[([^\[]+)\]\(([^)]+)\)
+	return "\\[([^\\[]+)\\]\\(([^)]+)\\)";
 }
 
 /**
- * mdLink: can be:
+ * mdShortUrl: can be:
  * - a long url
  * - doc:xxx
  * - /doc/xxx (in old stuff)
@@ -194,23 +238,22 @@ public static String markdownLinkRegex() {
  * 
  * we handle here http:// https:// doc:xxx /doc/xxx (return null otherwise)
  * 
- * Similar thing in markdown-sl.js (much more complicated over there)
+ * Similar thing in markdown-sl.js (replaceLinkFct - much more complicated over there)
  */
-static private String mdLink2Url(String mdLink, String contextUrl) {
-	if (mdLink.startsWith("doc:")) {	
-		return contextUrl + "/doc/" + mdLink.substring(4);
-	} else if (mdLink.startsWith("/doc/")) {
-		return contextUrl + "/doc/" + mdLink.substring(5);		
-	} else if (mdLink.startsWith("http://")) {
-		return mdLink;
-	} else if (mdLink.startsWith("https://")) {
-		return mdLink;
+static String mdShortUrl2Url(String mdShortUrl, String contextUrl) {
+	if (mdShortUrl.startsWith("doc:")) {	
+		return contextUrl + "/doc/" + mdShortUrl.substring(4);
+	} else if (mdShortUrl.startsWith("/doc/")) {
+		return contextUrl + "/doc/" + mdShortUrl.substring(5);		
+	} else if (mdShortUrl.startsWith("http://")) {
+		return mdShortUrl;
+	} else if (mdShortUrl.startsWith("https://")) {
+		return mdShortUrl;
 	} else {
 		return null;
 	}
 }
 
-// SLVocab.SL_RELATED_DOC_PROPERTY
 /*
 Match count: 1, Group Zero Text: '[Xie et al. (2016)](doc:2020/10/representation_learning_of_know)'
 Capture Group Number: 1, Captured Text: 'Xie et al. (2016)'

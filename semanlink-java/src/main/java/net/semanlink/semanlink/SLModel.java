@@ -179,6 +179,8 @@ abstract public LabelGetter<SLKeyword> getKwLabelGetter(); // 2020-04
  *  
  *  Il faut mieux smarterGetDocument si l'on souhaite retomber sur ses pieds sur des pbs genre uri http vs https
  *  @see smarterGetDocument(String)
+ *  
+ *  VOIR getDocumentIfExists
  */
 abstract public SLDocument getDocument(String uri);
 /** Retourne true ssi doc intervient dans au moins un statement en tant que sujet. */
@@ -187,6 +189,9 @@ abstract public boolean existsAsSubject(SLDocument doc); // pertinent en pre 201
 /**
  * the SLDocument corresponding to the url of a bookmark (url on the web) // only new form of bookmarks
  * or null if it doesn't exist yet
+ * 
+ * (for old docs, see smarterGetDocument + existsAsSubject)
+ * 
  * @since 0.6
  */ 
 public SLDocument bookmarkUrl2Doc(String bookmarkUrl) throws Exception { // 2019-03 uris for bookmarks
@@ -202,7 +207,23 @@ public SLDocument bookmarkUrl2Doc(String bookmarkUrl) throws Exception { // 2019
 	return al.get(0);
 }
 
+/**
+ * @since 2020-11
+ */
+public SLDocument getDocumentIfExists(String uri) throws Exception {
+	SLDocument bookmark2019 = bookmarkUrl2Doc(uri);
+	if (bookmark2019 != null) {	
+		return bookmark2019;
+	}
+	
+	// uri n'existe pas en tant que "nouveau bookmark"
+	SLDocument doc = smarterGetDocument(uri);
+	if (!(existsAsSubject(doc))) {
+		return null;
+	}
 
+	return doc;
+}
 
 
 

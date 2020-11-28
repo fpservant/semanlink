@@ -26,6 +26,13 @@
     <dc:title>'The Character of Physical Law': Richard Feynman's Legendary Course Presented at Cornell, 1964 | Open Culture</dc:title>
     <sl:tag rdf:resource="&tag;physique"/>
   </rdf:Description>
+  <rdf:Description rdf:about="http://www.openculture.com/2012/08/BIS_the_character_of_physical_law_richard_feynmans_legendary_lecture_series_at_cornell_1964.html">
+    <sl:tag rdf:resource="&tag;feynman"/>
+    <sl:creationDate>2018-01-08</sl:creationDate>
+    <sl:creationTime>2018-01-08T23:16:54Z</sl:creationTime>
+    <dc:title>'BIS The Character of Physical Law': Richard Feynman's Legendary Course Presented at Cornell, 1964 | Open Culture</dc:title>
+    <sl:tag rdf:resource="&tag;physique"/>
+  </rdf:Description>
   <rdf:Description rdf:about="https://gist.github.com/mommi84/07f7c044fa18aaaa7b5133230207d8d4">
     <sl:creationDate>2018-01-03</sl:creationDate>
     <sl:comment>lists libraries and approaches for knowledge graph embeddings</sl:comment>
