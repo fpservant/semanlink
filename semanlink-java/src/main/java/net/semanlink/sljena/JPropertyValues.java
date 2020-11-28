@@ -44,7 +44,7 @@ public String getLang(int index) {
 public String getFirstAsString() {
 	if (al.size() > 0) {
 		Object o = al.get(0);
-		if (al instanceof Literal) {
+		if (o instanceof Literal) {
 			try {
 				return ((Literal) o).getString();
 			} catch (Exception e) {
