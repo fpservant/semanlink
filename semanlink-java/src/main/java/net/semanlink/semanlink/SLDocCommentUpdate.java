@@ -122,7 +122,7 @@ public static List<String> extractLinks(String comment, String contextUrl) {
 /* link being the url of a link extracted from the comment, return 
  * corresponding uri of sl doc (if it exists)
  */
-static String link2UriOfLinkedDocs(String link, SLModel mod, String contextUrl) throws Exception {
+public static String link2UriOfLinkedDocs(String link, SLModel mod, String contextUrl) throws Exception {
 	if ((link.startsWith("http://"))||(link.startsWith("https://"))) {
 		if (link.startsWith(contextUrl)) {
 			if (link.indexOf("?") > 0) { // TODO

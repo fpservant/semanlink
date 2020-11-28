@@ -2049,6 +2049,7 @@ public static class NewBookmarkCreationData {
 	private File saveAsDir;
 	private String shortFilename; // sans dot extension, par ex "titre_du_bkm_2" 
 	
+	// 2020-11 TODO should probably be aligned with SLUtils.title2bookmarkUri 
 	// ATTENTION, le bkm est créé ds default datafolder : suppose que c'est pour une bkm externe
 	public NewBookmarkCreationData(SLModel mod, String title) throws MalformedURLException, URISyntaxException {
 		File bkmDir = mod.dirToSaveBookmarks();

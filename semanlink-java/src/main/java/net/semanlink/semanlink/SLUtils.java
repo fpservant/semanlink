@@ -483,6 +483,33 @@ static public String getLabel(SLDocument doc) throws IOException, URISyntaxExcep
 //
 
 /**
+ * The URI to use for a bookmark with a given title
+ * 
+ * Attention, ne vérifie pas si n'existe pas déjà
+ * 
+ * @param title
+ * @param bkmDirUrl eg. http://127.0.0.1:8080/semanlink/doc/2020/11/ == contextUrl + "/doc/2020/11/"
+ * @throws URISyntaxException 
+ * @throws Exception
+ */
+// see SLModel NewBookmarkCreationData -- TODO align both
+public static String title2bookmarkUri(String title, String bkmDirUrl) throws URISyntaxException { // 2020-11
+	String sfn = SLUtils.title2shortFilename(title); // «_ca_va_alle_o_j_aime_a_alors
+	// System.out.println(URLEncoder.encode(sfn,"UTF-8")); // %C2%AB_ca_va_alle_o_j_aime_a_alors
+	
+	// from NewBookmarkCreationData:
+	// bkmUri = mod.fileToUri(new File(bkmDir, shortFilename));
+	// return FileUriFormat.filenameToUri(f.getPath());
+	
+	// System.out.println(FileUriFormat.filenameToUri(bkmDir + sfn)); // file:///Users/fps/Sites/fps/2020/11%C2%AB_ca_va_alle_o_j_aime_a_alors // manque l'histoire du webserver	
+	// System.out.println(m.fileToUri(new File(bkmDir, sfn))); // http://127.0.0.1:8080/semanlink/doc/2020/11/%C2%AB_ca_va_alle_o_j_aime_a_alors
+	
+	if (!bkmDirUrl.endsWith("/")) bkmDirUrl += "/";
+	URI uri = new URI (bkmDirUrl + sfn);
+	return uri.toASCIIString();
+}
+
+/**
  * ATTENTION : reste des caractères qui ont besoin d'être encodés dans une url
  * since 0.6
  */ // 2019-03 uris for bookmarks
