@@ -18,7 +18,7 @@ import org.apache.jena.sparql.pfunction.PropertyFunctionRegistry;
 import net.semanlink.lod.LODDataset;
 import net.semanlink.lod.LODServlet;
 import net.semanlink.lod.RDFIntoDiv;
-import net.semanlink.lod.SLSPARQLEndPoint;
+import net.semanlink.lod.SLSparqlEndPoint;
 import net.semanlink.lod.SPARQLEndPoint;
 import net.semanlink.lod.SPARQLUpdateEndPoint;
 import net.semanlink.skos.SKOS;
@@ -74,130 +74,12 @@ protected SPARQLUpdateEndPoint initSparqUpdatelEndPoint() {
 
 @Override
 protected SPARQLEndPoint initSparqlEndPoint(HttpServletRequest req) {
-	JModel slModel = (JModel) SLServlet.getSLModel();
-	SPARQLEndPoint x = new SLSPARQLEndPoint(slModel.getKWsModel(), slModel.getDocsModel());
-	
-	//
-	// MAGIC PROP DESCENDANT AND ANCESTOR (attention, doit ici inclure la tag lui même)
-	//
-
-	PrefixMapping mapping = slModel.getKWsModel();
-	String slNs = "http://www.semanlink.net/2001/00/semanlink-schema#"; // TODO
-	mapping.setNsPrefix("sl", slNs);
-	// @find SKOSIFY
-	String skosNs = SKOS.NS;
-	mapping.setNsPrefix("skos", skosNs);
-	
-	Path path; String uri;
-
-//  // @find SKOSIFY
-//	// usual semanlik use
-//	// path = PathParser.parse("^sl:hasParent*", mapping) ; // @find SKOSIFY
-//	path = PathParser.parse("^skos:broader*", mapping) ; // @find SKOSIFY
-//	uri = slNs + "hasDescendant" ; // including given tag
-//	PathLib.install(uri, path) ;
-	
-//  // @find SKOSIFY
-//	// path =  PathParser.parse("sl:hasParent*", mapping) ; // @find SKOSIFY
-//	path =  PathParser.parse("skos:broader*", mapping) ; // @find SKOSIFY
-//	uri = slNs + "hasAncestor"; // including given tag
-//	PathLib.install(uri, path) ;
-	
-//	// @find SKOSIFY
-//	// to allow to search using hasChild
-//	// path =  PathParser.parse("^sl:hasParent", mapping) ; // @find SKOSIFY
-//	path =  PathParser.parse("^skos:broader", mapping) ; // @find SKOSIFY
-//	uri = slNs + "hasChild";
-//	PathLib.install(uri, path) ;
-
-	// to use SKOS
-	// @find SKOSIFY
-//	// path =  PathParser.parse("sl:hasParent", mapping) ; // not OK, at least with jena 2.6.4
-//	path =  PathParser.parse("sl:hasParent{1}", mapping) ;
-//	uri = SKOS.broader.getURI();
-//	PathLib.install(uri, path) ;
-	
-	// path =  PathParser.parse("^sl:hasParent", mapping) ; // @find SKOSIFY
-	path =  PathParser.parse("^skos:broader", mapping) ; // @find SKOSIFY
-	uri = SKOS.narrower.getURI();
-	PathLib.install(uri, path) ;
-	
-	// path =  PathParser.parse("sl:hasParent+", mapping) ; // not including given tag: don't do that, because searching docs becomes ugly
-	// @find SKOSIFY
-	// path =  PathParser.parse("sl:hasParent*", mapping) ; // including given tag
-	path =  PathParser.parse("skos:broader*", mapping) ; // including given tag
-	uri = SKOS.NS + "broaderTransitive"; 
-	PathLib.install(uri, path) ;
-
-	// @find SKOSIFY
-	// path =  PathParser.parse("^sl:hasParent+", mapping) ; // not including given tag: don't do that, because searching docs becomes ugly
-	path =  PathParser.parse("^skos:broader+", mapping) ; // not including given tag: don't do that, because searching docs becomes ugly
-	uri = SKOS.NS + "narrowerTransitive"; // including given tag
-	PathLib.install(uri, path) ;
-
-	// @find SKOSIFY
-//	path =  PathParser.parse("sl:related{1}", mapping) ;
-//	uri = SKOS.related.getURI();
-//	PathLib.install(uri, path) ;
-	
-	path =  PathParser.parse("sl:Tag", mapping) ;
-	uri = SKOS.Concept.getURI();
-	PathLib.install(uri, path) ;
-	
-
-	//
-	// 
-	//
-	
-	uri = slNs + "tagText";
-	PropertyFunctionRegistry.get().put(uri, TextMatchMagicProp.class);
-	TextMatchMagicProp.setIndex(new AdaptedIndex(SLServlet.getSLModel().getThesaurusLabels()));
-	
-	//
-	// to return the sons in the description of a Tag
-	//
-	
-  DescribeHandlerRegistry.get().add(new TagDescribeHandlerFactory());
-	
-	return x;
+	return SLServlet.getSLSparqlEndPoint();
 }
-
-// that's a hack
-private static class AdaptedIndex implements WordIndexInterface<Resource> {
-	ThesaurusLabels th;
-	AdaptedIndex(ThesaurusLabels thIndex) {
-		this.th = thIndex;
-	}
-	public Collection<Resource> string2entities(String searchString) {
-		// 2020-03
-		// Set<SLKeyword> set = th.searchText(searchString);
-		Set<ObjectLabelPair<SLKeyword>> set = th.string2entities(searchString);
-		ArrayList<Resource> x = new ArrayList<Resource>(set.size());
-		// Model model = ((JModel) SLServlet.getSLModel()).getKWsModel();
-		for (ObjectLabelPair pair : set) {
-			// x.add(model.createResource(kw.getURI()));
-			x.add(((JKeyword) pair.getObject()).getRes());
-		}
-		return x;
-	}
-}
-
-
-/*
-@Override
-public void forward2HTMLBuiltFromRDF(HttpServletRequest req, HttpServletResponse res, String rdfUri) throws ServletException, IOException {
-	// Jsp_RDF2HTMLPage jsp = new Jsp_RDF2HTMLPage(req, res, "sparqlresults", rdfUri, null, true);
-	Jsp_Page jsp = new Jsp_Page(req, res);
-	RDFIntoDiv rdfIntoDiv = new SLRDFIntoDiv(jsp, "sparqlresults", rdfUri, null, true); // don't remove (this gives the capacity to the page
-	jsp.setTitle("SPARQL");
-	jsp.setContent("/jsp/sparql.jsp");
-  req.setAttribute("net.semanlink.servlet.jsp", jsp);
-	forward2Jsp(req, res, jsp);
-}*/
-
 @Override
 public void forward2HTMLBuiltFromRDF(HttpServletRequest req, HttpServletResponse res, String divId, String rdfUrl, String mainResUri, boolean displayAllResInList) throws ServletException, IOException {
 	Jsp_Page jsp = new Jsp_Page(req, res);
+	@SuppressWarnings("unused")
 	RDFIntoDiv rdfIntoDiv = new SLRDFIntoDiv(jsp, divId, rdfUrl, mainResUri, displayAllResInList); // don't remove (this gives the capacity to the page
 	jsp.setTitle("SPARQL");
 	jsp.setContent("/jsp/sparql.jsp");
@@ -207,12 +89,7 @@ public void forward2HTMLBuiltFromRDF(HttpServletRequest req, HttpServletResponse
 @Override
 public String div4rdf() { return "sparqlresults" ; }
 
-/*@Override
-public void forward2HTMLForOneResource(HttpServletRequest req, HttpServletResponse res, String resUri, String rdfUrl) throws ServletException, IOException {
-	forward2HTMLBuiltFromRDF(req, res, "sparqlresults", rdfUrl, resUri, false);
-}*/
-
-//2010-12
+// 2010-12
 protected Jsp_Page newJsp_Page(HttpServletRequest req, HttpServletResponse res) {
 	return new Jsp_Page(req,res);
 }
