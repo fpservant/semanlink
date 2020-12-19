@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment></comment>
-<entry key="livesearchform.search">Rechercher :</entry>
+<entry key="livesearchform.search">Recherche de Mot-clé</entry>
 <entry key="sidemenu.print">Impression</entry>
 <entry key="sidemenu.edit">Édition...</entry>
 <entry key="sidemenu.newBookmark">Nouveau Marque-Page...</entry>
@@ -130,5 +130,11 @@
 <entry key="docList.allDocs">Liste longue</entry>
 <!-- 2018/01 -->
 <entry key="doc.about">A propos</entry>
-<entry key="found.tags">Nouveaux Tags</entry>
+<entry key="found.tags">Nouveaux Mots-clés</entry>
+<!-- 2020-03 -->
+<entry key="and.tags">Descendants partagés</entry>
+<!-- 2020-12 -->
+<entry key="sidemenu.godoc">Recherche de Doc</entry>
+<entry key="sidemenu.godoc.placeholder">url ou phrase</entry>
+<entry key="livesearchform.search.placeholder">débuts de mots</entry>
 </properties>

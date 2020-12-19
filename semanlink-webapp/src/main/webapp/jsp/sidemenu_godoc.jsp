@@ -16,7 +16,7 @@
 <div class="browser">
     <div class="title trigger"><%=jsp.i18l("sidemenu.godoc")%></div>
     <form id="sidemenu_godoc" method="get" action="<%=response.encodeURL(request.getContextPath()+"/godoc.do")%>">
-        <p align="center"><input type="text" id="sidemenu_godoc_text" name="godoc_q" size="21" placeholder="url or phrase"/>
+        <p align="center"><input type="text" id="sidemenu_godoc_text" name="godoc_q" size="21" placeholder="<%=jsp.i18l("sidemenu.godoc.placeholder")%>"/>
         </p>
     </form> 
 </div> <%//browser%>

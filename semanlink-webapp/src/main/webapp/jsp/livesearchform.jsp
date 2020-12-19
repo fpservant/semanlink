@@ -56,7 +56,7 @@
 <div class="browser">
     <div class="title trigger"><%=jsp.i18l("livesearchform.search")%></div>
     <form id="searchform" method="<%=method%>" onsubmit="return <%=liveSearchSubmitFunction%>();" action="<%=response.encodeURL(request.getContextPath()+"/gokeyword.do")%>">
-        <p align="center"><input type="text" id="livesearch" name="q" onkeypress="liveSearchStart()" size="21" tabindex="1" placeholder="start of words"/>
+        <p align="center"><input type="text" id="livesearch" name="q" onkeypress="liveSearchStart()" size="21" tabindex="1" placeholder="<%=jsp.i18l("livesearchform.search.placeholder")%>"/>
         <input type="hidden" name="kwhref" value="" /><%//kwhref is documented with the href of the hghlighted line by liveSearchSubmitFunction%> 
         <%if (andTargetUri != null) { // 2020-02
             if (!edit) {%>
