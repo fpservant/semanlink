@@ -28,7 +28,7 @@ import net.semanlink.util.index.jena.TextMatchMagicProp;
 public class SLSparqlEndPoint extends SPARQLEndPoint {
 public SLSparqlEndPoint(JModel slModel) {
 	super(createDataSource(slModel.getKWsModel(), slModel.getDocsModel()));
-	hardSparqlInits(slModel);
+	sparqlInits(slModel);
 }
 
 private static Dataset createDataSource(Model kwsModel, Model docsModel) {
@@ -38,7 +38,7 @@ private static Dataset createDataSource(Model kwsModel, Model docsModel) {
 	return dataSource;
 }
 
-private static void hardSparqlInits(JModel slModel) {
+private static void sparqlInits(JModel slModel) {
 	//
 	// MAGIC PROP DESCENDANT AND ANCESTOR (attention, doit ici inclure la tag lui même)
 	//
@@ -141,55 +141,4 @@ private static class AdaptedIndex implements WordIndexInterface<Resource> {
 		return x;
 	}
 }
-
-////
-//// 2020-12
-////
-//
-///*
-//public Query createQuery(String queryString) {
-//	Query x = QueryFactory.create(queryString) ;
-//	// Query x = QueryFactory.create(queryString, Syntax.syntaxARQ) ; // property path test PBS with UNION (see message to Andy Seaborne)
-//	// x.setLimit(50);
-//	return x;
-//}
-//*/
-//
-//public void execSelect(String selectQueryString) {
-//	QueryExecution qexec = QueryExecutionFactory.create(QueryFactory.create(selectQueryString), this.dataset);
-//  ResultSet results = qexec.execSelect() ;
-//  
-//  for(;results.hasNext();) {
-//  	QuerySolution qs = results.next();
-//  	Resource doc = qs.getResource("doc");
-//  	System.out.println(doc);
-//  }
-//}
-//
-//public void exec(Query query, HttpServletResponse res) throws IOException, ServletException {
-//	QueryExecution qexec = QueryExecutionFactory.create(query, this.dataset);
-//  
-//	try {
-//		if (query.isAskType()) {
-//			boolean b = qexec.execAsk();
-//			String s = Boolean.toString(b);
-//			res.getOutputStream().write(s.getBytes());
-//		} else if (query.isSelectType()) {
-//		  ResultSet results = qexec.execSelect() ;
-//		  /*for ( ; results.hasNext() ; ) {
-//		    QuerySolution soln = results.nextSolution() ;
-//		    OutputStream out = res.getOutputStream();
-//		    out.write(soln.toString().getBytes());
-//			  out.write("\r\n".getBytes());
-//		  }*/
-//		  ResultSetFormatter.outputAsXML(res.getOutputStream(), results);
-//		  // ResultSetFormatter.outputAsJSON(res.getOutputStream(), results);
-//		} else { // either query.isDescribeType() or query.isConstructType()
-//			Model resultModel = getResultModel(query, qexec);
-//			
-//			RDFServletWriterUtil.writeRDF(resultModel, res);
-//		}
-//	} finally { qexec.close() ; }
-//}
-
 }

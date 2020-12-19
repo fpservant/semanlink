@@ -2,14 +2,9 @@ package net.semanlink.servlet;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.semanlink.lod.SLSparqlEndPoint;
-import net.semanlink.semanlink.*;
-import net.semanlink.util.Util;
 
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
@@ -22,6 +17,11 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import net.semanlink.lod.SLSparqlEndPoint;
+import net.semanlink.semanlink.SLDocument;
+import net.semanlink.semanlink.SLModel;
+import net.semanlink.util.Util;
+
 // 2020-03 started from Action_BookmarkForm
 public class Action_SearchDoc extends BaseAction {
 
@@ -30,11 +30,12 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 	try {
 		String what = request.getParameter("godoc_q");
 		SLModel mod = SLServlet.getSLModel();
+		String contextUrl = Util.getContextURL(request);
 		
 		if ((what.startsWith("http://")) || (what.startsWith("https://"))) {
 			String docuri = what; // attention encodage !!!
 
-			String redirectURL = Action_BookmarkForm.docUrl(docuri, mod, Util.getContextURL(request));
+			String redirectURL = Action_BookmarkForm.docUrl(docuri, mod, contextUrl);
 			if (redirectURL != null) {
 				response.sendRedirect(response.encodeRedirectURL(redirectURL));
 				return null; // EXIT !!!				
@@ -51,7 +52,7 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 		if (docs.size() == 1) {
 			SLDocument doc = docs.get(0);
 			// TODO SIMPLIFIER
-			String redirectURL = Action_BookmarkForm.docUrl(doc.getURI(), mod, Util.getContextURL(request));
+			String redirectURL = Action_BookmarkForm.docUrl(doc.getURI(), mod, contextUrl);
 			if (redirectURL == null) redirectURL = doc.getURI(); // ?
 			response.sendRedirect(response.encodeRedirectURL(redirectURL));
 			return null; // EXIT !!!				
@@ -71,7 +72,6 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
  */
 private static List<SLDocument> getDocs(String what, SLSparqlEndPoint endPoint, SLModel mod) {
 	String queryString = sparqlQString(what);
-	System.out.println("Action_GODoc " + queryString);
 	Query q = QueryFactory.create(queryString) ;
 	q.setLimit(50);
 	QueryExecution qexec = QueryExecutionFactory.create(q, endPoint.getDataset());
@@ -89,8 +89,8 @@ private static List<SLDocument> getDocs(String what, SLSparqlEndPoint endPoint, 
 
 private static String sparqlQString(String what) {
 	// beware to characters in what that may be special chars for regex
-	// hence the \Q around what \E
-	// Why do we need \\Ω and \\ I don't know
+	// hence the \Q around what \E (this is what returns java.util.regex.Pattern.quote(what))
+	// Why do we need \\Q and \\E don't know
 	return 
 	"SELECT DISTINCT ?doc WHERE {\n" +
 	"GRAPH <" + SLServlet.getServletUrl() + "/docs/> {\n" +
@@ -99,6 +99,5 @@ private static String sparqlQString(String what) {
 	"}\n" +
 	"}";
 }
-
 
 } // end Action
