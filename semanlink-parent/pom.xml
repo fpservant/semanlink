@@ -36,7 +36,8 @@
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
 		<semanlink.release.date>${maven.build.timestamp}</semanlink.release.date>
 
-		<version.jena>3.3.0</version.jena>
+<!-- 		<version.jena>3.3.0</version.jena> -->
+        <version.jena>3.16.0</version.jena>
 
 <!-- 2018-08 trying to reuse jersey
 cf https://stackoverflow.com/questions/26436463/getdispatchertype-is-undefined-for-the-type-httpservletrequest
