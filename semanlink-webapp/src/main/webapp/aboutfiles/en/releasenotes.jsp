@@ -5,6 +5,11 @@
 <h1>Release notes</h1>
 <div class="graybox">
 
+<h2>0.7.5 2020-12-xx</h2>
+<ul>
+<li>Search Doc: by URL or phrase</li>
+</ul>
+
 <h2>0.7.4 2020-11-xx</h2>
 <ul>
 <li>Copy-Paste of doc or tag uri into comment field</li>
