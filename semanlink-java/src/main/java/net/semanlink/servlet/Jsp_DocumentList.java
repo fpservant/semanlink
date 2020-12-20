@@ -1,11 +1,16 @@
 package net.semanlink.servlet;
-import net.semanlink.semanlink.*;
-
-import java.util.*;
 import java.io.IOException;
-import javax.servlet.http.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 
-import org.apache.jena.rdf.model.Model;
+import javax.servlet.http.HttpServletRequest;
+
+import net.semanlink.semanlink.SLKeyword;
+import net.semanlink.semanlink.SLModel;
+import net.semanlink.semanlink.SLTree;
+import net.semanlink.semanlink.SLUtils;
 
 /**
  * Permet de faire des pages affichant une liste de docs qui supporte, en plus,

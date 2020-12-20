@@ -143,6 +143,6 @@
 <!-- 2020-12 -->
 <entry key="sidemenu.godoc">Search Doc:</entry>
 <entry key="sidemenu.godoc.placeholder">url or phrase</entry>
-<entry key="livesearchform.search.placeholder">start of words</entry>
+<entry key="livesearchform.search.placeholder">starts of words</entry>
 
 </properties>

@@ -43,8 +43,6 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 		}
 		
 		// search as a string with sparql
-		
-		// create the query
 
 		SLSparqlEndPoint endPoint = SLServlet.getSLSparqlEndPoint();
 		List<SLDocument> docs = getDocs(what, endPoint, mod);
@@ -58,6 +56,10 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 			return null; // EXIT !!!				
 		}
 		
+		Jsp_DocumentList_Simple jsp = new Jsp_DocumentList_Simple(docs, request, 
+				I18l.getI18l(request.getSession()).getString("sidemenu.godoc") +" \""+ what + "\"");
+	  request.setAttribute("net.semanlink.servlet.jsp", jsp);
+
 		x = mapping.findForward("continue");
 
 	} catch (Exception e) {
@@ -70,10 +72,11 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 /**
  * @param what: la phrase passée
  */
+static int SPARQL_LIMIT = 30;
 private static List<SLDocument> getDocs(String what, SLSparqlEndPoint endPoint, SLModel mod) {
 	String queryString = sparqlQString(what);
 	Query q = QueryFactory.create(queryString) ;
-	q.setLimit(50);
+	q.setLimit(SPARQL_LIMIT);
 	QueryExecution qexec = QueryExecutionFactory.create(q, endPoint.getDataset());
 	ResultSet results = qexec.execSelect() ;
 	

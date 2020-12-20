@@ -127,7 +127,6 @@ public Query createQuery(HttpServletRequest req) {
  *  Doesn't execute the query: use getResultModel to execute it
  *  @see getResultModel(Query) */
 public Query createQuery(String queryString) {
-	System.out.println("EndPoint " + queryString);
 	Query x = QueryFactory.create(queryString) ;
 	// Query x = QueryFactory.create(queryString, Syntax.syntaxARQ) ; // property path test PBS with UNION (see message to Andy Seaborne)
 	// x.setLimit(50);
