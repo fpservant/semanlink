@@ -10,8 +10,6 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.apache.jena.vocabulary.RDF;
-
 import net.semanlink.metadataextraction.Extractor;
 import net.semanlink.metadataextraction.ExtractorData;
 import net.semanlink.semanlink.SLDocUpdate;

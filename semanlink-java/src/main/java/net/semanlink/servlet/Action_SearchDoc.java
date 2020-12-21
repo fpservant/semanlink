@@ -33,7 +33,7 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 		String contextUrl = Util.getContextURL(request);
 		
 		if ((what.startsWith("http://")) || (what.startsWith("https://"))) {
-			String docuri = what; // attention encodage !!!
+			String docuri = what;
 
 			String redirectURL = Action_BookmarkForm.docUrl(docuri, mod, contextUrl);
 			if (redirectURL != null) {

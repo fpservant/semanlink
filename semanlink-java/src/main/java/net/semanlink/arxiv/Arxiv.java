@@ -1,7 +1,6 @@
 /* Created on Mar 28, 2020 */
 package net.semanlink.arxiv;
 
-import net.semanlink.metadataextraction.ExtractorData;
 import net.semanlink.semanlink.SLDocument;
 import net.semanlink.semanlink.SLDocumentStuff;
 import net.semanlink.semanlink.SLModel;
