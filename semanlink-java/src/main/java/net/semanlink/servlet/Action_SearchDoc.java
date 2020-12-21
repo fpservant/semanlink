@@ -91,16 +91,53 @@ private static List<SLDocument> getDocs(String what, SLSparqlEndPoint endPoint, 
 }
 
 private static String sparqlQString(String what) {
-	// beware to characters in what that may be special chars for regex
+	// we want to search the phrase anywhere inside one of the text props
+	// (eg. the last name of an arxiv author)
+	// Hence the use of a regex.
+	
+	// Beware to characters in what that may be special chars for regex
 	// hence the \Q around what \E (this is what returns java.util.regex.Pattern.quote(what))
-	// Why do we need \\Q and \\E don't know
-	return 
-	"SELECT DISTINCT ?doc WHERE {\n" +
-	"GRAPH <" + SLServlet.getServletUrl() + "/docs/> {\n" +
-	"?doc ?p ?x .\n" +
-	"FILTER regex(?x, \"" + "\\\\Q" + what + "\\\\E" + "\", \"i\")\n" +
-	"}\n" +
-	"}";
+	// Why do we need \\Q and \\E I don't know
+
+	// pb when there is a quote (") inside what
+	// (exception)
+	// and can't find what to do
+	// With this, we ends up with \" instead of quote in the sparql string
+	// No more exception, but doesn't find the string
+	// what = what.replaceAll("\"", "\\\\\"");
+	// Hack to keep the largest chunk between quotes
+	int k = what.indexOf("\"");
+	if (k > -1) {
+		String[] chunks = what.split("\"");
+		int maxi = 0;
+		String s = null;
+		for (int i = 0 ; i < chunks.length ; i++) {
+			if (chunks[i].length() > maxi) {
+				maxi = chunks[i].length();
+				s = chunks[i];
+			}
+		}
+		what = s;
+	}
+	
+	// Still some problems
+	// for instance with "&" in
+	// Kingsley Uyi Idehen sur Twitter : "When I read this & other articles, I leverage our @datasniff browser ext. for highlighting key terms;
+	// (not found)
+	// Or with \& : exception
+	
+	try {
+		String x = 
+		"SELECT DISTINCT ?doc WHERE {\n" +
+		"GRAPH <" + SLServlet.getServletUrl() + "/docs/> {\n" +
+		"?doc ?p ?x .\n" +
+		"FILTER regex(?x, \"" + "\\\\Q" + what + "\\\\E" + "\", \"i\")\n" +
+		"}\n" +
+		"}";
+		return x;
+	} catch (Exception e) {
+		throw new RuntimeException(e);
+	}
 }
 
 } // end Action
