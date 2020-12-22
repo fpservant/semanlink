@@ -17,6 +17,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import net.semanlink.arxiv.Arxiv;
 import net.semanlink.lod.SLSparqlEndPoint;
 import net.semanlink.semanlink.SLDocument;
 import net.semanlink.semanlink.SLModel;
@@ -35,6 +36,14 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 		if ((what.startsWith("http://")) || (what.startsWith("https://"))) {
 			String docuri = what;
 
+			// for arxiv, we assume bookmarks point to the abs url
+			// and therfore search for tha abs url, not a pdf one
+			
+			Arxiv arx = Arxiv.getByUrl(docuri);
+			if (arx != null) {
+				docuri = arx.absUrl();
+			}
+			
 			String redirectURL = Action_BookmarkForm.docUrl(docuri, mod, contextUrl);
 			if (redirectURL != null) {
 				response.sendRedirect(response.encodeRedirectURL(redirectURL));
