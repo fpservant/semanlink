@@ -8,6 +8,7 @@ import java.io.UnsupportedEncodingException;
 import net.semanlink.semanlink.*;
 import net.semanlink.semanlink.SLModel.DocMetadataFile;
 import net.semanlink.util.*;
+import net.semanlink.util.text.WordsInString;
 
 import javax.servlet.http.*;
 
@@ -21,7 +22,7 @@ private List<SLDocument> docsInFolder;
 /** see CoolUriServlet.goPage */
 private String pagePathInfo;
 
-// 2019-04 uris for bookmraks
+// 2019-04 uris for bookmarks
 private SLDocumentStuff docStuff;
 
 //
@@ -324,7 +325,123 @@ public SLDocumentStuff getSLDocumentStuff() {
 // 2020-07 : add local copy
 //
 
-static public SLDocumentStuff localCopyCandidate(String contextUrl) throws Exception { // 2020-07
+static public SLDocumentStuff localCopyCandidate(String title, boolean strict, String contextUrl) throws Exception { // 2020-07
+  SLModel mod = SLServlet.getSLModel();
+  File currentDir = mod.goodDirToSaveAFile();	            
+  File[] files = currentDir.listFiles();
+  
+  // sort by date, newest first
+  Arrays.sort(files, new Comparator<File>(){
+    public int compare(File f1, File f2) {
+        return Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
+    } 
+  });
+  
+//  File f = titleFilenameMatch(title, files, true);
+//  if (f == null) {
+//  	if (!strict) {
+//  		f = titleFilenameMatch(title, files, false);
+//  	}
+//  }
+//  if (f == null) return null;
+  List<File> candidatsALaCandidature = titleFilenameMatch(title, files, strict);
+  
+  // if not exactly one candidate, reject
+  if ((candidatsALaCandidature == null) || (candidatsALaCandidature.size() != 1)) {
+  	return null;
+  } 
+
+  File f = candidatsALaCandidature.get(0);
+	SLDocument sldoc = mod.smarterGetDocument(mod.filenameToUri(f.getPath()));
+
+	// est-ce que ce n'est pas déjà un doc (local)?
+	// (hum, on pourrait après tout avoir le doc local local copy d'un doc online)
+	if (mod.existsAsSubject(sldoc)) { // todo check si c bien le bon test à faire
+		return null;
+	}
+  
+  SLDocumentStuff docStuff = new SLDocumentStuff(sldoc, mod, contextUrl);
+	// est-ce qu'il n'est pas déjà source de qlqu'un?
+  if (docStuff.getSource() != null) {
+  	return null;
+  }
+  
+  return docStuff;
+}
+
+// if strict, returns at most one element (?): no, not necessarily
+// but we could make it faster (exit loop) if we want and do so
+static List<File> titleFilenameMatch(String title, File[] files, boolean strict) {
+	boolean moreThan2LettersOnly = false;
+	boolean patchApostrophe = false;
+	Locale loc = Locale.getDefault();
+	
+	WordsInString wordsInString = new WordsInString(moreThan2LettersOnly, patchApostrophe);
+	
+	String source1 = title;
+	ArrayList<String> words1 = wordsInString.words(source1, loc);
+	int n1 = words1.size();
+	
+	ArrayList<File> x = new ArrayList<>();
+	for (File f : files) {
+  	String fn = f.getName();
+  	String source2 = Util.getWithoutExtension(fn);
+  	ArrayList<String> words2 = wordsInString.words(source2, loc);
+  	
+  	int n2 = words2.size();
+  	if (strict) {
+  		if (n1 != n2) continue;
+  	}
+  	
+  	for (int i = 0; i < Math.min(n1, n2); i++) {
+  		if (!words1.get(i).equals(words2.get(i))) {
+  			continue;
+  		}
+  	}
+  	x.add(f);		
+	}
+	return x;
+}
+
+//static File titleFilenameMatch(String title, File[] files, boolean strict) {
+//	boolean moreThan2LettersOnly = false;
+//	boolean patchApostrophe = false;
+//	Locale loc = Locale.getDefault();
+//	
+//	WordsInString wordsInString = new WordsInString(moreThan2LettersOnly, patchApostrophe);
+//	
+//	String source1 = title;
+//	ArrayList<String> words1 = wordsInString.words(source1, loc);
+//	int n1 = words1.size();
+//	
+//	for (File f : files) {
+//  	String fn = f.getName();
+//  	String source2 = Util.getWithoutExtension(fn);
+//  	ArrayList<String> words2 = wordsInString.words(source2, loc);
+//  	
+//  	int n2 = words2.size();
+//  	if (strict) {
+//  		if (n1 != n2) continue;
+//  	}
+//  	
+//  	for (int i = 0; i < Math.min(n1, n2); i++) {
+//  		if (!words1.get(i).equals(words2.get(i))) {
+//  			continue;
+//  		}
+//  	}
+//  	return f;		
+//	}
+//	return null;
+//}
+//
+static boolean titleFilenameMatch(String title, File f, boolean strict) {
+	File[] fs = new File[1]; fs [0] = f;
+	return (titleFilenameMatch(title, fs, strict) != null);
+}
+
+
+// this isn't good
+static public SLDocumentStuff localCopyCandidate_asMostRecentFile(String contextUrl) throws Exception { // 2020-07
   SLModel mod = SLServlet.getSLModel();
   File currentDir = mod.goodDirToSaveAFile();	            
   File[] files = currentDir.listFiles();
@@ -360,6 +477,7 @@ static public SLDocumentStuff localCopyCandidate(String contextUrl) throws Excep
   }
   return null;
 }
+
 
 //
 //
