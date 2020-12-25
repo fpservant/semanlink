@@ -43,5 +43,10 @@ public final void test() {
 		assertFalse(Jsp_Document.titleFilenameMatch(htmlTitle, f, strict));
 		assertTrue(Jsp_Document.titleFilenameMatch(htmlTitle, f, !strict));
 	}
+	dir = new File("src/test/files/localCopyCandidates/nomatch");
+	for (File f : dir.listFiles()) {
+		assertFalse(Jsp_Document.titleFilenameMatch(htmlTitle, f, true));
+		assertFalse(Jsp_Document.titleFilenameMatch(htmlTitle, f, false));
+	}
 }
 }

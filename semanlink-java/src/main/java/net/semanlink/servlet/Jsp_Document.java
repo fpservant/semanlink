@@ -393,12 +393,16 @@ static List<File> titleFilenameMatch(String title, File[] files, boolean strict)
   		if (n1 != n2) continue;
   	}
   	
+  	boolean match = true;
   	for (int i = 0; i < Math.min(n1, n2); i++) {
   		if (!words1.get(i).equals(words2.get(i))) {
-  			continue;
+  			match = false;
+  			break;
   		}
   	}
-  	x.add(f);		
+  	if (match) {
+  		x.add(f);
+  	}
 	}
 	return x;
 }
@@ -436,8 +440,11 @@ static List<File> titleFilenameMatch(String title, File[] files, boolean strict)
 //
 static boolean titleFilenameMatch(String title, File f, boolean strict) {
 	File[] fs = new File[1]; fs [0] = f;
-	return (titleFilenameMatch(title, fs, strict) != null);
+	List<File> candidates = titleFilenameMatch(title, fs, strict);
+	return ((candidates != null)&&(candidates.size() == 1));
 }
+
+
 
 
 // this isn't good
