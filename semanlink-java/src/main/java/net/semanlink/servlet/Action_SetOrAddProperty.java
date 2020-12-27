@@ -1,17 +1,26 @@
 package net.semanlink.servlet;
-import javax.servlet.http.*;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 
-import org.apache.struts.action.*;
-import net.semanlink.semanlink.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
+import net.semanlink.semanlink.SLDocument;
+import net.semanlink.semanlink.SLKeyword;
+import net.semanlink.semanlink.SLModel;
+import net.semanlink.semanlink.SLUtils;
+import net.semanlink.semanlink.SLVocab;
 import net.semanlink.sljena.JenaUtils;
 import net.semanlink.util.FileUriFormat;
 import net.semanlink.util.Util;
-import net.semanlink.util.servlet.BasicServlet;
-
-import java.net.*;
 
 /**
- * Action demandant d'affecter une propriété à un document. 
+ * Action demandant d'affecter une propriété à un document ou kw
  * 
  * Qlqs questions se posent :
  * <B>au sujet de la propriete</B>
@@ -24,34 +33,22 @@ import java.net.*;
  * genre "comment", et on en deduit qu'il faut l'attribuer a sl:comment
  * Pour cela, gere une liste de noms courts de proprietes accepatbles en tant que 
  * parameter "property" de la request.
- * 
- * <b>au sujet de la valeur de la propriete</b>
- * pourrait etre une uri ou un literal.
- * On suppose ici qu'on a affaire a un literal.
- * @author fps
  */
 public class Action_SetOrAddProperty extends BaseAction {
 public static final String ADD = "add";
 public static final String SET = "set";
 public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	try {
-		String propUri = getPropUri(request);
-
-		// URI uriTesting = new URI(propUri);
-		// ((JModel) SLServlet.getSLModel()).getDocsModel().createProperty(propUri);
+		String propUri = getPropUri(request); // this take care of ns:xxx
 
 		if (SLVocab.TITLE_PROPERTY.equals(propUri)) {
 			setOrAddProp(SLVocab.TITLE_PROPERTY, request.getParameter("docTitle"), request, response);
 		} else {
-			setOrAddProp(getPropUri(request), getPropValue(request), request, response);
+			setOrAddProp(propUri, getPropValue(request), request, response);
 		}
-		// POST REDIRECT 
-		// x = mapping.findForward("continue");
 	} catch (Exception e) {
 	    return error(mapping, request, e );
 	}
-	// POST REDIRECT 
-	// return x;
 	return null;
 } // end execute
 
@@ -68,10 +65,9 @@ protected boolean subjectIsKwNotDoc(HttpServletRequest request) {
 }
 
 protected String getSubjectUri(HttpServletRequest request) {
-	// 2020-12 (for local copy in document.jsp script setLocalCopyFile2):
-	// if no uri param, use file param
 	String x =  request.getParameter("uri");
 	if ((x == null) || ("".equals(x.trim()))) {
+		// if no uri param, use file param (cf. 2020-12 for local copy in document.jsp script setLocalCopyFile2)
 		x = null;
 		String f = request.getParameter("file");
 		try {
@@ -141,16 +137,10 @@ protected void setOrAddProp(String propertyUri, String propertyValue, HttpServle
 			}
 		}
 	}
-	// SLDocument doc = mod.getDocument(docuri);
 	
 	// 2005-02-23
 	String lang = request.getParameter("lang");
-	if ( ("".equals(lang)) || ("-".equals(lang)) ) lang = null;
-	/*if (valUrlString == null) {
-		lang = request.getParameter("lang");
-		if (lang == null) lang = "fr"; // todo
-	}*/
-	
+	if ( ("".equals(lang)) || ("-".equals(lang)) ) lang = null;	
 	
 	if (lang != null) { 
 		// if a date, don't set lang
@@ -183,7 +173,6 @@ protected void setOrAddProp(String propertyUri, String propertyValue, HttpServle
 			}
 		}		
 		// POST REDIRECT 
-		// request.setAttribute("net.semanlink.servlet.jsp", new Jsp_Keyword(kw, request));
 		redirectURL = HTML_Link.getTagURL(Util.getContextURL(request), kw.getURI(), false, ".html");
 	
 	} else {
@@ -209,11 +198,11 @@ protected void setOrAddProp(String propertyUri, String propertyValue, HttpServle
 				setDocProperty(request, mod, doc, propertyUri, propertyValue, lang);
 			}		
 		}
+		
 		// POST REDIRECT 
-		// getJsp_Document(doc, request);
 		
 		// 2020-07 to be able to redirect to doc, not local copy, when quick adding of local copy
-		// new param given the redirect url
+		// new param giving the redirect url
 		
 		String redirect = request.getParameter("redirect_uri"); // 2020-07
 		if (redirect != null) {
