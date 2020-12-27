@@ -6,6 +6,7 @@ import net.semanlink.semanlink.*;
 import net.semanlink.sljena.JenaUtils;
 import net.semanlink.util.FileUriFormat;
 import net.semanlink.util.Util;
+import net.semanlink.util.servlet.BasicServlet;
 
 import java.net.*;
 
@@ -33,7 +34,6 @@ public class Action_SetOrAddProperty extends BaseAction {
 public static final String ADD = "add";
 public static final String SET = "set";
 public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	// ActionForward x = null;
 	try {
 		String propUri = getPropUri(request);
 
@@ -68,7 +68,18 @@ protected boolean subjectIsKwNotDoc(HttpServletRequest request) {
 }
 
 protected String getSubjectUri(HttpServletRequest request) {
-	return request.getParameter("uri");
+	// 2020-12 (for local copy in document.jsp script setLocalCopyFile2):
+	// if no uri param, use file param
+	String x =  request.getParameter("uri");
+	if ((x == null) || ("".equals(x.trim()))) {
+		x = null;
+		String f = request.getParameter("file");
+		try {
+			x = SLServlet.getSLModel().filenameToUri(f);
+		} catch (MalformedURLException | URISyntaxException e) { throw new RuntimeException(e) ; }
+	}
+	if (x == null) throw new RuntimeException("no uri");
+	return x;
 }
 
 protected void setOrAddProp(String propertyUri, String propertyValue, HttpServletRequest request, HttpServletResponse response) throws Exception {

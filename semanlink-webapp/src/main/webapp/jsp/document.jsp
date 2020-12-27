@@ -173,16 +173,16 @@ if ((x != null) && (subdocs.size() > 0)) {
               %>
               <html:form action="setoraddproperty">
               <%
-	              SLDocumentStuff.HrefPossiblyOpeningInDestop localCopyLink = docStuff.getLocalCopyLink();
-	              String localHref = localCopyLink.href();
-	              String lab = jsp.i18l("doc.localCopy");
-	              if (localCopyLink.openingInDesktop()) {
-	                %><a href="<%=localHref%>" onclick="desktop_open_hack('<%=localHref%>'); return false;"><%=lab%></a>
-	                <%
-	              } else {
-	                String href = response.encodeURL(localHref);
-	                %><a href="<%=href%>"><%=lab%></a><% 
-	              }
+                  SLDocumentStuff.HrefPossiblyOpeningInDestop localCopyLink = docStuff.getLocalCopyLink();
+                  String localHref = localCopyLink.href();
+                  String lab = jsp.i18l("doc.localCopy");
+                  if (localCopyLink.openingInDesktop()) {
+                    %><a href="<%=localHref%>" onclick="desktop_open_hack('<%=localHref%>'); return false;"><%=lab%></a>
+                    <%
+                  } else {
+                    String href = response.encodeURL(localHref);
+                    %><a href="<%=href%>"><%=lab%></a><% 
+                  }
               %>
               <i><a href="<%=page_href%>"><%=jsp.i18l("doc.about")%></a></i>
               <html:hidden property="uri" value="<%=localCopy.getURI()%>" />
@@ -194,13 +194,13 @@ if ((x != null) && (subdocs.size() > 0)) {
               </html:form>
               <%                
 
-          		
-        } else {
+                
+        } else { // localCopy == null
             SLDocumentStuff localCopyCandidate = jsp.localCopyCandidate(jsp.getTitle(), true, jsp.getContextURL()); // 2020-07
             if (localCopyCandidate != null) {
               %>
               <p></p>
-              <html:form action="setoraddproperty">
+              <html:form action="setoraddproperty" method="POST">
               No local copy defined. Following file seems to match: 
               <a href="<%=localCopyCandidate.getURI()%>"><%=localCopyCandidate.getFile().getName()%></a>.
               Set it as Local Copy?
@@ -211,6 +211,57 @@ if ((x != null) && (subdocs.size() > 0)) {
               <html:hidden property="redirect_uri" value="<%=uri%>" />
               <html:submit property="<%=Action_SetOrAddProperty.ADD%>">Do it!</html:submit>
               </html:form>
+              
+              <script>
+              function setLocalCopyFile(uri) {
+                  files = document.getElementById('localCopyFileChooser').files;
+                  if ((!files) || (files.length == 0)) {
+                      alert("No file chosen")
+                  }
+                  for (var i = 0; i < files.length; i++) {
+                      setLocalCopyFile2(uri, files[i]);
+                  }                
+              }
+                           
+              function setLocalCopyFile2(uri, file) {
+                  alert(uri);
+              
+                  var formData = new FormData();
+                  // formData.append("file", file);
+                  formData.append("uri", "http://127.0.0.1:7080/semanlink/doc/2020/12/bla_1.pdf")
+                  formData.append("docorkw", "doc");
+                  formData.append("property", "dc:source");
+                  formData.append("value", uri);
+                  formData.append("redirect_uri", uri);
+                  formData.append("<%=Action_SetOrAddProperty.ADD%>", 'true')
+ 
+                  var xhr = new XMLHttpRequest();
+                  xhr.addEventListener("load", setLocalCopyFileComplete, false);
+                  // 2020-09 TODO
+                  xhr.open("POST", getContextPath() + "/setoraddproperty.do", true); // If async=false, then you'll miss progress bar support.
+                  xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+                  
+                  // this doesn't work, given what is done in the servlet: 
+                  // we ends up with something getParameter(paramName) doesn't work
+                  // xhr.send(formData);
+                  // following borrowed from https://ultimatecourses.com/blog/transform-formdata-into-query-string
+                  const formDataAsString = [...formData.entries()]
+                  .map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
+                  .join('&');
+                  xhr.send(formDataAsString);
+              }
+
+              function setLocalCopyFileComplete(event) {
+                  if (event.target.status == 200) {
+                	  window.location.href = '<%=uri%>';
+                  } else {
+                      alert('Error ' + event.target.responseText); // TODO change servlet
+                  }
+              }             
+              </script>
+              
+              <input type="file" name="file2" id="localCopyFileChooser">
+              <button onclick="setLocalCopyFile('<%=uri%>')">Set as Local Copy</button>
               
               <%                
             }           
@@ -385,7 +436,7 @@ if (SLServlet.canOpenLocalFileWithDesktop()) { %>
 
 
 
-<%{	
+<%{ 
   if (!edit) {
     Bean_DocList li = jsp.relatedDocs(false, true); // 2020-11 
     if (li.getList().size() > 0) {
