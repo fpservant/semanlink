@@ -34,6 +34,13 @@ import net.semanlink.util.Util;
  * Pour cela, gere une liste de noms courts de proprietes accepatbles en tant que 
  * parameter "property" de la request.
  */
+
+// 2020-12 found TODO: the subject of the triple, given by param "uri" 
+// (or, this is new, the param "file", cf. local copy)
+// is supposed to be a long uri. Should also accept short uris using namespaces
+// including "tag:" and "doc:"
+// (and all actions should allow this. Would make less ugly eg. docuri=bla)
+
 public class Action_SetOrAddProperty extends BaseAction {
 public static final String ADD = "add";
 public static final String SET = "set";
