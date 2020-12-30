@@ -781,6 +781,41 @@ public void setKwProperty(String kwUri, String propertyUri, String propertyValue
 	} catch (Exception e) { throw new SLRuntimeException(e); }
 }
 
+/**
+ * @since 2020-12 */
+@Override public void deleteKwTriple(String kwUri, String propertyUri, String objectUri) {
+	try {
+		JFileBiModel bi = getJFileBiModel4Kws(kwUri);
+		bi.remove(kwUri, propertyUri, objectUri);
+		bi.save();
+	} catch (Exception e) { throw new SLRuntimeException(e); }
+	
+}
+
+/**
+ * @since 2020-12 */
+@Override public void deleteKwTriple(String kwUri, String propertyUri, String propertyValue, String lang) {
+	propertyValue = safe(propertyValue);
+	lang = safe(lang);
+	try {
+		JFileBiModel bi = getJFileBiModel4Kws(kwUri);
+		bi.remove(kwUri, propertyUri, propertyValue, lang);
+		bi.save();
+		
+		boolean isLabelProperty = isLabelProperty(propertyUri);
+		if (isLabelProperty) {
+			SLKeyword kw = getKeyword(kwUri);
+			Locale locale = null;
+			if ((lang == null) || ("".equals(lang))) {
+				locale = Locale.getDefault();
+			} else {
+				locale = new Locale(lang);
+			}
+			this.thesaurusLabels.removeLabel(kw, propertyValue, locale);
+		}
+	} catch (Exception e) { throw new SLRuntimeException(e); }
+}
+
 /** Retourne le JFileModel pertinent pour le document docUri. */
 JFileModel getJFileModel4Docs(String docUri) throws JenaException, IOException, URISyntaxException {
 	// DocsFile docsFile = doc2DocsFile(docUri);

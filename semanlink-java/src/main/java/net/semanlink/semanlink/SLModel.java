@@ -788,6 +788,21 @@ public void setDocProperty(SLDocument doc, String propertyUri, String objectUri)
 	} catch (Exception e) { throw new RuntimeException(e) ; }
 }
 
+/** @since 2020-12 */
+public void deleteDocTriple(SLDocument doc, String propertyUri, String objectUri) {
+	try (SLDocUpdate du = newSLDocUpdate(doc)) {
+		du.removeStatement(propertyUri, objectUri);
+	} catch (Exception e) { throw new RuntimeException(e) ; }
+}
+
+/** @since 2020-12 */
+public void deleteDocTriple(SLDocument doc, String propertyUri, String propertyValue, String lang) {
+	try (SLDocUpdate du = newSLDocUpdate(doc)) {
+		du.removeStatement(propertyUri, propertyValue, lang);
+	} catch (Exception e) { throw new RuntimeException(e) ; }
+}
+
+
 /** also updates also relatedDoc props extracted from comment */
 public void setDocComment(SLDocument doc, String comment, String lang, String contextUrl) { // 2020-11
 	SLDocCommentUpdate.changeComment(this, doc, comment, lang, contextUrl);
@@ -801,24 +816,28 @@ abstract public void removeKeywords(SLDocument doc, SLKeyword[] kw);
 
 
 
-/** kw censé exister */
+/** kw supposed to exist */
 public void addKwProperty(SLKeyword kw, String propertyUri, String objectUri) {
 	addKwProperty(kw.getURI(), propertyUri, objectUri);
 }
-/** kw censé exister */
+/** kw supposed to exist */
 public void setKwProperty(SLKeyword kw, String propertyUri, String propertyValue, String lang) {
 	setKwProperty(kw.getURI(), propertyUri, propertyValue, lang);
 }
-/** kwuri uri d'un kw sensé exister */
+/** kw supposed to exist */
 abstract public void addKwProperty(String kwUri, String propertyUri, String objectUri);
-/** kwuri uri d'un kw sensé exister */
+/** kw supposed to exist */
 abstract public void addKwProperty(String kwUri, String propertyUri, String[] objectUris);
-/** kwuri uri d'un kw sensé exister */
+/** kw supposed to exist */
 abstract public void addKwProperty(String kwUri, String propertyUri, String propertyValue, String lang);
-/** kwuri uri d'un kw sensé exister */
+/** kw supposed to exist */
 abstract public void setKwProperty(String kwUri, String propertyUri, String objectUri);
-/** kwuri uri d'un kw sensé exister */
+/** kw supposed to exist */
 abstract public void setKwProperty(String kwUri, String propertyUri, String propertyValue, String lang);
+/** @since 2020-12 */
+abstract public void deleteKwTriple(String kwUri, String propertyUri, String objectUri);
+/** @since 2020-12 */
+abstract public void deleteKwTriple(String kwUri, String propertyUri, String propertyValue, String lang);
 
 
 /** true iff values must be indexed by ThesaurusWordIndex */

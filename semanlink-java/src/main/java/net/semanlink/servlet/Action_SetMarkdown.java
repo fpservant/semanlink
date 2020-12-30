@@ -46,7 +46,7 @@ public class Action_SetMarkdown extends Action_SetOrAddProperty {
 	}
 	
 	// le sujet est tjrs le markdown doc
-	protected boolean subjectIsKwNotDoc(HttpServletRequest request) {
+	@Override protected boolean subjectIsKwNotDoc(HttpServletRequest request) {
 		return false;
 	}
 

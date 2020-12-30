@@ -169,13 +169,21 @@ if ((x != null) && (subdocs.size() > 0)) {
           
           // remove local copy button
           String page_href = response.encodeURL(docStuff.getLocalCopyPage());
-          %> <%
-              %>
-              <html:form action="setoraddproperty">
+          %> 
+              <html:form action="deletetriple">
               <%
+                  SLDocumentStuff localCopyStuff = docStuff.getLocalCopyStuff();
+              
                   SLDocumentStuff.HrefPossiblyOpeningInDestop localCopyLink = docStuff.getLocalCopyLink();
                   String localHref = localCopyLink.href();
-                  String lab = jsp.i18l("doc.localCopy");
+                  // String lab = jsp.i18l("doc.localCopy");
+//                   SLDocument locopy = docStuff.getLocalCopy();
+//                   String lab = locopy.getURI();
+//                   String s = Util.getContextURL(request) + "/doc/";
+//                   if (lab.startsWith(s)) lab = lab.substring(s.length());
+
+                  String lab = localCopyStuff.getFile().getAbsolutePath();
+
                   if (localCopyLink.openingInDesktop()) {
                     %><a href="<%=localHref%>" onclick="desktop_open_hack('<%=localHref%>'); return false;"><%=lab%></a>
                     <%
@@ -185,10 +193,10 @@ if ((x != null) && (subdocs.size() > 0)) {
                   }
               %>
               <i><a href="<%=page_href%>"><%=jsp.i18l("doc.about")%></a></i>
-              <html:hidden property="uri" value="<%=localCopy.getURI()%>" />
+              <html:hidden property="s" value="<%=localCopy.getURI()%>" />
               <html:hidden property="docorkw" value="doc" />
-              <html:hidden property="property" value="dc:source" />
-              <html:hidden property="value" value="" />
+              <html:hidden property="p" value="dc:source" />
+              <html:hidden property="o" value="<%=uri%>" />
               <html:hidden property="redirect_uri" value="<%=uri%>" />
               <html:submit property="<%=Action_SetOrAddProperty.SET%>">Remove</html:submit>
               </html:form>
@@ -213,55 +221,57 @@ if ((x != null) && (subdocs.size() > 0)) {
               </html:form>
               
               <script>
-              function setLocalCopyFile(uri) {
-                  files = document.getElementById('localCopyFileChooser').files;
-                  if ((!files) || (files.length == 0)) {
-                      alert("No file chosen")
-                  }
-                  for (var i = 0; i < files.length; i++) {
-                      setLocalCopyFile2(uri, files[i]);
-                  }                
-              }
+//               function setLocalCopyFile(uri) {
+//                   files = document.getElementById('localCopyFileChooser').files;
+//                   if ((!files) || (files.length == 0)) {
+//                       alert("No file chosen")
+//                   }
+//                   for (var i = 0; i < files.length; i++) {
+//                 	  alert(files[i]);
+//                       setLocalCopyFile2(uri, files[i]);
+//                   }                
+//               }
                            
-              function setLocalCopyFile2(uri, file) {
-                  alert(uri);
-              
-                  var formData = new FormData();
-                  // formData.append("file", file);
-                  formData.append("uri", "http://127.0.0.1:7080/semanlink/doc/2020/12/bla_1.pdf")
-                  formData.append("docorkw", "doc");
-                  formData.append("property", "dc:source");
-                  formData.append("value", uri);
-                  formData.append("redirect_uri", uri);
-                  formData.append("<%=Action_SetOrAddProperty.ADD%>", 'true')
+//               function setLocalCopyFile2(uri, file) {
+//             	  // NO WAY: no way to get the path of a file from the file object in javascript
+//                   var formData = new FormData();
+//                   // formData.append("file", file); // this would be for formdata, but not given what is done below
+//                   formData.append("file", file.name);
+//                   formData.append("docorkw", "doc");
+//                   formData.append("property", "dc:source");
+//                   formData.append("value", uri);
+//                   formData.append("redirect_uri", uri);
+<%--                   formData.append("<%=Action_SetOrAddProperty.ADD%>", 'true'); --%>
+//                   alert(file.name);
  
-                  var xhr = new XMLHttpRequest();
-                  xhr.addEventListener("load", setLocalCopyFileComplete, false);
-                  // 2020-09 TODO
-                  xhr.open("POST", getContextPath() + "/setoraddproperty.do", true); // If async=false, then you'll miss progress bar support.
-                  xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+//                   var xhr = new XMLHttpRequest();
+//                   xhr.addEventListener("load", setLocalCopyFileComplete, false);
+//                   // 2020-09 TODO
+//                   xhr.open("POST", getContextPath() + "/setoraddproperty.do", true); // If async=false, then you'll miss progress bar support.
+//                   xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
                   
-                  // this doesn't work, given what is done in the servlet: 
-                  // we ends up with something getParameter(paramName) doesn't work
-                  // xhr.send(formData);
-                  // following borrowed from https://ultimatecourses.com/blog/transform-formdata-into-query-string
-                  const formDataAsString = [...formData.entries()]
-                  .map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
-                  .join('&');
-                  xhr.send(formDataAsString);
-              }
+//                   // this doesn't work, given what is done in the servlet: 
+//                   // we ends up with something getParameter(paramName)
+//                   // xhr.send(formData);
+//                   // following borrowed from https://ultimatecourses.com/blog/transform-formdata-into-query-string
+//                   const formDataAsString = [...formData.entries()]
+//                   .map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
+//                   .join('&');
+//                   alert(formDataAsString);
+//                   xhr.send(formDataAsString);
+//               }
 
-              function setLocalCopyFileComplete(event) {
-                  if (event.target.status == 200) {
-                	  window.location.href = '<%=uri%>';
-                  } else {
-                      alert('Error ' + event.target.responseText); // TODO change servlet
-                  }
-              }             
+//               function setLocalCopyFileComplete(event) {
+//                   if (event.target.status == 200) {
+<%--                       window.location.href = '<%=uri%>'; --%>
+//                   } else {
+//                       alert('Error ' + event.target.responseText); // TODO change servlet
+//                   }
+//               }             
               </script>
               
-              <input type="file" name="file2" id="localCopyFileChooser">
-              <button onclick="setLocalCopyFile('<%=uri%>')">Set as Local Copy</button>
+<!--               <input type="file" name="file2" id="localCopyFileChooser"> -->
+<%--               <button onclick="setLocalCopyFile('<%=uri%>')">Set as Local Copy</button> --%>
               
               <%                
             }           

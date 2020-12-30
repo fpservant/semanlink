@@ -39,7 +39,7 @@ import net.semanlink.util.Util;
 // (or, this is new, the param "file", cf. local copy)
 // is supposed to be a long uri. Should also accept short uris using namespaces
 // including "tag:" and "doc:"
-// (and all actions should allow this. Would make less ugly eg. docuri=bla)
+// (and all actions should allow this. Would make less ugly eg. ?docuri=bla)
 
 public class Action_SetOrAddProperty extends BaseAction {
 public static final String ADD = "add";
@@ -67,8 +67,12 @@ protected String getPropValue(HttpServletRequest request) {
 	return request.getParameter("value");
 }
 
-protected boolean subjectIsKwNotDoc(HttpServletRequest request) {
+static public boolean subjectIsKwNotDoc_(HttpServletRequest request) {
 	return ("kw".equals(request.getParameter("docorkw")));
+}
+
+protected boolean subjectIsKwNotDoc(HttpServletRequest request) {
+	return subjectIsKwNotDoc_(request);
 }
 
 protected String getSubjectUri(HttpServletRequest request) {
@@ -210,6 +214,7 @@ protected void setOrAddProp(String propertyUri, String propertyValue, HttpServle
 		
 		// 2020-07 to be able to redirect to doc, not local copy, when quick adding of local copy
 		// new param giving the redirect url
+		// (same code in Action_DeleteTriple)
 		
 		String redirect = request.getParameter("redirect_uri"); // 2020-07
 		if (redirect != null) {

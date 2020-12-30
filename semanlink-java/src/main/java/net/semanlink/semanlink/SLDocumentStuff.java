@@ -385,7 +385,7 @@ public String getLocalCopyPage() throws Exception {
 	return localCopyPage;
 }
 
-private SLDocumentStuff getLocalCopyStuff() throws Exception {
+public SLDocumentStuff getLocalCopyStuff() throws Exception {
 	if (localCopyStuffComputed) return localCopyStuff;
 	localCopyStuffComputed = true;
 	SLDocument localCopy = getLocalCopy();

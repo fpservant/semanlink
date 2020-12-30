@@ -55,6 +55,11 @@ public void addKw(SLKeyword kw, String label, Locale locale) {
 	} catch (Exception e) { throw new RuntimeException(e) ; }
 }
 
+public void removeLabel(SLKeyword kw, String label, Locale locale) { // @since 2020-12
+	try (Update<SLKeyword> up = newUpdate(false)) {
+		up.removeLabel(kw, label, locale);
+	} catch (Exception e) { throw new RuntimeException(e) ; }
+}
 
 //
 // SEARCHING TAGS IN A TEXT

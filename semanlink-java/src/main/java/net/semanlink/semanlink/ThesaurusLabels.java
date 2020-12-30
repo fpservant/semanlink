@@ -36,9 +36,13 @@ ThesaurusLabels(SLModel mod, CharConverter converter, Locale locale) throws Exce
 	aho = new AhoCorasick<>(kws.iterator(), mod.getKwLabelGetter(), converter);
 }
 
+// HUM should be possible to improve
+// (AhoCorasick recomputed at each change) // TODO ? 2020-12
+
 private AhoCorasick<SLKeyword> newAho() {
 	return new AhoCorasick<>(mod.getKWsInConceptsSpaceArrayList().iterator(), mod.getKwLabelGetter(), converter);
 }
+
 public void deleteKw(SLKeyword kw) throws Exception {
 	thIndex.deleteKw(kw);
 	this.aho = newAho();
@@ -51,6 +55,11 @@ public void addKw(SLKeyword kw) {
 
 public void addKw(SLKeyword kw, String label, Locale locale) {
 	thIndex.addKw(kw, label, locale);
+	this.aho = newAho();
+}
+
+public void removeLabel(SLKeyword kw, String label, Locale locale) { // @since 2020-12
+	thIndex.removeLabel(kw, label, locale);
 	this.aho = newAho();
 }
 
