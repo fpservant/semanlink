@@ -158,6 +158,7 @@ if ((x != null) && (subdocs.size() > 0)) {
 <%// if ((edit) && (SLServlet.canOpenLocalFileWithDesktop())) {
 if (edit) {%>
   <jsp:include page="localCopyEdit.jsp"/>
+  <jsp:include page="localCopyEdit_SVG_KeepIt.jsp"/>
 <%}%>
 
 

@@ -1586,7 +1586,9 @@ public File goodDirToSaveAFile() {
 	// return new File(getDefaultFolder() + (new YearMonthDay()).getYearMonth(File.pathSeparator) + File.pathSeparator);
 	// OK sur windaube ???
 	// return new File(getDefaultFolder() + (new YearMonthDay()).getYearMonth("/") + "/");
-	return todayYearMonthDir(getDefaultFolder().getFile());
+	File dir = todayYearMonthDir(getDefaultFolder().getFile());
+	if (!dir.exists()) dir.mkdirs(); // 2020-12
+	return dir;
 }
 
 /** Retourne la dir parentDir/yyyy/mm avec yyyy/mm d'aujourd'hui. */
@@ -1595,14 +1597,18 @@ File todayYearMonthDir(File parentDir) {
 }
 
 public File dirToSaveANote() {
-	return todayYearMonthDir(getNotesFolder().getFile());
+	File dir =  todayYearMonthDir(getNotesFolder().getFile());
+	if (!dir.exists()) dir.mkdirs(); // 2020-12
+	return dir;
 }
 
 /**
  * Beware, the dir, at this time 
  * @since v0.6 */ // 2019-03 uris for bookmarks
 public File dirToSaveBookmarks() {
-	return todayYearMonthDir(getBookmarkFolder().getFile());
+	File dir = todayYearMonthDir(getBookmarkFolder().getFile());
+	if (!dir.exists()) dir.mkdirs(); // 2020-12
+	return dir;
 }
 
 

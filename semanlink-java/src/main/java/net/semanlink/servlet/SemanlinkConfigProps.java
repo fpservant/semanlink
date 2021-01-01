@@ -128,12 +128,12 @@ public SLVocab.EasyProperty[] getEasyProps() {
 }
 
 private SLVocab.EasyProperty easyProp(String propUri) {
-	Map prefixMap = this.model.getNsPrefixMap();
-	Set prefixes = prefixMap.keySet();
+	Map<String, String> prefixMap = this.model.getNsPrefixMap();
+	Set<String> prefixes = prefixMap.keySet();
 	//System.out.println("SemanlinkConfigProps " + propUri);
-	for(Iterator it = prefixes.iterator(); it.hasNext();) {
-		String prefix = (String) it.next();
-		String uri = (String) prefixMap.get(prefix);
+	for(Iterator<String> it = prefixes.iterator(); it.hasNext();) {
+		String prefix = it.next();
+		String uri = prefixMap.get(prefix);
 		// System.out.println(prefix + " : " + uri);
 		if (propUri.startsWith(uri)) {
 			String end = propUri.substring(uri.length());
@@ -150,12 +150,12 @@ private SLVocab.EasyProperty easyProp(String propUri) {
  * @return the uri or null
  */
 String getUriString(String nsPrefixedString) {
-	Map prefixMap = this.model.getNsPrefixMap();
-	Set prefixes = prefixMap.keySet();
-	for(Iterator it = prefixes.iterator(); it.hasNext();) {
-		String prefix = (String) it.next();
+	Map<String, String> prefixMap = this.model.getNsPrefixMap();
+	Set<String> prefixes = prefixMap.keySet();
+	for(Iterator<String> it = prefixes.iterator(); it.hasNext();) {
+		String prefix = it.next();
 		if (nsPrefixedString.startsWith(prefix + ":")) {
-			String ns = (String) prefixMap.get(prefix);
+			String ns = prefixMap.get(prefix);
 			return ns + nsPrefixedString.substring(prefix.length() + 1);
 		}
 	}

@@ -21,7 +21,7 @@ import net.semanlink.util.Util;
 // (eg. valUrlString = FileUriFormat.fileSlashSlashSlashProblem(valUrlString);)
 // TODO check lang null in litteral triples
 
-public class Action_DeleteTriple extends BaseAction {
+public class Action_DeleteTriple extends BaseAction { // 2020-12
 public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	try {
 		String s = getSPO("s", request);

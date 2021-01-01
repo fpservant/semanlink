@@ -14,130 +14,82 @@ SLDocument x = (SLDocument) jsp.getSLResource();
 String uri = x.getURI();
 SLDocumentStuff docStuff = jsp.getSLDocumentStuff(); // 2019-04 
 
+SLDocument localCopy = docStuff.getLocalCopy();
+
+String cur_s = "", cur_p = "", cur_o = "", cur_lang = ""; 
+String cur_sfile = "";
+String s = "", p = "", o = "", lang = "";
+String sfile = "";
+
+SLDocumentStuff localCopyStuff = null;
+if (localCopy != null) {
+	cur_s = localCopy.getURI();
+	cur_p = "dc:source";
+	cur_o = uri;
+	//
+	localCopyStuff = docStuff.getLocalCopyStuff();	
+// 	SLDocumentStuff.HrefPossiblyOpeningInDestop localCopyLink = docStuff.getLocalCopyLink();
+// 	String localHref = localCopyLink.href();
+	cur_sfile = localCopyStuff.getFile().getAbsolutePath();
+}
+
+s = cur_s;
+sfile = cur_sfile;
+p = "dc:source";
+o = uri;
+
+%>
+
+<div class="graybox" id="local_copy">
+<div class="what"><%=jsp.i18l("doc.localCopy")%></div>
+<p></p>
+
+
+<%if (localCopy == null) {%>
+<jsp:include page="localCopyCandidate.jsp"/>
+<%} else {%>
+   <p>
+   <%
+   SLDocumentStuff.HrefPossiblyOpeningInDestop localCopyLink = docStuff.getLocalCopyLink();
+   String localHref = localCopyLink.href();
+   String lab = jsp.i18l("doc.localCopy");
+   // String lab = localCopyStuff.getFile().getAbsolutePath();
+
+   if (localCopyLink.openingInDesktop()) {
+     %><a href="<%=localHref%>" onclick="desktop_open_hack('<%=localHref%>'); return false;"><%=lab%></a>
+     <%
+   } else {
+     String href = response.encodeURL(localHref);
+     %><a href="<%=href%>"><%=lab%></a><% 
+   }
+   String page_href = response.encodeURL(docStuff.getLocalCopyPage());
+   %>
+   <i><a href="<%=page_href%>"><%=jsp.i18l("doc.about")%></a></i>
+   </p>
+   <%
+}
 %>
 
 
-
-<div class="graybox" id="local_copy">
-    <div class="what"><%=jsp.i18l("doc.localCopy")%></div>
-    <%
-        SLDocument localCopy = docStuff.getLocalCopy();
-        if (localCopy != null) {
-          %><p><%
-              
-          
-          
-          // remove local copy button
-          String page_href = response.encodeURL(docStuff.getLocalCopyPage());
-          %> 
-              <html:form action="deletetriple">
-              <%
-                  SLDocumentStuff localCopyStuff = docStuff.getLocalCopyStuff();
-              
-                  SLDocumentStuff.HrefPossiblyOpeningInDestop localCopyLink = docStuff.getLocalCopyLink();
-                  String localHref = localCopyLink.href();
-                  // String lab = jsp.i18l("doc.localCopy");
-//                   SLDocument locopy = docStuff.getLocalCopy();
-//                   String lab = locopy.getURI();
-//                   String s = Util.getContextURL(request) + "/doc/";
-//                   if (lab.startsWith(s)) lab = lab.substring(s.length());
-
-                  String lab = localCopyStuff.getFile().getAbsolutePath();
-
-                  if (localCopyLink.openingInDesktop()) {
-                    %><a href="<%=localHref%>" onclick="desktop_open_hack('<%=localHref%>'); return false;"><%=lab%></a>
-                    <%
-                  } else {
-                    String href = response.encodeURL(localHref);
-                    %><a href="<%=href%>"><%=lab%></a><% 
-                  }
-              %>
-              <i><a href="<%=page_href%>"><%=jsp.i18l("doc.about")%></a></i>
-              <html:hidden property="s" value="<%=localCopy.getURI()%>" />
-              <html:hidden property="docorkw" value="doc" />
-              <html:hidden property="p" value="dc:source" />
-              <html:hidden property="o" value="<%=uri%>" />
-              <html:hidden property="redirect_uri" value="<%=uri%>" />
-              <html:submit property="<%=Action_SetOrAddProperty.SET%>">Remove</html:submit>
-              </html:form>
-              <%                
-
-                
-        } else { // localCopy == null
-            SLDocumentStuff localCopyCandidate = jsp.localCopyCandidate(jsp.getTitle(), true, jsp.getContextURL()); // 2020-07
-            if (localCopyCandidate != null) {
-              %>
-              <p></p>
-              <html:form action="setoraddproperty" method="POST">
-              No local copy defined. Following file seems to match: 
-              <a href="<%=localCopyCandidate.getURI()%>"><%=localCopyCandidate.getFile().getName()%></a>.
-              Set it as Local Copy?
-              <html:hidden property="uri" value="<%=localCopyCandidate.getURI()%>" />
-              <html:hidden property="docorkw" value="doc" />
-              <html:hidden property="property" value="dc:source" />
-              <html:hidden property="value" value="<%=uri%>" />
-              <html:hidden property="redirect_uri" value="<%=uri%>" />
-              <html:submit property="<%=Action_SetOrAddProperty.ADD%>">Do it!</html:submit>
-              </html:form>
-              
-              <script>
-//               function setLocalCopyFile(uri) {
-//                   files = document.getElementById('localCopyFileChooser').files;
-//                   if ((!files) || (files.length == 0)) {
-//                       alert("No file chosen")
-//                   }
-//                   for (var i = 0; i < files.length; i++) {
-//                 	  alert(files[i]);
-//                       setLocalCopyFile2(uri, files[i]);
-//                   }                
-//               }
-                           
-//               function setLocalCopyFile2(uri, file) {
-//             	  // NO WAY: no way to get the path of a file from the file object in javascript
-//                   var formData = new FormData();
-//                   // formData.append("file", file); // this would be for formdata, but not given what is done below
-//                   formData.append("file", file.name);
-//                   formData.append("docorkw", "doc");
-//                   formData.append("property", "dc:source");
-//                   formData.append("value", uri);
-//                   formData.append("redirect_uri", uri);
-<%--                   formData.append("<%=Action_SetOrAddProperty.ADD%>", 'true'); --%>
-//                   alert(file.name);
- 
-//                   var xhr = new XMLHttpRequest();
-//                   xhr.addEventListener("load", setLocalCopyFileComplete, false);
-//                   // 2020-09 TODO
-//                   xhr.open("POST", getContextPath() + "/setoraddproperty.do", true); // If async=false, then you'll miss progress bar support.
-//                   xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-                  
-//                   // this doesn't work, given what is done in the servlet: 
-//                   // we ends up with something getParameter(paramName)
-//                   // xhr.send(formData);
-//                   // following borrowed from https://ultimatecourses.com/blog/transform-formdata-into-query-string
-//                   const formDataAsString = [...formData.entries()]
-//                   .map(x => `${encodeURIComponent(x[0])}=${encodeURIComponent(x[1])}`)
-//                   .join('&');
-//                   alert(formDataAsString);
-//                   xhr.send(formDataAsString);
-//               }
-
-//               function setLocalCopyFileComplete(event) {
-//                   if (event.target.status == 200) {
-<%--                       window.location.href = '<%=uri%>'; --%>
-//                   } else {
-//                       alert('Error ' + event.target.responseText); // TODO change servlet
-//                   }
-//               }             
-              </script>
-              
-<!--               <input type="file" name="file2" id="localCopyFileChooser"> -->
-<%--               <button onclick="setLocalCopyFile('<%=uri%>')">Set as Local Copy</button> --%>
-              
-              <%                
-            }           
-        }
-    %>
-    </p>
+<p>
+<html:form action="changetriple" method="POST">
+    File: 
+    <%if (localCopy != null) {%>
+        <html:hidden property="cur_s" value="<%=cur_s%>" />
+        <html:hidden property="cur_p" value="<%=cur_p%>" />
+        <html:hidden property="cur_o" value="<%=cur_o%>" />
+        <html:hidden property="cur_lang" value="<%=cur_lang%>" />
+    <%}%>
+<%--     <input type="text" name="s" value="<%=s%>" style="width:100%; box-sizing: border-box;-webkit-box-sizing:border-box;-moz-box-sizing: border-box"> --%>
+    <input type="text" name="sfile" value="<%=sfile%>" style="width:100%; box-sizing: border-box">
+    <html:hidden property="p" value="<%=p%>" />
+    <html:hidden property="o" value="<%=o%>" />
+    <html:hidden property="lang" value="<%=lang%>" />
+    <html:hidden property="docorkw" value="doc" />
+    <html:hidden property="redirect_uri" value="<%=uri%>" />
+    <html:submit property="<%=Action_SetOrAddProperty.SET%>">Set</html:submit>
+ </html:form>
+</p>
 </div>
 
 <!--/localCopyEdit.jsp-->
