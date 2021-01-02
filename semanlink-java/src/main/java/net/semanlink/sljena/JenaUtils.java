@@ -19,6 +19,8 @@ import org.apache.jena.rdf.model.Statement;
 import org.apache.jena.rdf.model.StmtIterator;
 import org.apache.jena.vocabulary.RDF;
 
+import net.semanlink.semanlink.LabelLN;
+import net.semanlink.semanlink.LabelLNImpl;
 import net.semanlink.semanlink.SLVocab;
 
 /**
@@ -230,30 +232,74 @@ public static boolean changeObjects(Model mod, Resource oldObject, Resource newO
 	return x;
 }
 
+// 2021-01: hum, this handles the possibility to have several comments for one res
 static public String getComment(Resource res) {
+	LabelLN ln = getCommentLN(res);
+	if (ln == null) return null;
+	return ln.getLabel();
+//	Model model = res.getModel();
+//	NodeIterator ite = model.listObjectsOfProperty(res, model.getProperty(SLVocab.COMMENT_PROPERTY));
+//	String x = null;
+//	int k = 0;
+//	if (ite.hasNext()) {
+//		StringBuffer sb = new StringBuffer();
+//		for (;ite.hasNext();) {
+//			RDFNode node = ite.nextNode();
+//			if (k > 0) {
+//				sb.append("\r\n");
+//			}
+//			k++;
+//			if (node instanceof Literal) {
+//				sb.append(((Literal) node).getString()); // toString de RDFNode met @lang
+//			} else {
+//				sb.append(node.toString());
+//			}
+//		}
+//		x = sb.toString();
+//	}
+//	ite.close();
+//	return x;
+}
+
+static public LabelLN getCommentLN(Resource res) {
 	Model model = res.getModel();
 	NodeIterator ite = model.listObjectsOfProperty(res, model.getProperty(SLVocab.COMMENT_PROPERTY));
-	String x = null;
 	int k = 0;
+	LabelLN x = null;
 	if (ite.hasNext()) {
+		String lang = null;
 		StringBuffer sb = new StringBuffer();
+		String curLang = null;
 		for (;ite.hasNext();) {
 			RDFNode node = ite.nextNode();
 			if (k > 0) {
 				sb.append("\r\n");
 			}
-			k++;
 			if (node instanceof Literal) {
-				sb.append(((Literal) node).getString()); // toString de RDFNode met ~lang
+				Literal lit = (Literal) node;
+				sb.append(lit.getString()); // toString de RDFNode met @lang
+				curLang = lit.getLanguage();
+				if (k == 0) {
+					lang = curLang;
+				} else {
+					if (lang != null) {
+						if (!lang.equals(curLang)) {
+							lang = null;
+						}
+					}
+				}
 			} else {
 				sb.append(node.toString());
 			}
+			k++;
 		}
-		x = sb.toString();
+		
+		x = new LabelLNImpl(sb.toString(), lang);
 	}
 	ite.close();
 	return x;
 }
+
 
 /** a ameliorer
  * supprime toutes les occurences d'un kw en tant que subject et object

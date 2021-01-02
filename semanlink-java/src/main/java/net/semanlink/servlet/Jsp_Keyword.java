@@ -164,6 +164,9 @@ public String getLinkToThis(String action) throws UnsupportedEncodingException {
 }
 
 public String getComment() { return this.slKw.getComment(); }
+public LabelLN getCommentLN() { // 2021-01
+	return this.slKw.getCommentLN();
+}
 
 //
 // Linked Keywords - TAG CLOUD

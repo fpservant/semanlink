@@ -1,4 +1,5 @@
 package net.semanlink.sljena;
+import net.semanlink.semanlink.LabelLN;
 import net.semanlink.semanlink.SLDocument;
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLVocab;
@@ -103,8 +104,11 @@ private String getLabel(Property prop) {
 	}
 	return null;
 }
-public String getComment() {
+@Override public String getComment() {
   return JenaUtils.getComment(this.res);
+}
+@Override public LabelLN getCommentLN() { // 2021-01
+  return JenaUtils.getCommentLN(this.res);
 }
 public String getDate() {
 	if (!this.dateComputed) {

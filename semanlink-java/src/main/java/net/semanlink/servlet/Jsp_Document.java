@@ -68,6 +68,9 @@ public String getTitleInTitle() throws Exception {
 }
 
 public String getComment() { return this.slDoc.getComment(); }
+public LabelLN getCommentLN() { // 2021-01
+	return this.slDoc.getCommentLN();
+}
 
 /**
  * Retourne true s'il s'agit d'un fichier auquel on accède, soit en tant

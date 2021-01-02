@@ -48,6 +48,10 @@ public int hashCode() { return this.res.hashCode(); }
 	return getLabelLN(this.jModel.getKWsModel(), this.res);
 }
 
+@Override public LabelLN getCommentLN() { // 2021-01
+  return JenaUtils.getCommentLN(this.res);
+}
+
 public String getLabel() {
 	return getLabel(this.jModel.getKWsModel(), this.res);
 }
