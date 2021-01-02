@@ -48,7 +48,7 @@
 <entry key="tag.addAlias">Ajouter un Alias</entry>
 <entry key="properties.aboutThisDoc">Au sujet de ce document</entry>
 <entry key="properties.properties">Propriétés</entry>
-<entry key="properties.editProp">Editer la Propriété:</entry>
+<entry key="properties.editProp">Editer la Propriété :</entry>
 <entry key="properties.setValue">Fixer la Valeur</entry>
 <entry key="properties.addValue">Ajouter la valeur</entry>
 <entry key="x.documents">{0} Documents</entry>
