@@ -14,10 +14,13 @@ import net.semanlink.util.Util;
 
 /**
  * Change a triple
+ * path="/changetriple"
  * params: the "current triple" to be replaced by a new triple
- * - "cur_s", "cur_p", "cur_o" and possibly "cur_lang" (if no cur_lang, "cur_o" assumed to be a uri)
- * - "s", "p", "o" and possibly "lang" (if no lang, "o" assumed to be a uri)
- * - "docorkw"
+ * - "cur_s", "cur_p", "cur_o" and possibly "cur_lang" (if otype not defined and no cur_lang, "cur_o" assumed to be a uri)
+ * - "s", "p", "o" and possibly "lang" (if otype not defined and  no lang, "o" assumed to be a uri)
+ * - "docorkw" ("doc", or "kw")
+ * - "otype": "res" or "lit" or not defined says whether the triple, by nature of its prop,
+ * points to a resource or a literal;
  * s (and cur_s) may be replaced by sfile (resp. cur_sfile: in this case, a file to be replaced by
  * its uri to get s (resp cur_s)
  * 
@@ -162,7 +165,6 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 private String getSPO(String spo, HttpServletRequest request) {
 	String val = request.getParameter(spo);
 	if ((val == null) || ("".equals(val.trim()))) {
-		// throw new RuntimeException("No " + spo + " param");
 		return null;
 	}
 	
@@ -177,15 +179,28 @@ private String getSPO(String spo, HttpServletRequest request) {
 	
 	// SANS COMPTER, pour lang, que "" peut vouloir dire literal sans lang
 	
+	// PALIATIF PARTIEL : "otype" param, peut-être documenté à "lit" ou "res"
+	// -> reste modif à faire voir // TODO CHANGE plus bas
+	
 	if ("o".equals(spo)) {
-		String lang = request.getParameter("lang");
-		if ((lang != null)&&(!"".equals(lang))) {
+		if ("lit".equals(request.getParameter("otype"))) {
 			return val;
+		} else if (!"res".equals(request.getParameter("otype"))) {
+			// TODO CHANGE
+			String lang = request.getParameter("lang");
+			if ((lang != null)&&(!"".equals(lang))) {
+				return val;
+			}
 		}
 	} else if ("cur_o".equals(spo)) {
-		String lang = request.getParameter("cur_lang");
-		if ((lang != null)&&(!"".equals(lang))) {
+		if ("lit".equals(request.getParameter("otype"))) {
 			return val;
+		} else if (!"res".equals(request.getParameter("otype"))) {
+		  // TODO CHANGE
+			String lang = request.getParameter("cur_lang");
+			if ((lang != null)&&(!"".equals(lang))) {
+				return val;
+			}
 		}
 	}
 	
