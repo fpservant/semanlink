@@ -126,8 +126,8 @@ public String getBookmarkOf() {
 	return bookmarkOf;
 }
 
-// doesn't check that it exists -- ET ATTENTION, SUPPOSE QU'ON N'A PAS AFFAIRE A UNE NOTE
-// 2020-01 localFilesOutOfDatafolders : now handles the case of bookmarks on files outside datafolder
+/** doesn't check that it exists -- ET ATTENTION, SUPPOSE QU'ON N'A PAS AFFAIRE A UNE NOTE
+ * 2020-01 localFilesOutOfDatafolders : now handles the case of bookmarks on files outside datafolder */
 public File getFile() throws IOException, URISyntaxException {
 	if (fileComputed) return file;
 	fileComputed = true;

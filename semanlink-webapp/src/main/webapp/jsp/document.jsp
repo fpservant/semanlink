@@ -156,7 +156,7 @@ if ((x != null) && (subdocs.size() > 0)) {
 %>
 
 <%// if ((edit) && (SLServlet.canOpenLocalFileWithDesktop())) {
-if (edit) {%>
+if ((edit) && (file == null)) { // only when it's not a file itself %>
   <jsp:include page="localCopyEdit.jsp"/>
 <%}%>
 
