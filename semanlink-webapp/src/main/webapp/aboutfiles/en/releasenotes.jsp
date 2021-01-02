@@ -9,6 +9,7 @@
 <ul>
 <li>Search Doc: by URL or phrase</li>
 <li>Edit/Local copy: improvements</li>
+<li>Editing labels: improvements</li>
 </ul>
 
 <h2>0.7.4 2020-11-xx</h2>
