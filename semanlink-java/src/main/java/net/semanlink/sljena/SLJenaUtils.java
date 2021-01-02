@@ -147,6 +147,30 @@ static public LabelLN getLabelLN(Model model, Resource res, Property labelProp) 
 	return new LabelLNImpl(res.getURI(), null);
 }
 
+static public List<LabelLN> getLabelLNs(Model model, Resource res, Property labelProp) { // 2021-01
+	List<LabelLN> x = new ArrayList<>();
+  NodeIterator ite = model.listObjectsOfProperty(res, labelProp);
+  try {
+		for (;ite.hasNext();) {
+			RDFNode node = ite.nextNode();
+			if (!(node instanceof Literal)) continue;
+			Literal lit = (Literal) node;
+			try {
+				String s = lit.getString().trim();
+				if (s.length() > 0) {
+					x.add(new LabelLNImpl(s, lit.getLanguage()));
+				}
+			} catch (Exception e) {
+				x.add(new LabelLNImpl(lit.toString(), null));
+			}
+		}
+  } finally {
+  	ite.close();
+  }
+	return x;
+}
+
+
 
 
 }

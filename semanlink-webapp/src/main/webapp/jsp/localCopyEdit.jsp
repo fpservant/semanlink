@@ -88,7 +88,7 @@ o = uri;
     <html:hidden property="docorkw" value="doc" />
     <html:hidden property="redirect_uri" value="<%=uri%>" />
     <html:submit property="<%=Action_SetOrAddProperty.SET%>">Set</html:submit>
- </html:form>
+</html:form>
 </p>
 </div>
 

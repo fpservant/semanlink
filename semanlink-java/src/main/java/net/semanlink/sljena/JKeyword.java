@@ -7,6 +7,7 @@ import net.semanlink.semanlink.LabelLNImpl;
 import net.semanlink.semanlink.SLDocument;
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLVocab;
+import net.semanlink.skos.SKOS;
 
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
@@ -53,6 +54,10 @@ public int hashCode() { return this.res.hashCode(); }
   return JenaUtils.getCommentLN(this.res);
 }
 
+static public LabelLN getLabelLN(Model model, Resource res) { // 2021-01
+	return SLJenaUtils.getLabelLN(model, res, model.createProperty(SLVocab.PREF_LABEL_PROPERTY));
+}
+
 public String getLabel() {
 	return getLabel(this.jModel.getKWsModel(), this.res);
 }
@@ -62,14 +67,9 @@ public String getLabel(String language) {
 	return getLabel(this.jModel.getKWsModel(), this.res, language);
 }
 
-static public LabelLN getLabelLN(Model model, Resource res) { // 2021-01
-	return SLJenaUtils.getLabelLN(model, res, model.createProperty(SLVocab.PREF_LABEL_PROPERTY));
-}
-
 static public String getLabel(Model model, Resource res) {
 	return getLabelLN(model, res).getLabel();
 }
-
 
 static public String getLabel(Model model, Resource res, String language) {
   NodeIterator ite = model.listObjectsOfProperty(res, model.createProperty(SLVocab.PREF_LABEL_PROPERTY));
@@ -173,4 +173,10 @@ public HashMap getPropertiesAsStrings() {
 	if (homePage != null) return homePage.getURI();
 	else return null;
 }*/
+
+@Override
+public List<LabelLN> getAltLabels() { // 2021-01
+	return SLJenaUtils.getLabelLNs(this.jModel.getKWsModel(), this.res, SKOS.altLabel);
+}
+
 } // class

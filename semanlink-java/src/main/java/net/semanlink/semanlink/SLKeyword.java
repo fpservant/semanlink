@@ -13,13 +13,15 @@ import java.util.List;
  * @author fps
  */
 public interface SLKeyword extends SLLabeledResource, SLVocab, Comparable {
-	public List<SLKeyword> getParents();
-	public List<SLKeyword> getChildren();
-	public List<SLKeyword> getFriends();
-	public List<SLDocument> getDocuments();
+	List<SLKeyword> getParents();
+	List<SLKeyword> getChildren();
+	List<SLKeyword> getFriends();
+	List<SLDocument> getDocuments();
 	// used by livetree
-	public boolean hasChild();
-	public boolean hasDocument();
-	//
-	// public String getHomePageURI();
+	boolean hasChild();
+	boolean hasDocument();
+	List<LabelLN> getAltLabels(); //2021-01
+//	default List<LabelLN> getAltLabels() {
+//		throw new UnsupportedOperationException();
+//	}
 }
