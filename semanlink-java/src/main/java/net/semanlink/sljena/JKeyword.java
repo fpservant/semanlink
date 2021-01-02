@@ -11,6 +11,7 @@ import net.semanlink.semanlink.SLVocab;
 import org.apache.jena.rdf.model.Literal;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.NodeIterator;
+import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 
@@ -62,41 +63,12 @@ public String getLabel(String language) {
 }
 
 static public LabelLN getLabelLN(Model model, Resource res) { // 2021-01
-  NodeIterator ite = model.listObjectsOfProperty(res, model.createProperty(SLVocab.PREF_LABEL_PROPERTY));
-  try {
-		for (;ite.hasNext();) {
-			RDFNode node = ite.nextNode();
-			if (!(node instanceof Literal)) continue;
-			Literal lit = (Literal) node;
-			String s = lit.getString().trim();
-			if (s.length() > 0) {
-				return new LabelLNImpl(s, lit.getLanguage());
-			}
-		}
-  } finally {
-  	ite.close();
-  }
-	return new LabelLNImpl(res.getURI(), null);
+	return SLJenaUtils.getLabelLN(model, res, model.createProperty(SLVocab.PREF_LABEL_PROPERTY));
 }
 
 static public String getLabel(Model model, Resource res) {
-//  NodeIterator ite = model.listObjectsOfProperty(res, model.createProperty(SLVocab.PREF_LABEL_PROPERTY));
-//  String x = null;
-//  try {
-//		for (;ite.hasNext();) {
-//			RDFNode node = ite.nextNode();
-//			if (!(node instanceof Literal)) continue;
-//			x = ((Literal) node).getString();
-//			x = x.trim();
-//			if (x.length() > 0) return x;
-//		}
-//  } finally {
-//  	ite.close();
-//  }
-//	// return res2shortString(res);
-//	return res.getURI();
 	return getLabelLN(model, res).getLabel();
-} // getLabel()
+}
 
 
 static public String getLabel(Model model, Resource res, String language) {

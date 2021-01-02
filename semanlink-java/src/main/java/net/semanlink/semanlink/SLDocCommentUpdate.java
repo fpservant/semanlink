@@ -16,8 +16,13 @@ public class SLDocCommentUpdate {
 // set doc's comment to a newComment, and based on this new comment
 // (and the previous value), computes and updates the sl:relatedDocs
 // return true if updated, false if no change done (and this is not the same as oldComment == newComment !)
-static public boolean changeComment(SLModel mod, SLDocument doc, String newComment, String lang, String contextUrl) { // 2020-11
-	String oldComment = doc.getComment();
+static public boolean changeComment(SLModel mod, SLDocument doc, String newComment, String newLang, String contextUrl) { // 2020-11
+	LabelLN oldCommentLN = doc.getCommentLN();
+	String oldComment = null, oldLang = null;
+	if (oldCommentLN != null) {
+		oldComment = oldCommentLN.getLabel();
+		oldLang = oldCommentLN.getLang();
+	}
 	
 	List<String> oldLinks = extractLinks(oldComment, contextUrl);
 	List<String> newLinks = extractLinks(newComment, contextUrl);
@@ -65,14 +70,25 @@ static public boolean changeComment(SLModel mod, SLDocument doc, String newComme
 	
 	// not done : tag:xxx (oui, mais faire quoi ?)
 	
+	boolean sameLang;
+	if (newLang == null) {
+		if (oldLang == null) {
+			sameLang = true;
+		} else {
+			sameLang = false;
+		}
+	} else {
+		sameLang = newLang.equals(oldLang);
+	}
 	
 	boolean somethingChanged = ((!newComment.equals(oldComment))
+			|| (!sameLang)
 			|| (toBeAdded.size() > 0)
 			|| (toBeRemoved.size() > 0));
 
 	if (somethingChanged) {
 		try (SLDocUpdate up = mod.newSLDocUpdate(doc)) {
-			up.setDocProperty(SLVocab.COMMENT_PROPERTY, newComment, lang);
+			up.setDocProperty(SLVocab.COMMENT_PROPERTY, newComment, newLang);
 			// links in comment
 			if (toBeAdded.size() > 0) {
 				String[] objectUris = new String[toBeAdded.size()];

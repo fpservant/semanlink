@@ -27,22 +27,27 @@ if (!edit) {%>
         <%=jsp.getTitleInTitle()%>
     </div> <!-- class="title" -->
 <%
-} else { // edit %>
+} else { // edit 
+	LabelLN lln = jsp.getTitleLN();
+	String lab = null, lang = null;
+	if (lln != null) {
+		lab = lln.getLabel(); // jsp.getTitle() serait mieux, mais pas économique en temps calcul double de jsp.getTitleLN()
+		lang = lln.getLang();
+	} else { // on pourrait, si pas souceux economie :
+		lab = jsp.getTitle();
+	}
+	request.setAttribute("net.semanlink.servlet.jsp.lang", lang);
+
+%>
     <div class="graybox">
         <div class="what"><%=jsp.i18l("doc.title")%></div>
         <html:form action="/setoraddproperty">
         <html:hidden property="uri" value="<%=uri%>" />
         <html:hidden property="docorkw" value="doc" />
         <html:hidden property="property" value="dc:title"/>
-        <textarea name="docTitle" cols="80" rows="2"><%=jsp.getTitle()%></textarea>
+        <textarea name="docTitle" cols="80" rows="2"><%=lab%></textarea>
         <br/>
-        <html:select property="lang">
-            <html:option value="-">-</html:option>
-            <html:option value="fr">fr</html:option>
-            <html:option value="en">en</html:option>
-            <html:option value="es">es</html:option>
-            <html:option value="pt">pt</html:option>
-        </html:select>
+        <jsp:include page="/jsp/langSelect.jsp" flush="true" />
         <html:submit property="<%=Action_SetOrAddProperty.SET%>">Set title</html:submit>
         </html:form>
     </div> <!-- class="graybox" -->

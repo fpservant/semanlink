@@ -218,14 +218,14 @@ public static boolean changeObjects(Model mod, Resource oldObject, Resource newO
 	// Peut-on, au fur et a mesure de l'enumeration,
 	// creer les nouveaux statements, et supprimer les anciens ?
 	// I don't know, et je vais la jouer prudente :
-	ArrayList oldStas = new ArrayList();
+	ArrayList<Statement> oldStas = new ArrayList<>();
 	for (;staIte.hasNext();) {
 		oldStas.add(staIte.next());
 	}
-	Iterator ite = oldStas.iterator();
+	Iterator<Statement> ite = oldStas.iterator();
 	boolean x = ite.hasNext();
 	for (;ite.hasNext();) {
-		Statement oldSta = (Statement) ite.next();
+		Statement oldSta = ite.next();
 		mod.add(oldSta.getSubject(), oldSta.getPredicate(), newObject);
 		mod.remove(oldSta);
 	}
@@ -237,28 +237,6 @@ static public String getComment(Resource res) {
 	LabelLN ln = getCommentLN(res);
 	if (ln == null) return null;
 	return ln.getLabel();
-//	Model model = res.getModel();
-//	NodeIterator ite = model.listObjectsOfProperty(res, model.getProperty(SLVocab.COMMENT_PROPERTY));
-//	String x = null;
-//	int k = 0;
-//	if (ite.hasNext()) {
-//		StringBuffer sb = new StringBuffer();
-//		for (;ite.hasNext();) {
-//			RDFNode node = ite.nextNode();
-//			if (k > 0) {
-//				sb.append("\r\n");
-//			}
-//			k++;
-//			if (node instanceof Literal) {
-//				sb.append(((Literal) node).getString()); // toString de RDFNode met @lang
-//			} else {
-//				sb.append(node.toString());
-//			}
-//		}
-//		x = sb.toString();
-//	}
-//	ite.close();
-//	return x;
 }
 
 static public LabelLN getCommentLN(Resource res) {

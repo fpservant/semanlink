@@ -62,6 +62,13 @@ public String getTitle() {
 	} catch (Exception e) { throw new RuntimeException(e) ; }
 }
 
+/** ATTENTION, prend juste le dc:title. Si non doc, n'essaye pas de retourner la fin de l'url, comme le fait getTitle */
+public LabelLN getTitleLN() { // 2021-01
+	try {
+		return this.slDoc.getLabelLN();
+	} catch (Exception e) { throw new RuntimeException(e) ; }
+}
+
 /** ce qui est affiché dans la div "title" de la page : pour aussi mettre un lien vers le doc */
 public String getTitleInTitle() throws Exception {
 	return "<a href=\"" + docStuff.getHref(true) + "\">" + getTitle() + "</a>";

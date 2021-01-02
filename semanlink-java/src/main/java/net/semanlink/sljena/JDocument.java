@@ -1,5 +1,6 @@
 package net.semanlink.sljena;
 import net.semanlink.semanlink.LabelLN;
+import net.semanlink.semanlink.LabelLNImpl;
 import net.semanlink.semanlink.SLDocument;
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLVocab;
@@ -83,6 +84,52 @@ public String getLabel() {
 	} catch (UnsupportedEncodingException e) { throw new SLRuntimeException(e); }
 	*/
 	return x;
+}
+
+public LabelLN getLabelLN() {
+	LabelLN x = null;
+	
+	x = getLabelLN(RDFS.label);
+	if (x != null) return x;
+	
+	x = getLabelLN(DC.title);
+	/* if (x != null) return x;
+	
+	// ce qui suit est envoyé ds Jsp_Page.getLabel(SLDocument) 
+	// par defaut, on prend la fin de l'uri
+	x = getURI();
+	if ( (x.startsWith("file:")) && !(x.endsWith("/")) ) {
+		int n = x.lastIndexOf('/');
+		x = x.substring(n+1);
+	} 
+	// comme uri est encodee, il faut la decoder pour l'afficher sous une forme "human compliant"
+	try {
+		x = URLDecoder.decode(x, "UTF-8");
+	} catch (UnsupportedEncodingException e) { throw new SLRuntimeException(e); }
+	*/
+	return x;
+}
+
+private LabelLN getLabelLN(Property prop) {
+	Model model = this.jModel.getDocsModel();
+	NodeIterator ite = model.listObjectsOfProperty(res, prop);
+	for (;ite.hasNext();) { // normalement yen a qu'un - et on n'en prend qu'un
+		RDFNode node = ite.nextNode();
+		ite.close();
+		if (node instanceof Literal) {
+			Literal literal = (Literal) node;
+			try {
+				String s = literal.getString();
+				String lang = literal.getLanguage();
+				return new LabelLNImpl(s, lang);
+			} catch (Exception e) {
+				return new LabelLNImpl(node.toString(), null); 
+			}
+		} else {
+			throw new RuntimeException("Not a litteral");
+		}
+	}
+	return null;
 }
 
 private String getLabel(Property prop) {
