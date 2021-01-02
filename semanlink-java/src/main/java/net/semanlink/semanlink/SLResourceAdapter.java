@@ -44,6 +44,10 @@ public List getPropertyAsStrings(String pptyUri) {
 	return (List) getPropertiesAsStrings().get(pptyUri);
 }
 
+@Override public LabelLN getLabelLN() { // 2021-01
+	throw new UnsupportedOperationException();
+}
+
 // IMPLEMENTS Comparable
 
 public boolean equals(Object o) {

@@ -2,6 +2,8 @@ package net.semanlink.sljena;
 import java.util.HashMap;
 import java.util.List;
 
+import net.semanlink.semanlink.LabelLN;
+import net.semanlink.semanlink.LabelLNImpl;
 import net.semanlink.semanlink.SLDocument;
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLVocab;
@@ -42,33 +44,57 @@ public int hashCode() { return this.res.hashCode(); }
 
 //IMPLEMENTS SLKeyword
 
+@Override public LabelLN getLabelLN() { // 2021-01
+	return getLabelLN(this.jModel.getKWsModel(), this.res);
+}
 
 public String getLabel() {
 	return getLabel(this.jModel.getKWsModel(), this.res);
-} // getLabel()
+}
 
 /** essaye de trouver le libellé pour language, sinon un autre */
 public String getLabel(String language) {
 	return getLabel(this.jModel.getKWsModel(), this.res, language);
-} // getLabel(String language)
+}
 
-static public String getLabel(Model model, Resource res) {
+static public LabelLN getLabelLN(Model model, Resource res) { // 2021-01
   NodeIterator ite = model.listObjectsOfProperty(res, model.createProperty(SLVocab.PREF_LABEL_PROPERTY));
-  String x = null;
   try {
 		for (;ite.hasNext();) {
 			RDFNode node = ite.nextNode();
 			if (!(node instanceof Literal)) continue;
-			x = ((Literal) node).getString();
-			x = x.trim();
-			if (x.length() > 0) return x;
+			Literal lit = (Literal) node;
+			String s = lit.getString().trim();
+			if (s.length() > 0) {
+				return new LabelLNImpl(s, lit.getLanguage());
+			}
 		}
   } finally {
   	ite.close();
   }
-	// return res2shortString(res);
-	return res.getURI();
+	return new LabelLNImpl(res.getURI(), null);
+}
+
+static public String getLabel(Model model, Resource res) {
+//  NodeIterator ite = model.listObjectsOfProperty(res, model.createProperty(SLVocab.PREF_LABEL_PROPERTY));
+//  String x = null;
+//  try {
+//		for (;ite.hasNext();) {
+//			RDFNode node = ite.nextNode();
+//			if (!(node instanceof Literal)) continue;
+//			x = ((Literal) node).getString();
+//			x = x.trim();
+//			if (x.length() > 0) return x;
+//		}
+//  } finally {
+//  	ite.close();
+//  }
+//	// return res2shortString(res);
+//	return res.getURI();
+	return getLabelLN(model, res).getLabel();
 } // getLabel()
+
+
 static public String getLabel(Model model, Resource res, String language) {
   NodeIterator ite = model.listObjectsOfProperty(res, model.createProperty(SLVocab.PREF_LABEL_PROPERTY));
   String x = null;

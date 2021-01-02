@@ -22,9 +22,7 @@ if (!(jsp.isDisplaySnipOnly())) {
 				 	<%} %>
 				 </span>
 			<%} // @find RDFa bergie%>			<span property="<%=SLVocab.PREF_LABEL_PROPERTY%>"><%=jsp.getTitle()%></span>			<!--  <p property="skos:prefLabel" contenteditable="true"><%=jsp.getTitle()%></p>  -->		</div> <!-- class="title" -->		<%
-	} else { // edit %>		<div class="graybox">				<div class="what"><%=jsp.i18l("tag.label")%></div>				<p></p>				<html:form action="setkwlabel">					<html:text property="kwlabel" value="<%=kw.toString()%>" size="60"/>					<html:hidden property="kwuri" value="<%=kw.getURI()%>" />					<html:select property="lang">						<html:option value="-">-</html:option>						<html:option value="de">de</html:option>
-						<html:option value="en">en</html:option>						<html:option value="es">es</html:option>						<html:option value="fr">fr</html:option>
-						<html:option value="pt">pt</html:option>					</html:select>					<html:submit property="okBtn">OK</html:submit>				</html:form>		</div> <!-- class="graybox" -->	<%} // edit or not %>			
+	} else { // edit %>	   <jsp:include page="keywordLabelEdit.jsp"/>	<%} // edit or not %>			
 	
 	<% /////////////////// COMMENT		 %>							 
 	<jsp:include page="comment.jsp"/>
