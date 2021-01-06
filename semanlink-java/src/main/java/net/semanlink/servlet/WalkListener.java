@@ -29,9 +29,10 @@ public static String DIV_ID_SEPAR = "_";
 private String divIdRoot;
 private String contextPath;
 private Stack treePosition;
+private boolean displayDocsOfRoot;
 
 static public boolean REMOVE_PARENT_TAG_FROM_DOCS_LIST_OF_TAGS = false;
-public boolean DISPLAY_DOCS_OF_ROOT = false;
+// public boolean DISPLAY_DOCS_OF_ROOT = false;
 
 /**
  * @param request
@@ -40,7 +41,8 @@ public boolean DISPLAY_DOCS_OF_ROOT = false;
  * @param jsp par exemple "/jsp/docline.jsp"
  * @param divIdRoot sert de début aux id des divs
  */
-public WalkListener(HttpServletRequest request, HttpServletResponse response, JspWriter out, String divIdRoot, Stack treePosition) {
+public WalkListener(HttpServletRequest request, HttpServletResponse response, JspWriter out, 
+		String divIdRoot, Stack treePosition, boolean displayDocsOfRoot) {
 	this.request = request;
 	this.contextPath = request.getContextPath();
 	String snip = request.getParameter("snip");
@@ -51,6 +53,7 @@ public WalkListener(HttpServletRequest request, HttpServletResponse response, Js
 	this.out = out;
 	this.divIdRoot = divIdRoot;
 	this.treePosition = treePosition;
+	this.displayDocsOfRoot = displayDocsOfRoot;
 	//
 	// this.docJspDispatcher = request.getRequestDispatcher(jsp);
 }
@@ -100,7 +103,7 @@ public void startDocList(SLKeyword kw) {}
  */
 public void printDocument(SLDocument doc, SLKeyword currentKw, List<SLKeyword> kwsOfDoc) throws Exception {
 	
-	if (!DISPLAY_DOCS_OF_ROOT) { // 2021-01 no doc for root
+	if (!displayDocsOfRoot) { // 2021-01 no doc for root
 		if (treePosition.size() == 1) return;
 	}
 		

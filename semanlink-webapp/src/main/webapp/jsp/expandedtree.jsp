@@ -9,7 +9,8 @@ jsp.setShowKeywordsInDocList(true); // pour afficher les keywords des docs de la
 // SLTree tree = new SLTree(kw, "children", null, SLServlet.getSLModel());
 SLTree tree = jsp.getTree();
 Stack treePosition = new Stack();
-WalkListener walkListener = new WalkListener(request, response, out, "kwtree", treePosition);
+boolean displayDocsOfRoot = false; // 2021-01
+WalkListener walkListener = new WalkListener(request, response, out, "kwtree", treePosition, displayDocsOfRoot);
 %>
 <div class="docslistcontainer">
 <%
