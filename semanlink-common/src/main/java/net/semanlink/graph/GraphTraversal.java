@@ -73,7 +73,7 @@ public void depthFirstWalk(WalkListener<NODE> walkListener) throws Exception {
 /**
  * Depth-first traversal. 
  *
- * <p>HOW TO USE: implements WalkListener (for instance extending WalkListenerImpl),
+ * <p>HOW TO USE: implements WalkListener,
  * and call this method. By storing a Stack stack or treePosition as attribute of
  * the class implementing  WalkListener, you can use their content in the implementing methods.</p>
  * @see class SimplePrinter as an example
@@ -197,7 +197,7 @@ public void print() throws Exception {
     depthFirstWalk(printer, stack, treePosition);
 }
 
-static public class SimplePrinter<NODE2> extends WalkListenerImpl<NODE2> {
+static public class SimplePrinter<NODE2> implements WalkListener<NODE2> {
     private Stack<NODE2> stack;
     private Stack<Integer> treePosition;
     public SimplePrinter(Stack<NODE2> stack, Stack<Integer> treePosition) {

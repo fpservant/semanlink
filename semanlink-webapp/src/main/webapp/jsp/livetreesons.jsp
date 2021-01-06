@@ -57,7 +57,7 @@ String context = SLServlet.getServletUrl();
 // COMMENT SAVOIR QU'ON EST SUR UNE PAGE KW ???
 // String displayedKW = (String) request.getAttribute("displayedKW");
 // SLKeyword displayedKW = (SLKeyword) request.getAttribute("displayedKW");
-String targetUri = (String) request.getParameter("targeturi");
+String targetUri = request.getParameter("targeturi");
 if (targetUri == null) {
 	targetUri = (String) request.getAttribute("targeturi");
 } else {
@@ -157,5 +157,20 @@ for (int i = 0; i < children.size(); i++) {	// We check whether a son has child
 POUR AFFICHER AUSSI LES DOCUMENTSATTENTION : cette version ne supporte pas le "highlight"RESTE A FAIRE :- style des liens (comment ? pour le moment, tous ds style livetree cf slstyles.css)- le highlight : ne déclenche pas la bonne action (modifier liveSearchSubmit ds livesearch.js, et livesearchform.jsppour y mettre ds un autre attribut hidden le dochref (et non le kwhref)- lien : ouvre la page doc, pas le doc lui même (devrait dépendre du edit)- pas d'icône image pour afficher image - pourrait être à la place image vide du cas sans fils- affichage en plein pagePOUR AVOIR POTENTIELLEMENT PLUSIEURS ARBRES SUR UNE MEME PAGE :- modifier l'id de ligne : de 1_2 à [treeid]1_2 (cf sonid)- ds livesearch.js : modif du event handler// DUR DUR !!!*/// Bean_DocList beanDocList = (Bean_DocList) request.getAttribute("net.semanlink.servlet.Bean_DocList");
 //2007-08 Niamey intersection in andKws// if (withDocs) {
 if (!withdocs_notonfirstlevel) {
-	if ((withDocs) && (kw != null)) {		List docs = kw.getDocuments();		int nn = docs.size();		if (nn > 0) {			Jsp_Keyword jsp_keyword = new Jsp_Keyword(kw, request);			request.setAttribute("net.semanlink.servlet.jsp", jsp_keyword);			// code copié de Jsp_Keyword			SLKeyword[] dontShow = new SLKeyword[1]; dontShow[0] = kw;			jsp_keyword.sort(docs, dontShow);			Bean_DocList x = new Bean_DocList();			x.setList(docs);			x.setShowKwsOfDocs(true, dontShow);			x.setUri(kw.getURI());			request.setAttribute("net.semanlink.servlet.Bean_DocList", x);			%>			<jsp:include page="doclist.jsp"/>			<%		} // nn > 0	}
+	if ((withDocs) && (kw != null)) {		List<SLDocument> docs = kw.getDocuments();		int nn = docs.size();		if (nn > 0) {			Jsp_Keyword jsp_keyword = new Jsp_Keyword(kw, request);			request.setAttribute("net.semanlink.servlet.jsp", jsp_keyword);			// code copié de Jsp_Keyword. 2021-01: y comprends rien. Tant pis
+			
+			Bean_DocList x = null;
+			if (WalkListener.REMOVE_PARENT_TAG_FROM_DOCS_LIST_OF_TAGS) {
+		        SLKeyword[] dontShow = new SLKeyword[1]; dontShow[0] = kw;
+		        jsp_keyword.sort(docs, dontShow);
+		        x = new Bean_DocList();
+		        x.setList(docs);
+		        x.setShowKwsOfDocs(true, dontShow); // 2021-01			
+			} else {
+		        SLKeyword[] dontShow = new SLKeyword[0];
+		        jsp_keyword.sort(docs, dontShow);
+		        x = new Bean_DocList();
+		        x.setList(docs);
+		        x.setShowKwsOfDocs(true, dontShow); // 2021-01          				
+			}			x.setUri(kw.getURI());			request.setAttribute("net.semanlink.servlet.Bean_DocList", x);			%>			<jsp:include page="doclist.jsp"/>			<%		} // nn > 0	}
 }%>

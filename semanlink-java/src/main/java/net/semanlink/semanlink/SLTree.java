@@ -3,11 +3,11 @@ import java.util.*;
 
 import net.semanlink.graph.Graph;
 import net.semanlink.graph.GraphTraversal;
-import net.semanlink.graph.WalkListenerImpl;
+import net.semanlink.graph.WalkListener;
 /**
  * Arbre issu d'un kw
  * 
- * How to use: create an instance, create a SLTree.SLWalkListener (for instance extending SLTree.SLWalkListenerAdapter),
+ * How to use: create an instance, create a SLTree.SLWalkListener,
  * then call walk(SLWalkListener walkListener)
  */
 public class SLTree extends GraphTraversal<SLKeyword> implements SLVocab {
@@ -110,78 +110,27 @@ static class ParentsGetter implements VoisinsGetter {
 //
 
 public interface SLWalkListener {
-	public void startSeed(SLKeyword kw) throws Exception;
+	default void startSeed(SLKeyword kw) throws Exception {}
 	/** début "sous-menu" de kw (children et/ou docs) */
-	public void startList(SLLabeledResource kw) throws Exception;
+	default void startList(SLLabeledResource kw) throws Exception {}
 	/** emis si kw n'a pas de sous liste (cad si startList pas émis) */
-	public void noList(SLResource kw) throws Exception;
-	public void startKwList(SLLabeledResource kw) throws Exception;
+	default void noList(SLResource kw) throws Exception {}
+	default void startKwList(SLLabeledResource kw) throws Exception {}
 	/** emis si kw n'a pas de sous liste de kws (mais en a une de doc : pas émis si on a noList émis) */
-	public void noKwList(SLLabeledResource kw) throws Exception;
-	public void startKeyword(SLKeyword kw) throws Exception;
-	public void endKeyword(SLKeyword kw) throws Exception;
+	default void noKwList(SLLabeledResource kw) throws Exception {}
+	default void startKeyword(SLKeyword kw) throws Exception {}
+	default void endKeyword(SLKeyword kw) throws Exception {}
 	/** emis si on est deja tombe sur kw precedemment. */
-	public void repeatKeyword(SLKeyword kw) throws Exception;
-	public void endKwList(SLLabeledResource kw) throws Exception;
-	public void startDocList(SLKeyword kw) throws Exception;
+	default void repeatKeyword(SLKeyword kw) throws Exception {}
+	default void endKwList(SLLabeledResource kw) throws Exception {}
+	default void startDocList(SLKeyword kw) throws Exception {}
 	/** emis si kw n'a pas de sous liste de docs (mais en a une de kws : pas émis si on a noList émis) */
-	public void noDocList(SLLabeledResource kw) throws Exception;
-	public void printDocument(SLDocument doc, SLKeyword currentKw, List<SLKeyword> kwsOfDoc) throws Exception;
-	public void endDocList(SLKeyword kw) throws Exception;
-	public void endList(SLLabeledResource kw) throws Exception;
-	public void endSeed(SLKeyword kw) throws Exception;
+	default void noDocList(SLLabeledResource kw) throws Exception {}
+	default void printDocument(SLDocument doc, SLKeyword currentKw, List<SLKeyword> kwsOfDoc) throws Exception {}
+	default void endDocList(SLKeyword kw) throws Exception {}
+	default void endList(SLLabeledResource kw) throws Exception {}
+	default void endSeed(SLKeyword kw) throws Exception {}
 }
-public static class SLWalkListenerAdapter implements SLWalkListener {
-	public void startSeed(SLKeyword kw) throws Exception {}
-	public void startList(SLLabeledResource res) throws Exception {}
-	/** emis si kw n'a pas de sous liste */
-	public void noList(SLResource kw) throws Exception {}
-	public void startKwList(SLLabeledResource kw) throws Exception {}
-	/** emis si kw n'a pas de sous liste de kws (mais en a une de doc : pas émis si on a noList émis) */
-	public void noKwList(SLLabeledResource kw) throws Exception {}
-	public void startKeyword(SLKeyword kw) throws Exception {}
-	public void endKeyword(SLKeyword kw) throws Exception {}
-	/** emis si on est deja tombe sur kw precedemment. */
-	public void repeatKeyword(SLKeyword kw) throws Exception {}
-	public void endKwList(SLLabeledResource kw) throws Exception {}
-	public void startDocList(SLKeyword kw) throws Exception {}
-	/** emis si kw n'a pas de sous liste de docs (mais en a une de kws : pas émis si on a noList émis) */
-	public void noDocList(SLLabeledResource kw) throws Exception {}
-	public void printDocument(SLDocument doc, SLKeyword currentKw, List<SLKeyword> kwsOfDoc) throws Exception {}
-	public void endDocList(SLKeyword kw) throws Exception {}
-	public void endList(SLLabeledResource res) throws Exception {}
-	public void endSeed(SLKeyword kw) throws Exception {}
-}
-
-
-
-/*
- * 
- * SLtreeNew(Graph)
- * new GraphWalkListener(treePosition)
- * 
- */
-/*
-public void walk(SLWalkListener walkListener) throws Exception {
-	// System.out.println("SLTree.walk " + root);
-	setWalkListener(walkListener);
-	// this.hmKws = new HashMap();
-	this.hsKws = new HashSet();
-	this.hsDocs = new LinkedHashSet();
-	// this.hsKwsOfDocs = new HashSet();
-	this.hmKwsOfDocs = new HashMap();
-	if (this.property.equals(SLVocab.HAS_PARENT_PROPERTY)) {
-		this.getter = new ParentsGetter();
-	} else {
-		this.getter = new ChildrenGetter();
-	}
-	Stack treePosition = new Stack();
-	treePosition.add(new Integer(0));
-	walkListener.startWalk(root);
-	walk(root, treePosition, walkListener);
-	walkListener.endWalk(root);
-}*/
-
 
 public void walk(SLWalkListener slWalkListener) throws Exception {
 	walk(slWalkListener, new Stack<Integer>());
@@ -197,7 +146,7 @@ public void walk(SLWalkListener slWalkListener, Stack<Integer> treePosition) thr
 }
 
 
-class GraphWalkListener extends WalkListenerImpl<SLKeyword> {
+class GraphWalkListener implements WalkListener<SLKeyword> {
 	private SLWalkListener slWalkListener1;
 	private Stack<Integer> treePosition;
 
@@ -228,12 +177,6 @@ class GraphWalkListener extends WalkListenerImpl<SLKeyword> {
   public void startNode(SLKeyword kw) throws Exception {
   	slWalkListener1.startKeyword(kw);
 
-  	/*
-  	HashSet subHsDocs = new HashSet();
-  	hsDocsStack.push(subHsDocs);
-  	subHsDocs.addAll(docs);
-  	*/
-  	
   	/// CHANGER ICI LE BONUS_POUR_PARENT PAR NB DESCENDANTS
   	// We put in the tag cloud the parents of the kws of the tree
 		List<SLKeyword> list = getter.getInvKeywords(kw);
@@ -298,10 +241,6 @@ class GraphWalkListener extends WalkListenerImpl<SLKeyword> {
   private void handleDocList(SLKeyword kw, List<SLDocument> docs) throws Exception {
 		slWalkListener1.startDocList(kw);
   	
-  	/*HashSet subHsDocs = new HashSet();
-  	hsDocsStack.push(subHsDocs);
-  	subHsDocs.addAll(docs);*/
-  	
   	if (sortProperty != null) {
   		if (SLVocab.HAS_KEYWORD_PROPERTY.equals(sortProperty)) {
   			SLKeyword[] k = new SLKeyword[1]; k[0] = kw;
@@ -354,7 +293,8 @@ class GraphWalkListener extends WalkListenerImpl<SLKeyword> {
 public HashSet<SLDocument> getDocsSet() throws Exception {
 	if (this.hsDocs == null) {
 		if (this.slWalkListener == null) {
-			this.slWalkListener = new SLWalkListenerAdapter();
+			this.slWalkListener = new SLWalkListener() {
+			};
 		}
 		walk(this.slWalkListener);
 	}
@@ -374,7 +314,8 @@ public SLDocument[] getDocs() throws Exception {
 public HashSet<SLKeyword> getNodes() throws Exception {
 	if (this.hs == null) {
 		if (this.slWalkListener == null) {
-			this.slWalkListener = new SLWalkListenerAdapter();
+			this.slWalkListener = new SLWalkListener() {
+			};
 		}
 		walk(this.slWalkListener);
 	}
@@ -388,7 +329,8 @@ public HashSet<SLKeyword> getNodes() throws Exception {
 public SLKeyword[] getKwsOfDocs() throws Exception {
 	if (this.hmKwsOfDocs == null) {
 		if (this.slWalkListener == null) {
-			this.slWalkListener = new SLWalkListenerAdapter();
+			this.slWalkListener = new SLWalkListener() {
+			};
 		}
 		walk(this.slWalkListener);
 	}
@@ -415,7 +357,8 @@ public List<SLKeyword> getLinkedKws() throws Exception {
 public HashMap<SLKeyword, Integer> getLinkedKeywords2NbHashMap() throws Exception {
 	if (this.hmKwsOfDocs == null) {
 		if (this.slWalkListener == null) {
-			this.slWalkListener = new SLWalkListenerAdapter();
+			this.slWalkListener = new SLWalkListener() {
+			};
 		}
 		walk(this.slWalkListener);
 	}

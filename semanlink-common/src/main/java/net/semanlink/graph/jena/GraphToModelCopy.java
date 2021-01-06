@@ -5,7 +5,7 @@ import java.util.Stack;
 
 import net.semanlink.graph.Graph;
 import net.semanlink.graph.GraphTraversal;
-import net.semanlink.graph.WalkListenerImpl;
+import net.semanlink.graph.WalkListener;
 
 import org.apache.jena.rdf.model.*;
 
@@ -17,7 +17,7 @@ import org.apache.jena.rdf.model.*;
  *  and using a given property for the parent-child link.</p>
  *  <p>Assumes that the source graph is made of Resource.</p>
  */
-public class GraphToModelCopy extends WalkListenerImpl<Resource> {
+public class GraphToModelCopy implements WalkListener<Resource> {
 	
 public static final String SEPARATOR_IN_POSITION = ".";
 protected Graph<Resource> sourceGraph;

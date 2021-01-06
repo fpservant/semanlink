@@ -1,4 +1,4 @@
-/* Created on 15 d�c. 03 */
+/* Created on 15 déc. 03 */
 package net.semanlink.servlet;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -17,25 +17,28 @@ import net.semanlink.semanlink.SLLabeledResource;
 import net.semanlink.semanlink.SLTree;
 /**
  * To get an expanded tree
- * ATTENTION � na pas mettre de blanc ou cr dans le dom de l'arbre (cf livetreesons.jsp)
- * (d'o� les print et non println)
+ * ATTENTION à ne pas mettre de blanc ou cr dans le dom de l'arbre (cf livetreesons.jsp)
+ * (d'où les print et non println)
  * @author fps
  */
-public class WalkListener extends SLTree.SLWalkListenerAdapter {
+public class WalkListener implements SLTree.SLWalkListener {
 private HttpServletRequest request;
 private HttpServletResponse response;
 private JspWriter out;
-// private RequestDispatcher docJspDispatcher;
 public static String DIV_ID_SEPAR = "_";
 private String divIdRoot;
 private String contextPath;
 private Stack treePosition;
+
+static public boolean REMOVE_PARENT_TAG_FROM_DOCS_LIST_OF_TAGS = false;
+public boolean DISPLAY_DOCS_OF_ROOT = false;
+
 /**
  * @param request
  * @param response
  * @param out
  * @param jsp par exemple "/jsp/docline.jsp"
- * @param divIdRoot sert de d�but aux id des divs
+ * @param divIdRoot sert de début aux id des divs
  */
 public WalkListener(HttpServletRequest request, HttpServletResponse response, JspWriter out, String divIdRoot, Stack treePosition) {
 	this.request = request;
@@ -78,7 +81,7 @@ public void repeatKeyword(SLKeyword kw) throws ServletException, IOException {
 	/*this.out.println("<li>");
 	printHRefToKw1(kw);
 	this.out.println("(...)</li>");*/
-	// on le met, ferm�. Il faudrait tester si il y a de enfants ou pas (rare!) // TODO
+	// on le met, fermé. Il faudrait tester si il y a des enfants ou pas (rare!) // TODO
 	String divId = treePosition2DivId(treePosition);
 	String encodedUri = java.net.URLEncoder.encode(kw.getURI(),"UTF-8");
 	this.out.print("<li><img src=\"" + this.contextPath + "/ims/box_closed.gif\" id=\"trigger:" + divId +"\" alt=\"\" width=\"8px\" onclick=\"toggle2('" + divId+"', '"+encodedUri+"', 'true', 'false')\"/>");
@@ -91,18 +94,32 @@ public void endKwList(SLLabeledResource kw) throws IOException {}
 public void startDocList(SLKeyword kw) {}
 /**
  * @param currentKw le kw au dessous duquel on affiche doc. Permet,
- * si on le souhaite, de purger kwsOfDoc de sa valeur � l'affichage
- * @param kwsOfDoc liste des SLKeyword du doc (�gale � doc.getSLKeywords())
+ * si on le souhaite, de purger kwsOfDoc de sa valeur à l'affichage
+ * @param kwsOfDoc liste des SLKeyword du doc (égale à doc.getSLKeywords())
  * (parent du doc ds l'arbre)
  */
-public void printDocument(SLDocument doc, SLKeyword currentKw, List kwsOfDoc) throws Exception {
-	this.request.setAttribute("net.semanlink.servlet.jsp.currentdoc",doc);
-	int n = kwsOfDoc.size();
-	List kwsToShow = new ArrayList(n);
-	for (int i = 0; i < n; i++) {
-		Object kw = kwsOfDoc.get(i); 
-		if (!currentKw.equals(kw)) kwsToShow.add(kw);
+public void printDocument(SLDocument doc, SLKeyword currentKw, List<SLKeyword> kwsOfDoc) throws Exception {
+	
+	if (!DISPLAY_DOCS_OF_ROOT) { // 2021-01 no doc for root
+		if (treePosition.size() == 1) return;
 	}
+		
+	this.request.setAttribute("net.semanlink.servlet.jsp.currentdoc",doc);
+	
+	// show or not the parent tag, depending on REMOVE_PARENT_TAG_FROM_DOCS_LIST_OF_TAGS // 2021-01
+	List<SLKeyword> kwsToShow = null;
+	if (REMOVE_PARENT_TAG_FROM_DOCS_LIST_OF_TAGS) {
+		int n = kwsOfDoc.size();
+		kwsToShow = new ArrayList<>(n);
+		for (int i = 0; i < n; i++) {
+			SLKeyword kw = kwsOfDoc.get(i); 
+			if (!currentKw.equals(kw)) kwsToShow.add(kw);
+		}
+				
+	} else {
+		kwsToShow = kwsOfDoc;
+	}	
+	
 	this.request.setAttribute("net.semanlink.servlet.jsp.currentdoc.kws", kwsToShow);	
 	this.out.flush();
 	// this.docJspDispatcher.include(this.request, this.response);
@@ -121,7 +138,7 @@ public void endSeed(SLKeyword kw) throws IOException {
 
 /** Ecrit un lien vers un kw */
 private void printHRefToKw(SLKeyword kw) throws IOException {
-	// attention � l'url rewriting !
+	// attention à l'url rewriting !
 	// this.out.print("<a href=\"" + HTML_Link.getHREF(kw) + "\">");
 	// 2020-02 (?)
 	this.out.print("<a href=\"" + this.response.encodeURL(HTML_Link.getTagURL(this.contextPath, kw.getURI(), false, ".html")) + "\">");
@@ -141,11 +158,11 @@ private String treePosition2DivId(Stack treePosition) {
 
 /**
  * ATTENTION A NE PAS INTRODUIRE DE TEXTE "VIDE" ENTRE LES DIFFERENTS ELEMENTS
- * une image vide pour avoir le m�me nb de fils que dans le cas avec descendant (cf highlight de livesearch) et
- * avoir aussi le trigger:divid qui sert � se rep�rer ds le parcours de l'arbre.
+ * une image vide pour avoir le même nb de fils que dans le cas avec descendant (cf highlight de livesearch) et
+ * avoir aussi le trigger:divid qui sert à se repérer ds le parcours de l'arbre.
  *
- * ci-dessous, mettre une id � li ne marche pas parce que pour le highlight, on met � LSHighlight,
- * puis � null, l'id de la ligne s�lectionn�e
+ * ci-dessous, mettre une id à li ne marche pas parce que pour le highlight, on met à LSHighlight,
+ * puis à null, l'id de la ligne sélectionnée
  * @throws UnsupportedEncodingException
  */
 public static String treeLineKwWoDescendant(SLKeyword kw, String divId) throws UnsupportedEncodingException {
