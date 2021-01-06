@@ -44,19 +44,27 @@
     if ((jsp_doc != null) || (jsp_kw != null)) uri = jsp_r.getUriFormValue();
     boolean edit = (Boolean.TRUE.equals(session.getAttribute("net.semanlink.servlet.edit")));
     String method, liveSearchSubmitFunction;
+    int size;
+    String align;
     if (edit) {
         method = "post";
         liveSearchSubmitFunction = "liveSearchSubmit4Post";
+        
+        size = 16; // pour avoir "New" button sur la même ligne
+        align = "center";
     } else {
         method = "get";
         liveSearchSubmitFunction = "liveSearchSubmit4Get";
+        
+        size = 21;
+        align = "center";
     }
 %>
 
 <div class="browser">
     <div class="title trigger"><%=jsp.i18l("livesearchform.search")%></div>
     <form id="searchform" method="<%=method%>" onsubmit="return <%=liveSearchSubmitFunction%>();" action="<%=response.encodeURL(request.getContextPath()+"/gokeyword.do")%>">
-        <p align="center"><input type="text" id="livesearch" name="q" onkeypress="liveSearchStart()" size="21" tabindex="1" placeholder="<%=jsp.i18l("livesearchform.search.placeholder")%>"/>
+        <p align="<%=align%>"><input type="text" id="livesearch" name="q" onkeypress="liveSearchStart()" size="<%=size%>" tabindex="1" placeholder="<%=jsp.i18l("livesearchform.search.placeholder")%>"/>
         <input type="hidden" name="kwhref" value="" /><%//kwhref is documented with the href of the hghlighted line by liveSearchSubmitFunction%> 
         <%if (andTargetUri != null) { // 2020-02
             if (!edit) {%>
@@ -64,10 +72,10 @@
         <%}} // if uri != null%>
         <%if (edit) {
             if (uri != null) {%>
-                <!-- BEWARE, by default, button is type submit. Must not be here -->
+                 <!-- BEWARE, by default, button is type submit. Must not be here -->
                 <button type="button" onclick="if (askConfirmationCreateTag()) {document.getElementById('searchform').submit()}; return false;">New</button>
+                 </p><p align="<%=align%>" style="padding-left:4px;padding-top:0px;padding-bottom:4px;padding-right:0px;margin:0">
                 <input type="hidden" name="targeturi" value="<%=uri%>" /><%//uri of this page (doc or tag)%>
-                </p><p align="center" style="padding-left:4px;padding-top:0px;padding-bottom:4px;padding-right:0px;margin:0">
                     <select name="actionprop">
                         <%if (jsp_doc != null) {%>
                             <option value="add2doc"><%=jsp.i18l("livesearchform.addToTags")%></option>
