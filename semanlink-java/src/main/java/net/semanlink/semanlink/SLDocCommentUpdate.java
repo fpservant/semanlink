@@ -13,9 +13,22 @@ import java.util.regex.Pattern;
  */
 public class SLDocCommentUpdate {
 
-// set doc's comment to a newComment, and based on this new comment
-// (and the previous value), computes and updates the sl:relatedDocs
-// return true if updated, false if no change done (and this is not the same as oldComment == newComment !)
+/**
+ * set doc's comment to a newComment, and based on this new comment
+ * (and the previous value), computes and updates the sl:relatedDoc(s)
+ * @return true if updated, false if no change done (and this is not the same as oldComment == newComment !)
+ */
+	
+// we compare old and new comment, in order to be able to remove the removed links.
+// Is this really necessary? Why not removing them all, then adding the new ones?
+// That wouldn't be OK if there are other sources for the sl:relatedDoc property
+// (or if we want to be able to manually change them - ex. removing such a triple
+// by hand, although the link is in the comment field
+	
+// 2021-01-08: thinking about using this for markdown files (not just comment)
+// On ne peut pas faire la comparaison oldValue / newValue
+// (the file may have been changed externally)
+// The only way is to start from scratch (and/or use a different prop)
 static public boolean changeComment(SLModel mod, SLDocument doc, String newComment, String newLang, String contextUrl) { // 2020-11
 	LabelLN oldCommentLN = doc.getCommentLN();
 	String oldComment = null, oldLang = null;
