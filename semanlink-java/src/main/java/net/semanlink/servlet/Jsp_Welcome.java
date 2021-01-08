@@ -85,23 +85,24 @@ public String bookmarkletJavascript() throws MalformedURLException {
 
 // deactivated actually, see getLinkedKeywords2NbHashMap
 
-public HashMap getLinkedKeywords2NbHashMap() throws Exception {
-	boolean displayTagCloudOnHonePage = false;
+@Override public HashMap<SLKeyword, Integer> getLinkedKeywords2NbHashMap() throws Exception {
+	boolean displayTagCloudOnHonePage = true; // 2021-01
 	if (displayTagCloudOnHonePage) {
-		List docs = getDocs();
+		List<SLDocument> docs = getDocs();
 		return SLUtils.getLinkedKeywords2NbHashMap(docs);
 	} else {
 		return null;
 	}
 }
 
-public List getDocs() throws Exception {
+public List<SLDocument> getDocs() throws Exception {
 	return computeDocs();
 }
 
-public List computeDocs() throws Exception {
+public List<SLDocument> computeDocs() throws Exception {
 	SLModel mod = SLServlet.getSLModel();
-	return mod.getRecentDocs(30, SLServlet.getJspParams().getDateProperty(request));
+	RecentDocsAndKws recents = new RecentDocsAndKws(mod, 31, 0, SLServlet.getJspParams().getDateProperty(request));
+	return recents.getRecentDocs(); 
 }
 
 public HTML_Link linkToThisAndKw(SLKeyword otherKw) throws IOException {

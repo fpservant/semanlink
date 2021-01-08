@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.semanlink.semanlink.SLDocument;
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLModel;
 import net.semanlink.semanlink.SLTree;
@@ -29,7 +30,7 @@ public abstract class Jsp_DocumentList extends Jsp_Page {
 /** au cas où on fait un and avec des kws */
 protected SLKeyword[] kws;
 // use getter
-protected List docs; // finalement éventuellement filtré par les kws
+protected List<SLDocument> docs; // finalement éventuellement filtré par les kws
 
 //
 // CONSTRUCTION
@@ -60,8 +61,8 @@ public void setDocs() throws Exception {
 	}
 }
 
-/** liste de SLDocument : la liste des docs, non filtrée (par l'éventuel AND de kws)*/
-protected abstract List computeDocs() throws Exception;
+/** la liste des docs, non filtrée (par l'éventuel AND de kws)*/
+protected abstract List<SLDocument> computeDocs() throws Exception;
 
 //
 //
@@ -69,11 +70,11 @@ protected abstract List computeDocs() throws Exception;
 
 // A mettre ds SLModel ?
 /** modifie docs. Fait un AND avec les kws. */
-public static void filterDocsByKws(List docs, SLKeyword[] kws, boolean childrenOnly) throws Exception {
+public static void filterDocsByKws(List<SLDocument> docs, SLKeyword[] kws, boolean childrenOnly) throws Exception {
 	for (int i = 0; i < kws.length ;i++) {
-		HashSet set = null;
+		HashSet<SLDocument> set = null;
 		if (childrenOnly) {
-			set = new HashSet(kws[i].getDocuments());
+			set = new HashSet<>(kws[i].getDocuments());
 		} else {
 			SLTree tree = new SLTree(kws[i], "children", null, SLServlet.getSLModel());
 			set = tree.getDocsSet();
@@ -90,12 +91,12 @@ public static void filterDocsByKws(List docs, SLKeyword[] kws, boolean childrenO
 public abstract String getTitle();
 
 /** non nécessairement triée */
-public List getDocs() throws Exception { return this.docs; }
+public List<SLDocument> getDocs() throws Exception { return this.docs; }
 
 /** triée */
 public Bean_DocList getDocList() throws Exception {
 	Bean_DocList x = new Bean_DocList();
-	List docList = getDocs();
+	List<SLDocument> docList = getDocs();
 	sort(docList);
 	x.setList(docList);
 	x.setShowKwsOfDocs(true, null);
@@ -107,16 +108,15 @@ public abstract String getLinkToThis() throws UnsupportedEncodingException;*/
 
 /** la liste des mots clés liés, cad ayant un doc en commun */
 public SLKeyword[] getLinkedKeywords() throws Exception {
-	List docs = getDocs();
-	HashSet hs = SLUtils.getKeywords(docs);
-	SLKeyword[] x = (SLKeyword[]) hs.toArray(new SLKeyword[0]);
+	List<SLDocument> docs = getDocs();
+	HashSet<SLKeyword> hs = SLUtils.getKeywords(docs);
+	SLKeyword[] x = hs.toArray(new SLKeyword[0]);
 	Arrays.sort(x);
 	return x;
 }
 
-public HashMap getLinkedKeywords2NbHashMap() throws Exception {
-	List docs = getDocs();
-	return SLUtils.getLinkedKeywords2NbHashMap(docs);
+@Override public HashMap<SLKeyword, Integer> getLinkedKeywords2NbHashMap() throws Exception {
+	return SLUtils.getLinkedKeywords2NbHashMap(getDocs());
 }
 
 /** "lien vers un mot clé lié" cad vers un AND de this et du mot clé 

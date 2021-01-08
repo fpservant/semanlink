@@ -1656,59 +1656,59 @@ public boolean isLocalDocument(String docUri) throws IOException, URISyntaxExcep
 /** Allows to have Corrections made on a file (either thesaurus or document file) at the time it is loaded. */
 public abstract void setCorrector(ModelCorrector corrector);
 
+////
+//// cf recent docs and kws
+////
 //
-// cf recent docs and kws
-//
-
-//peut s'optimiser (par ex en ne recalculant pas tout de YearMonthDay.daysAgo(i)
-public List<SLDocument> getRecentDocs(int nbOfDays, String dateProp) throws Exception {
-//	List<SLDocument> x = getDocumentsList(dateProp, (new YearMonthDay()).getYearMonthDay("-"),null);
-//	for (int i = 1; i < nbOfDays+1; i++) {
-//		List<SLDocument> y = getDocumentsList(dateProp, (YearMonthDay.daysAgo(i)).getYearMonthDay("-"),null);
+////peut s'optimiser (par ex en ne recalculant pas tout de YearMonthDay.daysAgo(i)
+//public List<SLDocument> getRecentDocs(int nbOfDays, String dateProp) throws Exception {
+////	List<SLDocument> x = getDocumentsList(dateProp, (new YearMonthDay()).getYearMonthDay("-"),null);
+////	for (int i = 1; i < nbOfDays+1; i++) {
+////		List<SLDocument> y = getDocumentsList(dateProp, (YearMonthDay.daysAgo(i)).getYearMonthDay("-"),null);
+////		SLUtils.reverseSortByProperty(y, dateProp);
+////		x.addAll(y);
+////	}
+//	List<SLDocument> x = new ArrayList<>();
+//	for (int i = -1; i < nbOfDays+1; i++) { // -1 for tomorrow (avoid pbs when deploying to kattare just created docs
+//		List<SLDocument> y = getDocumentsList(dateProp, (YearMonthDay.daysAgo(i)).getYearMonthDay("-"), null);
 //		SLUtils.reverseSortByProperty(y, dateProp);
 //		x.addAll(y);
 //	}
-	List<SLDocument> x = new ArrayList<>();
-	for (int i = -1; i < nbOfDays+1; i++) { // -1 for tomorrow (avoid pbs when deploying to kattare just created docs
-		List<SLDocument> y = getDocumentsList(dateProp, (YearMonthDay.daysAgo(i)).getYearMonthDay("-"), null);
-		SLUtils.reverseSortByProperty(y, dateProp);
-		x.addAll(y);
-	}
-	return x;
-}
-
-//peut s'optimiser (par ex en ne recalculant pas tout de YearMonthDay.daysAgo(i)
-public List<SLKeyword> getRecentKws(int nbOfDays, String dateProp) throws Exception {
-//	List<SLKeyword> x = getKeywordsList(dateProp, (new YearMonthDay()).getYearMonthDay("-"),null);
-//	for (int i = 1; i < nbOfDays+1; i++) {
-//		List<SLKeyword> y = getKeywordsList(dateProp, (YearMonthDay.daysAgo(i)).getYearMonthDay("-"), null);
+//	return x;
+//}
+//
+////peut s'optimiser (par ex en ne recalculant pas tout de YearMonthDay.daysAgo(i)
+//public List<SLKeyword> getRecentKws(int nbOfDays, String dateProp) throws Exception {
+////	List<SLKeyword> x = getKeywordsList(dateProp, (new YearMonthDay()).getYearMonthDay("-"),null);
+////	for (int i = 1; i < nbOfDays+1; i++) {
+////		List<SLKeyword> y = getKeywordsList(dateProp, (YearMonthDay.daysAgo(i)).getYearMonthDay("-"), null);
+////		SLUtils.reverseSortByProperty(y, dateProp);
+////		x.addAll(y);
+////	}
+//	List<SLKeyword> x = new ArrayList<>();
+//	for (int i = -1; i < nbOfDays+1; i++) { // -1 for tomorrow (avoid pbs when deploying to kattare just created docs
+//		List<SLKeyword> y = getKeywordsList(dateProp, (YearMonthDay.daysAgo(i)).getYearMonthDay("-"),null);
 //		SLUtils.reverseSortByProperty(y, dateProp);
 //		x.addAll(y);
 //	}
-	List<SLKeyword> x = new ArrayList<>();
-	for (int i = -1; i < nbOfDays+1; i++) { // -1 for tomorrow (avoid pbs when deploying to kattare just created docs
-		List<SLKeyword> y = getKeywordsList(dateProp, (YearMonthDay.daysAgo(i)).getYearMonthDay("-"),null);
-		SLUtils.reverseSortByProperty(y, dateProp);
-		x.addAll(y);
-	}
-	// Patch bug googlebot 2008-09
-	/*for (int i = x.size()-1; i > -1; i--) {
-		SLKeyword kw = (SLKeyword) x.get(i);
-		List docs = kw.getDocuments();
-		if ((docs == null) || (docs.size() == 0)) {
-			x.remove(i);
-		}
-	}*/
-	return x;
-}
-
-public List<SLDocument> getRecentDocs(int nbOfDays) throws Exception {
-	return getRecentDocs(nbOfDays, SLVocab.SL_CREATION_DATE_PROPERTY);
-}
-
-public List<SLKeyword> getRecentKws(int nbOfDays) throws Exception {
-	return getRecentKws(nbOfDays, SLVocab.SL_CREATION_DATE_PROPERTY);
-}
+//	// Patch bug googlebot 2008-09
+//	/*for (int i = x.size()-1; i > -1; i--) {
+//		SLKeyword kw = (SLKeyword) x.get(i);
+//		List docs = kw.getDocuments();
+//		if ((docs == null) || (docs.size() == 0)) {
+//			x.remove(i);
+//		}
+//	}*/
+//	return x;
+//}
+//
+//public List<SLDocument> getRecentDocs(int nbOfDays) throws Exception {
+//	return getRecentDocs(nbOfDays, SLVocab.SL_CREATION_DATE_PROPERTY);
+//}
+//
+//public List<SLKeyword> getRecentKws(int nbOfDays) throws Exception {
+//	return getRecentKws(nbOfDays, SLVocab.SL_CREATION_DATE_PROPERTY);
+//}
 
 public List<SLDocument> geDocs(Date date) throws Exception {
 	return getDocumentsList(SLVocab.SL_CREATION_DATE_PROPERTY, new YearMonthDay(date).getYearMonthDay("-"),null);

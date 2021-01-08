@@ -185,7 +185,7 @@ public LabelLN getCommentLN() { // 2021-01
 	return x;
 }*/
 
-public HashMap<SLKeyword, Integer> getLinkedKeywords2NbHashMap() throws Exception {
+@Override public HashMap<SLKeyword, Integer> getLinkedKeywords2NbHashMap() throws Exception {
 	HashMap<SLKeyword, Integer> x=null;
 	// DisplayMode mode = getDisplayMode();
 	// 2013-03

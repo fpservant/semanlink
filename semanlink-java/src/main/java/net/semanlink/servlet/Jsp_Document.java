@@ -172,7 +172,7 @@ public String getLinkToThis(String action) throws UnsupportedEncodingException {
  * @throws IOException
  *  @deprecated, utiliser la version avec le boolean sort
  */
-public List getDocsInFolder() throws IOException, URISyntaxException {
+public List<SLDocument> getDocsInFolder() throws IOException, URISyntaxException {
 	return getDocsInFolder(true);
 }
 
@@ -244,7 +244,7 @@ public SLKeyword[] getLinkedKeywords() throws IOException, URISyntaxException {
 
 /** clé un linked SLKeyword, data nb d'occurrences.
  *  pertinent seulement au cas ou on a affaire a un dossier. */
-public HashMap<SLKeyword, Integer> getLinkedKeywords2NbHashMap() throws Exception {
+@Override public HashMap<SLKeyword, Integer> getLinkedKeywords2NbHashMap() throws Exception {
 	if (isDirectory()) {
 		List<SLDocument> docs = getDocsInFolder(false);
 		return SLUtils.getLinkedKeywords2NbHashMap(docs);
