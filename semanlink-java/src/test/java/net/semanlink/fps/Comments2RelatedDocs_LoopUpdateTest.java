@@ -37,7 +37,7 @@ import net.semanlink.util.FileUriFormat;
 
 public class Comments2RelatedDocs_LoopUpdateTest { // 2020-11
 
-@Test
+// @Test
 public final void ATTENTION_MODIF_VRAI_SEMANLINK_FPS() throws Exception {
 	SLModel m = DataLoader.fpsSLModel();
 	String contextUrl = "http://127.0.0.1:8080/semanlink";

@@ -601,9 +601,9 @@ public String filenameToFileUri(String filename) throws MalformedURLException, U
 }
 
 
-class YYYYMM {
-	String yyyy,mm;
-	YYYYMM(String yyyy, String mm) {
+public static class YYYYMM {
+	public String yyyy,mm;
+	public YYYYMM(String yyyy, String mm) {
 		this.yyyy = yyyy;
 		this.mm = mm;
 	}
@@ -1173,12 +1173,13 @@ public static String file2Folder(String file) {
     return file;
 }
 
-/** Le reotur est "/" terminated (a verifier) @todo */
-public static String docUri2Folder(String docUri) throws MalformedURLException {
-	URL docUrl = new URL(docUri);
-	String docFileName = docUrl.getFile();
-	return file2Folder(docFileName);
-}
+// 2021-01 ceci ne marche pas du tout - pas utilisé, heureusement
+///** Le reotur est "/" terminated (a verifier) @todo */
+//public static String docUri2Folder(String docUri) throws MalformedURLException {
+//	URL docUrl = new URL(docUri);
+//	String docFileName = docUrl.getFile();
+//	return file2Folder(docFileName);
+//}
 
 
 /*
