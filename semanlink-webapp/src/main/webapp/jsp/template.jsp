@@ -222,7 +222,7 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
     // Add a script element as a child of the body %>
     function downloadJS() {
          var element = document.createElement("script");
-         element.src = "<%=contextPath%>/scripts/livesearch.js?v=0.7.3-i";
+         element.src = "<%=contextPath%>/scripts/livesearch.js?v=0.7.3-m";
          document.body.appendChild(element);
          
          element = document.createElement("script");
