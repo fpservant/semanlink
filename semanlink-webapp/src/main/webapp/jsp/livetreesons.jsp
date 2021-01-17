@@ -144,13 +144,19 @@ for (int i = 0; i < children.size(); i++) {	// We check whether a son has child
 	          %><%//PAS DE VIDE!!!%><li><img src="<%=context%>/ims/box_nada.gif" height="0" width="8" alt="" id="trigger:<%=sonDivId%>" /><a property="skos:narrower" href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%          
 	      }
 	} else { // son has sons
-	      if (kw == null) {
-	          %><%//PAS DE VIDE!!!%><li><img src="<%=context%>/ims/box_closed.gif" id="trigger:<%=sonDivId%>" alt="" height="8" width="8" onclick="toggle2('<%=sonDivId%>', '<%=encodedSonUri%>', '<%=withDocs%>', '<%=postTagOnClick%>', '<%=targetUri%>')" /><% // ne rien mettre entre les 2
-	                   // ne rien mettre entre les 2%><a href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%
-	      } else {
-	          %><%//PAS DE VIDE!!!%><li><img src="<%=context%>/ims/box_closed.gif" id="trigger:<%=sonDivId%>" alt="" height="8" width="8" onclick="toggle2('<%=sonDivId%>', '<%=encodedSonUri%>', '<%=withDocs%>', '<%=postTagOnClick%>', '<%=targetUri%>')" /><% // ne rien mettre entre les 2
-	           // ne rien mettre entre les 2%><a property="skos:narrower" href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%
-	      }
+		
+	  String uriq = targetUri;
+	  if (uriq != null) {
+	  	uriq = uriq.replace("\'", "\\'"); // 2021-01 bug triangles that do not open
+	  }
+	  
+      if (kw == null) {
+          %><%//PAS DE VIDE!!!%><li><img src="<%=context%>/ims/box_closed.gif" id="trigger:<%=sonDivId%>" alt="" height="8" width="8" onclick="toggle2('<%=sonDivId%>', '<%=encodedSonUri%>', '<%=withDocs%>', '<%=postTagOnClick%>', '<%=uriq%>')" /><% // ne rien mettre entre les 2
+                   // ne rien mettre entre les 2%><a href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%
+      } else {
+          %><%//PAS DE VIDE!!!%><li><img src="<%=context%>/ims/box_closed.gif" id="trigger:<%=sonDivId%>" alt="" height="8" width="8" onclick="toggle2('<%=sonDivId%>', '<%=encodedSonUri%>', '<%=withDocs%>', '<%=postTagOnClick%>', '<%=uriq%>')" /><% // ne rien mettre entre les 2
+           // ne rien mettre entre les 2%><a property="skos:narrower" href="<%=href%>"<%=onClick%>><%=label%></a></li><%//PAS DE VIDE!!!%><%
+      }
 	} // if (son.hasChild())
 			} // for/* // CE COMMENATIRE EST-IL ENCORE PERTINENT ???
 

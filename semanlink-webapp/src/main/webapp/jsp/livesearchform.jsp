@@ -71,11 +71,12 @@
                 <input type="hidden" name="targeturi" value="<%=andTargetUri%>" />
         <%}} // if uri != null%>
         <%if (edit) {
-            if (uri != null) {%>
+            if (uri != null) {
+                %>
                  <!-- BEWARE, by default, button is type submit. Must not be here -->
-                <button type="button" onclick="if (askConfirmationCreateTag()) {document.getElementById('searchform').submit()}; return false;">New</button>
+                 <button type="button" onclick="if (askConfirmationCreateTag()) {document.getElementById('searchform').submit()}; return false;">New</button>
                  </p><p align="<%=align%>" style="padding-left:4px;padding-top:0px;padding-bottom:4px;padding-right:0px;margin:0">
-                <input type="hidden" name="targeturi" value="<%=uri%>" /><%//uri of this page (doc or tag)%>
+                 <input type="hidden" name="targeturi" value="<%=uri%>" /><%//uri of this page (doc or tag)%>
                     <select name="actionprop">
                         <%if (jsp_doc != null) {%>
                             <option value="add2doc"><%=jsp.i18l("livesearchform.addToTags")%></option>
