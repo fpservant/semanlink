@@ -49,7 +49,7 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
     
     <script src="<%=contextPath%>/scripts/markdown-it.min.910.js"></script>   
     <script src="<%=contextPath%>/scripts/markdown-it-replace-link.min.js"></script>   
-    <script src="<%=contextPath%>/scripts/markdown-sl.js?v=0.7.2.a"></script>   
+    <script src="<%=contextPath%>/scripts/markdown-sl.js?v=0.7.4"></script>   
     
     <%    
     if ((jsp instanceof Jsp_Keyword) || (jsp instanceof Jsp_ThisMonth)) { // 2007-03 remplace 2007-01
@@ -222,11 +222,11 @@ if (jsp instanceof Jsp_Keyword) tagUri = HTML_Link.getTagURL(contextPath, jsp.ge
     // Add a script element as a child of the body %>
     function downloadJS() {
          var element = document.createElement("script");
-         element.src = "<%=contextPath%>/scripts/livesearch.js?v=0.7.3-n";
+         element.src = "<%=contextPath%>/scripts/livesearch.js?v=0.7.4";
          document.body.appendChild(element);
          
          element = document.createElement("script");
-         element.src = "<%=contextPath%>/scripts/trees.js?v=0.7.3-n";
+         element.src = "<%=contextPath%>/scripts/trees.js?v=0.7.4";
          document.body.appendChild(element);
     }
     </script>

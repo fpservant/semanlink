@@ -101,14 +101,13 @@ if (!edit) {
         // pas bon
         // var data = new FormData(); data.append(...)
 
-//         // ATTENTION, quotes in var ???
-// var uriq = '<%=uri.replace("\'", "\\'")%>';
-        var data = "docuri=" + encodeURIComponent(uri);
+		var uriq = '<%=uri.replace("\'", "\\'")%>';
+        var data = "docuri=" + encodeURIComponent(uriq);
         data = data + "&content=" + encodeURIComponent(document.getElementById("rawmd").value);
         xhr.send(data);
         
         // pb cache (au moins avec safari)
-        invalidateCache(uri);
+        invalidateCache(uriq);
     }
     </script>
      
@@ -121,8 +120,11 @@ if (!edit) {
          
     <div class="graybox">
         <div class="what"><%=jsp.i18l("markdown.raw")%></div>
-         <textarea id="rawmd" oninput="this.editor.update()"
-              rows="12" cols="60">Type **Markdown** here.</textarea>
+         <textarea id="rawmd" name="comment" rows="12" 
+                    onpaste="mypaste('rawmd')"
+                    oninput="this.editor.update()" 
+                    ondrop="dropToComment(event)">Type **Markdown** here.</textarea>
+         
          <br/>
          <input type="submit" value="Save" onclick="saveMarkdown()"/>
     </div>
