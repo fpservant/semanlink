@@ -39,7 +39,7 @@ public class UploadServlet extends HttpServlet {
       if (createSubDir != null) {
       	File f = new File (dir, createSubDir);
       	if (f.exists()) {
-      		throw new RuntimeException("Already exixts: " + f.getName());
+      		throw new RuntimeException("Already exists: " + f.getName());
       	} else {
         	boolean done = f.mkdir();
         	if (done) {
@@ -60,7 +60,7 @@ public class UploadServlet extends HttpServlet {
         
         File f = new File(dir, filename);
         if (f.exists()) {
-        	throw new RuntimeException("file already exists, no overwrite"); // TODO
+        	throw new RuntimeException("File already exists, no overwrite"); // TODO
         }
       	
       	// real upload
