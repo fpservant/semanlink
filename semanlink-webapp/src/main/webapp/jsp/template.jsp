@@ -445,10 +445,11 @@ if (jsp instanceof Jsp_Keyword) { // 2013-08 RDFa added typeof
 // creating one from js doesn't seem to work from firefox 
 // see tree.js post_usingExistingForm
 // see CoolUriServlet action2020
+// 2021-02 change param uri to dragTagUri cause when dragging to a doc, request may have a uri param with doc's uri
 %>
 <form id="tags_form" action="" method="POST">
   <input id="tags_form_action2020" type="hidden" name="action2020" value="add2parents">
-  <input id="tags_form_uri" type="hidden" name="uri" value="">
+  <input id="tags_form_uri" type="hidden" name="dragTagUri" value="">
 </form>
 
 
