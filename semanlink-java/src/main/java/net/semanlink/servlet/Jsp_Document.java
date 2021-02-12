@@ -391,6 +391,14 @@ static List<File> titleFilenameMatch(String title, File[] files, boolean strict)
 	String source1 = title;
 	ArrayList<String> words1 = wordsInString.words(source1, loc);
 	int n1 = words1.size();
+	StringBuilder sb1 = new StringBuilder();
+	for (String w : words1) {
+		sb1.append(w + " ");
+	}
+	String s1 = sb1.toString();
+	// if title too long (more than 100 chars?), filename is truncated
+	// so we request only to match until 100 chars
+	if (s1.length() > 100) s1 = s1.substring(0,100);
 	
 	ArrayList<File> x = new ArrayList<>();
 	for (File f : files) {
@@ -402,14 +410,26 @@ static List<File> titleFilenameMatch(String title, File[] files, boolean strict)
   	if (strict) {
   		if (n1 != n2) continue;
   	}
-  	
-  	boolean match = true;
-  	for (int i = 0; i < Math.min(n1, n2); i++) {
-  		if (!words1.get(i).equals(words2.get(i))) {
-  			match = false;
-  			break;
-  		}
+
+  	StringBuilder sb2 = new StringBuilder();
+  	for (String w : words1) {
+  		sb2.append(w + " ");
   	}
+  	String s2 = sb2.toString();
+  	// if title too long (more than 100 chars?), filename is truncated
+  	// so we request only to match until 100 chars
+  	if (s2.length() > 100) s2 = s2.substring(0,100);
+  	
+  	boolean match;
+  	if (s2.length() > 100) {
+    	// if title too long (more than 100 chars?), filename is truncated
+    	// so we request from filename to match only on its own length
+  		// (provided it is more than 100) (so the test above is on s2.length)
+  		match = s1.startsWith(s2);
+  	} else {
+  		match = s1.equals(s2);
+  	}
+
   	if (match) {
   		x.add(f);
   	}
@@ -417,83 +437,49 @@ static List<File> titleFilenameMatch(String title, File[] files, boolean strict)
 	return x;
 }
 
-//static File titleFilenameMatch(String title, File[] files, boolean strict) {
-//	boolean moreThan2LettersOnly = false;
-//	boolean patchApostrophe = false;
-//	Locale loc = Locale.getDefault();
-//	
-//	WordsInString wordsInString = new WordsInString(moreThan2LettersOnly, patchApostrophe);
-//	
-//	String source1 = title;
-//	ArrayList<String> words1 = wordsInString.words(source1, loc);
-//	int n1 = words1.size();
-//	
-//	for (File f : files) {
-//  	String fn = f.getName();
-//  	String source2 = Util.getWithoutExtension(fn);
-//  	ArrayList<String> words2 = wordsInString.words(source2, loc);
-//  	
-//  	int n2 = words2.size();
-//  	if (strict) {
-//  		if (n1 != n2) continue;
-//  	}
-//  	
-//  	for (int i = 0; i < Math.min(n1, n2); i++) {
-//  		if (!words1.get(i).equals(words2.get(i))) {
-//  			continue;
-//  		}
-//  	}
-//  	return f;		
-//	}
-//	return null;
-//}
-//
 static boolean titleFilenameMatch(String title, File f, boolean strict) {
 	File[] fs = new File[1]; fs [0] = f;
 	List<File> candidates = titleFilenameMatch(title, fs, strict);
 	return ((candidates != null)&&(candidates.size() == 1));
 }
 
-
-
-
-// this isn't good
-static public SLDocumentStuff localCopyCandidate_asMostRecentFile(String contextUrl) throws Exception { // 2020-07
-  SLModel mod = SLServlet.getSLModel();
-  File currentDir = mod.goodDirToSaveAFile();	            
-  File[] files = currentDir.listFiles();
-  // sort by date, newest first
-  Arrays.sort(files, new Comparator<File>(){
-    public int compare(File f1, File f2) {
-        return Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
-    } 
-  });
-  for (File f : files) { // we only are interested with the most recent, so not really a loop
-  	
-  	// hum, le plus récent, ce n'est pas forcément génial :
-  	// ne marche pas si on a copié-collé un fichier à partir du disque
-  	// (le fichier garde son last-modified à sa valeur originale).
-  	// Mais ca devient compliqué pour faire mieux : garder un état de l'activ folder
-  	// et voir ses changeemnts.
-  	
-  	// est-ce que c un pdf ou html (pas sl.rdf !)
-  	String nam = f.getName();
-  	if ("sl.rdf".equals(nam)) continue;
-  	if ((nam.startsWith("sl-")) && (nam.endsWith(".rdf"))) continue;
-  	// est-ce que ce n'est pas déjà un doc (local)?
-  	SLDocument sldoc = mod.smarterGetDocument(mod.filenameToUri(f.getPath()));
-  	if (mod.existsAsSubject(sldoc)) { // todo check si c bien le bon test à faire
-  		return null;
-  	}
-    SLDocumentStuff docStuff = new SLDocumentStuff(sldoc, mod, contextUrl);
-  	// est-ce qu'il n'est pas déjà source de qlqu'un?
-    if (docStuff.getSource() != null) {
-    	return null;
-    }
-    return docStuff;
-  }
-  return null;
-}
+//// this isn't good
+//static public SLDocumentStuff localCopyCandidate_asMostRecentFile(String contextUrl) throws Exception { // 2020-07
+//  SLModel mod = SLServlet.getSLModel();
+//  File currentDir = mod.goodDirToSaveAFile();	            
+//  File[] files = currentDir.listFiles();
+//  // sort by date, newest first
+//  Arrays.sort(files, new Comparator<File>(){
+//    public int compare(File f1, File f2) {
+//        return Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
+//    } 
+//  });
+//  for (File f : files) { // we only are interested with the most recent, so not really a loop
+//  	
+//  	// hum, le plus récent, ce n'est pas forcément génial :
+//  	// ne marche pas si on a copié-collé un fichier à partir du disque
+//  	// (le fichier garde son last-modified à sa valeur originale).
+//  	// Mais ca devient compliqué pour faire mieux : garder un état de l'activ folder
+//  	// et voir ses changeemnts.
+//  	
+//  	// est-ce que c un pdf ou html (pas sl.rdf !)
+//  	String nam = f.getName();
+//  	if ("sl.rdf".equals(nam)) continue;
+//  	if ((nam.startsWith("sl-")) && (nam.endsWith(".rdf"))) continue;
+//  	// est-ce que ce n'est pas déjà un doc (local)?
+//  	SLDocument sldoc = mod.smarterGetDocument(mod.filenameToUri(f.getPath()));
+//  	if (mod.existsAsSubject(sldoc)) { // todo check si c bien le bon test à faire
+//  		return null;
+//  	}
+//    SLDocumentStuff docStuff = new SLDocumentStuff(sldoc, mod, contextUrl);
+//  	// est-ce qu'il n'est pas déjà source de qlqu'un?
+//    if (docStuff.getSource() != null) {
+//    	return null;
+//    }
+//    return docStuff;
+//  }
+//  return null;
+//}
 
 
 //
