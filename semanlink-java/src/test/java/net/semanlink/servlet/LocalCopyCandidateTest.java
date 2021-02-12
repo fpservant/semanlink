@@ -1,20 +1,12 @@
 /* Created on Dec 23, 2020 */
 package net.semanlink.servlet;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Locale;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-
-import net.semanlink.util.Util;
-import net.semanlink.util.text.WordsInString;
 
 public class LocalCopyCandidateTest {
 

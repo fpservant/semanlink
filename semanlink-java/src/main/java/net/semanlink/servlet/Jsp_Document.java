@@ -412,7 +412,7 @@ static List<File> titleFilenameMatch(String title, File[] files, boolean strict)
   	}
 
   	StringBuilder sb2 = new StringBuilder();
-  	for (String w : words1) {
+  	for (String w : words2) {
   		sb2.append(w + " ");
   	}
   	String s2 = sb2.toString();
