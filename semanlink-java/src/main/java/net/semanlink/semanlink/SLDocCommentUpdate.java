@@ -18,7 +18,9 @@ public class SLDocCommentUpdate {
  * (and the previous value), computes and updates the sl:relatedDoc(s)
  * @return true if updated, false if no change done (and this is not the same as oldComment == newComment !)
  */
-	
+
+// Use the sl:relatedDoc property: docContainingComment sl:relatedoc mentionnedDoc
+//
 // we compare old and new comment, in order to be able to remove the removed links.
 // Is this really necessary? Why not removing them all, then adding the new ones?
 // That wouldn't be OK if there are other sources for the sl:relatedDoc property
@@ -29,6 +31,12 @@ public class SLDocCommentUpdate {
 // On ne peut pas faire la comparaison oldValue / newValue
 // (the file may have been changed externally)
 // The only way is to start from scratch (and/or use a different prop)
+	
+// ouais, me parait pas bien grave : virer tous les relatedDocs,
+// puis ajouter ce qui correspond au nouveau contenu
+	// (~ considérer que relatedDocs est une ppté dédiée au contenu du doc)
+	// (ah : vaut peut-être miuex alors une ppté spéciale pour md doc) - sinon, ca ne va pas avec le comment
+	
 static public boolean changeComment(SLModel mod, SLDocument doc, String newComment, String newLang, String contextUrl) { // 2020-11
 	LabelLN oldCommentLN = doc.getCommentLN();
 	String oldComment = null, oldLang = null;

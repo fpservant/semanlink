@@ -354,7 +354,7 @@ static public SLDocumentStuff localCopyCandidate(String title, boolean strict, S
 //  	}
 //  }
 //  if (f == null) return null;
-  List<File> candidatsALaCandidature = titleFilenameMatch(title, files, strict);
+  List<File> candidatsALaCandidature = titleFilenameMatch(title, files);
   
   // if not exactly one candidate, reject
   if ((candidatsALaCandidature == null) || (candidatsALaCandidature.size() != 1)) {
@@ -379,9 +379,7 @@ static public SLDocumentStuff localCopyCandidate(String title, boolean strict, S
   return docStuff;
 }
 
-// if strict, returns at most one element (?): no, not necessarily
-// but we could make it faster (exit loop) if we want and do so
-static List<File> titleFilenameMatch(String title, File[] files, boolean strict) {
+static List<File> titleFilenameMatch(String title, File[] files) {
 	boolean moreThan2LettersOnly = false;
 	boolean patchApostrophe = false;
 	Locale loc = Locale.getDefault();
@@ -390,7 +388,6 @@ static List<File> titleFilenameMatch(String title, File[] files, boolean strict)
 	
 	String source1 = title;
 	ArrayList<String> words1 = wordsInString.words(source1, loc);
-	int n1 = words1.size();
 	StringBuilder sb1 = new StringBuilder();
 	for (String w : words1) {
 		sb1.append(w + " ");
@@ -406,11 +403,6 @@ static List<File> titleFilenameMatch(String title, File[] files, boolean strict)
   	String source2 = Util.getWithoutExtension(fn);
   	ArrayList<String> words2 = wordsInString.words(source2, loc);
   	
-  	int n2 = words2.size();
-  	if (strict) {
-  		if (n1 != n2) continue;
-  	}
-
   	StringBuilder sb2 = new StringBuilder();
   	for (String w : words2) {
   		sb2.append(w + " ");
@@ -437,9 +429,9 @@ static List<File> titleFilenameMatch(String title, File[] files, boolean strict)
 	return x;
 }
 
-static boolean titleFilenameMatch(String title, File f, boolean strict) {
+static boolean titleFilenameMatch(String title, File f) {
 	File[] fs = new File[1]; fs [0] = f;
-	List<File> candidates = titleFilenameMatch(title, fs, strict);
+	List<File> candidates = titleFilenameMatch(title, fs);
 	return ((candidates != null)&&(candidates.size() == 1));
 }
 

@@ -28,17 +28,15 @@ public final void test() {
 	boolean strict = true;
 	File dir = new File("src/test/files/localCopyCandidates/strict");
 	for (File f : dir.listFiles()) {
-		assertTrue(Jsp_Document.titleFilenameMatch(htmlTitle, f, strict));
+		assertTrue(Jsp_Document.titleFilenameMatch(htmlTitle, f));
 	}
 	dir = new File("src/test/files/localCopyCandidates/notstrict");
 	for (File f : dir.listFiles()) {
-		assertFalse(Jsp_Document.titleFilenameMatch(htmlTitle, f, strict));
-		assertTrue(Jsp_Document.titleFilenameMatch(htmlTitle, f, !strict));
+		assertFalse(Jsp_Document.titleFilenameMatch(htmlTitle, f));
 	}
 	dir = new File("src/test/files/localCopyCandidates/nomatch");
 	for (File f : dir.listFiles()) {
-		assertFalse(Jsp_Document.titleFilenameMatch(htmlTitle, f, true));
-		assertFalse(Jsp_Document.titleFilenameMatch(htmlTitle, f, false));
+		assertFalse(Jsp_Document.titleFilenameMatch(htmlTitle, f));
 	}
 }
 }
