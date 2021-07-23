@@ -49,8 +49,8 @@ private static String[] otherKwUris(String[] kwUris) {
  * Liste des SLDocuments NE DOIT PAS dépendre du "mode" (children only ou tree) : doit être en  "long mode" (tree)
  * (cela, depuis 2013-03)
  */
-protected List computeDocs()  throws Exception {
-	List docs = null;
+protected List<SLDocument> computeDocs()  throws Exception {
+	List<SLDocument> docs = null;
 	String sortProperty = null;
 	// @find tag cloud when displaying the short list of docs
 	// 2013-03 we changed the way the tag cloud is computed: when in "doc short list" mode (which, BTW, is now the default)
@@ -60,7 +60,7 @@ protected List computeDocs()  throws Exception {
 		// docs = this.firstKw.getDocuments();
 	// } else {
 		SLTree tree = new SLTree(this.firstKw, "children", sortProperty, SLServlet.getSLModel());
-		docs = new ArrayList(Arrays.asList(tree.getDocs()));
+		docs = new ArrayList<SLDocument>(Arrays.asList(tree.getDocs()));
 	// }
 	return docs;
 }
@@ -101,8 +101,8 @@ public Bean_KwList  prepareParentsList() {
 	return this.beanKwList;
 }
 
-public List getParents() {
-	ArrayList x = new ArrayList();
+public List<SLKeyword> getParents() {
+	ArrayList<SLKeyword> x = new ArrayList<>();
 	x.add(this.firstKw);
 	for (int i = 0; i < this.kws.length; i++) {
 		x.add(this.kws[i]);
@@ -151,7 +151,7 @@ public String getContent() throws Exception {
 }
 
 //
-// Pouyr transformer la liste en un nouveau kw
+// Pour transformer la liste en un nouveau kw
 //
 
 public SLKeyword toNewKeyword() throws Exception {
