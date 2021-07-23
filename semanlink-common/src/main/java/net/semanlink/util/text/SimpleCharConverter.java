@@ -115,14 +115,43 @@ public static char[] computeCollatorBasedConversionTable(int dim, Collator coll)
 	char[] x = new char[dim];
 
 	// Loop over s. Chars that are equal (wrt the Collator) are one after the other in s.
-	// They all will be converted to the first encountered.
-	String smallestAmongEqualChars = s[0];
+	
+	// before 2021-07
+//	// They all will be converted to the first encountered.
+//	String smallestAmongEqualChars = s[0];
+//	for (int i = 0; i < dim; i++) {
+//	  if (coll.compare(s[i], smallestAmongEqualChars) != 0) {
+//	  	smallestAmongEqualChars = s[i];
+//	  }
+//	  x[s[i].charAt(0)] = smallestAmongEqualChars.charAt(0);
+//	  // if (i < 512) System.out.println(s[i].charAt(0) + " -> " + smallestAmongEqualChars.charAt(0));
+//	}
+	
+	// 2021-07 in Danish (da):
+	// uppercases are greater than lowercases
+	// the smallest char equal to a is ¾
+	// So, among the "equal' chars, take the one between a and z, if any
+	// (otherwise, the smallest)
+	int first = 0;
+	String smallestAmongEqualChars = s[first];
 	for (int i = 0; i < dim; i++) {
-	  if (coll.compare(s[i], smallestAmongEqualChars) != 0) {
-	  	smallestAmongEqualChars = s[i];
+	  if ((coll.compare(s[i], smallestAmongEqualChars) != 0) || (i == dim-1)) {
+	  	char bestChar = s[first].charAt(0);
+	  	for (int j = first; j < i; j++) {
+		  	char c = s[j].charAt(0);
+		  	if (('a' <= c) && ('z' >= c)) {
+		  		bestChar = c;
+		  		break;
+		  	}
+	  	}
+	  	for (int j = first; j < i; j++) {
+	  		x[s[j].charAt(0)] = bestChar;
+	  	}
+	  	first = i;
+	  	smallestAmongEqualChars = s[first];
 	  }
-	  x[s[i].charAt(0)] = smallestAmongEqualChars.charAt(0);
 	}
+
 	return x;
 } // computeSimpleConversionTable
 }
