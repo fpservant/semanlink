@@ -329,20 +329,24 @@ if (SLServlet.canOpenLocalFileWithDesktop()) { %>
 
 
 
-
+<%
+boolean isMarkdown = SLDocumentStuff.isMarkdown(uri);
+%>
 <%{ 
   if (!edit) {
-    Bean_DocList li = jsp.relatedDocs(false, true); // 2020-11 
-    if (li.getList().size() > 0) {
-        jsp.setShowKeywordsInDocList(true); // pour afficher les keywords des docs de la liste
-        request.setAttribute("net.semanlink.servlet.Bean_DocList", li);
-        %>
-        <div class="graybox" id="related_docs_ft">
-           <div class="what">Linked From</div>
-           <jsp:include page="doclist.jsp"/>
-        </div>
-    <%} // list not empty
-  }
+    if (!isMarkdown) { // 2021-07
+	    Bean_DocList li = jsp.relatedDocs(false, true); // 2020-11 
+	    if (li.getList().size() > 0) {
+	        jsp.setShowKeywordsInDocList(true); // pour afficher les keywords des docs de la liste
+	        request.setAttribute("net.semanlink.servlet.Bean_DocList", li);
+	        %>
+	        <div class="graybox" id="related_docs_ft">
+	           <div class="what">Linked From</div>
+	           <jsp:include page="doclist.jsp"/>
+	        </div>
+	    <%} // list not empty
+    } // !markdown
+  } // !edit
 }%>
 
 
@@ -395,16 +399,18 @@ if (false) {
 <%
 {
     if (!edit) {
-        Bean_DocList li = jsp.similarlyTaggedDocs(); // 2020-11 
-        if (li.getList().size() > 0) {
-            jsp.setShowKeywordsInDocList(true); // pour afficher les keywords des docs de la liste
-            request.setAttribute("net.semanlink.servlet.Bean_DocList", li);
-            %>
-            <div class="graybox" id="similarly_tagged_docs">
-               <div class="what">Documents with similar tags (experimental)</div>
-               <jsp:include page="doclist.jsp"/>
-            </div>
-        <%} // list not empty
+    	if (!isMarkdown) { // 2021-07
+	        Bean_DocList li = jsp.similarlyTaggedDocs(); // 2020-11 
+	        if (li.getList().size() > 0) {
+	            jsp.setShowKeywordsInDocList(true); // pour afficher les keywords des docs de la liste
+	            request.setAttribute("net.semanlink.servlet.Bean_DocList", li);
+	            %>
+	            <div class="graybox" id="similarly_tagged_docs">
+	               <div class="what">Documents with similar tags (experimental)</div>
+	               <jsp:include page="doclist.jsp"/>
+	            </div>
+	        <%} // list not empty
+    	} // if !markdown
     } // if !edit
 }%>
 
