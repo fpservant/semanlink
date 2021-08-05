@@ -107,7 +107,8 @@ static public Literal getComment(Resource res) {
 //
 
 // pb, parce que le doc redirige vers un autre page, et donc le click bookmarklet ensuite ne marche pad
-@Test public final void test_x() throws Exception {
+// @Test
+public final void test_x() throws Exception {
 	SLModel m = DataLoader.fpsSLModel();
 	String contextUrl = "http://127.0.0.1:8080/semanlink";
 	String link = "https://doi.org/10.1145/3178876.3186007";

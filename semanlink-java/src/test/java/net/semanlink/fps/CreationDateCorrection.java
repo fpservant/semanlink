@@ -1,15 +1,10 @@
 /* Created on Jan 8, 2021 */
 package net.semanlink.fps;
 
-import static org.junit.Assert.*;
-
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ResIterator;
@@ -22,15 +17,14 @@ import org.junit.Test;
 
 import net.semanlink.semanlink.DataLoader;
 import net.semanlink.semanlink.PropertyValues;
-import net.semanlink.semanlink.SLDataFolder;
 import net.semanlink.semanlink.SLDocument;
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLModel;
+import net.semanlink.semanlink.SLModel.DocMetadataFile;
 import net.semanlink.semanlink.SLResource;
 import net.semanlink.semanlink.SLUtils;
 import net.semanlink.semanlink.SLVocab;
 import net.semanlink.sljena.JModel;
-import net.semanlink.semanlink.SLModel.DocMetadataFile;
 
 /**
  * to create creation dates for old stuff which had no
@@ -45,9 +39,13 @@ private static String contextUrl;
 @BeforeClass
 public static void setUpBeforeClass() throws Exception {
 	m = DataLoader.fpsSLModel();
-	contextUrl = "http://127.0.0.1:8080/semanlink";
-	tagns = m.getDefaultThesaurus().getBase();
-	System.out.println("tag ns (thesaurus uri): " + tagns);
+	if (m != null) {
+		contextUrl = "http://127.0.0.1:8080/semanlink";
+		tagns = m.getDefaultThesaurus().getBase();
+		System.out.println("tag ns (thesaurus uri): " + tagns);
+	} else {
+		System.out.println("Not loaded");
+	}
 }
 
 @AfterClass
