@@ -23,7 +23,7 @@ public class LocalCopyCandidateTest {
 
 @Test
 public final void test() {
-	String htmlTitle = "Covid-19 : la saga du vaccin à ARN messager désormais dans le sprint final";
+	String htmlTitle = "Covid-19, la saga du vaccin ARN messager dans le sprint final";
 	
 	boolean strict = true;
 	File dir = new File("src/test/files/localCopyCandidates/strict");
