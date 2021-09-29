@@ -102,7 +102,7 @@ public static void writeRDF(Model model, OutputStream out, String xmlBase, Strin
 
   // Writing the xml header
   if (rdfKind.indexOf("XML") > -1) {
-      boolean wantEncodingWritten = true;
+      final boolean wantEncodingWritten = true;
       if (wantEncodingWritten) {
           rdfWriter.setProperty("showXmlDeclaration", "false"); // with true, we do not get the encoding written // and is it bad?
           String xmlDeclaration = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";

@@ -2,6 +2,7 @@
 package net.semanlink.common;
 
 import org.apache.jena.query.Dataset;
+import org.apache.jena.query.DatasetFactory;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
@@ -13,14 +14,15 @@ import org.junit.Test;
 
 public class UnionGraphTest {
 
-// @Test 
+@Test 
 public final void test() {
 	Model m = ModelFactory.createDefaultModel();
 	m.add(
 			m.createResource("http://ex.com/s"),
 			m.createProperty("http://ex.com/p"),
 			m.createResource("http://ex.com/o"));
-	Dataset ds = TDBFactory.createDataset("/Users/fps/Desktop/tdbtest");
+	// Dataset ds = TDBFactory.createDataset("/Users/fps/Desktop/tdbtest");
+	Dataset ds = DatasetFactory.create(m);
 	ds.addNamedModel("http://ex.com/g", m);
 
 	Model m0 = ds.getDefaultModel();

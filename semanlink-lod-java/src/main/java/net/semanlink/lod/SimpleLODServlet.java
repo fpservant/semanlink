@@ -21,7 +21,7 @@ import net.semanlink.util.servlet.Jsp_Page;
 public class SimpleLODServlet extends LODServlet {
 private static final String LINKED_DATA = "linkeddata";
 /** The folder inside the web app folder that contains the JSP. */ // TODO a mettre dans BasicServlet. Accès d'ailleurs ? ds contexte ?
-protected String JSPFolder = "/jsp/simplelodservlet/";
+static final protected String JSP_FOLDER = "/jsp/simplelodservlet/";
 
 /*
  * BEWARE to parameter base: used to read the rdf files (cf jena) iff (?) there is no xml:base inside the file
@@ -63,7 +63,7 @@ protected Jsp_Page homePage (HttpServletRequest req, HttpServletResponse res) {
 	Jsp_Page x = new Jsp_Page(req, res);
 	x.setLeftBoxJsp(null);
 	x.setTitle("Simple Linked Data Servlet");
-	x.setCenterBoxJsp(JSPFolder + "sparql.jsp");
+	x.setCenterBoxJsp(JSP_FOLDER + "sparql.jsp");
 	x.setMoreHeadersJsp("/jsp/jsRDFParserHeaders.jsp");
 	return x;
 }
@@ -75,8 +75,8 @@ protected Jsp_Page homePage (HttpServletRequest req, HttpServletResponse res) {
 
 protected void forward2Jsp(HttpServletRequest req, HttpServletResponse res, Jsp_Page jsp) throws ServletException, IOException {
 	// to customize the look of the page (to have a template for iso3166 different from LOD template).
-	jsp.setTopBoxJsp(JSPFolder + "topBox.jsp");
-	jsp.setRightBoxJsp(JSPFolder + "rightBox.jsp");	
+	jsp.setTopBoxJsp(JSP_FOLDER + "topBox.jsp");
+	jsp.setRightBoxJsp(JSP_FOLDER + "rightBox.jsp");	
 	super.forward2Jsp(req, res, jsp);
 }
 
@@ -84,7 +84,7 @@ protected void forward2Jsp(HttpServletRequest req, HttpServletResponse res, Jsp_
 //
 //
 
-protected String sparqlGUIPageName() { return JSPFolder + "sparql.jsp"; }
+protected String sparqlGUIPageName() { return JSP_FOLDER + "sparql.jsp"; }
 
 /** req supposed to contain a sparql query to be returned as html, return the uri of the (rdf) sparql query. 
  * THIS IS EXACTLY THE SAME THING AS IN LODServlet,

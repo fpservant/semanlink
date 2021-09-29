@@ -56,24 +56,6 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 		SLModel mod = SLServlet.getSLModel();
 		if (isKwNotDoc) {
 			
-			if ((p != null) 
-					&& (s != null)
-					&& (o != null)) {  // there is a "new triple" to create
-				
-				// mod.addKwProperty method assumes that the kw exist.
-				// So, we must check it.
-				
-				SLKeyword kw = mod.getKeywordIfExists(s);
-				if (kw == null) throw new RuntimeException("Keyword doesn't exist: " + s);
-				
-				if ((lang == null)||("".contentEquals(lang))) {
-					mod.addKwProperty(s, p, o);
-
-				} else {
-					mod.addKwProperty(s, p, o, lang);		
-				}
-			} // if (p != null)
-						
 			if (cur_p != null) { // there is a "current triple" to delete
 				if (cur_s == null) throw new RuntimeException("Current Triple: no subject");
 				if (cur_o == null) throw new RuntimeException("Current Triple: no object");
@@ -91,6 +73,24 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 				}
 			} // if (cur_p != null)
 			
+			if ((p != null) 
+					&& (s != null)
+					&& (o != null)) {  // there is a "new triple" to create
+				
+				// mod.addKwProperty method assumes that the kw exist.
+				// So, we must check it.
+				
+				SLKeyword kw = mod.getKeywordIfExists(s);
+				if (kw == null) throw new RuntimeException("Keyword doesn't exist: " + s);
+				
+				if ((lang == null)||("".contentEquals(lang))) {
+					mod.addKwProperty(s, p, o);
+
+				} else {
+					mod.addKwProperty(s, p, o, jenaLangArg(lang));		
+				}
+			} // if (p != null)
+						
 			redirectURL = HTML_Link.getTagURL(Util.getContextURL(request), s, false, ".html");
 			
 		} else { // doc
@@ -103,6 +103,20 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 				}				
 			}
 
+			if (cur_p != null) { // there is a "current triple" to delete
+				if (cur_s == null) throw new RuntimeException("Current Triple: no subject");
+				if (cur_o == null) throw new RuntimeException("Current Triple: no object");
+
+				cur_doc = mod.getDocument(cur_s);
+				
+				if ((cur_lang == null) || ("".contentEquals(cur_lang))) {
+					mod.deleteDocTriple(cur_doc, cur_p, cur_o);
+	
+				} else {
+					mod.deleteDocTriple(cur_doc, cur_p, cur_o, jenaLangArg(cur_lang));				
+				}
+			} // if (cur_p != null)
+				
 			if ((p != null) 
 					&& (s != null)
 					&& (o != null)) {  // there is a "new triple" to create
@@ -119,20 +133,6 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 				}
 			} // if (p != null)
 			
-			if (cur_p != null) { // there is a "current triple" to delete
-				if (cur_s == null) throw new RuntimeException("Current Triple: no subject");
-				if (cur_o == null) throw new RuntimeException("Current Triple: no object");
-
-				cur_doc = mod.getDocument(cur_s);
-				
-				if ((cur_lang == null) || ("".contentEquals(cur_lang))) {
-					mod.deleteDocTriple(cur_doc, cur_p, cur_o);
-	
-				} else {
-					mod.deleteDocTriple(cur_doc, cur_p, cur_o, jenaLangArg(cur_lang));				
-				}
-			} // if (cur_p != null)
-				
 			// 2020-07 to be able to redirect to doc, not local copy, when quick adding of local copy
 			// new param giving the redirect url
 			// (same code in Action_SetOrAddProperty)

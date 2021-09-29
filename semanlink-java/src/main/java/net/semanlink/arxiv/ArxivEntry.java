@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -26,7 +27,9 @@ private String id, updated, published, title, summary;
 private ArrayList<String> authors;
 
 static DocumentBuilder newDocumentBuilder() throws ParserConfigurationException {
-  DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();  
+  DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+  // factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+  // factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
   return factory.newDocumentBuilder();  
 }
 
