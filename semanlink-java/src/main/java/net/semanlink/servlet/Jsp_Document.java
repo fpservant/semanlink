@@ -496,4 +496,8 @@ public Bean_DocList relatedDocs(boolean linkTo, boolean linkFrom) { // 2020-11
 	return x;
 }
 
+@Override
+public Iterator rdfTypes() {
+	return SLServlet.getSLModel().rdfTypes4Docs();
+}
 }

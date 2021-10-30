@@ -2043,6 +2043,8 @@ abstract public SLKeyword object2Tag(String propUri, String objectUri);
 
 /** list of rdf:type used for tags. */
 abstract public Iterator rdfTypes4Tags();
+/** list of rdf:type used for docs. */
+abstract public Iterator rdfTypes4Docs();
 
 // 2017-04 saving modified md files
 public void saveDocFile(String docUri, String docContent) throws IOException, URISyntaxException {

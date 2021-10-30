@@ -367,8 +367,15 @@ public String getDescribedByPage() {
 	return pvs;
 }*/
 
-public Iterator rdfTypes4Tags() {
+@Override
+public Iterator rdfTypes() {
 	return SLServlet.getSLModel().rdfTypes4Tags();
 }
+
+///* @deprecated use rdfTypes() */
+//public Iterator rdfTypes4Tags() {
+//	return rdfTypes();
+//}
+
 
 } // class

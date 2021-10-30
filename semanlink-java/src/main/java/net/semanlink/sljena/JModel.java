@@ -1673,8 +1673,15 @@ public SLKeyword object2Tag(String propUri, String objectUri) {
 }
 
 /** list of rdf:type used for tags. */ // TODO OPTIM: don't compute each time. See where it can change: rdf:type form in edit keywords
+@Override
 public Iterator rdfTypes4Tags() {
 	return this.kwsModel.listObjectsOfProperty(RDF.type);
+}
+
+/** list of rdf:type used for docs. */ // TODO OPTIM: don't compute each time. See where it can change: rdf:type form in edit docs
+@Override
+public Iterator rdfTypes4Docs() {
+	return this.docsModel.listObjectsOfProperty(RDF.type);
 }
 
 

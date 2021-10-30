@@ -165,6 +165,11 @@ if ((edit) && (file == null)) { // only when it's not a file itself %>
   <jsp:include page="localCopyEdit.jsp"/>
 <%}%>
 
+<% /////////////////////////////////////////// RDF:TYPES %>
+<%if (edit) { %>                                               
+    <jsp:include page="rdfTypesForm.jsp"/>
+<%}%>
+
 
 <% /////////////////////////////////////////// PROPERTIES %>
 <%

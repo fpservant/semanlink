@@ -3,20 +3,22 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.jena.vocabulary.DC;
+import org.apache.jena.vocabulary.OWL;
+import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.RDFS;
 
 import net.semanlink.semanlink.PropertyValues;
 import net.semanlink.semanlink.SLLabeledResource;
 import net.semanlink.semanlink.SLSchema;
 import net.semanlink.skos.SKOS;
 import net.semanlink.util.Util;
-
-import org.apache.jena.vocabulary.OWL;
-import org.apache.jena.vocabulary.RDF;
-import org.apache.jena.vocabulary.RDFS;
-import org.apache.jena.vocabulary.DC;
-
-import javax.servlet.http.*;
 
 /** Affichage d'une SLLabeledResource */
 public class Jsp_Resource extends Jsp_Page {
@@ -140,4 +142,7 @@ public String getFirstAsString(String pptyUri) {
 	return null;		
 }
 
+public Iterator rdfTypes() {
+	return Collections.emptyIterator();
+}
 }
