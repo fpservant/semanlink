@@ -75,19 +75,18 @@
 		<servlet-class>net.semanlink.servlet.SLSparqlServlet</servlet-class>
 	</servlet>
 
-	<!-- JERSEY -->
+	<!-- JERSEY COMMENTED OUT 2021-10 BECAUSE ACTUALLY UNUSED -->
 	<!-- voir ici on peut faire miuex ? https://stackoverflow.com/questions/22022114/org-glassfish-jersey-servlet-servletcontainer-classnotfoundexception -->
-	<servlet>
-		<servlet-name>Jersey Based Semanlink</servlet-name>
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>Jersey Based Semanlink</servlet-name> -->
 
-		<!-- <servlet-class>org.glassfish.jersey.spi.container.servlet.ServletContainer</servlet-class> -->
-		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
-		<init-param>
-			<param-name>javax.ws.rs.Application</param-name>
-			<param-value>
-				net.semanlink.jersey.SLJerseyApp
-			</param-value>
-		</init-param>
+<!-- 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>javax.ws.rs.Application</param-name> -->
+<!-- 			<param-value> -->
+<!-- 				net.semanlink.jersey.SLJerseyApp -->
+<!-- 			</param-value> -->
+<!-- 		</init-param> -->
 		<!-- <init-param> <param-name>org.glassfish.jersey.spi.container.ContainerRequestFilters</param-name> 
 			<param-value>net.semanlink.jersey.MediaTypeFilter;</param-value> </init-param> -->
 		<!-- 2018-08 : sinon les Viewable (retour via jsp) ne marchent plus org.glassfish.jersey.message.internal.WriterInterceptorExecutor$TerminalWriterInterceptor 
@@ -95,12 +94,12 @@
 			type=class org.glassfish.jersey.server.mvc.Viewable, genericType=class org.glassfish.jersey.server.mvc.Viewable. 
 			cf https://stackoverflow.com/questions/19865738/cannot-have-jsp-page-load-with-jersey-server 
 			Vraiment, jersey, quelle merde -->
-		<init-param>
-			<param-name>jersey.config.server.provider.classnames</param-name>
-			<param-value>org.glassfish.jersey.server.mvc.jsp.JspMvcFeature</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
+<!-- 		<init-param> -->
+<!-- 			<param-name>jersey.config.server.provider.classnames</param-name> -->
+<!-- 			<param-value>org.glassfish.jersey.server.mvc.jsp.JspMvcFeature</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<load-on-startup>1</load-on-startup> -->
+<!-- 	</servlet> -->
 
 
 	<!-- SERVLET MAPPINGS -->

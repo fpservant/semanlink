@@ -2,7 +2,6 @@
 package net.semanlink.jersey;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,12 +12,15 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.StreamingOutput;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Providers;
+
+import org.apache.jena.rdf.model.Model;
+// import com.sun.jersey.api.view.Viewable;
+import org.glassfish.jersey.server.mvc.Viewable;
 
 import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.servlet.BaseAction;
@@ -27,13 +29,9 @@ import net.semanlink.servlet.Jsp_Keyword;
 import net.semanlink.servlet.RDFOutput;
 import net.semanlink.servlet.RDFOutput_Keyword;
 import net.semanlink.servlet.RDFServlet;
+import net.semanlink.servlet.SLServlet;
 import net.semanlink.servlet.SLUrisAsSkos;
-import net.semanlink.util.Util;
 import net.semanlink.util.jena.RDFWriterUtil;
-
-import org.apache.jena.rdf.model.Model;
-// import com.sun.jersey.api.view.Viewable;
-import org.glassfish.jersey.server.mvc.Viewable;
 
 // TODO 	response.setHeader("Access-Control-Allow-Origin", "*"); // CORS 2012-08
 
@@ -106,12 +104,11 @@ private Jsp_Keyword getJSP() {
 	// System.out.println("uriInfo.getBaseUri()"+uriInfo.getBaseUri()); // http://127.0.0.1:7080/semanlink/sl/resources/
 	// String oldTagUri = "http://www.semanlink.net/tag/"+ id; // TODO
 	// String oldTagUri = "http://127.0.0.1:7080/semanlink/tag/"+ id; // TODO
-	String oldTagUri;
-	try {
-		oldTagUri = Util.getContextURL(servletRequest) + "/tag/" + id;
-	} catch (MalformedURLException e) { throw new RuntimeException(e);	}
-	System.out.println(oldTagUri);
-  SLKeyword kw = CoolUriServlet.getSLKeyword(oldTagUri, servletRequest);
+	String tagUri;
+	// tagUri = Util.getContextURL(servletRequest) + "/tag/" + id; // 127
+	tagUri = SLServlet.getSLModel().getDefaultThesaurus().getURI()+"/" + id;
+	System.out.println(tagUri);
+  SLKeyword kw = CoolUriServlet.getSLKeyword(tagUri, servletRequest);
 	return new Jsp_Keyword(kw, servletRequest);
 }
 
