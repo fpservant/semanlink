@@ -76,8 +76,8 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
 		<!-- cf connection through proxy, see SLServlet.getSimpleHttpClient -->
-
 		<dependency>
 			<groupId>org.glassfish.jersey.connectors</groupId>
 			<artifactId>jersey-apache-connector</artifactId>

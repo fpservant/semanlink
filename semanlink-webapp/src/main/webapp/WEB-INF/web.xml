@@ -233,10 +233,11 @@
 
 
 	<!-- JERSEY -->
-	<servlet-mapping>
-		<servlet-name>Jersey Based Semanlink</servlet-name>
-		<url-pattern>/resources/*</url-pattern>
-	</servlet-mapping>
+    <!-- JERSEY COMMENTED OUT 2021-10 BECAUSE ACTUALLY UNUSED -->
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>Jersey Based Semanlink</servlet-name> -->
+<!-- 		<url-pattern>/resources/*</url-pattern> -->
+<!-- 	</servlet-mapping> -->
 
 
 
