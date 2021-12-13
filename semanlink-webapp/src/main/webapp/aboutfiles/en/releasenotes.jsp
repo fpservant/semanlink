@@ -5,6 +5,12 @@
 <h1>Release notes</h1>
 <div class="graybox">
 
+<h2>0.7.6 2021-12-13</h2>
+<ul>
+<li>log4j update
+</li>
+</ul>
+
 <h2>0.7.5 2020-12-xx</h2>
 <ul>
 <li>Search Doc: by URL or phrase</li>
