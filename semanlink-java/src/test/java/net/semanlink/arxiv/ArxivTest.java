@@ -17,7 +17,7 @@ import org.xml.sax.SAXException;
 
 public class ArxivTest {
 
-// @Test // TODO REMETTRE ?
+@Test // TODO REMETTRE ?
 public final void test() throws IOException, ParserConfigurationException, SAXException {
 	Client client = ClientBuilder.newClient();
   DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();  
@@ -77,9 +77,12 @@ public final void test() throws IOException, ParserConfigurationException, SAXEx
 	
 	url = "http://arxiv.org/abs/0811.3701";
 	x = Arxiv.url2num(url);
-	System.out.println(x);
 	assertTrue("0811.3701".contentEquals(x));
-
+	
+	url = "https://browse.arxiv.org/pdf/2310.03025.pdf"; // 2023-10
+	x = Arxiv.url2num(url);
+	System.out.println(x);
+	assertTrue("2310.03025".contentEquals(x));
 }
 
 @Test public void foo() {
@@ -93,6 +96,13 @@ public final void test() throws IOException, ParserConfigurationException, SAXEx
 	 String url = "https://arxiv.org/abs/1912.08904#clicktoread";
 	 String num = Arxiv.url2num(url);
 	 assertTrue(num.equals("1912.08904"));
+}
+
+@Test public void pdf_url() { // 2023-10
+	// String url = "https://browse.arxiv.org/pdf/2310.03025.pdf"; 
+	String url = "https://arxiv.org/abs/2310.03041";
+	String x = Arxiv.url2pdfUrl(url);
+	assertTrue(x.equals("https://browse.arxiv.org/pdf/2310.03041.pdf"));
 }
 
 }

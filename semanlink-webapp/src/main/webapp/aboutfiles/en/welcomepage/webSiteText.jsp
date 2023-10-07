@@ -15,7 +15,7 @@
 	<div class="graybox">
         <h2>My bookmarks</h2>
             <p>
-            As a demo, you'll find my bookarks on this site. 
+            As a demo, you'll find my bookmarks on this site. 
             Click the "News" button at   the top of  this    page to see the latest bookmarks that I added, 
             in a page that looks a bit like the main page of a blog.    Each bookmark has a creation    date,   tags, 
             and often a short   description (generally  an  abstract or a   quote).

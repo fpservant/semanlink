@@ -5,10 +5,14 @@
 <h1>Release notes</h1>
 <div class="graybox">
 
+<h2>0.7.6 2023-10-07</h2>
+<ul>
+<li>arxiv changed the URL of pdfs</li>
+</ul>
+
 <h2>0.7.6 2021-12-13</h2>
 <ul>
-<li>log4j update
-</li>
+<li>log4j update</li>
 </ul>
 
 <h2>0.7.5 2020-12-xx</h2>

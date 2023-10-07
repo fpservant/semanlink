@@ -13,8 +13,12 @@ static final String ARXIV_NS = "https://arxiv.org/";
 static final String ARXIV_NS_OLD = "http://arxiv.org/";
 static final String ABS = ARXIV_NS + "abs/";
 static final String PDF = ARXIV_NS + "pdf/";
+// Bordel, 2013-10 : le pdf est maintenant en https://browse.arxiv.org/pdf/2310.03025.pdf
+static final String PDF_2 = "https://browse.arxiv.org/pdf/";
 private static final int ABS_LEN = ABS.length();
 private static final int PDF_LEN = PDF.length();
+
+
 
 private String num;
 public Arxiv(String num) {
@@ -39,12 +43,15 @@ public String absUrl() {
  * else return null;
  * @param url the url of a web document (not a semanlink url!), eg. https://arxiv.org/abs/0807.4145
  * or https://arxiv.org/pdf/0807.4145
+ * or (since 2023-10) https://browse.arxiv.org/pdf/2310.03025.pdf
  * @return eg.0807.4145, null if url is not the url of an arxiv doc
  */
 static public String url2num(String url) {
 	if (!url.startsWith(ARXIV_NS)) {
 		if (!url.startsWith(ARXIV_NS_OLD)) {
-			return null;
+			if (!url.startsWith(PDF_2)) {
+				return null;
+			}
 		} else {
 			url = "https:" + url.substring(5);
 		}
@@ -59,6 +66,11 @@ static public String url2num(String url) {
 		x = url.substring(ABS_LEN);
 	} else if (url.startsWith(PDF)) {
 		x = url.substring(PDF_LEN);
+		if (x.endsWith(".pdf")) {
+			x = x.substring(0, x.length()-4); // remove .pdf
+		}
+	} else if (url.startsWith(PDF_2)) { // 2023-10 new url for pdfs
+		x = url.substring(PDF_2.length());
 		if (x.endsWith(".pdf")) {
 			x = x.substring(0, x.length()-4); // remove .pdf
 		}
@@ -87,7 +99,9 @@ static public String url2pdfUrl(String url) {
 }
 
 private static String num2pdfUrl(String num) {
-	return PDF + num + ".pdf";
+	// 2023-10 arxiv new pdf url
+	// return PDF + num + ".pdf";
+	return PDF_2 + num + ".pdf";
 }
 
 private static String num2absUrl(String num) {
