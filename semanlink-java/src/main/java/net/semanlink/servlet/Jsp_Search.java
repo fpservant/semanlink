@@ -62,7 +62,7 @@ public Jsp_Search(String searchString, HttpServletRequest request) {
 	
 	List<SLKeyword> x = new ArrayList<>();
   // to avoid having twice the same kw 
-	// (as one kw has several labels, it can matche
+	// (as one kw has several labels, it can match
 	// the search string several times)
 	Set<SLKeyword> allReadyIn = new HashSet<>();
 	if (exactMatch != null) {
@@ -99,6 +99,9 @@ public Jsp_Search(String searchString, HttpServletRequest request) {
 
 private int nbOfWords(String s) {
 	// use WordsInString? must requires a locale...
+	if ((s == null) || (s.length() == 0) ) { // 2015-01
+		return 0;
+	}
 	return s.split("[ -@]").length;
 }
 

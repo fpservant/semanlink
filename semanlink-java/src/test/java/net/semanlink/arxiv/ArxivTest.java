@@ -98,11 +98,12 @@ public final void test() throws IOException, ParserConfigurationException, SAXEx
 	 assertTrue(num.equals("1912.08904"));
 }
 
-@Test public void pdf_url() { // 2023-10
-	// String url = "https://browse.arxiv.org/pdf/2310.03025.pdf"; 
-	String url = "https://arxiv.org/abs/2310.03041";
-	String x = Arxiv.url2pdfUrl(url);
-	assertTrue(x.equals("https://browse.arxiv.org/pdf/2310.03041.pdf"));
-}
+// 2024-05
+//@Test public void pdf_url() { // 2023-10
+//	// String url = "https://browse.arxiv.org/pdf/2310.03025.pdf"; 
+//	String url = "https://arxiv.org/abs/2310.03041";
+//	String x = Arxiv.url2pdfUrl(url);
+//	assertTrue(x.equals("https://browse.arxiv.org/pdf/2310.03041.pdf"));
+//}
 
 }

@@ -101,7 +101,9 @@ static public String url2pdfUrl(String url) {
 private static String num2pdfUrl(String num) {
 	// 2023-10 arxiv new pdf url
 	// return PDF + num + ".pdf";
-	return PDF_2 + num + ".pdf";
+	// return PDF_2 + num + ".pdf";
+	// 2024-05 rechangé (?)
+	return PDF + num;
 }
 
 private static String num2absUrl(String num) {

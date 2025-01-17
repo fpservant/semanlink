@@ -1,20 +1,18 @@
 /* Created on 19 oct. 2004 */
 package net.semanlink.servlet;
 
-import java.io.IOException;
-import java.net.*;
-import java.io.UnsupportedEncodingException;
-import java.text.MessageFormat;
-import java.util.*;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 
-import net.semanlink.graph.Graph;
-import net.semanlink.graph.GraphTraversal;
-import net.semanlink.graph.Intersection;
 import net.semanlink.semanlink.SLDocument;
-import net.semanlink.semanlink.SLKeyword;
 import net.semanlink.semanlink.SLModel;
-import net.semanlink.semanlink.SLTree;
 
 
 public class Jsp_Domains extends Jsp_ThisMonth {

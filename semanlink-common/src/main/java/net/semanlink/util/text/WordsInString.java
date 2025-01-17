@@ -54,12 +54,16 @@ public ArrayList<String> words(String source, Locale locale) {
 
 
 static private ArrayList<String> computeWords(String source, Locale locale, boolean moreThan2LettersOnly, boolean patchApostrophe) {
+	ArrayList<String> x = new ArrayList<String>();
+	if (source == null) { // 2025-01 added
+		return x;
+	}
 	if (patchApostrophe) {
 		source = source.replaceAll("'", " ");
 		source = source.replaceAll("-", " ");
 	}
 	BreakIterator  breaker  = BreakIterator.getWordInstance (locale);
-	ArrayList<String> x = new ArrayList<String>();
+
 	breaker.setText(source); 
 	int start = breaker.first();
 	for (int end = breaker.next(); end != BreakIterator.DONE; start = end, end = breaker.next()) {

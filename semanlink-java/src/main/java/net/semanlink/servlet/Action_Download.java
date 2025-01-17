@@ -74,6 +74,7 @@ public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServlet
 			return error(mapping, request, "This doc already has a local copy. Delete this copy first if you want to download it again.");
 		}
 
+		
 		// 2020-03 arxiv
 		String arxivPdf = Arxiv.url2pdfUrl(downloadFromUri);
 		if (arxivPdf != null) {

@@ -21,6 +21,10 @@ private SLKeyword firstKw;
 public Jsp_AndKws(SLKeyword firstKw, String[] otherKwUris, HttpServletRequest request) throws Exception {
 	super(otherKwUris, request);
 	this.firstKw = firstKw;
+	if (otherKwUris.length == 0) { // 2025-01 there are exceptions in the online version, because no otherKwUris
+		System.err.println("Jsp_AndKws unexpected: empty otherKwUris");
+		// throw new IllegalArgumentException("empty otherKwUris in Jsp_AndKws");
+	}
 	setDocs();
 }
 
@@ -83,12 +87,18 @@ public void setDocs() throws Exception {
 public String getTitle() {
 	StringBuffer sb = new StringBuffer(64);
 	sb.append(firstKw.getLabel());
-	for (int i = 0; i < this.kws.length-1; i++) {
-		sb.append(" ; ");
-		sb.append(kws[i].getLabel());
+	// 2025-01: there was ArrayIndexOutOfBoundsException below in the online version
+	// (in kws[kws.length-1]), hence this test
+	if (this.kws.length > 0) {
+		for (int i = 0; i < this.kws.length-1; i++) {
+			sb.append(" ; ");
+			sb.append(kws[i].getLabel());
+		}
+		sb.append(" AND ");
+		sb.append(kws[kws.length-1].getLabel());
+	// } else {
+	//	System.err.println("Jsp_AndKws unexpected");
 	}
-	sb.append(" AND ");
-	sb.append(kws[kws.length-1].getLabel());
 	return sb.toString();
 }
 

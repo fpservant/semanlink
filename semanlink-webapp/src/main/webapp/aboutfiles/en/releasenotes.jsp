@@ -5,6 +5,11 @@
 <h1>Release notes</h1>
 <div class="graybox">
 
+<h2>0.7.7 2025-01-15</h2>
+<ul>
+<li>avoid logging exceptions when wrongly formatted URIs are passed to the service</li>
+</ul>
+
 <h2>0.7.6 2023-10-07</h2>
 <ul>
 <li>arxiv changed the URL of pdfs</li>
